@@ -4,25 +4,22 @@
 
 
 <style>
-  body {
-    margin: 0;
-    padding: 0;
-    overflow: hidden;
-    background-color: #f0f0f0;
-  }
-    
+
     #contents .container{
     position:relative;
-    border:2px solid #fff;
+  
     }
     
     #container_Shin{
-
+      	border:2px solid #fff;
+ 		margin-top:50px;
+		height:600px;
+		background:#666666;
     }
     
-    #button1{position:absolute; top:50px; background:black; color:#fff; padding:10px; cursor: pointer; z-index: 100;}
+    #button1{position:absolute; top:55px; left:25px; background:black; color:#fff; padding:10px; cursor: pointer; z-index: 100;}
     
-    #button2{position:absolute; top:50px; left:200px; background:#333; color:#fff; padding:10px; cursor: pointer; z-index: 100;}
+    #button2{position:absolute; top:55px; left:200px; background:#333; color:#fff; padding:10px; cursor: pointer; z-index: 100;}
     
     input{font-size: 16px;}
     
@@ -60,8 +57,8 @@
       var width = window.innerWidth;
       var height = window.innerHeight;
 
-      var width2 = $('#contents .container').width();
-      var height2 = $('#contents .container').width();
+      var width2 = $('#container_Shin').width();
+      var height2 = $('#container_Shin').height();
       
       console.log("width : "+width);
       console.log("width2 : "+width2);
