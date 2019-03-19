@@ -10,8 +10,8 @@
         	<put-attribute name="content" value="" />
         </definition>
         
-        <definition name="test1" extends="layout">
-        	<put-attribute name="content" value="/WEB-INF/views/test2.jsp" />
+        <definition name="main" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/main.jsp" />
         </definition>
         
         <definition name="test2" extends="layout">
