@@ -11,7 +11,7 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/test1">Logo</a>
+          <a class="navbar-brand" href="/test1">ERDrawing</a>
           <a class="navbar-brand" href="/test1">Library</a>
 
         </div>
