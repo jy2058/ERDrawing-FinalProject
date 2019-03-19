@@ -1,95 +1,31 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<link rel="stylesheet" href="/css/member.css">
 
 <style>
-
 #contents{
-background:#3d3d3d;
+background:#4B4B4B;
 }
 
 	
 .join-title{
-	margin:50px 0;
-}
-
-
-.submit-btn{
-	display: inline-block;
-	margin:10px 0 50px 0;
-	width:100px;
-}
+	margin-top:50px;
+	margin-bottom:50px;
 	
-	
-.btn-style3{
-	display:inline-block;
-	margin-left:10px;
-	cursor: pointer;
-	font-size:16px;
-	font-weight: 500;
 }
-
-
-
-.member{
-	max-width:100%;
-}
-
-
-.google-btn{
-	width:100%;
-	max-width:500px;
-	margin-bottom:15px;
-	background:#E25141;
-}
-
-.facebook-btn{
-	width:100%;
-	max-width:500px;
-	margin-bottom:15px;
-	background:#4A659D;
-}
-
-.github-btn{
-	width:100%;
-	max-width:500px;
-	margin-bottom:15px;
-	background:#666666;
-}
-
-
-
-.login-left{
-
-}
-
-.login-center{
-
-}
-
-.login-right{
-
-}
-
 </style>
 
-<!-- <div class="member"> -->
-<!-- 	<div class="join-title"> -->
-<!-- 		<h1>Login</h1> -->
-<!-- 	</div> -->
-	
-
-<div class="row">
-
-	<div class="col-sm-4 offset-sm-2" style="background:red;">
-	a
-	</div>
-
-	<div class="col-sm-4 offset-sm-2" style="background:yellow;">
-	b
+ <div class="member">
+ 
+ <div class="row">
+	<div class="join-title col-sm-4 col-sm-offset-1">
+		<h1>Login</h1>
 	</div>
 </div>
+	
+<div class="row">
 
 
-		<form class="login-left col-sm-4 offset-sm-2">
+		<form class="col-sm-4 col-sm-offset-2">
 			<span>이메일</span>
 			<input type="text" />
 			<span>비밀번호</span>
@@ -98,14 +34,19 @@ background:#3d3d3d;
 		</form>
 
 
-		<form class="login-right col-sm-4 offset-sm-3">
+		<form class="col-sm-3 col-sm-offset-1">
 
-			
 			<div class="google-btn btn-style1">Google 로그인</div>
 			<div class="facebook-btn btn-style1">Facebook 로그인</div>
 			<div class="github-btn btn-style1">Github 로그인</div>
 			
 		</form>
+</div>
 
+
+
+<div class="lable-style1 col-sm-10 col-sm-offset-1">
+	계정이 필요하세요? 지금 회원가입을 하세요.
+</div>
 	
-<!-- </div> -->
+</div>

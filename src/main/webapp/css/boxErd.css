@@ -4,7 +4,7 @@
 	text-align: center;
 }
 
-.inner-container>div {
+#contents .container {
 	padding-bottom: 50px;
 }
 
@@ -139,4 +139,40 @@ a.preview-box {
 
 .youtube-title {
 	text-align: center;
+}
+
+
+
+
+@media (max-width: 1024px) {
+  .erd-box-list .erd-box-item{
+  	width:49%;
+  	margin-right:2%;
+  }
+  
+  .erd-box-list .erd-box-item:nth-child(3n) {
+	margin-right: 2%;
+  }
+
+  .erd-box-list .erd-box-item:nth-child(2n) {
+	margin-right: 0px;
+  }
+
+}
+
+
+@media (max-width: 767px) {
+  .erd-box-list .erd-box-item{
+  	width:100%;
+  	margin-right:0px;
+  }
+  
+  .erd-box-list .erd-box-item:nth-child(3n) {
+	margin-right: 0px;
+  }
+
+  .erd-box-list .erd-box-item:nth-child(2n) {
+	margin-right: 0px;
+  }
+
 }
