@@ -13,6 +13,7 @@
           </button>
           <a class="navbar-brand" href="/test1">ERDrawing</a>
           <a class="navbar-brand" href="/test1">Library</a>
+          <a class="navbar-brand" href="/test1">Community</a>
 
         </div>
 

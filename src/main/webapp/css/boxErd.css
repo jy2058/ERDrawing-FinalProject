@@ -1,0 +1,155 @@
+.best-erd-title {
+	display: block;
+	padding: 20px 0;
+	text-align: center;
+}
+
+.inner-container>div {
+	padding-bottom: 50px;
+}
+
+.best-erd-list {
+	
+}
+
+.inner-container {
+	
+}
+
+.erd-box-item {
+	position: relative;
+	width: 32%;
+	margin-right: 2%;
+	margin-bottom: 2%;
+	float: left;
+	border: 3px solid #000;
+	color: #000;
+}
+
+.erd-box-item:nth-child(3n) {
+	margin-right: 0px;
+}
+
+a.preview-box {
+	cursor: pointer;
+	position: relative;
+	display: block;
+	width: 100%;
+	height: 0;
+	padding-top: 56.25%;
+}
+
+.table-bg-text {
+	display: table;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	left: 0;
+	top: 0;
+	bottom: 0;
+	right: 0;
+}
+
+.bg-box {
+	position: absolute;
+	background: #fff;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	display: table;
+}
+
+.bg-box .bg-img {
+	color: #000;
+	font-size: 30px;
+	height: 100%;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.bg-box .bg-text {
+	opacity: 0;
+	background: #000;
+	color: #fff;
+	font-size: 18px;
+	height: 100%;
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+	-webkit-transition: all 0.5s ease;
+	-khtml-transition: all 0.5s ease;
+	-moz-transition: all 0.5s ease;
+	-ms-transition: all 0.5s ease;
+	-o-transition: all 0.5s ease;
+	transition: all 0.5s ease;
+}
+
+.erd-box-item:hover .bg-text {
+	opacity: 0.85;
+}
+
+.erd-box-item:hover {
+	display: block;
+	border: 3px solid #fff;
+}
+
+.description-item {
+	padding: 5px;
+	display: block !important;
+	background: #000;
+	color: #fff;
+}
+
+.mov {
+	height: 650px;
+	width: 100%;
+	background: #232323;
+	color: #fff;
+}
+
+.youtube-bg {
+	background: #fff;
+}
+
+.youtube {
+	background: rgba(114, 118, 124, 0.5) url('/image/ss123.png') repeat
+		center 0px;
+	margin: 50px 0;
+	display: table;
+	width: 100%;
+	height: 400px;
+	border-radius: 5px;
+	/* background:#666666; */
+}
+
+.youtube span {
+	display: table-cell;
+	text-align: center;
+	vertical-align: middle;
+}
+
+.youtube-btn {
+	opacity: 0.9;
+	display: block;
+	width: 200px;
+	text-align: center;
+	margin: 0 auto;
+	background: #ef1c7b;
+	padding: 10px;
+	border-radius: 4px;
+	font-weight: 500;
+	border: 3px solid #000;
+	cursor: pointer;
+}
+
+.youtube-btn:hover {
+	opacity: 1;
+}
+
+.youtube-title {
+	text-align: center;
+}
