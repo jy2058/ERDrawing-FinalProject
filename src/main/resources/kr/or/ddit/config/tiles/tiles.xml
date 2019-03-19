@@ -4,19 +4,45 @@
        
 	<tiles-definitions>
 
-        <definition name="layout" template="/WEB-INF/views/template/layout.jsp" >
+        <definition name="layoutMain" template="/WEB-INF/views/template/layoutMain.jsp" >
         	<put-attribute name="header" value="/WEB-INF/views/template/header.jsp" />
         	<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
         	<put-attribute name="content" value="" />
         </definition>
         
-        <definition name="main" extends="layout">
+        
+         <definition name="layout" template="/WEB-INF/views/template/layout.jsp" >
+        	<put-attribute name="header" value="/WEB-INF/views/template/header.jsp" />
+        	<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
+        	<put-attribute name="content" value="" />
+        </definition>
+        
+        
+        
+        
+        <definition name="main" extends="layoutMain">
         	<put-attribute name="content" value="/WEB-INF/views/main.jsp" />
         </definition>
         
-        <definition name="test2" extends="layout">
+         <definition name="test2" extends="layout">
         	<put-attribute name="content" value="/WEB-INF/views/test3.jsp" />
         </definition>
+        
+        
+        
+        <definition name="library" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/erd/library.jsp" />
+        </definition>
+        
+         <definition name="join" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/member/join.jsp" />
+        </definition>
+        
+        <definition name="login" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/member/login.jsp" />
+        </definition>
+        
+       
         
         
         

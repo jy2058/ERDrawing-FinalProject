@@ -26,17 +26,11 @@
     
 </style>
     
-    
-<div id="contents">
-	<div class="container">
-    
-	    <div id="button1">테이블 이름 가져오기</div>
-	    <div id="button2">확대/축소 초기화</div>
-	    <div id="container_Shin"></div>
-      
-    </div>
-</div>
-     
+
+    <div id="button1">테이블 이름 가져오기</div>
+    <div id="button2">확대/축소 초기화</div>
+    <div id="container_Shin"></div>
+ 
       
     <script>
         

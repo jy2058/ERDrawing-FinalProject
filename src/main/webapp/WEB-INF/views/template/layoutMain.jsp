@@ -13,11 +13,8 @@
 
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
-		
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
-<!-- <link rel="stylesheet" href="/css/bootstrap.css"> -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="/css/bootstrap.css">
 <link rel="stylesheet" href="/css/style.css">
     
     
@@ -27,14 +24,8 @@
 <body>
 
 <tiles:insertAttribute name="header"/>
-<div id="contents">
-	<div class="container">
-		<tiles:insertAttribute name="content"/>
-	</div>
-</div>
+<tiles:insertAttribute name="content"/>
 <tiles:insertAttribute name="footer"/>
 
-
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 </body>
 </html>

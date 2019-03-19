@@ -57,3 +57,54 @@ li {
 	text-align: center;
 	font-size: 13px;
 }
+
+
+
+
+/* 버튼 스타일 */
+
+.btn-style1{
+	opacity: 0.9;
+	display: block;
+	width: 200px;
+	text-align: center;
+	margin: 0 auto;
+	background: #ef1c7b;
+	padding: 10px;
+	border-radius: 4px;
+	font-size:16px;
+	font-weight: 500;
+	border: 1px solid #000;
+	cursor: pointer;
+}
+
+.btn-style1:hover{
+	opacity:1;
+}
+
+
+
+
+
+/* 멤버 스타일 */
+
+.member{
+	max-width:600px;
+	width:100%;
+	margin:0 auto;
+}
+	
+	
+.member span{
+	display:block;
+	font-size:16px;
+	font-weight:400;
+}
+
+.member input{
+	height:40px;
+	width:100%;
+	
+	margin-top:5px;
+	margin-bottom:20px;
+}

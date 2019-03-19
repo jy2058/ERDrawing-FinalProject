@@ -18,4 +18,24 @@ public class TestController {
 	}
 	
 	
+	@RequestMapping(path="/library")
+	public String library(){
+		return "library";
+	}
+	
+	
+	@RequestMapping(path="/join")
+	public String join(){
+		return "join";
+	}
+	
+	
+	@RequestMapping(path="/login")
+	public String login(){
+		return "login";
+	}
+	
+
+	
+	
 }
