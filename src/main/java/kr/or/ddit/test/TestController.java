@@ -35,7 +35,14 @@ public class TestController {
 		return "login";
 	}
 	
-
+	@RequestMapping(path="/mypage")
+	public String mypage(){
+		return "mypage";
+	}
 	
+	@RequestMapping(path="/modify")
+	public String modify(){
+		return "modify";
+	}
 	
 }

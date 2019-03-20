@@ -42,6 +42,14 @@
         	<put-attribute name="content" value="/WEB-INF/views/member/login.jsp" />
         </definition>
         
+        <definition name="mypage" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/member/mypage.jsp" />
+        </definition>
+        
+        <definition name="modify" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/member/modify.jsp" />
+        </definition>
+        
        
         
         
