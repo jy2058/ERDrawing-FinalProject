@@ -45,4 +45,11 @@ public class TestController {
 		return "modify";
 	}
 	
+	
+	@RequestMapping(path="/team")
+	public String team(){
+		return "team";
+	}
+	
+	
 }

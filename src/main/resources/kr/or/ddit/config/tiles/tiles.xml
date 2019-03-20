@@ -48,6 +48,11 @@
         	<put-attribute name="content" value="/WEB-INF/views/member/mypage.jsp" />
         </definition>
         
+         <definition name="team" extends="layoutMain">
+        	<put-attribute name="content" value="/WEB-INF/views/member/team.jsp" />
+        </definition>
+        
+        
         <definition name="modify" extends="layout">
         	<put-attribute name="content" value="/WEB-INF/views/member/modify.jsp" />
         </definition>
