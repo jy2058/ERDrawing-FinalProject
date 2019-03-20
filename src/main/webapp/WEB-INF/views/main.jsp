@@ -9,9 +9,8 @@
 	<div class="mov">
 		<div class="container">
 
-
 			123
-			<div class="youtube-title"><h2>최종 프로젝트가 시작되었습니다.한수입니다. 머지완료</h2></div>
+			<div class="youtube-title"><h2>최종 프로젝트가 시작되었습니다.한수입니다. 수정입니다.</h2></div>
 			횬지	
 			00
 			<div class="youtube-bg"><div class="youtube"><span><img width="200px" src="/image/youtube.png" /></span></div></div>
