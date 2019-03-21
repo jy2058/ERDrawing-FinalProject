@@ -316,7 +316,7 @@
         
         //스크롤 확대 축소
         
-        var scaleBy = 1.01;
+        var scaleBy = 1.05;
       stage.on('wheel', e => {
         e.evt.preventDefault();
         var oldScale = stage.scaleX();
