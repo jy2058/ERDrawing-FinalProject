@@ -2,7 +2,7 @@ package kr.or.ddit.member.model;
 
 import java.util.Date;
 
-public class memberVo {
+public class MemberVo {
 	private String memId;  			//회원아이디
 	private String memMail;			//이메일
 	private String memPass;			//비밀번호
