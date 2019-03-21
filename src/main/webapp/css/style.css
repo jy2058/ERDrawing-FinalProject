@@ -68,7 +68,13 @@ input{
 	
 }
 
+.left-menu .navbar-brand{
+	padding:15px 30px;
+}
 
+.left-menu .navbar-brand:nth-child(1){
+	padding-left:15px;
+}
 
 
 .shinys{
@@ -228,6 +234,12 @@ input{
   .col-shinys-offset{
   	margin-left:0;
   }
+  
+  
+	/* 	왼쪽메뉴 변경 */
+	.left-menu .navbar-brand{
+		padding:15px 10px;
+	}
 
 }
 
