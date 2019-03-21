@@ -30,10 +30,7 @@ public class TestController {
 	}
 	
 	
-	@RequestMapping(path="/login")
-	public String login(){
-		return "login";
-	}
+
 	
 	@RequestMapping(path="/mypage")
 	public String mypage(){

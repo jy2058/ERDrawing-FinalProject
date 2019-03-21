@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <link rel="stylesheet" href="/css/member/login.css">
 
 <style>
@@ -30,11 +31,11 @@ background:#4B4B4B;
 <div class="row">
 
 
-		<form class="col-sm-4 col-sm-offset-2" action="/member/login" method="post">
+		<form id="frm" class="col-sm-4 col-sm-offset-2" action="/login/login" method="post">
 			<span>이메일</span>
 			<input type="text" id="memId" name="memId"/>
 			<span>비밀번호</span>
-			<input type="text" />
+			<input type="password" id="memPass" name="memPass"/>
 			<div class="submit-btn btn-style1">로그인</div> <div class="btn-style3">비밀번호를 잊으셨나요?</div>
 		</form>
 
@@ -46,6 +47,7 @@ background:#4B4B4B;
 			<div class="github-btn btn-style1" >Github 로그인</div>
 			
 		</form>
+		
 </div>
 
 
@@ -58,9 +60,23 @@ background:#4B4B4B;
 
 <script >	
 	$(document).ready(function () {
+		<c:if test="${msg != null}">
+		alert("${msg}");
+		</c:if>
+		
 		$(".submit-btn").on("click",function(){
+			if ($("#memId").val().trim() == "") {
+				alert("ID를 입력해주세요");
+				$("#memId").focus();
+				return false;
+			}
+			if ($("#memPass").val().trim() == "") {
+				alert("비밀번호를 입력해주세요");
+				$("#memPass").focus();
+				return false;
+			}
 			
-			
+			$("#frm").submit();
 		})
 	});
 	

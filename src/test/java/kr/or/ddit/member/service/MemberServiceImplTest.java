@@ -2,13 +2,22 @@ package kr.or.ddit.member.service;
 
 import static org.junit.Assert.*;
 
+import javax.annotation.Resource;
+
 import org.junit.Test;
 
-public class MemberServiceImplTest {
+import kr.or.ddit.test.logicTestConfig;
 
+public class MemberServiceImplTest extends logicTestConfig{
+	@Resource(name="memberService")
+	private IMemberService memberService;
+	
 	@Test
 	public void test() {
-		fail("Not yet implemented");
+	//	assertNotNull(memberService.selectMember("user212"));
+		assertNull(memberService.selectMember("user212"));
+		assertEquals("윤한수",memberService.selectMember("user1").getMemNm());
+		assertEquals(null,memberService.selectMember("user1333"));
 	}
 
 }

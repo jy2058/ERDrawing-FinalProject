@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <nav id="header" class="navbar navbar-inverse navbar-fixed-top">
       <div class="container">
 
@@ -22,15 +22,27 @@
           </ul>
 
         </div>
-
-
+  ${memberVo }
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <!-- <li class="active"><a href="#">ERD생성</a></li> -->
             <li><a href="/test2">ERD생성</a></li>
-            <li><a href="/login">로그인</a></li>
-            <li><a href="/join">회원가입</a></li>
-            <li><a href="/mypage">마이페이지</a></li>
+          
+            <c:choose>
+            	<c:when test="${memberVo.memId == null }">
+            		<li><a href="/login/login">로그인</a></li>
+            		<li><a href="/join">회원가입</a></li>
+            	</c:when>
+            	<c:otherwise>
+            		<li><a href="/mypage">마이페이지-Img</a></li>
+            		<li><a href="/message">메세지</a></li>
+            		<li><a href="/logout">로그아웃</a></li>
+            	</c:otherwise>
+            
+            </c:choose>
+            
+           <li><a href="">검색</a></li>
+            
           </ul>
         </div><!--/.nav-collapse -->
 
