@@ -11,12 +11,15 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="/">ERDrawing</a>
-          <a class="navbar-brand" href="/library">Library</a>
-          <div class="navbar-brand communityHover"><a href="/">Community</a>
-          <%@ include file="/WEB-INF/views/template/module/communityMenu.jsp"%>
-          </div>
           
+          <ul class="navbar-brand">
+          	<li><a href="/">ERDrawing</a></li>
+          	<li><a href="/library">Library</a></li>
+          	<li><a href="/">Community</a>
+          		<%@ include file="/WEB-INF/views/template/module/communityMenu.jsp"%>
+          	</li>
+         
+          </ul>
 
         </div>
 
