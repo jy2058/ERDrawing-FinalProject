@@ -30,9 +30,9 @@ background:#4B4B4B;
 <div class="row">
 
 
-		<form class="col-sm-4 col-sm-offset-2">
+		<form class="col-sm-4 col-sm-offset-2" action="/member/login" method="post">
 			<span>이메일</span>
-			<input type="text" />
+			<input type="text" id="memId" name="memId"/>
 			<span>비밀번호</span>
 			<input type="text" />
 			<div class="submit-btn btn-style1">로그인</div> <div class="btn-style3">비밀번호를 잊으셨나요?</div>
@@ -42,8 +42,8 @@ background:#4B4B4B;
 		<form class="col-sm-3 col-sm-offset-1">
 
 			<div class="google-btn btn-style1">Google 로그인</div>
-			<div class="facebook-btn btn-style1">Facebook 로그인</div>
-			<div class="github-btn btn-style1">Github 로그인</div>
+			<div class="facebook-btn btn-style1">KaKao 로그인</div>
+			<div class="github-btn btn-style1" >Github 로그인</div>
 			
 		</form>
 </div>
@@ -55,3 +55,14 @@ background:#4B4B4B;
 </div>
 	
 </div>
+
+<script >	
+	$(document).ready(function () {
+		$(".submit-btn").on("click",function(){
+			
+			
+		})
+	});
+	
+</script>
+
