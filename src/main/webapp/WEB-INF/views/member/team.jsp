@@ -5,19 +5,26 @@
 <link rel="stylesheet" href="/css/member/modify.css">
 <link rel="stylesheet" href="/css/member/mypage.css">
 
+<style>
+.profile-info{
+	bottom:-130px;
+}
+.memberId{
+	margin-bottom:10px;
+}
+</style>
 
 <div id="contents">
 	
 	<div class="my-bg">
 		<div class="container">
 			<div class="inner-container">
-				<a href="/modify" class="btn-style2">프로필 수정</a>
+				<a href="#" class="btn-style2">Edit Team</a>
 			</div>	
 				
 				
 			<div class="profile-info">
-				<div class="memberId">아이디 출력 위치</div>
-				<div class="memberEmail">이메일 출력 위치</div>
+				<div class="memberId">팀 이름 출력 위치</div>
 				<div><div class="sampleImg"><div class="exText">Profile Image</div></div></div>
 			</div>
 		</div>
@@ -41,9 +48,21 @@
 				</div>
 			</div>
 	
+	
+			<div class="line-title">
+				<h2 class="page-title">TEAM MEMBER</h2>
+			</div>
+			
+			<div class="row">
+				<div style="background:#232323; color:#fff; height:100px; line-height:100px; padding-left:20px; font-size:20px; font-weight:600;">
+					팀 멤버 리스트 출력위치 (멤버 삭제 기능)
+				</div>
+			</div>
+			
+			
 			
 			<div class="line-title">
-				<h2 class="page-title">MY-ERD</h2>
+				<h2 class="page-title">TEAM ERD</h2>
 				<a class="add-btn1">+</a>
 			</div>
 			

@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<link rel="stylesheet" href="/css/member.css">
+<link rel="stylesheet" href="/css/member/login.css">
 
 <style>
 #contents{
@@ -11,6 +11,11 @@ background:#4B4B4B;
 	margin-top:50px;
 	margin-bottom:50px;
 	
+}
+
+.join-btn{
+	margin-left:5px;
+	margin-right:5px;
 }
 </style>
 
@@ -46,7 +51,7 @@ background:#4B4B4B;
 
 
 <div class="lable-style1 col-sm-10 col-sm-offset-1">
-	계정이 필요하세요? 지금 회원가입을 하세요.
+	계정이 필요하세요? <div class="join-btn btn-style3">지금 회원가입을 하세요.</div>
 </div>
 	
 </div>

@@ -24,7 +24,7 @@
             <li><a href="/test2">ERD생성</a></li>
             <li><a href="/login">로그인</a></li>
             <li><a href="/join">회원가입</a></li>
-            <li><a href="/test2">ERD퀵 검색</a></li>
+            <li><a href="/mypage">마이페이지</a></li>
           </ul>
         </div><!--/.nav-collapse -->
 
