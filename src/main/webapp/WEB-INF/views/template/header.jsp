@@ -13,7 +13,10 @@
           </button>
           <a class="navbar-brand" href="/">ERDrawing</a>
           <a class="navbar-brand" href="/library">Library</a>
-          <a class="navbar-brand" href="/">Community</a>
+          <div class="navbar-brand communityHover"><a href="/">Community</a>
+          <%@ include file="/WEB-INF/views/template/module/communityMenu.jsp"%>
+          </div>
+          
 
         </div>
 

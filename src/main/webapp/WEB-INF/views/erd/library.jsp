@@ -44,7 +44,7 @@ color:#000;
 				  				&nbsp;Image${idx }
 				  			</div>
 			  				<div class="table-bg-text">
-			  					<div class="bg-text">
+			  					<div class="bg-text shinys">
 			  						&nbsp;Image${idx }
 			  					</div>
 				  			</div>
