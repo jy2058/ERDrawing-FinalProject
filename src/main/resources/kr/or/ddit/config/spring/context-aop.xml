@@ -6,7 +6,7 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd">
 
 
-	<bean id="LoggingAdvice" class="kr.or.ddit.aop.LoggingAdvice"/>
+	<bean id="LoggingAdvice" class="kr.or.ddit.util.aop.LoggingAdvice"/>
 	
 	<aop:config>
 											<!-- (패키지 ) -->
