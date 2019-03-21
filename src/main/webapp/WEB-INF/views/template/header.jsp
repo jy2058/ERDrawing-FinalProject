@@ -12,10 +12,10 @@
             <span class="icon-bar"></span>
           </button>
           
-          <ul class="navbar-brand">
-          	<li><a href="/">ERDrawing</a></li>
-          	<li><a href="/library">Library</a></li>
-          	<li><a href="/">Community</a>
+          <ul class="left-menu">
+          	<li class="navbar-brand"><a href="/">ERDrawing</a></li>
+          	<li class="navbar-brand"><a href="/library">Library</a></li>
+          	<li class="navbar-brand communityHover"><a href="/">Community</a>
           		<%@ include file="/WEB-INF/views/template/module/communityMenu.jsp"%>
           	</li>
          

@@ -1,4 +1,4 @@
-package kr.or.ddit.aop;
+package kr.or.ddit.util.aop;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;

@@ -15,7 +15,7 @@
 			<!-- <mvc:exclude-mapping path=""/> -->
 			
 			<!-- 클래스 정보 입력 -->
-			<bean class="kr.or.ddit.interceptor.ProfileInterceptor"></bean>
+			<bean class="kr.or.ddit.util.interceptor.ProfileInterceptor"></bean>
 			
 		</mvc:interceptor>
 	</mvc:interceptors>
