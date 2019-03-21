@@ -36,4 +36,4 @@
 </div>
 
 
-<%@ include file="/WEB-INF/views/erd/erdadd.jsp"%>
+

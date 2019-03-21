@@ -7,6 +7,8 @@
         <definition name="layoutMain" template="/WEB-INF/views/template/layoutMain.jsp" >
         	<put-attribute name="header" value="/WEB-INF/views/template/header.jsp" />
         	<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
+        	<put-attribute name="module" value="/WEB-INF/views/template/module.jsp" />
+        	
         	<put-attribute name="content" value="" />
         </definition>
         
@@ -14,6 +16,8 @@
          <definition name="layout" template="/WEB-INF/views/template/layout.jsp" >
         	<put-attribute name="header" value="/WEB-INF/views/template/header.jsp" />
         	<put-attribute name="footer" value="/WEB-INF/views/template/footer.jsp" />
+        	<put-attribute name="module" value="/WEB-INF/views/template/module.jsp" />
+
         	<put-attribute name="content" value="" />
         </definition>
         
