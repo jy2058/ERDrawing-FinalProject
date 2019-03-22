@@ -9,6 +9,8 @@
   <typeAliases>
 <!--   	<typeAlias alias="userVo" type="kr.or.ddit.user.model.UserVO"/> -->
 	<typeAlias alias="memberVo" type="kr.or.ddit.member.model.MemberVo"/>
+	<typeAlias alias="erdVo" type="kr.or.ddit.erd.model.ErdVo"/> 
+	
 	<typeAlias alias="boardVo" type="kr.or.ddit.post.model.BoardVo"/>
 	<typeAlias alias="postVo" type="kr.or.ddit.post.model.PostVo"/>
 	<typeAlias alias="pageVo" type="kr.or.ddit.util.model.PageVo"/>
@@ -31,5 +33,6 @@
 <!--     <mapper resource="kr/or/ddit/config/db/mapper/user.xml"/> -->
  			<mapper resource="kr/or/ddit/config/db/mapper/member.xml"/>
  			<mapper resource="kr/or/ddit/config/db/mapper/post.xml"/>
+ 				<mapper resource="kr/or/ddit/config/db/mapper/erd.xml"/>
   </mappers>
 </configuration>

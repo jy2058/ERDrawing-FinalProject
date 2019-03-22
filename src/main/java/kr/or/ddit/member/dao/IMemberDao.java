@@ -24,4 +24,14 @@ public interface IMemberDao {
 	 * Method 설명 : 특정 사용자 조회
 	 */
 	MemberVo selectMember(String memId);
+	
+	/**
+	 * Method : insertMember
+	 * 작성자 : PC02
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 사용자 등록
+	 */
+	int insertMember(MemberVo vo);
 }
