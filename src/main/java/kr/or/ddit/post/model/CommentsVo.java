@@ -2,7 +2,7 @@ package kr.or.ddit.post.model;
 
 import java.util.Date;
 
-public class commentsVo {
+public class CommentsVo {
 	private int cmtNo;     		//댓글번호
 	private Date cmtRegDt; 		//댓글 작성 날짜
 	private String cmtContent;  //내용

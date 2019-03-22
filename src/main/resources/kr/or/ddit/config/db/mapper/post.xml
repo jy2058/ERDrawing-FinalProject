@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="post">
+  
+  <!-- 게시판 전체 조회 -->
+  <select id="getAllBoard" resultType="boardVo">
+    select * 
+    from board
+  </select>
+  
+  <!-- 특정 게시판 조회 -->
+  <select id="getSelectBoard" resultType="boardVo" parameterType="String">
+     select *
+     from board
+     where boardNo = #{boardNo}
+  </select>
+  
+  <!-- 게시판 이름 조회 -->
+  <select parameterType="String" resultType="String" id="getSelectBoardNm"> 
+  	select boardNm from board where boardNo = #{boardNo}
+  </select>
+  
+  <!-- 게시글 전체 조회 -->
+  <select id="getAllPost" resultType="postVo" parameterType="String">
+    select * 
+    from post
+    where boardNo = #{boardNo}
+  </select>
+  
+  <!-- 특정 게시글 조회 -->
+  <select id="getSelectPost" resultType="postVo" parameterType="String">
+    select /*+INDEX(post PK_POST)*/ *
+    from post
+    where postNo = #{postNo}
+  </select>
+  
+	<!-- 게시글 페이징 조회 -->
+	<select id="selectPostPagingList" resultType="postVo" parameterType="pageVo">
+		<!-- select *
+		from
+		(select a.*, rownum rn
+		from (select postNo, PostTitle, PostGn, BoardNo, writerId,
+		trim(PostDelFlag) as PostDelFlag, PostRegDt,
+		level FROM post
+		where BoardNo = #{boardNo} START WITH PARENTPOSTNO IS NULL CONNECT BY
+		PARENTPOSTNO = prior POSTNO order SIBLINGS By POSTGN desc, POSTNO) a) a
+		where rn between ((#{pageNo}-1)*10)+1 and (#{pageNo})*10 -->
+		
+		select *
+		from
+			(select a.*, rownum rn
+			 from
+				(select post.*
+				 from post
+				 where boardNo=#{boardNo}
+				 order by boardNo) a) a
+		where rn between (#{page}-1) * #{pageSize} +1 and (#{page} * #{pageSize})
+	</select>
+	
+	<!-- 전체 게시글 수 조회 -->
+	<select id="getPostCnt" resultType="Integer" parameterType="String">
+		select count (*)
+		from post
+		where boardNo = #{boardNo}
+	</select>
+  
+  <!-- 게시글 생성 -->
+  <insert id="insertPost" parameterType="postVo">
+	insert into post (postNo, postContent, postRegDt, postGn, postDelFlag, 
+	                  boardNo, parentPostNo, writerId, postTitle)
+	values (seq_postNo.nextval, #{postContent}, sysdate, NVL(#{parentPostNo,jdbcType=VARCHAR}, SEQ_POST.CURRVAL), 'T',
+	        #{boardNo}, #{parentPostNo,jdbcType=VARCHAR}, #{writerId}, #{postTitle})
+  </insert>	
+  
+  <!-- 게시글 수정 -->
+  <update id="updatePost" parameterType="postVo">
+  	 update post
+  	 set postTitle = #{postTitle},
+  	     postContent = #{postContent}
+  	 where postNo = #{postNo}  
+  </update>	
+  
+  <!-- 게시글 삭제 -->
+  <delete id="deletePost" parameterType="String">
+	update post
+  	   set postDelFlag = 'F'
+  	where postNo = #{postNo}
+  </delete>
+  
+</mapper>
+

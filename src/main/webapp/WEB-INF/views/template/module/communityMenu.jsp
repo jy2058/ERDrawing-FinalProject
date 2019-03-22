@@ -3,8 +3,8 @@
 
 <div class="communityMenu shinys">
 	<ul>
-		<li><a href="">공지사항</a></li>
-		<li><a href="">자유게시판</a></li>
-		<li><a href="">질문게시판</a></li>
+		<li><a href="${cp}/post/postList?boardNo=1">공지사항</a></li>
+		<li><a href="${cp}/post/postList?boardNo=2">자유게시판</a></li>
+		<li><a href="${cp}/post/postList?boardNo=3">질문게시판</a></li>
 	</ul>
 </div>

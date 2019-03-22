@@ -11,6 +11,7 @@ public class PostVo {
 	private int boardNo;          //게시판번호
 	private int parentPostNo;     //부모게시글번호
 	private String writerId;      //작성자아이디
+	private String postTitle;     //게시글제목
 	
 }
 

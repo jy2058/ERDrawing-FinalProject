@@ -1,6 +1,6 @@
 package kr.or.ddit.util.model;
 
-public class pageVo {
+public class PageVo {
     private int pageSize; // 게시 글 수
     private int firstPageNo; // 첫 번째 페이지 번호
     private int prevPageNo; // 이전 페이지 번호
@@ -17,10 +17,10 @@ public class pageVo {
         return pageSize;
     }
 
-   public pageVo() {
+   public PageVo() {
 }
 
-	public pageVo(int pageSize, int pageNo) {
+	public PageVo(int pageSize, int pageNo) {
 		super();
 		this.pageSize = pageSize;
 		this.pageNo = pageNo;
