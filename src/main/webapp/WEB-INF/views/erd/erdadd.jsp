@@ -60,10 +60,10 @@ color:#fff;
 <div class="background-etc">
 	<div class="erd-add">
 		<h1 class="erd-add h1">Create ERD</h1>
-		<form action="">
+		<form action="/erd/erdAdd" id="erdAddFrm" method="post">
 			<div class="input-box">
 				<label>제목</label>
-				<input type="text" placeholder="제목">
+				<input type="text" id="title" name="erdTitle" placeholder="제목">
 			</div>
 			<div class="input-box">
 				<label>태그</label>
@@ -80,11 +80,23 @@ color:#fff;
 						<input type="radio">
 						<label>비공개</label>
 					</div>
+					<div>
+						<input type="radio">
+						<label>팀</label>
+					</div>
 				</div>
+			</div>
+			<div class="input-box">
+				<label>태그</label>
+				<select>
+					<option value="">가입된 팀 목록 나올 거야1</option>
+					<option value="">가입된 팀 목록 나올 거야2</option>
+					<option value="">가입된 팀 목록 나올 거야3</option>
+				</select>
 			</div>
 		</form>
 		<div class="cancle-btn btn-style1">취소</div>
-		<div class="cancle-btn btn-style1">만들기</div>
+		<div class="cancle-btn btn-style1" id="erdAdd">만들기</div>
 	</div>
 </div>
 
@@ -93,7 +105,7 @@ color:#fff;
 <script>
 
 	$(document).ready(function(){
-		//생성버튼 클릭 시
+		//ERD 생성버튼 클릭 시 화면 띄우기
 		$("#myAdd").on("click", function(){
 			var height = $(document).height();
 // 			$(".background-etc").addClass("bg-on");
@@ -101,10 +113,15 @@ color:#fff;
 									  "height" : height + "px"});
 		});
 		
-		// 취소버튼 클릭 시
+		// 취소버튼 클릭 시 화면 띄우기
 		$(".cancle-btn").on("click", function(){
 			$(".background-etc").css("display","none");
 // 			$(".background-etc").removeClass("bg-on");
+		});
+		
+		$("#erdAdd").on("click", function(){
+			//alert($("#title").val());
+			$("#erdAddFrm").submit();
 		});
 	});
 </script>
