@@ -24,5 +24,7 @@ public interface IMemberService {
 	 * Method 설명 : 특정 사용자 조회
 	 */
 	MemberVo selectMember(String memId);
+	
+	int insertMember(MemberVo vo);
 
 }

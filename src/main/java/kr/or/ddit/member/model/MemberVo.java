@@ -21,7 +21,15 @@ public class MemberVo {
 		
 	}
 	
-	
+	public MemberVo(String memId, String memMail, String memPass, String memNm, String memLang) {
+		this.memId = memId;
+		this.memMail = memMail;
+		this.memPass = memPass;
+		this.memNm = memNm;
+		this.memLang = memLang;
+	}
+
+
 	public String getMemId() {
 		return memId;
 	}

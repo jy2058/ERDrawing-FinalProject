@@ -24,6 +24,11 @@ public class MemberDaoImpl implements IMemberDao{
 	public MemberVo selectMember(String memId) {
 		return sqlSession.selectOne("member.selectMember",memId);
 	}
+
+	@Override
+	public int insertMember(MemberVo vo) {
+		return sqlSession.insert("member.insertMember",vo);
+	}
 	
 
 }

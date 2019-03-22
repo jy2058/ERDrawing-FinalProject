@@ -10,6 +10,7 @@ import org.junit.Test;
 
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.test.logicTestConfig;
+import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
 
 public class MemberDaoImplTest extends logicTestConfig{
 	
@@ -27,6 +28,15 @@ public class MemberDaoImplTest extends logicTestConfig{
 		MemberVo userid= memberDao.selectMember("user1");
 		assertNotNull(userid);
 		assertEquals("윤한수", userid.getMemNm());
+	}
+	
+	@Test
+	public void testInsertMember() {
+		String pass = KISA_SHA256.encrypt("test");
+		MemberVo vo = new MemberVo("test13","testmail", pass, "테스트", "kr");
+		int cnt = memberDao.insertMember(vo);
+		assertNotNull(cnt);
+		assertEquals(1, cnt);
 	}
 
 }

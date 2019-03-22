@@ -30,7 +30,7 @@ background:#4B4B4B;
 	
 <div class="row">
 
-		<form id="erdFrm" class="col-sm-4 col-sm-offset-2" action="/login" method="post">
+		<form id="erdFrm" class="col-sm-4 col-sm-offset-2" action="${cp }/login" method="post">
 			<span>이메일</span>
 			<input type="text" id="memId" name="memId"/>
 			<span>비밀번호</span>
@@ -41,7 +41,7 @@ background:#4B4B4B;
 
 		<form id="apiFrm" class="col-sm-3 col-sm-offset-1">
 
-			<div class="google-btn btn-style1"><a href="${google_url}">Google 로그인</a></div>
+			<a href="${google_url}"><div class="google-btn btn-style1">Google 로그인</div></a>
 			<div class="facebook-btn btn-style1">KaKao 로그인</div>
 			<div class="github-btn btn-style1" >Github 로그인</div>
 			

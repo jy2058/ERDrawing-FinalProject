@@ -4,15 +4,48 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="member">
 	<!-- 전체 사용자 조회 -->
-  <select id="getAllMember" resultType="memberVo">
-    select * from member
-  </select>
-  
-  <!-- 특정 사용자 조회 -->
-  <select id="selectMember" resultType="memberVo" parameterType="String">
-    select * from member 
-    where memId = #{memId}
-  </select>
-  
-	
+	<select id="getAllMember" resultType="memberVo">
+		select * from member
+	</select>
+
+	<!-- 특정 사용자 조회 -->
+	<select id="selectMember" resultType="memberVo" parameterType="String">
+		select * from member
+		where memId = #{memId}
+	</select>
+
+	<insert id="insertMember" parameterType="memberVo">
+
+		insert into member (
+				memid,
+				mememail,
+				mempass,
+				memcancelflag,
+				memimg,
+				memauth,
+				memnm,
+				memintro,
+				memlang,
+				memtel,
+				memperiod,
+				menindt,
+				memblackflag
+		) values (
+				#{memId},
+				#{memMail},
+				#{memPass},
+				'f',
+				#{memImg, jdbcType=VARCHAR},
+				'f',
+				#{memNm},
+				#{memIntro, jdbcType=VARCHAR},
+				#{memLang},
+				#{memTel, jdbcType=VARCHAR},
+				#{memPeriod, jdbcType=VARCHAR},
+				sysdate,
+				'f'
+		)
+	</insert>
+
+
 </mapper>

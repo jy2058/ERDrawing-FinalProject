@@ -31,13 +31,13 @@
             <c:choose>
             
             	<c:when test="${SESSION_MEMBERVO == null }">
-            		<li><a href="/login">로그인</a></li>
-            		<li><a href="/join">회원가입</a></li>
+            		<li><a href="${cp }/login">로그인</a></li>
+            		<li><a href="${cp }/join">회원가입</a></li>
             	</c:when>
             	<c:otherwise>
             		<li><a href="/mypage">마이페이지-Img</a></li>
             		<li><a href="/message">메세지</a></li>
-            		<li><a href="/logout">로그아웃</a></li>
+            		<li><a href="${cp }/logout">로그아웃</a></li>
             	</c:otherwise>
             
             </c:choose>
