@@ -31,7 +31,7 @@ background:#4B4B4B;
 <div class="row">
 
 
-		<form id="frm" class="col-sm-4 col-sm-offset-2" action="/login/login" method="post">
+		<form id="frm" class="col-sm-4 col-sm-offset-2" action="/login" method="post">
 			<span>이메일</span>
 			<input type="text" id="memId" name="memId"/>
 			<span>비밀번호</span>
@@ -62,9 +62,10 @@ background:#4B4B4B;
 	$(document).ready(function () {
 		
 	
-		<c:if test="${msg != null}">
+		<c:if  test="${msg != null}">
 		alert("${msg}");
-		</c:if>
+	</c:if>
+  		
 		
 		$(".submit-btn").on("click",function(){
 			if ($("#memId").val().trim() == "") {

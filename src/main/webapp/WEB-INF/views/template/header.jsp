@@ -31,7 +31,7 @@
             <c:choose>
             
             	<c:when test="${SESSION_MEMBERVO == null }">
-            		<li><a href="/login/login">로그인</a></li>
+            		<li><a href="/login">로그인</a></li>
             		<li><a href="/join">회원가입</a></li>
             	</c:when>
             	<c:otherwise>
