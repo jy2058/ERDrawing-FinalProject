@@ -97,7 +97,8 @@ public class LoginController {
 		logger.debug("=======f2{}",person.getBirthday());
 		logger.debug("=======f3{}",person.getAccountEmail());
 		logger.debug("=======f3{}",person.getEmailAddresses());
-		logger.debug("=======f3{}",person.getEmails().size());
+		
+		logger.debug("=======f3{}",person.toString());
 		
 		
 /*		
