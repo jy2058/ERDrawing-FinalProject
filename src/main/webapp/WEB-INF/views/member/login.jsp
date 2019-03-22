@@ -30,8 +30,7 @@ background:#4B4B4B;
 	
 <div class="row">
 
-
-		<form id="frm" class="col-sm-4 col-sm-offset-2" action="/login" method="post">
+		<form id="erdFrm" class="col-sm-4 col-sm-offset-2" action="/login" method="post">
 			<span>이메일</span>
 			<input type="text" id="memId" name="memId"/>
 			<span>비밀번호</span>
@@ -40,16 +39,15 @@ background:#4B4B4B;
 		</form>
 
 
-		<form class="col-sm-3 col-sm-offset-1">
+		<form id="apiFrm" class="col-sm-3 col-sm-offset-1">
 
-			<div class="google-btn btn-style1">Google 로그인</div>
+			<div class="google-btn btn-style1"><a href="${google_url}">Google 로그인</a></div>
 			<div class="facebook-btn btn-style1">KaKao 로그인</div>
 			<div class="github-btn btn-style1" >Github 로그인</div>
 			
 		</form>
 		
 </div>
-
 
 
 <div class="lable-style1 col-sm-10 col-sm-offset-1">
@@ -66,7 +64,7 @@ background:#4B4B4B;
 		alert("${msg}");
 	</c:if>
   		
-		
+		//로그인버튼 클릭시
 		$(".submit-btn").on("click",function(){
 			if ($("#memId").val().trim() == "") {
 				alert("ID를 입력해주세요");
@@ -79,8 +77,11 @@ background:#4B4B4B;
 				return false;
 			}
 			
-			$("#frm").submit();
+			$("#erdFrm").submit();
 		});
+		
+
+		
 	});
 	
 </script>

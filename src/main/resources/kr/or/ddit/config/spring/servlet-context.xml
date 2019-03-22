@@ -96,6 +96,18 @@
 	 		</bean>
 	 	</mvc:interceptor>
 	 </mvc:interceptors>
+	 
+	 <!-- google Class Bean설정 추가 -->
+<bean id="googleConnectionFactory"
+	class="org.springframework.social.google.connect.GoogleConnectionFactory">
+	<constructor-arg value="343565421972-mitpc1mef7hl78obh5d43q8fkodj9g18.apps.googleusercontent.com" />
+	<constructor-arg value="AIzaSyCUl2xo220lqtglAQh1FBeyzTJFTRABeLM" />
+</bean>
+<bean id="googleOAuth2Parameters" class="org.springframework.social.oauth2.OAuth2Parameters">
+	<property name="scope" value="https://www.googleapis.com/auth/plus.login" />
+	<property name="redirectUri" value="http://localhost/logins" />
+</bean>
+	 
 	
 </beans>
 

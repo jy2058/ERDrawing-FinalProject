@@ -7,6 +7,7 @@ import java.util.Date;
 public class ErdHistVo {
 	private int erdHistNo;			//erd내역번호
 	private int erdNo;				//erd번호
+	private String erdTitle;		//ERD제목
 	private Date erdDt;				//생성날짜
 	private String erdIsVisible;	//기본값 T   (스냅샷을 한 뒤에 F로 변경)
 	private String snapImg;			//스냅샷이미지경로
