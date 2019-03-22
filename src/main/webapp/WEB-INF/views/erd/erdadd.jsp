@@ -1,5 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
     
 
 <style>
@@ -73,21 +72,23 @@ color:#fff;
 				<label>공유</label>
 				<div>
 					<div>
-						<input type="radio">
+						<input type="radio" name="erdScope" value="public" checked="checked">
 						<label>공개</label>
 					</div>
 					<div>
-						<input type="radio">
+						<input type="radio" name="erdScope" value="private">
 						<label>비공개</label>
 					</div>
 					<div>
-						<input type="radio">
+						<input type="radio" name="erdScope" value="team">
 						<label>팀</label>
 					</div>
 				</div>
 			</div>
+			
+			<!-- 팀 라디오 버튼 선택 시 나타나야 함 -->
 			<div class="input-box">
-				<label>태그</label>
+				<label>팀</label>
 				<select>
 					<option value="">가입된 팀 목록 나올 거야1</option>
 					<option value="">가입된 팀 목록 나올 거야2</option>
