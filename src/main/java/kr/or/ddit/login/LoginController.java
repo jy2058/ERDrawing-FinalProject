@@ -29,29 +29,19 @@ public class LoginController {
 	}
 
 	@RequestMapping(path = { "/login" }, method = { RequestMethod.POST })
-	public String Login(MemberVo vo, HttpSession session, RedirectAttributes ra) {
+	public String Login(MemberVo vo, HttpSession session,RedirectAttributes ra) { 
+		MemberVo checkMemVo = memberService.selectMember(vo.getMemId());
 
-		logger.debug("===memVowwww {} ", memberService.selectMember(vo.getMemId()));
-
-			MemberVo memberVo = memberService.selectMember(vo.getMemId());
-			if(memberVo!=null){
-			if(!memberVo.getMemId().equals(vo.getMemId())){
-				ra.addAttribute("msg", "Id를 다시 확인해 주세요");
-				return "login";
-			}
-			if (memberVo.getMemId().equals(vo.getMemId())
-					&& memberVo.getMemPass().equals(KISA_SHA256.encrypt(vo.getMemPass()))) {
-				session.setAttribute("memberVo", memberVo);
-				return "main";
-			} else {
-				ra.addAttribute("msg", "PassWord를 다시 확인해 주세요");
-				return "login";
-			
-		} 
-	}else {
-		ra.addAttribute("msg", "PassWord를 다시 확인해 주세요");
-		return "login";
-	
-} 
+		if (checkMemVo == null) {
+			ra.addFlashAttribute("msg", "Id를 다시 확인해 주세요");
+			return "login";
+		} else if (checkMemVo.getMemId().equals(vo.getMemId())
+				&& checkMemVo.getMemPass().equals(KISA_SHA256.encrypt(vo.getMemPass()))) {
+			session.setAttribute("SESSION_MEMBERVO", vo);
+			return "main";
+		} else {
+			ra.addFlashAttribute("msg", "PassWord를 다시 확인해 주세요");
+			return "login";
+		}
 	}
 }

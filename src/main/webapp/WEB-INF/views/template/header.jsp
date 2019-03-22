@@ -22,14 +22,15 @@
           </ul>
 
         </div>
-  ${memberVo }
+ 
         <div id="navbar" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
             <!-- <li class="active"><a href="#">ERD생성</a></li> -->
             <li><a href="/test2">ERD생성</a></li>
           
             <c:choose>
-            	<c:when test="${memberVo.memId == null }">
+            
+            	<c:when test="${SESSION_MEMBERVO == null }">
             		<li><a href="/login/login">로그인</a></li>
             		<li><a href="/join">회원가입</a></li>
             	</c:when>
