@@ -10,6 +10,9 @@
 <!--   	<typeAlias alias="userVo" type="kr.or.ddit.user.model.UserVO"/> -->
 	<typeAlias alias="memberVo" type="kr.or.ddit.member.model.MemberVo"/>
 	<typeAlias alias="erdVo" type="kr.or.ddit.erd.model.ErdVo"/> 
+	<typeAlias alias="teamListVo" type="kr.or.ddit.team.model.TeamListVo"/> 
+	<typeAlias alias="teamVo" type="kr.or.ddit.team.model.TeamVo"/> 
+	<typeAlias alias="tagVo" type="kr.or.ddit.team.model.TagVo"/> 
 	
 	<typeAlias alias="boardVo" type="kr.or.ddit.post.model.BoardVo"/>
 	<typeAlias alias="postVo" type="kr.or.ddit.post.model.PostVo"/>
@@ -33,6 +36,7 @@
 <!--     <mapper resource="kr/or/ddit/config/db/mapper/user.xml"/> -->
  			<mapper resource="kr/or/ddit/config/db/mapper/member.xml"/>
  			<mapper resource="kr/or/ddit/config/db/mapper/post.xml"/>
- 				<mapper resource="kr/or/ddit/config/db/mapper/erd.xml"/>
+			<mapper resource="kr/or/ddit/config/db/mapper/erd.xml"/>
+			<mapper resource="kr/or/ddit/config/db/mapper/team.xml"/>
   </mappers>
 </configuration>

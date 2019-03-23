@@ -35,7 +35,7 @@
             		<li><a href="${cp }/join">회원가입</a></li>
             	</c:when>
             	<c:otherwise>
-            		<li><a href="/mypage">마이페이지-Img</a></li>
+            		<li><a href="${cp }/mypage">마이페이지-Img</a></li>
             		<li><a href="/message">메세지</a></li>
             		<li><a href="${cp }/logout">로그아웃</a></li>
             	</c:otherwise>

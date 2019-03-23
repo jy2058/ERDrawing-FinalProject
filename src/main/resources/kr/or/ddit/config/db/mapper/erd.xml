@@ -3,6 +3,7 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="erd">
+	<!-- erd 생성 모든 컬럼 -->
 	<insert id="addErdFull" parameterType="erdVo">
 		insert into erd
 			(erdno, erdtitle, erdscope, erdreadcnt, erdcdt, erdudt, erdcolor, memid, teamno)
@@ -10,11 +11,12 @@
 			(seq_erdno.nextval, #{erdTitle}, #{erdScope}, #{erdReadCnt}, sysdate, sysdate, #{erdColor}, #{memId}, #{teamNo})
 	</insert>
 	
+	<!-- erd 생성하기 -->
 	<insert id="addErd" parameterType="erdVo">
 		insert into erd
 			(erdno, erdtitle, erdscope, erdcdt, memid, teamno)
 		values
-			(seq_erdno.nextval, #{erdTitle}, #{erdScope}, sysdate, #{memId}, nullif(#{teamNo},0))
+			(seq_erdno.nextval, #{erdTitle}, #{erdScope}, sysdate, #{memId, jdbcType=VARCHAR}, nullif(#{teamNo},0))
 			
 	</insert>
 	

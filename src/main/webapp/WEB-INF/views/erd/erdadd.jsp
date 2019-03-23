@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
 
 <style>
@@ -66,7 +67,7 @@ color:#fff;
 			</div>
 			<div class="input-box">
 				<label>태그</label>
-				<input type="text" placeholder="태그">
+				<input type="text" placeholder="태그" name="tag">
 			</div>
 			<div class="input-box">
 				<label>공유</label>
@@ -82,6 +83,7 @@ color:#fff;
 					<div>
 						<input type="radio" name="erdScope" value="team">
 						<label>팀</label>
+						
 					</div>
 				</div>
 			</div>
@@ -89,10 +91,10 @@ color:#fff;
 			<!-- 팀 라디오 버튼 선택 시 나타나야 함 -->
 			<div class="input-box">
 				<label>팀</label>
-				<select>
-					<option value="">가입된 팀 목록 나올 거야1</option>
-					<option value="">가입된 팀 목록 나올 거야2</option>
-					<option value="">가입된 팀 목록 나올 거야3</option>
+				<select name="teamNo">
+					<c:forEach var="teamInfoList" items="${teamInfoList}">
+						<option value="${teamInfoList.teamNo }">${teamInfoList.teamNm }</option>
+					</c:forEach>
 				</select>
 			</div>
 		</form>
