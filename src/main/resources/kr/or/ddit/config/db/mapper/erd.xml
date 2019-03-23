@@ -13,6 +13,9 @@
 	
 	<!-- erd 생성하기 -->
 	<insert id="addErd" parameterType="erdVo">
+		<selectKey keyProperty="erdNo" resultType="int" order="BEFORE">
+   			 select seq_erdno.nextval FROM DUAL
+  		</selectKey>
 		insert into erd
 			(erdno, erdtitle, erdscope, erdcdt, memid, teamno)
 		values
