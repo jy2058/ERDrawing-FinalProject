@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.team.dao.ITeamDao;
+import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
 import kr.or.ddit.team.model.TeamListVo;
 import kr.or.ddit.team.model.TeamVo;
@@ -54,6 +55,16 @@ public class TeamServiceImpl implements ITeamService{
 	@Override
 	public int insertTag(TagVo tagVo) {
 		return teamDao.insertTag(tagVo);
+	}
+
+	@Override
+	public int getTagNo(String tagContent) {
+		return teamDao.getTagNo(tagContent);
+	}
+
+	@Override
+	public int insertTagHist(TagHistVo tagHistVo) {
+		return teamDao.insertTagHist(tagHistVo);
 	}
 
 }

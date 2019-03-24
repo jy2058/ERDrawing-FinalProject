@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
 import kr.or.ddit.team.model.TeamListVo;
 import kr.or.ddit.team.model.TeamVo;
@@ -99,6 +100,39 @@ public class TeamDaoImplTest extends logicTestConfig{
 		/***Then***/
 		assertEquals(1, insertTag);
 		
+	}
+	
+	/**
+	* Method : testInsertTagHist
+	* 작성자 : kjy
+	* 변경이력 :
+	* Method 설명 : 태그, erd 맵핑 테스트
+	*/
+	@Test
+	public void testInsertTagHist(){
+		/***Given***/
+		TagHistVo tagHistVo = new TagHistVo();
+		tagHistVo.setErdNo(1035);
+		tagHistVo.setTagNo(1);
+		/***When***/
+		int cnt = teamDao.insertTagHist(tagHistVo);
+
+		/***Then***/
+		assertEquals(1, cnt);
+
+		
+	}
+	
+	@Test
+	public void testGetTagNo(){
+		/***Given***/
+		String content = "1";
+		/***When***/
+		int tagNo = teamDao.getTagNo(content);
+
+		/***Then***/
+		assertEquals(1, tagNo);
+
 	}
 	
 }

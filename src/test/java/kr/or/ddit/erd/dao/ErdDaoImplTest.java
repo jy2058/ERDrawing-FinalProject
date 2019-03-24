@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.junit.Test;
 
 import kr.or.ddit.erd.model.ErdVo;
+import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.test.logicTestConfig;
 
 public class ErdDaoImplTest extends logicTestConfig{
@@ -36,5 +37,7 @@ public class ErdDaoImplTest extends logicTestConfig{
 		assertEquals(addCnt, 1);
 
 	}
+	
+	
 
 }

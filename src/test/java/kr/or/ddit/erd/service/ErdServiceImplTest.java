@@ -35,5 +35,25 @@ public class ErdServiceImplTest extends logicTestConfig{
 		assertEquals(addCnt, 1);
 		
 	}
+	
+	/*@Test
+	public void testAddErdTagFull() {
+		*//***Given***//*
+		ErdVo erdVo = new ErdVo();
+		
+		String tag = "1,3,4,5";
+		
+		
+		erdVo.setErdTitle("테스트코드고친거");
+		erdVo.setErdScope("public");
+		erdVo.setMemId("user3");
 
+		*//***When***//*
+		int addCnt = erdService.addErdTag(erdVo, tag);
+
+		*//***Then***//*
+		assertEquals(addCnt, 1);
+		
+	}
+*/
 }

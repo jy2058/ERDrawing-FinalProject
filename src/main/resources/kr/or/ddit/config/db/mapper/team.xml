@@ -27,4 +27,18 @@
 		values (seq_tagno.nextval, #{tagContent}, sysdate, #{tagMaker})
 	</insert>
 	
+	<!-- 태그 번호 가져오기 -->
+	<select id="getTagNo" parameterType="String" resultType="int">
+		select tagno
+		from tag
+		where tagcontent = #{tagContent}
+	</select>
+	
+	<insert id="insertTagHist" parameterType="tagHistVo">
+		insert into tag_hist
+		(erdno, tagno, tagdt)
+		values (#{erdNo}, #{tagNo}, sysdate)
+		
+		
+	</insert>
 </mapper>

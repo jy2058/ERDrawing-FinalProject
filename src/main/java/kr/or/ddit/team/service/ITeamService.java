@@ -2,6 +2,7 @@ package kr.or.ddit.team.service;
 
 import java.util.List;
 
+import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
 import kr.or.ddit.team.model.TeamListVo;
 import kr.or.ddit.team.model.TeamVo;
@@ -46,5 +47,25 @@ public interface ITeamService {
 	* Method 설명 : 태그 insert
 	*/
 	int insertTag(TagVo tagVo);
+	
+	/**
+	* Method : getTagNo
+	* 작성자 : kjy
+	* 변경이력 :
+	* @param tagContent
+	* @return
+	* Method 설명 : 태그 번호 가져오기
+	*/
+	int getTagNo(String tagContent);
+	
+	/**
+	* Method : insertTagHist
+	* 작성자 : kjy
+	* 변경이력 :
+	* @param tagHistVo
+	* @return
+	* Method 설명 : 태그와 erd번호 맵핑
+	*/
+	int insertTagHist(TagHistVo tagHistVo);
 
 }

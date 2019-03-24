@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
 import kr.or.ddit.team.model.TeamListVo;
 import kr.or.ddit.team.model.TeamVo;
@@ -29,6 +30,16 @@ public class TeamDaoImpl implements ITeamDao{
 	@Override
 	public int insertTag(TagVo tagVo) {
 		return sqlSession.insert("team.insertTag", tagVo);
+	}
+
+	@Override
+	public int getTagNo(String tagContent) {
+		return sqlSession.selectOne("team.getTagNo", tagContent);
+	}
+
+	@Override
+	public int insertTagHist(TagHistVo tagHistVo) {
+		return sqlSession.insert("team.insertTagHist", tagHistVo);
 	}
 
 }

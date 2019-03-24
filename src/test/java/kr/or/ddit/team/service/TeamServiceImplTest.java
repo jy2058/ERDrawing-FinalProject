@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
 import kr.or.ddit.team.model.TeamListVo;
 import kr.or.ddit.team.model.TeamVo;
@@ -120,6 +121,27 @@ public class TeamServiceImplTest extends logicTestConfig{
 
 		/***Then***/
 		assertEquals(1, insertTag);
+		
+	}
+	
+	/**
+	* Method : testInsertTagHist
+	* 작성자 : kjy
+	* 변경이력 :
+	* Method 설명 : 태그, erd 맵핑 테스트
+	*/
+	@Test
+	public void testInsertTagHist(){
+		/***Given***/
+		TagHistVo tagHistVo = new TagHistVo();
+		tagHistVo.setErdNo(1035);
+		tagHistVo.setTagNo(2);
+		/***When***/
+		int cnt = teamService.insertTagHist(tagHistVo);
+
+		/***Then***/
+		assertEquals(1, cnt);
+
 		
 	}
 	
