@@ -39,12 +39,12 @@ background:#4B4B4B;
 		</form>
 
 
-		<form id="apiFrm" class="col-sm-3 col-sm-offset-1">
+		<form action="${cp }/logins" id="apiFrm" class="col-sm-3 col-sm-offset-1" >
 
-			<a href="${google_url}"><div class="google-btn btn-style1">Google 로그인</div></a>
+			<div class="google-btn btn-style1">Google 로그인</div>
 			<div class="facebook-btn btn-style1">KaKao 로그인</div>
 			<div class="github-btn btn-style1" >Github 로그인</div>
-			
+			<div class="g-signin2" data-onsuccess="onSignIn"></div>
 		</form>
 		
 </div>
@@ -80,9 +80,23 @@ background:#4B4B4B;
 			$("#erdFrm").submit();
 		});
 		
-
+		$(".g-signin2").on("click",function(){
+			var profile = googleUser.getBasicProfile();
+			
+			$("#apiFrm").submit();
+		});
+		
 		
 	});
-	
+	function onSignIn(googleUser) {
+		  var profile = googleUser.getBasicProfile();
+		  console.log('ID: ' + profile); // Do not send to your backend! Use an ID token instead.
+		  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+		  console.log('Name: ' + profile.getName());
+		  console.log('Image URL: ' + profile.getImageUrl());
+		  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+		 
+		}
+
 </script>
 

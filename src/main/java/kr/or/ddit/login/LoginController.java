@@ -78,33 +78,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/logins", method = { RequestMethod.GET, RequestMethod.POST })
-	public String googleCallback(HttpSession session,Model model, @RequestParam String code) throws Exception {
-		logger.debug("code===");
-		OAuth2Operations oauthOperations = googleConnectionFactory.getOAuthOperations();
-		AccessGrant accessGrant = oauthOperations.exchangeForAccess(code, googleOAuth2Parameters.getRedirectUri(),
-				null);
-		String accessToken = accessGrant.getAccessToken();
-		Long expireTime = accessGrant.getExpireTime();
-		if (expireTime != null && expireTime < System.currentTimeMillis()) {
-			accessToken = accessGrant.getRefreshToken();
-			logger.info("accessToken is expired. refresh token = {}", accessToken);
-		}
-		
-		Connection<Google> connection = googleConnectionFactory.createConnection(accessGrant);
-		Google google = connection == null ? new GoogleTemplate(accessToken) : connection.getApi();
-		PlusOperations plusOperations = google.plusOperations();
-		Person person = plusOperations.getGoogleProfile();
-		logger.debug("=======f2{}",person.getBirthday());
-		logger.debug("=======f3{}",person.getAccountEmail());
-		logger.debug("=======f3{}",person.getEmailAddresses());
-		
-		logger.debug("=======f3{}",person.toString());
-		
-		
-/*		
-		MemberVo vo = new MemberVo(person.getId(), person.getId(), "pass", person.getDisplayName(), "kr");
-		memberService.insertMember(vo);
-		session.setAttribute("SESSION_MEMBERVO", vo);*/
+	public String googleCallback() throws Exception {
 		
 		return "main";
 	}
