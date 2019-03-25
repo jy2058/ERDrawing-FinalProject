@@ -80,9 +80,13 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/kakaoLogin")
-	public String kakaoLogin(String info) {
+	public String kakaoLogin(String info, HttpSession session) {
 		logger.debug("==info{}",info);
-
+		String[] email =info.split("\":\"");
+		String[] strEmail =email[2].split("\"");
+		logger.debug("==email{}",strEmail[0]);	//이메일값
+		//session.setAttribute("SESSION_MEMBERVO", vo);
+		
 		return "main";
 	}
 
