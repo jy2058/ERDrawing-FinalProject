@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -144,6 +145,25 @@ public class TeamServiceImplTest extends logicTestConfig{
 
 		
 	}
+	
+	/**
+	* Method : testGetErdTagMap
+	* 작성자 : PC08
+	* 변경이력 :
+	* Method 설명 : erd에 해당하는 태그 리스트 가져오기
+	*/
+/*	@Test
+	public void testGetErdTagMap(){
+		*//***Given***//*
+		int erdNo = 1035;
+		*//***When***//*
+		Map<Integer, List<TagVo>> erdTagMap = teamService.getErdTagMap(erdNo);
+		List<TagVo> list = erdTagMap.get(erdNo);
+
+		*//***Then***//*
+		assertEquals(2, list.size());
+
+	}*/
 	
 
 }

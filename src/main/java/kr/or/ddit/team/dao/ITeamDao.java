@@ -1,6 +1,7 @@
 package kr.or.ddit.team.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
@@ -59,4 +60,15 @@ public interface ITeamDao {
 	* Method 설명 : 태그와 erd번호 맵핑
 	*/
 	int insertTagHist(TagHistVo tagHistVo);
+	
+	/**
+	* Method : getErdTag
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdNo
+	* @return
+	* Method 설명 : erd에 해당되는  tag 가져오기
+	*/
+	List<TagVo> getErdTag(int erdNo);
+	
 }

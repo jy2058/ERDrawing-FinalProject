@@ -8,23 +8,39 @@
 	padding-bottom: 50px;
 }
 
+
+.erd-box-list{
+	display:table;
+}
+
+
 .best-erd-list {
 	
 }
 
 
+	
+.tagList{
+min-height:20px;
+}
+
 .erd-box-item {
 	position: relative;
+	display:inline-block;
 	width: 32%;
 	margin-right: 2%;
 	margin-bottom: 2%;
-	float: left;
-	border: 3px solid #000;
+/* 	float: left; */
 	color: #000;
+	border: 3px solid #000;
+	vertical-align:top;
 }
+
 
 .erd-box-item:nth-child(3n) {
 	margin-right: 0px;
+	clear:both;
+
 }
 
 a.preview-box {
@@ -85,7 +101,7 @@ a.preview-box {
 }
 
 .erd-box-item:hover {
-	display: block;
+	display: inline-block;
 	border: 3px solid #fff;
 }
 
@@ -132,7 +148,6 @@ a.preview-box {
 .youtube-title {
 	text-align: center;
 }
-
 
 
 

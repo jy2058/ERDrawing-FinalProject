@@ -42,4 +42,9 @@ public class TeamDaoImpl implements ITeamDao{
 		return sqlSession.insert("team.insertTagHist", tagHistVo);
 	}
 
+	@Override
+	public List<TagVo> getErdTag(int erdNo) {
+		return sqlSession.selectList("team.getErdTag", erdNo);
+	}
+
 }

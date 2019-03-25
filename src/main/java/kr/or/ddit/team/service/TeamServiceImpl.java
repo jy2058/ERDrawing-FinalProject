@@ -1,7 +1,9 @@
 package kr.or.ddit.team.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -66,5 +68,6 @@ public class TeamServiceImpl implements ITeamService{
 	public int insertTagHist(TagHistVo tagHistVo) {
 		return teamDao.insertTagHist(tagHistVo);
 	}
+
 
 }

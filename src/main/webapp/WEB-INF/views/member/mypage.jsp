@@ -37,8 +37,19 @@
 			
 			<div class="row">
 				<div style="background:#232323; color:#fff; height:100px; line-height:100px; padding-left:20px; font-size:20px; font-weight:600;">
-					<a href="/team">팀 리스트 출력위치 (클릭시 해당 팀관리 페이지로 이동)</a>
+					<ul>
+					<c:forEach var="teamList" items="${teamInfoList }" >
+						<li><a href="/team">
+							<c:if test="${empty teamList.teamImg  }">teamImg</c:if>
+							${teamList.teamImg }
+							<span>${teamList.teamNm }</span>
+							</a>
+						</li>
+					</c:forEach>
+					</ul>
+					
 				</div>
+					<!-- <a href="/team">팀 리스트 출력위치 (클릭시 해당 팀관리 페이지로 이동)</a> -->
 			</div>
 	
 			
@@ -47,49 +58,58 @@
 				<a class="add-btn1" id="myAdd">+</a>
 			</div>
 			
-			
 			<div class="row">
 				
 
 						<div class="col-sm-12">
 							 <ul class="erd-box-list">
 							 
-							 	<c:forEach begin="0" end="5" var="idx" varStatus="status">
+							 	<c:forEach var="myErdList" varStatus="status" items="${myErdList }">
 							  	<li class="erd-box-item">
-				
-							  		<a class="preview-box">
-							  			<div class="bg-box">
-							  				<div class="bg-img">
-								  				&nbsp;Image${idx }
-								  			</div>
-							  				<div class="table-bg-text">
-							  					<div class="bg-text shinys">
-							  						&nbsp;Image${idx }
-							  					</div>
-								  			</div>
+									
+								  		<a class="preview-box">
+								  			<div class="bg-box">
+								  				<div class="bg-img">
+									  				&nbsp;Image
+									  			</div>
+								  				<div class="table-bg-text">
+								  					<div class="bg-text shinys">
+								  						&nbsp;${myErdList.erdTitle }
+								  					</div>
+									  			</div>
+									  		</div>
+								  		</a>
+								  		<div class="description-item">
+								  			<div style="float:left;">${myErdList.erdTitle }</div>
+								  			<!-- erd public / private에 따라 자물쇠 이미지 변경 -->
+								  			<div style="float:right;">${myErdList.erdScope } </div>
+								  			
+								  			
+								  			
+								  			<ul class="tagList" style="clear:both;">
+								  		<c:forEach var="entry" items="${erdTagListMap }">
+								  			<c:if test="${entry.key eq myErdList.erdNo}">
+								  				<c:set var="value" value="${entry.value }"/>
+								  				<c:forEach var="tagVo" items="${value}">
+								  				<li>${tagVo.tagContent }</li>
+								  					
+								  				</c:forEach>
+								  					
+								  			</c:if>
+								  		</c:forEach>
+								  			</ul>
 								  		</div>
-							  		</a>
-							  		<div class="description-item">
-							  			<div style="float:left;">ERD제목 ${idx }</div>
-							  			<div style="float:right;">Lock </div>
-							  			
-							  			<ul style="clear:both;">
-							  				<li>Tag</li>
-							  				<li>Tag</li>
-							  				<li>Tag</li>			  			
-							  			</ul>
-							  		</div>
-							  		
+							  
 							  	</li>
+							  	
+							  	
+							  	
 								</c:forEach>
 				
 						  	</ul>
 						 </div>
 	
-		
 			</div> <!-- /row -->
-			
-			
 			
 		</div>
 		
