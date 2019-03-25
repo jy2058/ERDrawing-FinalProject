@@ -41,10 +41,9 @@ background:#4B4B4B;
 
 		<form action="${cp }/logins" id="apiFrm" class="col-sm-3 col-sm-offset-1" >
 
-			<div class="google-btn btn-style1">Google 로그인</div>
+			<div class="g-signin2" data-onsuccess="onSignIn"></div>
 			<div class="facebook-btn btn-style1">KaKao 로그인</div>
 			<div class="github-btn btn-style1" >Github 로그인</div>
-			<div class="g-signin2" data-onsuccess="onSignIn"></div>
 		</form>
 		
 </div>
@@ -81,7 +80,6 @@ background:#4B4B4B;
 		});
 		
 		$(".g-signin2").on("click",function(){
-			var profile = googleUser.getBasicProfile();
 			
 			$("#apiFrm").submit();
 		});
