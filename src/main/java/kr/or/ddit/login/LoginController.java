@@ -80,8 +80,9 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value = "/kakaoLogin")
-	public String kakaoLogin() {
-		logger.debug("====kakaoLogin");
+	public String kakaoLogin(String info) {
+		logger.debug("==info{}",info);
+
 		return "main";
 	}
 
