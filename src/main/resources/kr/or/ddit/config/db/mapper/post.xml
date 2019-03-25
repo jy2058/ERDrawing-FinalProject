@@ -37,30 +37,17 @@
   </select>
   
 	<!-- 게시글 페이징 조회 -->
-	<select id="selectPostPagingList" resultType="postVo" parameterType="pageVo">
-		<!-- select *
-		from
-		(select a.*, rownum rn
-		from (select postNo, PostTitle, PostGn, BoardNo, writerId,
-		trim(PostDelFlag) as PostDelFlag, PostRegDt,
-		level FROM post
-		where BoardNo = #{boardNo} START WITH PARENTPOSTNO IS NULL CONNECT BY
-		PARENTPOSTNO = prior POSTNO order SIBLINGS By POSTGN desc, POSTNO) a) a
-		where rn between ((#{pageNo}-1)*10)+1 and (#{pageNo})*10 -->
-		
+	<select id="selectPostPagingList" parameterType="pageVo" resultType="postVo"> 
 		select *
-		from
-			(select a.*, rownum rn
-			 from
-				(select post.*
-				 from post
-				 where boardNo=#{boardNo}
-				 order by boardNo) a) a
-		where rn between (#{page}-1) * #{pageSize} +1 and (#{page} * #{pageSize})
+		from (select a.*, rownum rn from (select POSTNO, POSTTITLE, POSTGN, BOARDNO, WRITERID,trim(POSTDELFLAG) as
+		POSTDELFLAG, POSTREGDT, level FROM post where BOARDNO = #{boardNo}
+		START WITH parentPostNo IS NULL CONNECT BY parentPostNo = prior
+		POSTNO order SIBLINGS By POSTGN desc, POSTNO) a) a where rn between
+		((#{pageNo}-1)*10)+1 and (#{pageNo})*10 
 	</select>
 	
 	<!-- 전체 게시글 수 조회 -->
-	<select id="getPostCnt" resultType="Integer" parameterType="String">
+	<select id="getPostCnt" resultType="Integer" parameterType="Integer">
 		select count (*)
 		from post
 		where boardNo = #{boardNo}
