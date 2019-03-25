@@ -84,5 +84,9 @@ public class TestController {
 		return "team";
 	}
 	
+	@RequestMapping(path="/insert")
+	public String insert(){
+		return "post/postInsert";
+	}
 	
 }

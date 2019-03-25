@@ -246,7 +246,7 @@
 		    <artifactId>tiles-extras</artifactId>
 		    <version>3.0.8</version>
 		</dependency>
-		
+			
 
 		<!-- AOP추가 라이브러리 -->
 		<!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver -->
@@ -256,21 +256,8 @@
 		    <version>1.9.2</version>
 		</dependency>
 		
-		<!-- 구글 로그인 api -->
-	 <dependency>
-		    <groupId>org.springframework.social</groupId>
-		    <artifactId>spring-social-google</artifactId>
-	            <version>1.0.0.RELEASE</version>
-	    </dependency>
-
-
-
-    <dependency>
-            <groupId>org.apache.httpcomponents</groupId>
-            <artifactId>httpclient</artifactId>
-            <version>4.5.3</version>
-        </dependency>
 		
+
 		
 		
 	</dependencies>

@@ -1,32 +1,29 @@
 package kr.or.ddit.util.model;
 
 public class PageVo {
-    private int pageSize; // 게시 글 수
+    private int pageSize;    // 게시 글 수
     private int firstPageNo; // 첫 번째 페이지 번호
-    private int prevPageNo; // 이전 페이지 번호
+    private int prevPageNo;  // 이전 페이지 번호
     private int startPageNo; // 시작 페이지 (페이징 네비 기준)
-    private int pageNo; // 페이지 번호
-    private int endPageNo; // 끝 페이지 (페이징 네비 기준)
-    private int nextPageNo; // 다음 페이지 번호
+    private int pageNo;      // 페이지 번호
+    private int endPageNo;   // 끝 페이지 (페이징 네비 기준)
+    private int nextPageNo;  // 다음 페이지 번호
     private int finalPageNo; // 마지막 페이지 번호
-    private int totalCount; // 게시 글 전체 수
-    private int boardNo; //게시판 번호 좀 편하게 하려고 넣었음  ㅈㅅ... 
+    private int totalCount;  // 게시 글 전체 수
+    private int boardNo;     // 게시판 번호 좀 편하게 하려고 넣었음 
 
-
-    public int getPageSize() {
+   public int getPageSize() {
         return pageSize;
-    }
+   }
 
    public PageVo() {
-}
+   }
 
 	public PageVo(int pageSize, int pageNo) {
 		super();
 		this.pageSize = pageSize;
 		this.pageNo = pageNo;
 	}
-
-
 
 	public int getBoardNo() {
 		return boardNo;
@@ -104,8 +101,17 @@ public class PageVo {
         this.totalCount = totalCount;
         this.makePaging();
     }
+    
 
-    //페이징 생성
+    @Override
+	public String toString() {
+		return "PageVo [pageSize=" + pageSize + ", firstPageNo=" + firstPageNo + ", prevPageNo=" + prevPageNo
+				+ ", startPageNo=" + startPageNo + ", pageNo=" + pageNo + ", endPageNo=" + endPageNo + ", nextPageNo="
+				+ nextPageNo + ", finalPageNo=" + finalPageNo + ", totalCount=" + totalCount + ", boardNo=" + boardNo
+				+ "]";
+	}
+
+	//페이징 생성
     private void makePaging() {
         if (this.totalCount == 0) return; // 게시 글 전체 수가 없는 경우
         if (this.pageNo == 0) this.setPageNo(1); // 기본 값 설정

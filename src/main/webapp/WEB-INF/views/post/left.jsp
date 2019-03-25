@@ -4,14 +4,14 @@
 
 <div class="col-sm-3 col-md-2 sidebar">
 	<ul class="nav nav-sidebar">
-		<li><a href="${cp}/post/notice">공지사항</a></li>
+		<li><a href="${cp}/post/postList?boardNo=1">공지사항</a></li>
 	</ul>
 	
 	<ul class="nav nav-sidebar">
-		<li><a href="${cp}/post/freeBoard">자유게시판</a></li>
+		<li><a href="${cp}/post/postList?boardNo=2">자유게시판</a></li>
 	</ul>
 	
 	<ul class="nav nav-sidebar">
-		<li><a href="${cp}/post/questionBoard">질문게시판</a></li>
+		<li><a href="${cp}/post/postList?boardNo=3">질문게시판</a></li>
 	</ul>
 </div>

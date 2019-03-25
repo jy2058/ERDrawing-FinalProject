@@ -39,12 +39,15 @@ background:#4B4B4B;
 		</form>
 
 
-		<form action="${cp }/logins" id="apiFrm" class="col-sm-3 col-sm-offset-1" >
+		<form action="${cp }/logins" id="apiFrm" method="post" class="col-sm-3 col-sm-offset-1" >
 
-			<div class="google-btn btn-style1">Google 로그인</div>
+			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+			<input type="hidden" name="info" id="info"/>
 			<div class="facebook-btn btn-style1">KaKao 로그인</div>
 			<div class="github-btn btn-style1" >Github 로그인</div>
-			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+	<a id="custom-login-btn" href="javascript:loginWithKakao()">
+<img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"/>
+</a>
 		</form>
 		
 </div>
@@ -55,11 +58,39 @@ background:#4B4B4B;
 </div>
 	
 </div>
+
+	
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
+
+    
+ 
 <script >	
 	$(document).ready(function () {
 		
-	
+		Kakao.init('8eded83f4085ba344e793801d05f3722');
+		
+		 Kakao.Auth.createLoginButton({
+		      container: '#custom-login-btn',
+		      success: function(authObj) {
+		        // 로그인 성공시, API를 호출합니다.
+		        Kakao.API.request({
+		          success: function(res) {
+		            alert(JSON.stringify(res));
+		          },
+		          fail: function(error) {
+		            alert(JSON.stringify(error));
+		          }
+		        });
+		      },
+		      fail: function(err) {
+		        alert(JSON.stringify(err));
+		      }
+		    });
+		
 		<c:if  test="${msg != null}">
 		alert("${msg}");
 	</c:if>
@@ -80,23 +111,42 @@ background:#4B4B4B;
 			$("#erdFrm").submit();
 		});
 		
-		$(".g-signin2").on("click",function(){
-			var profile = googleUser.getBasicProfile();
-			
-			$("#apiFrm").submit();
-		});
 		
 		
 	});
 	function onSignIn(googleUser) {
+		console.log(googleUser);
+		  var info = new Array();
 		  var profile = googleUser.getBasicProfile();
 		  console.log('ID: ' + profile); // Do not send to your backend! Use an ID token instead.
 		  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
 		  console.log('Name: ' + profile.getName());
 		  console.log('Image URL: ' + profile.getImageUrl());
 		  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-		 
-		}
+		  info.push(profile.getId());
+		  info.push(profile.getName());
+		  info.push(profile.getImageUrl());
+		  info.push(profile.getEmail());
+		  $("#info").val(info);
+		  
+		  <c:if  test="${SESSION_MEMBERVO == null}">
+			 $("#apiFrm").submit();	
+			 </c:if>
+			 
+	 
+		}   
+	function loginWithKakao() {
+		      // 로그인 창을 띄웁니다.
+		      Kakao.Auth.login({
+		        success: function(authObj) {
+		          alert(JSON.stringify(authObj));
+		        },
+		        fail: function(err) {
+		          alert(JSON.stringify(err));
+		        }
+		      });
+		    };
+
 
 </script>
 
