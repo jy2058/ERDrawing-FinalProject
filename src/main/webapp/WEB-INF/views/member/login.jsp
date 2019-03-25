@@ -45,8 +45,9 @@ background:#4B4B4B;
 			<input type="hidden" name="info" id="info"/>
 			<div class="facebook-btn btn-style1">KaKao 로그인</div>
 			<div class="github-btn btn-style1" >Github 로그인</div>
-			
-			
+	<a id="custom-login-btn" href="javascript:loginWithKakao()">
+<img src="//mud-kage.kakao.com/14/dn/btqbjxsO6vP/KPiGpdnsubSq3a0PHEGUK1/o.jpg" width="300"/>
+</a>
 		</form>
 		
 </div>
@@ -61,10 +62,35 @@ background:#4B4B4B;
 	
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
+
+
+    
+ 
 <script >	
 	$(document).ready(function () {
 		
-	
+		Kakao.init('8eded83f4085ba344e793801d05f3722');
+		
+		 Kakao.Auth.createLoginButton({
+		      container: '#custom-login-btn',
+		      success: function(authObj) {
+		        // 로그인 성공시, API를 호출합니다.
+		        Kakao.API.request({
+		          success: function(res) {
+		            alert(JSON.stringify(res));
+		          },
+		          fail: function(error) {
+		            alert(JSON.stringify(error));
+		          }
+		        });
+		      },
+		      fail: function(err) {
+		        alert(JSON.stringify(err));
+		      }
+		    });
+		
 		<c:if  test="${msg != null}">
 		alert("${msg}");
 	</c:if>
@@ -84,10 +110,7 @@ background:#4B4B4B;
 			
 			$("#erdFrm").submit();
 		});
-		$(".g-signin2").on("click",function(){
-			
-			$(".g-signin2").attr("data-onsuccess","onSignIn")	
-		});
+		
 		
 		
 	});
@@ -111,7 +134,18 @@ background:#4B4B4B;
 			 </c:if>
 			 
 	 
-		}
+		}   
+	function loginWithKakao() {
+		      // 로그인 창을 띄웁니다.
+		      Kakao.Auth.login({
+		        success: function(authObj) {
+		          alert(JSON.stringify(authObj));
+		        },
+		        fail: function(err) {
+		          alert(JSON.stringify(err));
+		        }
+		      });
+		    };
 
 
 </script>

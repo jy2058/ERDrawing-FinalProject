@@ -1,7 +1,5 @@
 package kr.or.ddit.login;
 
-import java.util.ArrayList;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -35,7 +33,8 @@ public class LoginController {
 	@RequestMapping(path = { "/login" }, method = { RequestMethod.POST })
 	public String Login(MemberVo vo, HttpSession session, RedirectAttributes ra, HttpServletRequest req) {
 		MemberVo checkMemVo = memberService.selectMember(vo.getMemId());
-
+		
+		
 		if (checkMemVo == null) {
 			ra.addFlashAttribute("msg", "Id를 다시 확인해 주세요");
 			return "redirect:" + req.getContextPath() + "/login";
@@ -43,7 +42,15 @@ public class LoginController {
 				&& checkMemVo.getMemPass().equals(KISA_SHA256.encrypt(vo.getMemPass()))) {
 			session.setAttribute("SESSION_MEMBERVO", vo);
 			return "main";
-		} else {
+		}else if(checkMemVo.getMemEmailDiv().equals("google")){
+			ra.addFlashAttribute("msg", "google로 로그인 해주세요");
+			return "redirect:" + req.getContextPath() + "/login";
+		}
+		else if(checkMemVo.getMemEmailDiv().equals("kakao")){
+			ra.addFlashAttribute("msg", "kakao로 로그인 해주세요");
+			return "redirect:" + req.getContextPath() + "/login";
+		}
+		else {
 			ra.addFlashAttribute("msg", "PassWord를 다시 확인해 주세요");
 			return "redirect:" + req.getContextPath() + "/login";
 		}
@@ -71,4 +78,12 @@ public class LoginController {
 		}
 		return "main";
 	}
+	
+	@RequestMapping(value = "/kakaoLogin")
+	public String kakaoLogin() {
+		logger.debug("====kakaoLogin");
+		return "main";
+	}
+
+	
 }
