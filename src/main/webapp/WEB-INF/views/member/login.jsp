@@ -39,11 +39,14 @@ background:#4B4B4B;
 		</form>
 
 
-		<form action="${cp }/logins" id="apiFrm" class="col-sm-3 col-sm-offset-1" >
+		<form action="${cp }/logins" id="apiFrm" method="post" class="col-sm-3 col-sm-offset-1" >
 
 			<div class="g-signin2" data-onsuccess="onSignIn"></div>
+			<input type="hidden" name="info" id="info"/>
 			<div class="facebook-btn btn-style1">KaKao 로그인</div>
 			<div class="github-btn btn-style1" >Github 로그인</div>
+			
+			
 		</form>
 		
 </div>
@@ -54,6 +57,9 @@ background:#4B4B4B;
 </div>
 	
 </div>
+
+	
+
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script >	
 	$(document).ready(function () {
@@ -78,23 +84,35 @@ background:#4B4B4B;
 			
 			$("#erdFrm").submit();
 		});
-		
 		$(".g-signin2").on("click",function(){
 			
-			$("#apiFrm").submit();
+			$(".g-signin2").attr("data-onsuccess","onSignIn")	
 		});
 		
 		
 	});
 	function onSignIn(googleUser) {
+		console.log(googleUser);
+		  var info = new Array();
 		  var profile = googleUser.getBasicProfile();
 		  console.log('ID: ' + profile); // Do not send to your backend! Use an ID token instead.
 		  console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
 		  console.log('Name: ' + profile.getName());
 		  console.log('Image URL: ' + profile.getImageUrl());
 		  console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-		 
+		  info.push(profile.getId());
+		  info.push(profile.getName());
+		  info.push(profile.getImageUrl());
+		  info.push(profile.getEmail());
+		  $("#info").val(info);
+		  
+		  <c:if  test="${SESSION_MEMBERVO == null}">
+			 $("#apiFrm").submit();	
+			 </c:if>
+			 
+	 
 		}
+
 
 </script>
 

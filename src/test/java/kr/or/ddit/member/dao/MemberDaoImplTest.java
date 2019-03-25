@@ -33,7 +33,7 @@ public class MemberDaoImplTest extends logicTestConfig{
 	@Test
 	public void testInsertMember() {
 		String pass = KISA_SHA256.encrypt("test");
-		MemberVo vo = new MemberVo("test13","testmail", pass, "테스트", "kr");
+		MemberVo vo = new MemberVo("test3","testmail", pass, "테스트", "kr","google");
 		int cnt = memberDao.insertMember(vo);
 		assertNotNull(cnt);
 		assertEquals(1, cnt);

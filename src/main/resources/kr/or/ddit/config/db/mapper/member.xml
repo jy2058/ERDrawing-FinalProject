@@ -29,21 +29,23 @@
 				memtel,
 				memperiod,
 				menindt,
-				memblackflag
+				memblackflag,
+				memEmailDiv
 		) values (
 				#{memId},
 				#{memMail},
 				#{memPass},
-				'f',
+				'F',
 				#{memImg, jdbcType=VARCHAR},
-				'f',
+				'F',
 				#{memNm},
 				#{memIntro, jdbcType=VARCHAR},
 				#{memLang},
 				#{memTel, jdbcType=VARCHAR},
 				#{memPeriod, jdbcType=VARCHAR},
 				sysdate,
-				'f'
+				'F',
+				#{memEmailDiv, jdbcType=VARCHAR}
 		)
 	</insert>
 

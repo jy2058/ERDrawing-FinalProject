@@ -16,19 +16,28 @@ public class MemberVo {
 	private Date memPeriod; 		//이용권 기한
 	private Date memInDt;			//회원가입날짜
 	private String memBlackFlag;	//블랙리스트여부
-	
+	private String memEmailDiv;		//이메일구분
 	public MemberVo(){
 		
 	}
 	
-	public MemberVo(String memId, String memMail, String memPass, String memNm, String memLang) {
+	public MemberVo(String memId, String memMail, String memPass, String memNm, String memLang,String memEmailDiv) {
 		this.memId = memId;
 		this.memMail = memMail;
 		this.memPass = memPass;
 		this.memNm = memNm;
 		this.memLang = memLang;
+		this.memEmailDiv = memEmailDiv;
 	}
 
+
+	public String getMemEmailDiv() {
+		return memEmailDiv;
+	}
+
+	public void setMemEmailDiv(String memEmailDiv) {
+		this.memEmailDiv = memEmailDiv;
+	}
 
 	public String getMemId() {
 		return memId;

@@ -1,5 +1,7 @@
 package kr.or.ddit.login;
 
+import java.util.ArrayList;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -51,12 +53,22 @@ public class LoginController {
 	public String logout(HttpSession session) {
 		// session.invalidate(); // 세션 전체를 날려버림
 		session.removeAttribute("SESSION_MEMBERVO"); // 하나씩 하려면 이렇게 해도 됨.
+		
 		return "main";
 	}
 
 	@RequestMapping(value = "/logins", method = { RequestMethod.GET, RequestMethod.POST })
-	public String googleCallback() throws Exception {
-		
+	public String googleCallback(String[] info,Model model) throws Exception {
+		MemberVo memId = memberService.selectMember(info[3]);
+		MemberVo vo = new MemberVo(info[3], info[3], "--", info[1], "kr","google");
+		vo.setMemImg(info[2]);
+		if(memId==null){
+			memberService.insertMember(vo);
+			model.addAttribute("SESSION_MEMBERVO", vo);
+		}
+		else{
+			model.addAttribute("SESSION_MEMBERVO", vo);
+		}
 		return "main";
 	}
 }
