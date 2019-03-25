@@ -1,11 +1,14 @@
 package kr.or.ddit.erd.controller;
 
+import java.util.List;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.erd.service.IErdService;
 import kr.or.ddit.member.model.MemberVo;
-import kr.or.ddit.team.model.TagVo;
 import kr.or.ddit.team.service.ITeamService;
 
 @RequestMapping("/erd")
@@ -52,10 +54,6 @@ public class ErdController {
 			erdVo.setTeamNo(0);
 		}
 		erdService.addErdTag(erdVo, tag, memId);
-		
-		logger.debug("====erdVo.getErdNo() : {}", erdVo.getErdNo());
-		//왜 before로 하면 sequence -1 이고 after하면 sequence +1 돼...? ㅜㅜㅜㅜㅜㅜㅜ
-		// tag_hist 작업 해야 함
 		
 		return "mypage";
 	}

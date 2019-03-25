@@ -23,4 +23,11 @@
 			
 	</insert>
 	
+	<!-- 나의 Erd리스트 가져오기 -->
+	<select id="getMyErdList" parameterType="String" resultType="erdVo">
+		select *
+		from erd
+		where memid = #{memId}
+	</select>
+	
 </mapper>

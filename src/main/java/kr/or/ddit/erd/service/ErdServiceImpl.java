@@ -1,7 +1,9 @@
 package kr.or.ddit.erd.service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -78,6 +80,29 @@ public class ErdServiceImpl implements IErdService{
 			addErdCnt = erdDao.addErd(erdVo);
 		
 		return addErdCnt;
+	}
+
+	@Override
+	public List<ErdVo> getMyErdList(String memId) {
+		return erdDao.getMyErdList(memId);
+	}
+
+	@Override
+	public Map<String, Object> getMyErdTagMap(String memId) {
+		List<ErdVo> myErdList = erdDao.getMyErdList(memId);	// erdList
+		Map<Integer, List<TagVo>> erdTagListMap = new HashMap<>();
+		for(ErdVo erdVo : myErdList){
+			int erdNo = erdVo.getErdNo();
+			List<TagVo> erdTagList = teamDao.getErdTag(erdNo);	// tagList
+			if(!erdTagList.isEmpty()){
+				erdTagListMap.put(erdNo, erdTagList);	// tagList가 있을 때 erdNo를 key, tagList를 value로 설정
+			}
+		}
+		Map<String, Object> erdTagMap = new HashMap<>();	// 리턴 값 2개 처리하기 위해 erdList와 erdTagListMap을 Map에 넣어 리턴 
+		erdTagMap.put("myErdList", myErdList);
+		erdTagMap.put("erdTagListMap", erdTagListMap);
+		
+		return erdTagMap;
 	}
 
 }

@@ -1,6 +1,7 @@
 package kr.or.ddit.team.service;
 
 import java.util.List;
+import java.util.Map;
 
 import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
@@ -67,5 +68,5 @@ public interface ITeamService {
 	* Method 설명 : 태그와 erd번호 맵핑
 	*/
 	int insertTagHist(TagHistVo tagHistVo);
-
+	
 }

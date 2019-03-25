@@ -135,4 +135,15 @@ public class TeamDaoImplTest extends logicTestConfig{
 
 	}
 	
+	@Test
+	public void testGetErdTag(){
+		/***Given***/
+		int erdNo = 1035;
+		/***When***/
+		List<TagVo> erdTag = teamDao.getErdTag(erdNo);
+
+		/***Then***/
+		assertNotNull(erdTag);
+	}
+	
 }

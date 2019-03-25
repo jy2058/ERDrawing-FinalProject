@@ -34,11 +34,18 @@
 		where tagcontent = #{tagContent}
 	</select>
 	
+	<!-- erd와 tag 맵핑 -->
 	<insert id="insertTagHist" parameterType="tagHistVo">
 		insert into tag_hist
 		(erdno, tagno, tagdt)
 		values (#{erdNo}, #{tagNo}, sysdate)
-		
-		
 	</insert>
+	
+	<!-- erd에 해당하는 tag 가져오기 -->
+	<select id="getErdTag" parameterType="int" resultType="tagVo">
+		select *
+		from tag_hist a, tag b
+		where a.tagno = b.tagno 
+			and a.erdNo = #{erdNo}
+	</select>
 </mapper>
