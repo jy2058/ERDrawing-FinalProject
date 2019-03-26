@@ -45,7 +45,7 @@ background:#4B4B4B;
 			<input type="hidden" name="info" id="info"/>
 			<div class="facebook-btn btn-style1">KaKao 로그인</div>
 			<div class="github-btn btn-style1" >Github 로그인</div>
-><a id="kakao-login-btn"></a>
+<a id="kakao-login-btn"></a>
 		</form>
 		
 </div>
@@ -70,7 +70,9 @@ background:#4B4B4B;
 	$(document).ready(function () {
 		 Kakao.init('8eded83f4085ba344e793801d05f3722');
 		    // 카카오 로그인 버튼을 생성합니다.
+		    
 		    Kakao.Auth.createLoginButton({
+		    
 		      container: '#kakao-login-btn',
 		      success: function(authObj) {
 		        // 로그인 성공시, API를 호출합니다.
@@ -78,14 +80,13 @@ background:#4B4B4B;
 		          url: '/v2/user/me',
 		       //   /v1/api/talk/profile
 		          success: function(res) {
-		        
 			            alert(JSON.stringify(res));
 			            $("#apiFrm").attr("action","${cp}/kakaoLogin");	
 			            $("#info").val(JSON.stringify(res));
 			            $("#apiFrm").submit();	
 			          },
 		          fail: function(error) {
-		            alert(JSON.stringify(error));
+		            alert("로그인 실패");
 		          }
 		        });
 		      },
@@ -115,8 +116,22 @@ background:#4B4B4B;
 			
 			$("#erdFrm").submit();
 		});
-		
-		
+		$(".facebook-btn").on("click",function(){
+					Kakao.init('8eded83f4085ba344e793801d05f3722');
+					Kakao.Auth.loginForm({
+				          url: '/v2/user/me',
+				       //   /v1/api/talk/profile
+				          success: function(res) {
+				        	  alert(JSON.stringify(res));
+					            $("#apiFrm").attr("action","${cp}/kakaoLogin");	
+					            $("#info").val(JSON.stringify(res));
+					            $("#apiFrm").submit();	
+					          },
+				          fail: function(error) {
+				            alert("로그인 실패");
+				          }
+				        });
+		});
 		
 	});
 	function onSignIn(googleUser) {
@@ -134,9 +149,7 @@ background:#4B4B4B;
 		  info.push(profile.getEmail());
 		  $("#info").val(info);
 		  
-		  <c:if  test="${SESSION_MEMBERVO == null}">
 			 $("#apiFrm").submit();	
-			 </c:if>
 			 
 	 
 		}   

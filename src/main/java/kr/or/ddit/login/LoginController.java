@@ -1,7 +1,9 @@
 package kr.or.ddit.login;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -57,24 +59,25 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/logout")
-	public String logout(HttpSession session) {
+	public String logout(HttpSession session,HttpServletRequest request,HttpServletResponse response) {
 		// session.invalidate(); // 세션 전체를 날려버림
-		session.removeAttribute("SESSION_MEMBERVO"); // 하나씩 하려면 이렇게 해도 됨.
-		
+
+	logger.debug("==cooc{}",request.getCookies().length);
+	session.removeAttribute("SESSION_MEMBERVO"); // 하나씩 하려면 이렇게 해도 됨.
 		return "main";
 	}
 
 	@RequestMapping(value = "/logins", method = { RequestMethod.GET, RequestMethod.POST })
-	public String googleCallback(String[] info,Model model) throws Exception {
+	public String googleCallback(String[] info,HttpSession session) throws Exception {
 		MemberVo memId = memberService.selectMember(info[3]);
 		MemberVo vo = new MemberVo(info[3], info[3], "--", info[1], "kr","google");
 		vo.setMemImg(info[2]);
 		if(memId==null){
 			memberService.insertMember(vo);
-			model.addAttribute("SESSION_MEMBERVO", vo);
+			session.setAttribute("SESSION_MEMBERVO", vo);
 		}
 		else{
-			model.addAttribute("SESSION_MEMBERVO", vo);
+			session.setAttribute("SESSION_MEMBERVO", vo);
 		}
 		return "main";
 	}
@@ -82,13 +85,36 @@ public class LoginController {
 	@RequestMapping(value = "/kakaoLogin")
 	public String kakaoLogin(String info, HttpSession session) {
 		logger.debug("==info{}",info);
-		String[] email =info.split("\":\"");
-		String[] strEmail =email[2].split("\"");
-		logger.debug("==email{}",strEmail[0]);	//이메일값
-		//session.setAttribute("SESSION_MEMBERVO", vo);
-		
+		String[] email =info.split(",");
+		if(email.length<4){	//이메일 수락 안햇을시
+			String[] emailId =email[0].split(":");
+			logger.debug("==email{}",emailId[1]);
+			
+			MemberVo memId = memberService.selectMember(emailId[0]);
+			MemberVo vo = new MemberVo(emailId[0], emailId[0], "--", emailId[0], "kr","kakao");
+			if(memId==null){
+				memberService.insertMember(vo);
+				session.setAttribute("SESSION_MEMBERVO", vo);
+			}
+			else{
+				session.setAttribute("SESSION_MEMBERVO", vo);
+			}
+		}
+	
+		else{	//이메일 수락시 
+			String[] strEmail =email[5].split("\"");
+			logger.debug("==email{}",strEmail[3]);	//이메일값
+			
+			MemberVo memId = memberService.selectMember(strEmail[3]);
+			MemberVo vo = new MemberVo(strEmail[3], strEmail[3], "--", strEmail[3], "kr","kakao");
+			if(memId==null){
+				memberService.insertMember(vo);
+				session.setAttribute("SESSION_MEMBERVO", vo);
+			}
+			else{
+				session.setAttribute("SESSION_MEMBERVO", vo);
+			}
+		}
 		return "main";
 	}
-
-	
-}
+	}
