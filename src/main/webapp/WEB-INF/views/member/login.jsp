@@ -76,19 +76,19 @@ background:#4B4B4B;
 		      container: '#kakao-login-btn',
 		      success: function(authObj) {
 		        // 로그인 성공시, API를 호출합니다.
-		        Kakao.API.request({
-		          url: '/v2/user/me',
-		       //   /v1/api/talk/profile
-		          success: function(res) {
-			            alert(JSON.stringify(res));
-			            $("#apiFrm").attr("action","${cp}/kakaoLogin");	
+		    	  Kakao.Auth.loginForm({
+					    success: function (authObj) {
+					        Kakao.API.request({
+					            url: '/v1/user/me',
+					            success: function (res) {
+					                alert(JSON.stringify(res));
+$("#apiFrm").attr("action","${cp}/kakaoLogin");	
 			            $("#info").val(JSON.stringify(res));
 			            $("#apiFrm").submit();	
-			          },
-		          fail: function(error) {
-		            alert("로그인 실패");
-		          }
-		        });
+					            }
+					        });
+					    },
+					});
 		      },
 		      
 		      fail: function(err) {
@@ -116,22 +116,7 @@ background:#4B4B4B;
 			
 			$("#erdFrm").submit();
 		});
-		$(".facebook-btn").on("click",function(){
-					Kakao.init('8eded83f4085ba344e793801d05f3722');
-					Kakao.Auth.loginForm({
-				          url: '/v2/user/me',
-				       //   /v1/api/talk/profile
-				          success: function(res) {
-				        	  alert(JSON.stringify(res));
-					            $("#apiFrm").attr("action","${cp}/kakaoLogin");	
-					            $("#info").val(JSON.stringify(res));
-					            $("#apiFrm").submit();	
-					          },
-				          fail: function(error) {
-				            alert("로그인 실패");
-				          }
-				        });
-		});
+	
 		
 	});
 	function onSignIn(googleUser) {

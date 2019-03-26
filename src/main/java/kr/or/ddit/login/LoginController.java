@@ -86,12 +86,28 @@ public class LoginController {
 	public String kakaoLogin(String info, HttpSession session) {
 		logger.debug("==info{}",info);
 		String[] email =info.split(",");
-		if(email.length<4){	//이메일 수락 안햇을시
-			String[] emailId =email[0].split(":");
-			logger.debug("==email{}",emailId[1]);
+		if(email.length<5){	//이메일 수락 안햇을시
 			
-			MemberVo memId = memberService.selectMember(emailId[0]);
-			MemberVo vo = new MemberVo(emailId[0], emailId[0], "--", emailId[0], "kr","kakao");
+			String str_emailImg = "";
+			String[] emailId =email[0].split(":");
+			logger.debug("==emailId{}",emailId[1]);			//"이미지"
+			
+			String[] emailImg =email[1].split("\"profile_image\"");
+		    logger.debug("==emailImg{}",emailImg[1]);			//"이미지"
+		    if(!emailImg[1].equals(":null")){
+			String[] str_emailImgs =emailImg[1].split("\"");
+			str_emailImg=str_emailImgs[1];
+			logger.debug("==emailImg1{}",str_emailImgs[1]);		//이미지값
+		    }
+		    
+			String[] emailNicName =email[2].split(":");
+			logger.debug("==email{}",emailNicName[1]);			//"닉네임"
+			String[] str_emailNicName =emailNicName[1].split("\"");
+			logger.debug("==email{}",str_emailNicName[1]);		//닉네임
+			
+			MemberVo memId = memberService.selectMember(emailId[1]);
+			MemberVo vo = new MemberVo(emailId[1], emailId[1], "--", str_emailNicName[1], "kr","kakao");
+			vo.setMemImg(str_emailImg);
 			if(memId==null){
 				memberService.insertMember(vo);
 				session.setAttribute("SESSION_MEMBERVO", vo);
@@ -100,13 +116,34 @@ public class LoginController {
 				session.setAttribute("SESSION_MEMBERVO", vo);
 			}
 		}
-	
-		else{	//이메일 수락시 
-			String[] strEmail =email[5].split("\"");
-			logger.debug("==email{}",strEmail[3]);	//이메일값
+		/*{"kaccount_email":"hyuns0410@naver.com","kaccount_email_verified":true,"id":1050004750,"properties":{"profile_image":null,"nickname":"현지","thumbnail_image":null}}
+		  {"kaccount_email":"hyuns0410@naver.com","kaccount_email_verified":true,"id":1050004750,"properties":{"profile_image":null,"nickname":"현지","thumbnail_image":null}}
+		  {"id":1050004750,"properties":{"profile_image":null,"nickname":"현지","thumbnail_image":null}}
+		  {"id":1050336822,"properties":{"profile_image":"http://k.kakaocdn.net/dn/wP9nw/btqtOa9InY0/M026ovyy6T5virJtPbPBXK/profile_640x640s.jpg","nickname":"윤한수","thumbnail_image":"http://k.kakaocdn.net/dn/wP9nw/btqtOa9InY0/M026ovyy6T5virJtPbPBXK/profile_110x110c.jpg"}}
+		  {"id":1050420424,"properties":{"profile_image":"http://k.kakaocdn.net/dn/bZmQ5u/btqtQyoqCcM/6BD83x6wwgOwTZV27w6de0/profile_640x640s.jpg","nickname":"황수정","thumbnail_image":"http://k.kakaocdn.net/dn/bZmQ5u/btqtQyoqCcM/6BD83x6wwgOwTZV27w6de0/profile_110x110c.jpg"}}
+		*/else{	//이메일 수락시 
+			String str_emailImg = "";
 			
-			MemberVo memId = memberService.selectMember(strEmail[3]);
-			MemberVo vo = new MemberVo(strEmail[3], strEmail[3], "--", strEmail[3], "kr","kakao");
+			String[] strEmail =email[0].split(":");
+			String[] str_email  = strEmail[1].split("\"");
+			logger.debug("==email => {}",str_email[1]);	//이메일
+			
+			String[] emailImg =email[3].split("\"profile_image\"");
+		    logger.debug("==emailImg{}",emailImg[1]);			//"이미지"
+		    if(!emailImg[1].equals(":null")){
+				String[] str_emailImgs =emailImg[1].split("\"");
+				str_emailImg=str_emailImgs[1];
+				logger.debug("==emailImg이미지 => {}",str_emailImgs[1]);		//이미지값
+			    }
+		    
+		    String[] emailNicName =email[4].split(":");
+			logger.debug("==email{}",emailNicName[1]);			//"닉네임"
+			String[] str_emailNicName =emailNicName[1].split("\"");
+			logger.debug("==닉네임=> {}",str_emailNicName[1]);		//닉네임
+			
+			MemberVo memId = memberService.selectMember(str_email[1]);
+			MemberVo vo = new MemberVo(str_email[1], str_email[1], "--", str_emailNicName[1], "kr","kakao");
+			vo.setMemImg(str_emailImg);
 			if(memId==null){
 				memberService.insertMember(vo);
 				session.setAttribute("SESSION_MEMBERVO", vo);
