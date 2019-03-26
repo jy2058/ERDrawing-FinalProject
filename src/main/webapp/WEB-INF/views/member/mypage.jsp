@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <link rel="stylesheet" href="/css/boxErd.css">
 <link rel="stylesheet" href="/css/member/modify.css">
@@ -16,9 +17,9 @@
 				
 				
 			<div class="profile-info">
-				<div class="memberId">아이디 출력 위치</div>
-				<div class="memberEmail">이메일 출력 위치</div>
-				<div><div class="sampleImg"><div class="exText">Profile Image</div></div></div>
+				<div class="memberId">${SESSION_MEMBERVO.memId }</div>
+				<div class="memberEmail">${SESSION_MEMBERVO.memMail }이메일 출력 위치</div>
+				<div><div class="sampleImg"><div class="exText">${SESSION_MEMBERVO.memImg }Profile Image</div></div></div>
 			</div>
 		</div>
 	</div>
@@ -32,15 +33,15 @@
 		
 			<div class="line-title">
 				<h2 class="page-title">TEAM</h2>
-				<a class="add-btn1">+</a>
+				<a class="add-btn1" id="teamAdd">+</a>
 			</div>
 			
 			<div class="row">
 				<div style="background:#232323; color:#fff; height:100px; line-height:100px; padding-left:20px; font-size:20px; font-weight:600;">
-					<ul>
+					<ul style=" min-height:72px; line-height: 1.5">
 					<c:forEach var="teamList" items="${teamInfoList }" >
 						<li><a href="/team">
-							<c:if test="${empty teamList.teamImg  }">teamImg</c:if>
+						${fn:toUpperCase(fn:substring(teamList.teamNm,0,1 ))}
 							${teamList.teamImg }
 							<span>${teamList.teamNm }</span>
 							</a>
@@ -115,6 +116,7 @@
 		
 	</div>
 </div>
+
 
 
 

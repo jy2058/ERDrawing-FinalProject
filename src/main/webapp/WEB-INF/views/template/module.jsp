@@ -3,6 +3,7 @@
     
     
 <%@ include file="/WEB-INF/views/erd/erdadd.jsp"%>
+<%@ include file="/WEB-INF/views/erd/teamCreate.jsp"%>
 
 
 
