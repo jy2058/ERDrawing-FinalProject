@@ -76,7 +76,7 @@
 					          url: '/v1/user/unlink',
 					       //   /v1/api/talk/profile
 					          success: function(res) {
-						            alert("로그아우");
+						            alert("로그아웃");
 						            location.href = '/logout';
 						          },
 					          fail: function(error) {

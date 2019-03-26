@@ -52,7 +52,7 @@ background:#4B4B4B;
 
 
 <div class="lable-style1 col-sm-10 col-sm-offset-1">
-	계정이 필요하세요? <div class="join-btn btn-style3">지금 회원가입을 하세요.</div>
+	계정이 필요하세요? <div class="join-btn btn-style3" onclick="join()">지금 회원가입을 하세요.</div>
 </div>
 	
 </div>
@@ -120,7 +120,6 @@ $("#apiFrm").attr("action","${cp}/kakaoLogin");
 		
 	});
 	function onSignIn(googleUser) {
-		console.log(googleUser);
 		  var info = new Array();
 		  var profile = googleUser.getBasicProfile();
 		  console.log('ID: ' + profile); // Do not send to your backend! Use an ID token instead.
@@ -135,9 +134,10 @@ $("#apiFrm").attr("action","${cp}/kakaoLogin");
 		  $("#info").val(info);
 		  
 			 $("#apiFrm").submit();	
-			 
-	 
 		}   
+	function join() {
+		location.href = '${cp }/join';
+	}
 
 
 
