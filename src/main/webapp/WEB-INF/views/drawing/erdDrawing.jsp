@@ -17,8 +17,8 @@
 
 	<div id="drawing_container">
         <div class="drawing_top">
-        	<a id="botton0" href="/">홈</a>
-            <div id="button1" class="buttons">테이블 이름 가져오기</div>
+        	<a id="botton0" class="buttons" href="/">홈</a>
+            <div id="button1" class="buttons">테이블 이름 가져오기1</div>
 			<div id="button2" class="buttons">확대/축소 초기화</div>
 			<div id="button3" class="buttons">테이블 추가하기</div>
 			<div id="button4" class="buttons">미니맵</div>
