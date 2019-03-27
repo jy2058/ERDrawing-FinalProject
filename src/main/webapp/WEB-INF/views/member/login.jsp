@@ -43,8 +43,8 @@ background:#4B4B4B;
 
 			<div class="g-signin2" data-onsuccess="onSignIn"></div>
 			<input type="hidden" name="info" id="info"/>
-			<div class="facebook-btn btn-style1">KaKao 로그인</div>
-			<div class="github-btn btn-style1" >Github 로그인</div>
+	<!-- 		<div class="facebook-btn btn-style1">KaKao 로그인</div>
+			<div class="github-btn btn-style1" >Github 로그인</div> -->
 <a id="kakao-login-btn"></a>
 		</form>
 		

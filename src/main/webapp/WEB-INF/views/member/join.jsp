@@ -54,7 +54,8 @@ margin: 0 0 0 0;
 		
 		<span>이메일</span> 
 		<input	type="text" id="memMail" name="memMail" /> 
-		
+		<input type="button" class="btn-style1" id="checkEmail" name="email" value="인증번호 보내기" />
+		<div id="fileDiv"></div>
 		<span>비밀번호</span> 
 		<input	type="password" class="memPass" id="memPass"  oninput="checkPwd()" />
 		 <span>비밀번호 확인</span> 
@@ -74,6 +75,9 @@ margin: 0 0 0 0;
 </div>
 <script>
 var checkId=0;
+var checkInput=0;
+var checkEmail=0;
+
 	$(document).ready(function() {
 		//회원가입 버튼 클릭시
 		$(".submit-btn").on("click", function() {
@@ -172,6 +176,50 @@ var checkId=0;
 		
 		});
 		
+		
+		
+		//이메일 인증보내기 클릭시
+		$("#checkEmail").on("click", function() {
+			if(checkInput > 0){
+				return;
+			}
+			if($("#memMail").val().trim()==""){
+				//$("#memId").val().trim()
+				alert("아이디를 입력해 주세요");
+				$("#memMail").focus();
+				return;
+			}
+			
+			var email = $("#memMail").val();
+			$.ajax({
+			type : "get",
+			url : "${cp}/member/sendMail",
+			data : { email: email}, 
+			success : function(data) {
+				if(data.check==true){
+					var citationStr = "<input type='text' id='citationVal' placeholder='인증번호를 입력해주세요~' /> "
+					+"<input type='button' class='btn-style1' id='citation' value='인증' />"
+					 $("#fileDiv").append(citationStr);
+					checkInput++;
+					
+					$("#citation").on("click", function() {
+						
+						 if(data.joinCode==$("#citationVal").val()){
+							
+						alert("인증");
+						} 
+					});
+					
+				}else{
+					alert("이메일 전송이 실패하였습니다.");
+				}
+			},
+			error : function(xhr, status, error) {
+				console.log("에러!: " + error);
+			},
+			
+		});
+		});
 	});
 	var pwdCheck=0;
 	function checkPwd() {
