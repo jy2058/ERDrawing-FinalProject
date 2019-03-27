@@ -61,6 +61,12 @@
 	        #{boardNo}, #{parentPostNo,jdbcType=VARCHAR}, #{writerId}, #{postTitle})
   </insert>	
   
+ <!--  <insert parameterType="PostVo" id="insertPost"> 
+    INSERT INTO POST VALUES (SEQ_POST.NEXTVAL, #{postContent}, SYSDATE,
+	NVL(#{parent_Postno,jdbcType=VARCHAR}, SEQ_POST.CURRVAL), 'T',
+	#{userId}, #{boardNo}, #{parent_Postno,jdbcType=VARCHAR}, #{postTitle})
+  </insert> -->
+  
   <!-- 게시글 수정 -->
   <update id="updatePost" parameterType="postVo">
   	 update post
@@ -74,6 +80,34 @@
 	update post
   	   set postDelFlag = 'F'
   	where postNo = #{postNo}
+  </delete>
+  
+  <!-- 댓글 전체 조회 -->
+  <select id="getAllComments" resultType="commentsVo" parameterType="String">
+    select * 
+    from comments
+    where postNo = #{postNo}
+    ORDER BY cmtRegDt DESC
+  </select>
+  
+  <!-- 댓글 특정 조회 -->
+  <select id="getSelectComments" resultType="commentsVo" parameterType="String">
+     select *
+     from comments
+     where cmtNo = #{cmtNo}
+  </select>
+  
+  <!-- 댓글 생성 -->
+  <insert id="insertComments" parameterType="commentsVo">
+ 	 insert into comments
+  		    (cmtNo, cmtContent, cmtRegDt, cmtDelFlag, memId, postNo)
+  	 values (seq_cmtNo.nextval, #{cmtContent}, sysdate, 'T', #{memId}, #{postNo})
+  </insert>	
+  
+  <!-- 댓글 삭제 -->
+  <delete id="deleteComments" parameterType="String">
+		delete from comments
+		where cmtNo = #{cmtNo}
   </delete>
   
 </mapper>

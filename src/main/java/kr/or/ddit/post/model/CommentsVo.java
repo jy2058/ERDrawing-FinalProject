@@ -1,5 +1,6 @@
 package kr.or.ddit.post.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class CommentsVo {
@@ -9,4 +10,72 @@ public class CommentsVo {
 	private String cmtDelFlag;	//댓글삭제구분(T/F)
 	private int postNo;			//게시글번호
 	private String memId;		//댓글작성자아이디
+	
+	public CommentsVo(){
+		
+	}
+	
+	public CommentsVo(int postNo, int cmtNo, String cmtContent) {
+		super();
+		this.postNo = postNo;
+		this.cmtNo = cmtNo;
+		this.cmtContent = cmtContent;
+	}
+	
+	public int getCmtNo() {
+		return cmtNo;
+	}
+	
+	public void setCmtNo(int cmtNo) {
+		this.cmtNo = cmtNo;
+	}
+
+	// yyyy-MM-dd 포맷팅
+	public String getCmtRegDt_fmt() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(cmtRegDt);
+	}
+
+	public void setCmtRegDt(Date cmtRegDt) {
+		this.cmtRegDt = cmtRegDt;
+	}
+		
+	public String getCmtContent() {
+		return cmtContent;
+	}
+	
+	public void setCmtContent(String cmtContent) {
+		this.cmtContent = cmtContent;
+	}
+	
+	public String getCmtDelFlag() {
+		return cmtDelFlag;
+	}
+	
+	public void setCmtDelFlag(String cmtDelFlag) {
+		this.cmtDelFlag = cmtDelFlag;
+	}
+	
+	public int getPostNo() {
+		return postNo;
+	}
+	
+	public void setPostNo(int postNo) {
+		this.postNo = postNo;
+	}
+	
+	public String getMemId() {
+		return memId;
+	}
+	
+	public void setMemId(String memId) {
+		this.memId = memId;
+	}
+	
+	@Override
+	public String toString() {
+		return "CommentsVo [cmtNo=" + cmtNo + ", cmtRegDt=" + cmtRegDt + ", cmtContent=" + cmtContent + ", cmtDelFlag="
+				+ cmtDelFlag + ", postNo=" + postNo + ", memId=" + memId + "]";
+	}
+	
 }

@@ -14,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.or.ddit.post.model.CommentsVo;
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.service.IBoardService;
+import kr.or.ddit.post.service.ICommentsService;
 import kr.or.ddit.post.service.IPostService;
 import kr.or.ddit.util.model.PageVo;
 
@@ -30,6 +32,9 @@ public class PostController {
 	
 	@Resource(name="postService")
 	private IPostService postService;
+	
+	@Resource(name="commentsService")
+	private ICommentsService commentsService;
 	
 	// 게시판 페이징 리스트
 	@RequestMapping(path = "/postList")
@@ -62,11 +67,13 @@ public class PostController {
 		return "post/postInsert";
 	}
 
+	/*해야됨*/
 	// 게시글 등록
 	@RequestMapping(path = "/postInsert", method = RequestMethod.POST)
 	public String postInsert(PostVo postVo, HttpSession session, Model model) {
 	    Object memId = session.getAttribute("SESSION_MEMBERVO");
-		model.addAttribute("boardNo", postVo.getPostNo());
+	    logger.debug("===postVo{}",postVo);
+		model.addAttribute("boardNo", postVo.getBoardNo());
 
 		int insertCnt = postService.insertPost(postVo);
 
@@ -74,13 +81,82 @@ public class PostController {
 		if (insertCnt == 1) {
 			int postNo = postVo.getPostNo();
 
-			model.addAttribute("msg", "게시글이 정상 등록 되었습니다");
+			model.addAttribute("msg", "게시글이 정상 등록 되었습니다.");
 			return "redirect:/post/postList"; //리스트 되면 수정필요
 			// 정상 입력(실패)
 		} else {
-			model.addAttribute("msg", "게시글 등록이 실패 되었습니다");
+			model.addAttribute("msg", "게시글 등록이 실패 되었습니다.");
 			return "post/postInsert";
 		}
 	}
+	
+	/*해야됨*/
+	// 게시글 상세 화면
+	@RequestMapping(path = "/postDetail", method = RequestMethod.GET)
+	public String postDetailForm(PostVo postVo, CommentsVo commentsVo, Model model, 
+			                     String postNo, String boardNo) {
+		
+		model.addAttribute("postNo", postNo);
+		model.addAttribute("boardNo", boardNo);
+
+		// 댓글 조회
+		List<CommentsVo> cmtList = commentsService.getAllComments(postNo);
+		model.addAttribute("cmtList", cmtList);
+
+		PostVo postList = postService.getSelectPost(postNo);
+		model.addAttribute("postList", postList);
+
+		return "post/postDetail";
+
+	}
+	
+	// 게시글 삭제
+	@RequestMapping(path = "/postDel", method = RequestMethod.GET)
+	public String postDel(Model model, String boardNo, String postNo) {
+
+		model.addAttribute("boardNo", boardNo);
+		model.addAttribute("postNo", postNo);
+
+		int deleteCnt = postService.deletePost(postNo);
+
+		if (deleteCnt == 1) {
+			model.addAttribute("msg", "게시글이 삭제 되었습니다.");	
+		} else {
+			model.addAttribute("msg", "게시글 삭제에 실패했습니다.");
+		}
+		return "redirect:/post/postList";
+	}
+	
+	// 댓글 등록
+	@RequestMapping(path = "/insertCmt", method = RequestMethod.GET)
+	public String insertCmt(CommentsVo commentsVo, Model model, String memId, String postNo) {
+		model.addAttribute("postNo", postNo);
+		model.addAttribute("memId", memId);
+
+		int insertCnt = commentsService.insertComments(commentsVo);
+
+		if (insertCnt > 0) {
+			model.addAttribute("msg", "댓글을 정상 등록되었습니다.");
+		}
+		return "redirect:/post/postDetail";
+	}
+	
+	// 댓글 삭제
+	@RequestMapping(path = "/deleteCmt", method = RequestMethod.GET)
+	public String deleteCmt(Model model, String postNo, String cmtNo) {
+		model.addAttribute("postNo", postNo);
+		model.addAttribute("cmtNo", cmtNo);
+
+		int deleteCnt = commentsService.deleteComments(cmtNo);
+
+		if (deleteCnt == 1) {
+			model.addAttribute("msg", "댓글이 삭제 되었습니다.");	
+		} else {
+			model.addAttribute("msg", "댓글 삭제에 실패했습니다.");
+		}
+		return "redirect:/post/postDetail";
+	}
+	
+	
 	
 }
