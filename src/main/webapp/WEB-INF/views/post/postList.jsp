@@ -1,6 +1,7 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -16,6 +17,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
     <!-- Custom styles for this template -->
     <link href="${cp}/css/boxErd.css" rel="stylesheet">
+    <!-- <link rel="stylesheet" href="/css/style.css"> -->
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
@@ -75,7 +77,7 @@
 					</c:otherwise>
 				</c:choose>			
 							<td>${post.writerId}</td>
-							<td>${post.postRegDt}</td>
+							<td><fmt:formatDate value="${post.postRegDt}" pattern="yyyy-MM-dd" /></td>
 						</tr>
 					</c:forEach>
 				</tbody>
