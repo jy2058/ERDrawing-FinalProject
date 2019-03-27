@@ -14,6 +14,7 @@
 			<div class="youtube-btn btn-style1">ERDrawing 사용해보기</div>
 		</div>
 	</div>
+	<c:if test=""></c:if>
 		
     <div class="container">
 
@@ -63,4 +64,9 @@
 		</div>
 		
 	</div>
+	<script>
+	<c:if  test="${msg != null}">
+	alert("${msg}");
+</c:if>
+	</script>
 </div>
