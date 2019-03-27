@@ -89,4 +89,15 @@ public class TestController {
 		return "post/postInsert";
 	}
 	
+	
+	
+	
+	
+	
+	
+	@RequestMapping(path="er")
+	public String erdDrawing(){
+		return "drawing/erdDrawing";
+	}
+	
 }
