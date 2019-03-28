@@ -531,17 +531,17 @@
             };
 
 
-
+			console.log((textNode.width()*stage.scale().x)+3);
             document.body.appendChild(inputss);
 
             inputss.value = textNode.text();
             inputss.style.position = 'absolute';
-            inputss.style.top = (areaPosition.y) + 'px';
-            inputss.style.left = (areaPosition.x) + 'px';
-            inputss.style.width = (textNode.width()*stage.scale().x)+3;
-            inputss.style.height = (textNode.height()*stage.scale().y)+2;
+            inputss.style.top = (areaPosition.y-(stage.scale().x+4)) + 'px';
+            inputss.style.left = (areaPosition.x-(stage.scale().y+4)) + 'px';
+            inputss.style.width = (textNode.width()-4)*stage.scale().x + 'px';
+            inputss.style.height = (textNode.height()*stage.scale().y)+2 + 'px';
             inputss.style.fontSize = textNode.fontSize()*stage.scale().x + 'px';
-            inputss.style.paddingLeft = (4*stage.scale().x)+'px';
+            inputss.style.paddingLeft = (6*stage.scale().x)+'px';
             inputss.style.border = (2*stage.scale().x)+'px solid #000';
 
             inputss.focus();
