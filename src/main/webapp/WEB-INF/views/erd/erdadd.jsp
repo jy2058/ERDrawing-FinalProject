@@ -43,5 +43,13 @@
 		</form>
 		<div class="cancle-btn99 btn-style1">취소</div>
 		<div class="submit-btn99 btn-style1" id="erdAdd">만들기</div>
+		<a href="javascript:location.href='http://naver.com'" style="color:#fff;"> 테스트 버튼 </a>
+		
+		<script>
+		
+$("#erdAdd").on("click", function(){
+	 				$("#erdAddFrm").submit();
+	 			});
 
+		</script>
 <!-- css와 script는 moduleControl에서 작성 -->

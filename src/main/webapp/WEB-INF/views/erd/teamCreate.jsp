@@ -34,5 +34,67 @@
 		<div class="cancle-btn99 btn-style1">취소</div>
 		<div class="btn-style1" id="teamCreate">만들기</div>
 		
+<script>
+$( "#autocomplete" ).autocomplete({
+    source : function( request, response ) {
+         $.ajax({
+                type: 'get',
+                url: "/team/auto",
+//                request.term = $("#autocomplete").val()
+                data: { value : request.term },
+                success: function(data) {
+                	console.log("data:"+data.array);
+                    //서버에서 json 데이터 response 후 목록에 뿌려주기 위함(view 전에 실행)
+                response(
+                        $.map(data.array, function(item) {
+                        	console.log("item :"+item);
+                            return {
+                                //label: item.img,
+                                value: item.id,
+                                data: item.img
+                            }
+                        })
+                    ); 
+                }
+           });
+        },
+    //조회를 위한 최소글자수
+    minLength: 2,
+    autoFocus: true,
+    select: function( event, ui ) {
+        // 만약 검색리스트에서 선택하였을때 선택한 데이터에 의한 이벤트발생
+        console.log("ui.label : " + ui.item.label + " ui.value : " + ui.item.value);
+        
+        var html = '';
+        html += '<li class="teamMem">';
+        html += '	<div><img src="'+ ui.item.data + '"></div>';
+        html += '	<div>' + ui.item.value + '</div>';
+        html += '	<input id="delBtn" type="button" value="삭제">';
+        html += '</li>';
 
+        $("#ul").append(html); 
+        $("#autocomplete").val('');
+        
+        $("#teamMember").val(ui.item.value);
+        
+        //var searchId = $("input[name=searchId]").eq(1).val();
+        return false;	// text clear
+        
+        }
+});
+
+
+
+//추가된 회원 삭제
+$(document).on("click","#delBtn", function(e){
+	$(e.target).parent('li').remove();	
+});
+
+
+$("#teamCreate").on("click", function(){
+	$("#teamCreateFrm").submit();
+});
+
+
+</script>
 <!-- css와 script는 moduleControl에서 작성 -->

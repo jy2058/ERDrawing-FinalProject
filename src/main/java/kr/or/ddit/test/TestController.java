@@ -101,4 +101,27 @@ public class TestController {
 		return "drawing/erdDrawing";
 	}
 	
+	
+	
+	
+	@RequestMapping("/pageViewAjax")
+	public String testAjax(String value){
+		String page = "";
+		
+		
+		switch(value){
+			case "erdAdd":
+				page = "erd/erdadd";
+				break;
+				
+			case "createTeam":
+				page = "erd/teamCreate";
+				break;
+		}
+		
+		return page;
+	}
+	
+	
+	
 }
