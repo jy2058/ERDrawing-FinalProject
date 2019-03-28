@@ -371,7 +371,16 @@
             
              stage.off('click');
              stage.on('click', stageClick);
+             
+             entity.on('change', function(){
+            	 
+             });
         }
+        //entity 생성 종료
+        
+        
+        
+        
         
         //스테이지 클릭
         function stageClick(e){
@@ -475,6 +484,7 @@
                 btn_entity_group.show();
                 
                 entity.draggable(true);
+                
                 entity_container.strokeWidth(BORDER_SIZE);
                 
                 entity.moveTo(layer);
@@ -640,6 +650,10 @@
             btn_color.x(btn_entity_delete.x() - 21);
             btn_entity_delete_txt.x(btn_entity_delete.x()+7);
             btn_color_txt.x(btn_color.x()+7);
+            
+            
+            
+            
         }
         
         

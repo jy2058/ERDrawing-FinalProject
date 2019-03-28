@@ -64,6 +64,8 @@ a:hover { color: inherit; text-decoration: none;}
 	z-index: -1;
 }
 
+
+
 /*캔버스 미니맵 스타일 -hs추가-  */
 #container_mini {
 		 display:none;
@@ -79,6 +81,7 @@ a:hover { color: inherit; text-decoration: none;}
 
 
 
+
 /* 캔버스 스타일 */
 #contents .container {
 	position: relative;
@@ -91,19 +94,30 @@ a:hover { color: inherit; text-decoration: none;}
 
 
 .buttons {
-	display:table-cell;
-	background: black;
+	display:inline-block;
+	opacity:0.8;
 	color: #fff;
-	padding-left:10px;
-	padding-right:10px;
-	height:39px;
-	vertical-align:center;
+	min-width:33px;
+	height:25px;
+	line-height:25px;
+	vertical-align:middle;
+	text-align:center;
 	cursor: pointer;
+	margin-right:10px;
+	padding:0 10px;
 }
 
-
-input {
-	font-size: 16px;
+.buttons:nth-child(1){
+	padding:0;
+	margin-left:5px;
 }
 
+.buttons:hover{
+	
+	background:#555;
+}
+
+input:focus {
+  outline: none;
+}
 
