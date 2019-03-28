@@ -49,5 +49,11 @@
 		)
 	</insert>
 
+	<!-- 회원 자동검색 -->
+	<select id="getAutoFindMem" parameterType="String" resultType="memberVo">
+		select *
+		from member
+		where memid like '%'||#{memId}||'%'
+	</select>
 
 </mapper>

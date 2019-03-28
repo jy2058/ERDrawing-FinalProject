@@ -29,6 +29,11 @@ public class MemberDaoImpl implements IMemberDao{
 	public int insertMember(MemberVo vo) {
 		return sqlSession.insert("member.insertMember",vo);
 	}
+
+	@Override
+	public List<MemberVo> getAutoFindMem(String memId) {
+		return sqlSession.selectList("member.getAutoFindMem", memId);
+	}
 	
 
 }

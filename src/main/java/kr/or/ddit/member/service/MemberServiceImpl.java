@@ -29,6 +29,11 @@ public class MemberServiceImpl implements IMemberService{
 	public int insertMember(MemberVo vo) {
 		return memberDao.insertMember(vo);
 	}
+
+	@Override
+	public List<MemberVo> getAutoFindMem(String memId) {
+		return memberDao.getAutoFindMem(memId);
+	}
 	
 	
 	

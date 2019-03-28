@@ -7,12 +7,15 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.test.logicTestConfig;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
 
 public class MemberDaoImplTest extends logicTestConfig{
+	private Logger logger = LoggerFactory.getLogger(MemberDaoImplTest.class);
 	
 	@Resource(name="memberDao")
 	private IMemberDao memberDao;
@@ -37,6 +40,24 @@ public class MemberDaoImplTest extends logicTestConfig{
 		int cnt = memberDao.insertMember(vo);
 		assertNotNull(cnt);
 		assertEquals(1, cnt);
+	}
+	
+	/**
+	* Method : testGetAutoFindMem
+	* 작성자 : PC08
+	* 변경이력 :
+	* Method 설명 : 멤버 자동완성 검색
+	*/
+	@Test
+	public void testGetAutoFindMem(){
+		/***Given***/
+		String memId = "u";
+		/***When***/
+		List<MemberVo> autoFindMem = memberDao.getAutoFindMem(memId);
+		/***Then***/
+		assertNotNull(autoFindMem);
+		logger.debug("===autoFindMem : {}", autoFindMem);
+		
 	}
 
 }

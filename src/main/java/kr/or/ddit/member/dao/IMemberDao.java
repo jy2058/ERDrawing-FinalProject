@@ -34,4 +34,14 @@ public interface IMemberDao {
 	 * Method 설명 : 사용자 등록
 	 */
 	int insertMember(MemberVo vo);
+	
+	/**
+	* Method : getAutoFindMem
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param memId
+	* @return
+	* Method 설명 : 회원 자동검색
+	*/
+	List<MemberVo> getAutoFindMem(String memId);
 }

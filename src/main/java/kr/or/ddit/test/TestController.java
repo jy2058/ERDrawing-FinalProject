@@ -70,8 +70,12 @@ public class TestController {
 		Map<String, Object> myErdTagMap = erdService.getMyErdTagMap(memId);
 		model.addAllAttributes(myErdTagMap);
 		
+		
 		return "mypage";
 	}
+	
+	
+	
 	
 	@RequestMapping(path="/modify")
 	public String modify(){

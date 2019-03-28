@@ -55,6 +55,6 @@ public class ErdController {
 		}
 		erdService.addErdTag(erdVo, tag, memId);
 		
-		return "mypage";
+		return "redirect:/mypage";
 	}
 }
