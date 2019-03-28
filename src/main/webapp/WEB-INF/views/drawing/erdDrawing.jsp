@@ -201,15 +201,14 @@
             var mini_tb = new Konva.Rect({
 				x: circlePos.x/30,
 				y: circlePos.y/40,
-				width: entity_container.width()/30,
-				height: entity_container.height()/40,
 				fill: 'black',
 				id :entity._id        //메인스테이지 테이블의 id값을 참조함 
 				/* opacity: 0.3 */
 			});
             console.log('mini_tb 아이디 :'+mini_tb.id());
-			mini_layer.add(mini_tb);
-			mini_stage.add(mini_layer);
+            console.log('entity_container.width:'+entity_container.width());
+            console.log('entity_container.height:'+entity_container.height());
+			
             
             entity_logical = new Konva.Rect({
                 x: BORDER_SIZE,
@@ -363,11 +362,19 @@
             
             layer.add(entity);
             entity.add(btn_entity_group);
-
+			
              entity_resize();
              
             layer.draw();
             
+            //리사이즈 된 크기에 맞춰서 미니맵테이블의 크기 설정
+            mini_tb.width(entity_container.width()/30);
+            mini_tb.height(entity_container.height()/40);
+            
+            console.log('entity_container.width()'+ entity_container.width());
+            console.log('entity_container.height()'+ entity_container.height());
+            mini_layer.add(mini_tb);
+			mini_stage.add(mini_layer);
             
              entity.off('dblclick');
              entity.on('dblclick', textClick);
@@ -383,13 +390,12 @@
 //             	 }
 				
 
-            	 
-//             	 console.log('gg3');
             	 var mini_entity = mini_stage.find('#'+e.target._id+'');
             	 mini_entity.x(e.target.x()/30);
             	 mini_entity.y(e.target.y()/40);
-            	 mini_entity.width(e.target.width()/30);
-            	 mini_entity.height(e.target.height()/40);
+            	 //리사이즈 된 후에 첫번 째  값 즉 entity의 width를 가져옴
+            	 mini_entity.width(this.children[0].width()/30);
+            	 mini_entity.height(this.children[0].height()/40);
             	 mini_layer.draw();
             	 
             	 
@@ -666,12 +672,13 @@
              entity_logical.width(entity_logical_txt.width());
              entity_phisical.x(entity_logical.width()+BORDER_SIZE);
              entity_phisical_txt.x(entity_phisical.x());
-             entity_phisical.width(entity_phisical_txt.width()); entity_container.width(entity_logical_txt.width()+entity_phisical_txt.width()+(BORDER_SIZE*2));
-            
+             entity_phisical.width(entity_phisical_txt.width()); 
+             entity_container.width(entity_logical_txt.width()+entity_phisical_txt.width()+(BORDER_SIZE*2));
             btn_entity_delete.x(entity_container.width() -(20-(BORDER_SIZE-1)));
             btn_color.x(btn_entity_delete.x() - 21);
             btn_entity_delete_txt.x(btn_entity_delete.x()+7);
             btn_color_txt.x(btn_color.x()+7);
+            
             
             
             
