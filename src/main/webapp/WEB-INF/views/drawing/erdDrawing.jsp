@@ -389,13 +389,6 @@
             		 
 //             	 }
 				
-<<<<<<< HEAD
-				console.log(e);
-            	 
-//             	 console.log('gg3');
-=======
-
->>>>>>> branch 'master' of https://gitlab.com/ddit/erdrawing.git
             	 var mini_entity = mini_stage.find('#'+e.target._id+'');
             	 mini_entity.x(e.target.x()/30);
             	 mini_entity.y(e.target.y()/40);
