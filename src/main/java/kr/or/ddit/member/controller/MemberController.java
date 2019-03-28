@@ -1,15 +1,20 @@
 package kr.or.ddit.member.controller;
 
+import java.util.Random;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.or.ddit.api.mail.IMailService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
@@ -22,6 +27,9 @@ public class MemberController {
 	
 	@Resource(name = "memberService")
 	private IMemberService memberService;
+	
+	@Resource(name = "mailService")
+	private IMailService mailService;
 	
 	@RequestMapping("/join")	//회원가입
 	public String join(MemberVo memVo,RedirectAttributes ra,HttpServletRequest req){
@@ -51,7 +59,20 @@ public class MemberController {
 		return "jsonView";
 		
 	}
-		
+	 @RequestMapping("/sendMail")
+	    public String sendMailAuth(HttpSession session, @RequestParam String email,Model model) {
+		 int ran = new Random().nextInt(100000) + 10000; // 10000 ~ 99999
+	        String joinCode = String.valueOf(ran);
+	 
+	        String subject = "회원가입 인증 코드 발급 안내 입니다.";
+	        StringBuilder sb = new StringBuilder();
+	        sb.append("귀하의 인증 코드는 " + joinCode + " 입니다.");
+	        boolean send = mailService.send(subject, sb.toString(), "prings196s@gmail.com", email, null);
+	        model.addAttribute("check", send);
+	        model.addAttribute("joinCode", joinCode);
+	        return "jsonView";
+	    }
+
 	
 
 }
