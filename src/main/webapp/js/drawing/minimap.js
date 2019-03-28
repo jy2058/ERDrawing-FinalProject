@@ -13,7 +13,7 @@ $(document).ready(function() {
 		flag = !flag;
 	});
 	mini_rect.on('dragmove', function() {
-		console.log('move');
+		//console.log('move');
 		collision_check_mini();
 		moveMiniStage();
 	});

@@ -183,19 +183,7 @@
                 name: 'entity'
             });
             
-            //미니맵에 표시할 테이블 생성
-            var mini_tb = new Konva.Rect({
-				x: circlePos.x/30,
-				y: circlePos.y/40,
-				width: 6,
-				height: 3,
-				fill: 'black',
-				id :entity._id        //메인스테이지 테이블의 id값을 참조함 
-				/* opacity: 0.3 */
-			});
-            console.log('mini_tb 아이디 :'+mini_tb.id());
-			mini_layer.add(mini_tb);
-			mini_stage.add(mini_layer);
+          
             
 //            테이블 전체 박스
             entity_container = new Konva.Rect({
@@ -209,6 +197,19 @@
                 name: 'entity_container'
             });
             
+            //미니맵에 표시할 테이블 생성
+            var mini_tb = new Konva.Rect({
+				x: circlePos.x/30,
+				y: circlePos.y/40,
+				width: entity_container.width()/30,
+				height: entity_container.height()/40,
+				fill: 'black',
+				id :entity._id        //메인스테이지 테이블의 id값을 참조함 
+				/* opacity: 0.3 */
+			});
+            console.log('mini_tb 아이디 :'+mini_tb.id());
+			mini_layer.add(mini_tb);
+			mini_stage.add(mini_layer);
             
             entity_logical = new Konva.Rect({
                 x: BORDER_SIZE,
@@ -219,6 +220,8 @@
                 //stroke: 'red',
                 name: 'entity_logical'
             });
+            
+            
             
             entity_phisical = new Konva.Rect({
                 x: entity_logical.x() + entity_logical.width(),
@@ -378,12 +381,15 @@
 //             	 if(e.target.findaasdasd(.length != old_target.findaasdasd().length){
             		 
 //             	 }
+				
 
             	 
 //             	 console.log('gg3');
             	 var mini_entity = mini_stage.find('#'+e.target._id+'');
             	 mini_entity.x(e.target.x()/30);
             	 mini_entity.y(e.target.y()/40);
+            	 mini_entity.width(e.target.width()/30);
+            	 mini_entity.height(e.target.height()/40);
             	 mini_layer.draw();
             	 
             	 
