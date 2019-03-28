@@ -33,6 +33,13 @@
          <definition name="test2" extends="layout">
         	<put-attribute name="content" value="/WEB-INF/views/test3.jsp" />
         </definition>
+         <definition name="testyhs" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/testyhs_minimap.jsp" />
+        </definition>
+        
+         <definition name="testline" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/lineTest.jsp" />
+        </definition>
         
         
         
