@@ -241,7 +241,7 @@
             });
 
             entity_phisical_txt = new Konva.Text({
-                text: '테이블명(논리)',
+                text: '테이블명(물리)',
                 x: entity_phisical.x(),
                 y: entity_phisical.y(),
                 padding: 5,
@@ -509,18 +509,24 @@
             };
 
 
-
+			console.log((textNode.width()*stage.scale().x)+3);
             document.body.appendChild(inputss);
 
             inputss.value = textNode.text();
             inputss.style.position = 'absolute';
-            inputss.style.top = (areaPosition.y) + 'px';
+            inputss.style.top = (areaPosition.y) + 'px';	/* (areaPosition.y-(stage.scale().x+1)) + 'px'; */
             inputss.style.left = (areaPosition.x) + 'px';
-            inputss.style.width = (textNode.width()*stage.scale().x)+3;
-            inputss.style.height = (textNode.height()*stage.scale().y)+2;
+            inputss.style.width = (textNode.width()-6)*stage.scale().x + 'px';
+            inputss.style.height = (textNode.height()-3)*stage.scale().y + 'px';
             inputss.style.fontSize = textNode.fontSize()*stage.scale().x + 'px';
-            inputss.style.paddingLeft = (4*stage.scale().x)+'px';
-            inputss.style.border = (2*stage.scale().x)+'px solid #000';
+            inputss.style.paddingLeft = (5*stage.scale().x)+'px';
+            
+            inputss.style.background = textNode.findAncestor('.entity').findOne('.entity_container').attrs.fill;
+            inputss.style.color = textNode.findAncestor('.entity').findOne('.entity_container').attrs.stroke;
+            inputss.style.border = '0px';
+            inputss.style.fontFamily = textNode.fontFamily();
+           
+//             inputss.style.border = (2*stage.scale().x)+'px solid #000';
 
             inputss.focus();
 
