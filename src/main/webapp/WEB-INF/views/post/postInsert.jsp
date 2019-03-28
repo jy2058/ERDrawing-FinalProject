@@ -36,9 +36,9 @@
                <input type="hidden" id="boardNo" name="boardNo" value="${boardNo}">
 
 	</br>
-	글제목 : <input type="text" id="title" name="title" rows="10" cols="100" style="width:400px; height:30px;"/></br></br>
-	작성자 : <input type="text" id="writerId" value="${SESSION_MEMBERVO.memId}" rows="10" cols="100" style="width:400px; height:30px;" readonly/></br></br>
-	<textarea name="content" id="smarteditor" rows="10" cols="100" style="width:766px; height:412px;"></textarea>
+	글제목 : <input type="text" id="postTitle" name="postTitle" rows="10" cols="100" style="width:400px; height:30px;"/></br></br>
+	작성자 : <input type="text" id="writerId" name="writerId" value="${SESSION_MEMBERVO.memId}" rows="10" cols="100" style="width:400px; height:30px;" readonly/></br></br>
+	<textarea name="postContent" id="smarteditor" rows="10" cols="100" style="width:766px; height:412px;"></textarea>
 	<div class="form-group">
 		<label for="userNm" class="col-sm-1 control-label">첨부파일</label>
 		<div class="col-sm-4">
@@ -55,12 +55,11 @@
          </div>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-
-
-<script src="../SE2/js/HuskyEZCreator.js"></script>
-<script type="text/javascript">
+   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script src="../SE2/js/HuskyEZCreator.js"></script>
+	<script type="text/javascript">
 var oEditors = []; // 개발되어 있는 소스에 맞추느라, 전역변수로 사용하였지만, 지역변수로 사용해도 전혀 무관 함.
 
 $(document).ready(function() {
@@ -68,7 +67,7 @@ $(document).ready(function() {
 	nhn.husky.EZCreator.createInIFrame({
 		oAppRef : oEditors, // 전역변수 명과 동일해야 함.
 		elPlaceHolder : "smarteditor", // 에디터가 그려질 textarea ID 값과 동일 해야 함.
-		sSkinURI : "/SE2/SmartEditor2Skin.html", // Editor HTML
+		sSkinURI : "../SE2/SmartEditor2Skin.html", // Editor HTML
 		fCreator : "createSEditor2", // SE2BasicCreator.js 메소드명이니 변경 금지 X
 		htParams : {
 			// 툴바 사용 여부 (true:사용/ false:사용하지 않음)
@@ -82,7 +81,8 @@ $(document).ready(function() {
 
 	// 전송버튼 클릭이벤트
 	$("#saveBtn").click(function(){
-		if(confirm("저장하시겠습니까?")) {
+		console.log("dgdg")
+	 	if(confirm("저장하시겠습니까?")) {
 			// id가 smarteditor인 textarea에 에디터에서 대입
 			oEditors.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
 
@@ -91,7 +91,7 @@ $(document).ready(function() {
 				$("#frm").submit();
 			}
 		}
-	})
+	});
 });
 
 // 필수값 Check
@@ -107,6 +107,5 @@ function validation(){
 }
 
 </script>
-
 </body>
 </html>

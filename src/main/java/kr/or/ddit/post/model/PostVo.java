@@ -1,5 +1,6 @@
 package kr.or.ddit.post.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class PostVo {
@@ -25,63 +26,90 @@ public class PostVo {
 		this.postTitle = postTitle;
 	}
 	
+	
+
 	public int getPostNo() {
 		return postNo;
 	}
+
 	public void setPostNo(int postNo) {
 		this.postNo = postNo;
 	}
+
 	public String getPostContent() {
 		return postContent;
 	}
+
 	public void setPostContent(String postContent) {
 		this.postContent = postContent;
 	}
+
+	// yyyy-MM-dd 포맷팅
+	public String getPostRegDt_fmt() {
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		return sdf.format(postRegDt);
+	}
+	
 	public Date getPostRegDt() {
 		return postRegDt;
 	}
+
 	public void setPostRegDt(Date postRegDt) {
 		this.postRegDt = postRegDt;
 	}
+
 	public int getPostGn() {
 		return postGn;
 	}
+
 	public void setPostGn(int postGn) {
 		this.postGn = postGn;
 	}
+
 	public String getPostDelFlag() {
 		return postDelFlag;
 	}
+
 	public void setPostDelFlag(String postDelFlag) {
 		this.postDelFlag = postDelFlag;
 	}
+
 	public int getBoardNo() {
 		return boardNo;
 	}
+
 	public void setBoardNo(int boardNo) {
 		this.boardNo = boardNo;
 	}
+
 	public int getParentPostNo() {
 		return parentPostNo;
 	}
+
 	public void setParentPostNo(int parentPostNo) {
 		this.parentPostNo = parentPostNo;
 	}
+
 	public String getWriterId() {
 		return writerId;
 	}
+
 	public void setWriterId(String writerId) {
 		this.writerId = writerId;
 	}
+
 	public String getPostTitle() {
 		return postTitle;
 	}
+
 	public void setPostTitle(String postTitle) {
 		this.postTitle = postTitle;
 	}
+
 	public int getLevel() {
 		return level;
 	}
+
 	public void setLevel(int level) {
 		this.level = level;
 	}

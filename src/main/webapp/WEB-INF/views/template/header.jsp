@@ -20,6 +20,7 @@
 				<li class="navbar-brand communityHover"><a href="/">Community</a>
 					<%@ include file="/WEB-INF/views/template/module/communityMenu.jsp"%>
 				</li>
+				<li class="navbar-brand"><a href="/er">ErdTest</a></li>
 
 			</ul>
 
