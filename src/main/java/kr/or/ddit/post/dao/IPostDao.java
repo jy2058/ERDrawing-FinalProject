@@ -16,15 +16,14 @@ public interface IPostDao {
 	
 	int getPostCnt(int boardNo);
 
-	int insertPost(PostVo postVo);
+	int insertPost(PostVo postVo); //게시글 등록
 	
 	int updatePost(PostVo postVo);
 	
 	int deletePost(String PostNo);
 	
-	String getSelectBoardNm(String boardNo);
+	int insertReply(PostVo postVo); //답글 등록
 	
-	// 파일업로드
-	int insertUploadFile(UploadFileVo uploadFileVo);
-		
+	String getSelectBoardNm(String boardNo);
+			
 }
