@@ -5,20 +5,20 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+<link rel="stylesheet" href="/css/erdDrawing.css">
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://unpkg.com/konva@3.2.0/konva.min.js"></script>
+<script src="../../../js/drawing/minimap.js"></script>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-	<script src="https://unpkg.com/konva@3.2.0/konva.min.js"></script>
-
-	<link rel="stylesheet" href="/css/erdDrawing.css"> 
 </head>
 
-
-<body>
+<body id='my_body'>
 
 	<div id="drawing_container">
-        <div class="drawing_top">
-        	<a id="botton0" class="buttons" href="/">홈</a>
-            <div id="button1" class="buttons">테이블 이름 가져오기</div>
+		<div class="drawing_top">
+			<a id="botton0" class="buttons" href="/">홈</a>
+			<div id="button1" class="buttons">테이블 이름 가져오기</div>
 			<div id="button2" class="buttons">확대/축소 초기화</div>
 			<div id="button3" class="buttons">테이블 추가하기</div>
 			<div id="button4" class="buttons">미니맵 Toggle</div>
@@ -59,8 +59,6 @@
         $("#button1").on('click', function(){
            alert(textNode.text());
         });
-        
-        
         $("#button2").on('click', function(){
         	//미니맵 빨간 사각형 초기화
         	 console.log('mini_width/3'+mini_width/3);
@@ -99,22 +97,7 @@
                  //stage.off('click');
 
            });
-            
-            
         });
-        
-        
-        //미니맵 켜기/끄기
-       var flag= true;
-		$("#button4").on('click', function() {
-			if(flag){
-			$("#container_mini").css('display','block');
-			}
-			else if(!flag){
-			$("#container_mini").css('display','none');
-			}
-			flag =!flag;
-		}); 
         
 //    1. 변수 초기화
       var width = window.innerWidth;
@@ -162,13 +145,9 @@
       init_ERD();
       console.log(stage);
         
-  // 미니맵 스테이지 생성
+  // 미니맵용 스테이지 생성
   var mini_width = $('#container_mini').width();
 		var mini_height = $('#container_mini').height();
-		console.log('mini_width' + mini_width);
-		console.log('mini_height' + mini_height);
-
-		//작은 스테이지 생성(미니맵용)
 		var mini_stage = new Konva.Stage({
 			container: 'container_mini',
 			width: mini_width,
@@ -177,7 +156,7 @@
 		
 		var mini_layer = new Konva.Layer();
 	
-		//미니맵에 보이는 사각형 생성
+		//미니맵에 보이는 사각형 생성(빨간네모)
 		var mini_rect = new Konva.Rect({
 			x: 0,
 			y: 0,
@@ -189,112 +168,7 @@
 		});
 		mini_rect.draggable('true');
 		mini_layer.add(mini_rect);
-
 		mini_stage.add(mini_layer);
-
-		mini_rect.on('dragmove', function() {
-			console.log('move');
-			updateText_mini();
-			collision_check_mini();
-			moveMiniStage();
-		});
-		
-		function updateText_mini() {
-			var lines = [
-				'x: ' + mini_stage.x(),
-				'y: ' + mini_stage.y(),
-				'rotation: ' + mini_rect.rotation(),
-				'width: ' + mini_rect.width(),
-				'height: ' + mini_rect.height(),
-				'scaleX: ' + mini_rect.scaleX(),
-				'scaleY: ' + mini_rect.scaleY(),
-			];
-			console.log(lines);
-			layer.batchDraw();
-		};
-		
-		
-		//미니맵 사각형의 충돌 체크
-		function collision_check_mini() {
-			console.log((mini_stage.width() - mini_rect.width()));
-			console.log((mini_stage.height() - mini_rect.height()));
-			//x좌표의 왼쪽쪽 끝
-			if (mini_rect.x() <= 0) {
-				mini_rect.x(0);
-			}
-			//y좌표의 왼쪽 끝
-			if (mini_rect.y() <= 0) {
-				mini_rect.y(0);
-			}
-
-			//x좌표의 오른쪽 끝
-			if (mini_rect.x() >= (mini_stage.width() - mini_rect.width())) { //160
-				mini_rect.x(mini_stage.width() - mini_rect.width());
-			}
-			//y좌표의 오른쪽 끝
-			if (mini_rect.y() >= (mini_stage.height() - mini_rect.height())) { //90
-				mini_rect.y(mini_stage.height() - mini_rect.height());
-			}
-		}
-
-		//미니맵에 사각형을 움직였을 때. 메인 스테이지의 위치를 바꿔주는 메서드
-		function moveMiniStage() {
-			stage.x(-mini_rect.x() * 30);
-			stage.y(-mini_rect.y() * 40);
-			console.log('스테이지 이동');
-			layer.draw();
-		}
-      
-		//메인 스테이지를 드래그로  이동할 때
-		stage.on('dragmove', function() {
-			console.log('Main Stage move');
-			updateText();
-			collision_check();
-			moveStage();
-		});
-
-		function updateText() {
-			var lines = [
-				'x: ' + stage.x(),
-				'y: ' + stage.y(),
-				'rotation: ' + stage.rotation(),
-				'width: ' + stage.width(),
-				'height: ' + stage.height(),
-				'scaleX: ' + stage.scaleX(),
-				'scaleY: ' + stage.scaleY(),
-			];
-
-			console.log(lines);
-			layer.batchDraw();
-		};
-
-		//메인스테이지의  충돌체크
-		function collision_check() {
-			//x좌표의 왼쪽쪽 끝
-			if (stage.x() > 0) {
-				stage.x(0);
-			}
-			//y좌표의 왼쪽 끝
-			if (stage.y() > 0) {
-				stage.y(0);
-			}
-
-			//x좌표의 오른쪽 끝
-			if (stage.x() < -3680) {
-				stage.x(-3680);
-			}
-			//y좌표의 오른쪽 끝
-			if (stage.y() < -1714) {
-				stage.y(- 1714);
-			}
-		};
-
-	//메인 스테이지가 움직 일 때, 미니맵 스테이지를 움직이게 하는 메서드
-		function moveStage() {
-			mini_rect.x(-stage.x() / 30);
-			mini_rect.y(-stage.y() / 40);
-			mini_layer.draw();
-		};
 		
 		
         
@@ -356,10 +230,6 @@
                 name: 'entity_phisical'
             });
             
-            
-            
-
-            
             entity_logical_txt = new Konva.Text({
                 text: 'tableName',
                 x: entity_logical.x(),
@@ -369,7 +239,6 @@
                 fontSize: 11,
                 name: 'entity_logical_txt'
             });
-            
 
             entity_phisical_txt = new Konva.Text({
                 text: '테이블명(논리)',
@@ -381,13 +250,9 @@
                 name: 'entity_phisical_txt'
             });
             
-            
             entity.add(entity_container);
             entity.add(entity_logical).add(entity_phisical);
             entity.add(entity_logical_txt).add(entity_phisical_txt);
-
-
-            
             
 //            버튼 생성
             btn_entity_group = new Konva.Group({
@@ -396,8 +261,6 @@
                 visible:false,
                 name: 'btn_entity_group'
             });
-            
-            
 
             //entity 삭제 버튼
             btn_entity_delete = new Konva.Rect({
@@ -442,11 +305,9 @@
                 fontSize: 12,
                 name: 'btn_color_txt'
             });
-            
 
             btn_entity_group.add(btn_entity_delete).add(btn_color);
             btn_entity_group.add(btn_entity_delete_txt).add(btn_color_txt);
-            
             
             
             //pk추가 버튼
@@ -497,20 +358,11 @@
             btn_entity_group.add(btn_pk_add).add(btn_col_add);
             btn_entity_group.add(btn_pk_add_txt).add(btn_col_add_txt);
             
-            
-   
-            
-            
             layer.add(entity);
             entity.add(btn_entity_group);
-            
-            
 
              entity_resize();
-            
-            
-            
-            
+             
             layer.draw();
             
             
@@ -519,20 +371,7 @@
             
              stage.off('click');
              stage.on('click', stageClick);
-
-            
         }
-      
-
-      
-      
-
-        
-        
-        
-        
-        
-        
         
         //스테이지 클릭
         function stageClick(e){
@@ -544,13 +383,6 @@
             var old_btn_entity_delete = btn_entity_delete;
             var old_btn_color = btn_color;
             var old_btn_entity_group = btn_entity_group;
-            
-            
-            
-            
-            
-           
-            
             
             //입력창 삭제
            if(document.body.getElementsByTagName('input').length > 0){
@@ -629,8 +461,6 @@
                 });
                 
                 
-                
-                
                 if(allNode.parent.attrs.name === "entity"){
                     entity = allNode.parent;
                 }
@@ -641,9 +471,6 @@
                 
                 old_entity.draggable(false);
                 old_container.strokeWidth(0);
-
-                
-                
  
                 btn_entity_group.show();
                 
@@ -651,22 +478,9 @@
                 entity_container.strokeWidth(BORDER_SIZE);
                 
                 entity.moveTo(layer);
- 
             }
-
-            
             layer.draw();
-
-
         }
-        
-        
-     
-        
-        
-        
-     
-        
         
 //        텍스트 값 입력 메소드
         var inputss = document.createElement('input');
@@ -776,14 +590,10 @@
                                         btn_color_txt = g;
                                         break;
                                 }
-                                        
                             });
-                            
-                            
                             break;
       
                    }
-
                 });
                  
                  
@@ -797,12 +607,8 @@
                 if(allNode.parent.attrs.name === "entity"){
                     entity = allNode.parent;
                 }
-                 
-                 
-                 
                 //리사이징 시작
                  entity_resize();
-                 
                  
                 layer.draw();
                 document.body.removeChild(inputss);
@@ -824,15 +630,10 @@
              entity_phisical_txt.x(entity_phisical.x());
              entity_phisical.width(entity_phisical_txt.width()); entity_container.width(entity_logical_txt.width()+entity_phisical_txt.width()+(BORDER_SIZE*2));
             
-            
-            
             btn_entity_delete.x(entity_container.width() -(20-(BORDER_SIZE-1)));
             btn_color.x(btn_entity_delete.x() - 21);
-            
             btn_entity_delete_txt.x(btn_entity_delete.x()+7);
             btn_color_txt.x(btn_color.x()+7);
-            
-            
         }
         
         
@@ -846,7 +647,6 @@
         var SCALE_MAX = 1.8;
         var scaleBy = 1.05;
         stage.on('wheel', e => {
-            	
                 e.evt.preventDefault();
                 var oldScale = stage.scaleX();
 				console.log('stage.scaleX()'+ stage.scaleX());
@@ -861,10 +661,8 @@
 				//확대할 경우에...
 			if (e.evt.deltaY > 0) {
 				if(mini_rect.width()<40){  //작은 돋보기 크기가 너무 작아지는 것을 막아줌
-					console.log('return');
 					return;
 				}
-				console.log('확대중입니다..');
 				mini_rect.width(mini_rect.width() - plusWidth);
 				mini_rect.height(mini_rect.height() - plusHeight);
 
@@ -872,13 +670,10 @@
 			//축소할 경우에...
 			else if (e.evt.deltaY < 0) {
 				if(mini_rect.width()>=184){ //작은 돋보기 크기가 너무 커지는 것을 막아줌
-					console.log('return');
 					return;
 				}
 				mini_rect.width(mini_rect.width() + plusWidth);
 				mini_rect.height(mini_rect.height() + plusHeight);
-				console.log('가로'+ mini_rect.width());
-				console.log('세로'+ mini_rect.height());
 			}
 				
                 var mousePointTo = {
@@ -910,9 +705,7 @@
                 mini_layer.draw();//돋보기창
                 stage.position(newPos);
                 stage.batchDraw();
-
-                  console.log(stage.scale().x);
-
+                console.log(stage.scale().x);
                     
       });
         
