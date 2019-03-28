@@ -9,7 +9,7 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://unpkg.com/konva@3.2.0/konva.min.js"></script>
-<script src="../../../js/drawing/minimap.js"></script>
+<script src="/js/drawing/minimap.js"></script>
 
 </head>
 
@@ -382,7 +382,7 @@
             		 
 //             	 }
 				
-
+				console.log(e);
             	 
 //             	 console.log('gg3');
             	 var mini_entity = mini_stage.find('#'+e.target._id+'');
