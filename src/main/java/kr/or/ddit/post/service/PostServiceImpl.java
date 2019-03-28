@@ -80,6 +80,13 @@ public class PostServiceImpl implements IPostService {
 		
 		return deleteCnt;
 	}
+	
+	@Override
+	public int insertReply(PostVo postVo) {
+		int insertCnt = postDao.insertReply(postVo);
+		 
+		return insertCnt;
+	}	
 
 	@Override
 	public String getSelectBoardNm(String boardNo) {
@@ -87,13 +94,5 @@ public class PostServiceImpl implements IPostService {
 		
 		return boardNm;
 	}
-	
-	@Override
-	public int insertUploadFile(UploadFileVo uploadFileVo) {
-		int insertFileCnt = postDao.insertUploadFile(uploadFileVo);
-		
-		return insertFileCnt;
-	}
-
 	
 }

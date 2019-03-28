@@ -17,15 +17,14 @@ public interface IPostService {
 	
 	List<PostVo> selectPostPagingList(PageVo pageVo);
 	
-	int insertPost(PostVo postVo);
+	int insertPost(PostVo postVo); //게시글 등록
 	
 	int updatePost(PostVo postVo);
 	
 	int deletePost(String PostNo);
 	
+	int insertReply(PostVo postVo); //답글 등록
+	
 	String getSelectBoardNm(String boardNo);
 	
-	// 파일업로드
-	int insertUploadFile(UploadFileVo uploadFileVo);
-
 }

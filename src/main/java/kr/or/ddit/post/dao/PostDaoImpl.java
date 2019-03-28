@@ -65,6 +65,13 @@ public class PostDaoImpl implements IPostDao {
 		
 		return deleteCnt;
 	}
+	
+	@Override
+	public int insertReply(PostVo postVo) {
+		int insertCnt = sqlSessionTemplate.insert("post.insertReply", postVo);
+		
+		return insertCnt;
+	}
 
 	@Override
 	public String getSelectBoardNm(String boardNo) {
@@ -72,11 +79,4 @@ public class PostDaoImpl implements IPostDao {
 		return boardNm;
 	}
 	
-	@Override
-	public int insertUploadFile(UploadFileVo uploadFileVo) {
-		int insertFileCnt = sqlSessionTemplate.insert("post.insertPost", uploadFileVo);
-		
-		return insertFileCnt;
-	}
-
 }
