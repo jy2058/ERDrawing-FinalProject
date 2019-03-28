@@ -371,9 +371,25 @@
             
              stage.off('click');
              stage.on('click', stageClick);
-             
-             entity.on('change', function(){
+
+             //미니맵 이벤트
+             entity.on('dragmove click', function(e){
+//             	 e.target
+//             	 if(e.target.findaasdasd(.length != old_target.findaasdasd().length){
+            		 
+//             	 }
+
             	 
+//             	 console.log('gg3');
+            	 var mini_entity = mini_stage.find('#'+e.target._id+'');
+            	 mini_entity.x(e.target.x()/30);
+            	 mini_entity.y(e.target.y()/40);
+            	 mini_layer.draw();
+            	 
+            	 
+            	 old_target = e.target;
+            	 
+
              });
         }
         //entity 생성 종료

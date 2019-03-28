@@ -45,13 +45,11 @@ $(document).ready(function() {
 	function moveMiniStage() {
 		stage.x(-mini_rect.x() * 30);
 		stage.y(-mini_rect.y() * 40);
-		console.log('스테이지 이동');
 		layer.draw();
 	}
 
 	//메인 스테이지를 드래그로  이동할 때
 	stage.on('dragmove', function() {
-		console.log('Main Stage move');
 		collision_check();
 		moveStage();
 	});
