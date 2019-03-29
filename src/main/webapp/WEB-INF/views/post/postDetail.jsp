@@ -95,8 +95,12 @@
 								<c:if test="${SESSION_MEMBERVO.memId == cmt.memId}">
 									<td>
 										<!-- <button id="cmtUpdBtn" type="button" class="btnUpd btn-default">수정</button> -->
-										<button type="button" class="btnDel btn-default"
-											data-cmtnum="${cmt.cmtNo}">삭제</button>
+										<button type="button" class="btnDel btn-default" data-cmtnum="${cmt.cmtNo}">삭제</button>
+											<%-- <c:choose>
+												<c:when test="${SESSION_MEMBERVO.memId ne null}">
+													<a href="javascript: like_func();"><img src=""></a>
+												</c:when>
+											</c:choose> --%>
 									</td>
 								</c:if>
 							</tr>
@@ -116,7 +120,6 @@
 						<input type="button" id="delBtn" value="삭제" class="btn btn-default" />
 					</c:if>
 					<input type="button" id="replyBtn" value="답글" class="btn btn-default" />
-					<!-- <input type="button" id="likeBtn" value="LIKE" class="btn btn-default" /> -->
 				</div>
 			</div>	
 			</div>
@@ -130,7 +133,6 @@
 	<input type="hidden" name="boardNo" value="${postList.boardNo}" />
 </form>
 
-<!-- 해야됨 -->
 <form id="updFrm" action="${cp}/post/postUpdate" method="get">
 	<input type="hidden" name="postNo" value="${postList.postNo}" />
 </form>	
@@ -140,19 +142,17 @@
 	<input type="hidden" name="postNo" value="${postList.postNo}" />
 </form>	
 
-<!-- 해야됨 -->
 <form id="cmtFrm" action="${cp}/post/insertCmt" method="get">
 	<input type="hidden" id="cmtContent" name="cmtContent"/>
 	<input type="hidden" name="postNo" value="${postList.postNo}" />
 	<input type="hidden" name="memId" value="${SESSION_MEMBERVO.memId}" />
 </form>
 
-<%-- 
-<form id="replyFrm" action="${cp }/postReplyForm" method="get" class="form-horizontal" role="form">
-	<input type="hidden" id="post_num" name="post_num" value="${postVo.post_num }" />
-	<input type="hidden" id="board_num" name="board_num" value="${postVo.board_num }" />
+<!-- 해야됨 -->
+<form id="replyFrm" action="${cp}/post/postReply" method="get" class="form-horizontal" role="form">
+	<input type="hidden" id="postNo" name="postNo" value="${postVo.postNo}" />
+	<input type="hidden" id="boardNo" name="boardNo" value="${postVo.boardNo}" />
 </form>
---%>
 
 <form id="cmtDelFrm" action="${cp}/post/deleteCmt" method="get">
 	<input type="hidden" name="postNo" value="${postList.postNo}" />
@@ -163,6 +163,8 @@
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 	
 	<script type="text/javascript">
+	
+	
 		// 목록버튼 클릭이벤트
 		$(document).ready(function() {
 			$("#listBtn").click(function() {

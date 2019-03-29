@@ -84,10 +84,28 @@
 			</table>
 			
 			<form action="${cp}/post/postInsert" method="get">
+			
 			<input type = "hidden" name="boardNo" value="${boardNo}"> 
 			   <button type="submit" class="btn btn-default">게시글 등록</button>
 			</form>
 		</div>
+		
+		
+		<%-- <div class="form-group">
+				<div class="col-sm-3">
+					
+					<c:if test="${SESSION_MEMBERVO.memId == postList.writerId}">
+						<input type="button" id="updBtn" value="수정" class="btn btn-default" />
+					</c:if>
+					
+					<input type="button" id="replyBtn" value="답글" class="btn btn-default" />
+				</div>
+			</div>	
+			</div>
+		 --%>
+		
+		
+		
 
 		<nav style="text-align: center;">
 			<ul class="pagination">

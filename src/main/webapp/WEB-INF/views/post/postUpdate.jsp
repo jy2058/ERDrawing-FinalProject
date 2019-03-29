@@ -51,37 +51,33 @@
 					<label for="postRegDt" class="col-sm-2 control-label">등록일</label>
 					<div class="col-sm-7">
 						<input type="text" class="form-control" id="postRegDt" name="postRegDt" placeholder="등록일" value='<fmt:formatDate value="${postVo.postRegDt}" pattern="yyyy-MM-dd"/>' readonly/>
-						
 					</div>
-					
 				</div>
 
 				<div class="form-group">
 					<label for="postContent" class="col-sm-2 control-label">글내용</label>
 					<div class="col-sm-10">
-						<textarea name="postContent" id="postContent" rows="10" cols="100"
-							style="width: 766px; height: 412px;">
-								${postVo.postContent}
-							</textarea>
+						<textarea name="postContent" id="postContent" rows="10" cols="100" style="width: 766px; height: 412px;">
+							${postVo.postContent}
+						</textarea>
 					</div>
 				</div>
 
-				<%-- <div class="form-group">
+				<div class="form-group">
 					<label for="files" class="col-sm-2 control-label">첨부파일</label>
 					<div id="fileUpload" class="col-sm-7">
-						<c:forEach items="${fileList }" var="file">
-							<input id="file_num${file.file_num }" type="text"
-								class="form-control" value="${file.filename }" readonly />
+						<c:forEach items="${fileList}" var="file">
+							<input id="uploadFileNo${file.uploadFileNo}" type="text" class="form-control" value="${file.uploadFileNm}" readonly />
 						</c:forEach>
 					</div>
+					
 					<div class="col-sm-1">
-						<c:forEach items="${fileList }" var="file">
-							<button data-filenum="${file.file_num }" type="button"
-								class="delFileBtn btn btn-default">삭제</button>
+						<c:forEach items="${fileList}" var="file">
+							<button data-fileno="${file.uploadFileNo}" type="button" class="delFileBtn btn btn-default">삭제</button>
 						</c:forEach> 
-						<button id="fileAddBtn" type="button" class="btn btn-default">추가</button>
+						<button id="addFileBtn" type="button" class="btn btn-default">추가</button>
 					</div>
-				</div>--%>
+				</div>
 
 				<div class="form-group">
 					<div class="col-sm-offset-5 col-sm-10">
@@ -157,17 +153,17 @@
 			var contents = $.trim(oEditors[0].getContents());
 			if(contents == '<p>&nbsp;</p>' || contents == ''){ // 기본적으로 아무것도 입력하지 않아도 <p>&nbsp;</p> 값이 입력되어 있음. 
 				alert("내용을 입력하세요.");
-				oEditors.getById['smarteditor'].exec('FOCUS');
+				oEditors.getById['postContent'].exec('FOCUS');
 				return false;
 			}
 
 			return true;
 		}
 		
-		/* var file_size = ${fileList.size() };
+		var file_size = ${fileList.size()};
 		var file_cnt = 1;
 		// 파일 추가 버튼 클릭이벤트
-		$("#fileAddBtn").click(function(){
+		$("#addFileBtn").click(function(){
 			if (file_size >= 5) {
 				alert("첨부파일은 최대 5개까지 첨부 가능합니다.");
 			} else {
@@ -178,14 +174,14 @@
 		});
 		
 		$(".delFileBtn").click(function(){
-			var file_num = $(this).data("filenum");
-			$("#file_num" + file_num).remove();
+			var uploadFileNo = $(this).data("fileno");
+			$("#uploadFileNo" + uploadFileNo).remove();
 			$(this).remove();
 
 			file_size--;
 
-			$("#saveInfo").append("<input type='hidden' name='delFile' value='" + file_num + "'/>");
-		}); */
+			$("#saveInfo").append("<input type='hidden' name='delFile' value='" + uploadFileNo + "'/>");
+		});
 	</script>
 </body>
 </html>

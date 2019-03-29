@@ -95,29 +95,13 @@
 	from UPLOADFILE 
 	where POSTNO = #{POSTNO}
   </select>
-  
-  <!-- 
-   <select parameterType="java.lang.String" resultType="uploadFileVo" id="selectUploadFile">
-	 select * 
-	 from UPLOADFILE 
-	 where POSTNO = #{POSTNO}
-   </select>
-  -->
-  
+ 
   <!-- 첨부파일 조회  -->
   <select parameterType="String" resultType="uploadfileVo" id="selectFile">
 	select * 
 	from UPLOADFILE 
 	where UPLOADFILENO = #{UPLOADFILENO}
   </select>
-  
-  <!--
-   <select parameterType="java.lang.String" resultType="UploadfileVo" id="selectUploadFileOne">
-	select * 
-	from UPLOADFILE 
-	where UPLOADFILENO = #{UPLOADFILENO}
-   </select>
-  -->
   
   <!-- 첨부파일 등록 -->
   <insert parameterType="uploadfileVo" id="insertFile">
@@ -128,7 +112,7 @@
   <!-- 첨부파일 삭제 -->
   <delete parameterType="String" id="deleteFile">
    	delete from UPLOADFILE 
-   	where POSTNO = #{POSTNO}
+   	where uploadFileNo = #{uploadFileNo}
   </delete>
 
 <!-- Comments -->
@@ -160,5 +144,21 @@
 		where cmtNo = #{cmtNo}
   </delete>
   
+  
+<!-- 댓글 좋아요 -->
+  <!-- <update id="lickCheck" parameterType="HashMap">
+  	update comment_like
+  	set likeCheck = likeCheck + 1
+  	where memId = #{memId} and cmtNo = #{cmtNo}
+  </update>  -->
+  
+   <!-- 댓글 좋아요 취소 -->
+ <!--  <update id="lickCheck" parameterType="HashMap">
+  	update comment_like
+  	set likeCheck = 0
+  	where memId = #{memId} and cmtNo = #{cmtNo}
+  </update>  -->
+
+ 
 </mapper>
 

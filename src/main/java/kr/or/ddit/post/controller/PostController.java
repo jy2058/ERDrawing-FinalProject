@@ -157,7 +157,7 @@ public class PostController {
 		return "post/postDetail";
 	}
 	
-	// 게시글 수정
+	// 게시글 수정 화면
 	@RequestMapping(path = "/postUpdate", method = RequestMethod.GET)
 	public String postUpdateForm(@RequestParam("postNo") String postNo, Model model) {
 		
@@ -171,6 +171,69 @@ public class PostController {
 		model.addAttribute("boardList", boardList);
 		
 		return "post/postUpdate";
+	}
+	
+	// 게시글 수정
+	@RequestMapping(path = "/postUpdate", method = RequestMethod.POST)
+	public String postUpdate(RedirectAttributes ra,
+			@RequestParam("postNo") int postNo,
+			 @RequestParam("postTitle") String postTitle,
+			 @RequestParam("postContent") String postContent,
+							 @RequestParam(name="delFile", defaultValue="")String[] arrDelFile,
+							 @RequestPart("file") List<MultipartFile> files) throws IllegalStateException, IOException {
+		
+		List<String> filenames = new ArrayList<>();
+		List<String> realFilenames = new ArrayList<>();
+		
+		for (int i = 0; i < files.size(); i++) {
+			if (!files.get(i).isEmpty() && files.get(i).getSize() > 0) {
+				MultipartFile file = files.get(i);
+				
+				String filename = file.getOriginalFilename();
+				String realFilename = "d:\\uploadFile\\" + UUID.randomUUID().toString();
+				file.transferTo(new File(realFilename));
+				
+				filenames.add(filename);
+				realFilenames.add(realFilename);
+			}
+		}
+		
+		PostVo postVo = new PostVo();
+		postVo.setPostNo(postNo);
+		postVo.setPostTitle(postTitle);
+		postVo.setPostContent(postContent);
+		
+		int updateCnt = postService.updatePost(postVo);
+		
+		if (updateCnt > 0) {
+			int insFileCnt = 0;
+			int delFileCnt = 0;
+			
+			if (arrDelFile != null) {
+				for (int i = 0; i < arrDelFile.length; i++)	{
+					delFileCnt += uploadFileService.deleteFile(arrDelFile[i]);
+				}
+			}
+			
+			for (int i = 0; i < filenames.size(); i++) {
+				UploadFileVo uploadFileVo = new UploadFileVo();
+				uploadFileVo.setUploadFileNm(filenames.get(i));
+				uploadFileVo.setUploadRealFilePath(realFilenames.get(i));
+				uploadFileVo.setPostNo(postNo);
+				
+				insFileCnt += uploadFileService.insertFile(uploadFileVo);
+			}
+			
+			if (insFileCnt == filenames.size() && delFileCnt == (arrDelFile == null ? 0 : arrDelFile.length)) {
+				ra.addAttribute("postNo", postNo);
+				return "redirect:/post/postDetail";
+			} else {
+				System.out.println("첨부파일 등록 오류");
+			}
+		} 
+		
+		ra.addAttribute("postNo", postNo);
+		return "redirect:/post/postDetail";
 	}
 	
 	// 게시글 삭제
