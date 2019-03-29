@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,7 +11,14 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://unpkg.com/konva@3.2.0/konva.min.js"></script>
 <script src="/js/drawing/minimap.js"></script>
+<script src="/js/drawing/attribute.js"></script>
+<style>
 
+    .attr_container{
+        background: green;
+    }
+    
+</style>
 </head>
 
 <body id='my_body'>
@@ -92,7 +100,7 @@
               entityAdd(circlePos);
                 
                 
-                $('html').css({'cursor':'url(x), auto'});
+                $('html').css({'cursor':'default'});
                 
                  //stage.off('click');
 
@@ -111,16 +119,59 @@
         
       var BORDER_SIZE = 3;
       var color1 = [ 'red', 'black', 'blue' ];
+    
+      var colorPick = [
+      { 
+          name : 'yellow',           //명칭
+          entityBg : '#6d6c27',     //엔티티 배경색
+          entityColor : '#ffffff',  //엔티티 폰트색
+          groupColor : '#53521f',          //속성 테두리
+          groupColorActive : '#a68db4',    //속성 테두리(선택시)
+          pkBg : '#AAA94D',                //pk 배경색
+          pkColor : '#ffffff',             //pk 폰트색
+          fkBg : '#5f5f3a',
+          fkColor : '#ffffff',
+          atBg : '#49492f',
+          atColor : '#ffffff'
+      },{ 
+          name : 'black',           //명칭
+          entityBg : '#000000',     //엔티티 배경색
+          entityColor : '#ffffff',  //엔티티 폰트색
+          groupColor : '#000000',          //속성 테두리
+          groupColorActive : '#eeeeee',    //속성 테두리(선택시)
+          pkBg : '#412d1b',                //pk 배경색
+          pkColor : '#ffffff',             //pk 폰트색
+          fkBg : '#4a3f3f',
+          fkColor : '#ffffff',
+          atBg : '#2c2c2c',
+          atColor : '#ffffff'
+      },{ 
+          name : 'red',           //명칭
+          entityBg : '#65271a',     //엔티티 배경색
+          entityColor : '#ffffff',  //엔티티 폰트색
+          groupColor : '#4a1e15',          //속성 테두리
+          groupColorActive : '#a68db4',    //속성 테두리(선택시)
+          pkBg : '#9f5849',                //pk 배경색
+          pkColor : '#ffffff',             //pk 폰트색
+          fkBg : '#573932',
+          fkColor : '#ffffff',
+          atBg : '#45312c',
+          atColor : '#ffffff'
+      }];
         
-      var target, activeWedge, stage, layer, wheel, pointer, box, textNode, allNode;
+      var color1_num, target, activeWedge, stage, layer, wheel, pointer, box, textNode, allNode;
       
-        
+      // entity
       var entity, entity_container, entity_logical, entity_phisical, entity_logical_txt, entity_phisical_txt;
         
-    
+      // entity버튼
       var btn_entity_group, btn_entity_delete, btn_color, btn_pk_add, btn_col_add, btn_entity_delete_txt, btn_color_txt, btn_pk_add_txt, btn_col_add_txt;
         
+      // attribute group.
+      var pk_group, fk_group, attr_group;
         
+    
+    
         
 //    2. ERD화면 초기화
       function init_ERD(){
@@ -169,17 +220,17 @@
 		mini_rect.draggable('true');
 		mini_layer.add(mini_rect);
 		mini_stage.add(mini_layer);
-		
-		
+
         
 //        테이블 생성
         function entityAdd(circlePos){
             
-            var color1_num = Math.floor(Math.random() * 3);
+            color1_num = Math.floor(Math.random() * 3);
             
             entity = new Konva.Group({
                 x: circlePos.x,
                 y: circlePos.y,
+                class: color1_num,
                 name: 'entity'
             });
             
@@ -191,7 +242,7 @@
                 y: 0,
                 width: 200,
                 height: 26,
-                fill: color1[color1_num],
+                fill: colorPick[color1_num].entityBg,
                 stroke: 'white',
                 strokeWidth: 0,
                 name: 'entity_container'
@@ -237,7 +288,7 @@
                 x: entity_logical.x(),
                 y: entity_logical.y(),
                 padding: 5,
-                fill: '#ffffff',
+                fill: colorPick[color1_num].entityColor,
                 fontSize: 11,
                 name: 'entity_logical_txt'
             });
@@ -247,7 +298,7 @@
                 x: entity_phisical.x(),
                 y: entity_phisical.y(),
                 padding: 5,
-                fill: '#ffffff',
+                fill: colorPick[color1_num].entityColor,
                 fontSize: 11,
                 name: 'entity_phisical_txt'
             });
@@ -360,10 +411,36 @@
             btn_entity_group.add(btn_pk_add).add(btn_col_add);
             btn_entity_group.add(btn_pk_add_txt).add(btn_col_add_txt);
             
+            
+           
+            
+            pk_group = new Konva.Group({
+                x: 0,
+                y: 26,
+                name: 'pk_group'
+            });
+            
+            fk_group = new Konva.Group({
+                x: 0,
+                y: 0,
+                name: 'fk_group'
+            });
+            
+            attr_group = new Konva.Group({
+                x: 0,
+                y: 0,
+                name: 'attr_group'
+            });
+            
+            
+            
             layer.add(entity);
             entity.add(btn_entity_group);
-			
-             entity_resize();
+            entity.add(pk_group);
+			entity.add(fk_group);
+            entity.add(attr_group);
+            
+            entity_resize();
              
             layer.draw();
             
@@ -407,10 +484,12 @@
         
         
         
-        
+ 
         
         //스테이지 클릭
         function stageClick(e){
+            
+            
             allNode = e.target;
             var old_container = entity_container;
             var old_entity = entity;
@@ -425,6 +504,8 @@
                document.body.removeChild(inputss);
            }
             
+            
+            //스테이지 클릭시
             if(allNode.parent === null){
                 console.log("스테이지 선택");
                 
@@ -433,10 +514,16 @@
                 old_entity.draggable(false);
                 old_container.strokeWidth(0);
                 
-            }else {
+            }
+            //객체 선택시
+            else {
+
+                
+                //변수에 클릭 타겟 넣기
+                entity = allNode.findAncestor('.entity');
                 
                 
-                //삭제 
+                //entity 삭제버튼 이벤트 
                 if(allNode.attrs.name.indexOf('btn_entity_delete') > -1){
                     var removeTableNo=allNode.findAncestor('.entity')._id;
                     console.log('삭제할번호'+ removeTableNo);
@@ -445,62 +532,46 @@
                     mini_layer.draw();
                     layer.draw();
                     return;
-               }
-                
-                
-                allNode.parent.children.each(function(f){
-                    switch(f.attrs.name){
-                        case "entity_container":
-                            entity_container = f;
-                            break;
-                        case "entity_logical":
-                            entity_logical = f;
-                            break;
-                        case "entity_phisical":
-                            entity_phisical = f;    
-                            break;
-                        case "entity_logical_txt":
-                            entity_logical_txt = f;    
-                            break;
-                        case "entity_phisical_txt":
-                            entity_phisical_txt = f;    
-                            break;
-                        case "btn_entity_group":
-                            btn_entity_group = f;
-                            
-                            
-                            f.children.each(function(g){
-                                switch(g.attrs.name){
-                                    case "btn_entity_delete":
-                                        btn_entity_delete = g;
-                                        break;
-                                    case "btn_color":
-                                        btn_color = g;
-                                        break;
-                                    case "btn_pk_add":
-                                        btn_pk_add = g;
-                                        break;
-                                    case "btn_col_add":
-                                        btn_col_add = g;
-                                        break;       
-                                }
-                                        
-                            });
-                            
-                            
-                            break;
-                            
-                            
-                        
-                   }
-
-                });
-                
-                
-                if(allNode.parent.attrs.name === "entity"){
-                    entity = allNode.parent;
                 }
+                
+                
+                //pk버튼 이벤트
+                if(allNode.attrs.name.indexOf('btn_pk_add') > -1){
+                    attributeAdd("pk_group",entity)
+                    return;
+                }
+                
+                //attr버튼 이벤트
+                if(allNode.attrs.name.indexOf('btn_col_add') > -1){
+                    attributeAdd("attr_group",entity)
+                    return;
+                }
+                
+                //fk 테스트
+                if(allNode.attrs.name.indexOf('btn_color') > -1){
+                    attributeAdd("fk_group",entity)
+                    return;
+                }
+                
+                
+                entity_container = entity.findOne('.entity_container');
+                entity_logical = entity.findOne('.entity_logical');
+                entity_phisical = entity.findOne('.entity_phisical');
+                entity_logical_txt = entity.findOne('.entity_logical_txt');
+                entity_phisical_txt = entity.findOne('.entity_phisical_txt');
+                
+                btn_entity_group = entity.findOne('.btn_entity_group');
+                
+                btn_entity_delete = btn_entity_group.findOne('.btn_entity_delete');
+                btn_color = btn_entity_group.findOne('.btn_color');
+                btn_pk_add = btn_entity_group.findOne('.btn_pk_add');
+                btn_col_add = btn_entity_group.findOne('.btn_col_add');
+                
+                
 
+  
+                
+                //로직 시작
                 entity.moveTo(layer2);
        
                 old_btn_entity_group.hide();
@@ -515,10 +586,16 @@
                 entity_container.strokeWidth(BORDER_SIZE);
                 
                 entity.moveTo(layer);
+                
+                
             }
             layer.draw();
         }
         
+    
+    
+    
+    
 //        텍스트 값 입력 메소드
         var inputss = document.createElement('input');
         
@@ -591,72 +668,36 @@
                         f.width(textNode.width());
                     }
                      
-                     
-                    switch(f.attrs.name){
-                        case "entity_container":
-                            entity_container = f;
-                            break;
-                        case "entity_logical":
-                            entity_logical = f;
-                            break;
-                        case "entity_phisical":
-                            entity_phisical = f;    
-                            break;
-                        case "entity_logical_txt":
-                            entity_logical_txt = f;    
-                            break;
-                        case "entity_phisical_txt":
-                            entity_phisical_txt = f;    
-                            break;
-                        case "btn_entity_group":
-                            btn_entity_group = f;
-                            
-                            
-                            f.children.each(function(g){
-                                switch(g.attrs.name){
-                                    case "btn_entity_delete":
-                                        btn_entity_delete = g;
-                                        break;
-                                    case "btn_color":
-                                        btn_color = g;
-                                        break;
-                                    case "btn_pk_add":
-                                        btn_pk_add = g;
-                                        break;
-                                    case "btn_col_add":
-                                        btn_col_add = g;
-                                        break;  
-                                    case "btn_entity_delete_txt":
-                                        btn_entity_delete_txt = g;
-                                        break; 
-                                    case "btn_color_txt":
-                                        btn_color_txt = g;
-                                        break;
-                                }
-                            });
-                            break;
-      
-                   }
                 });
                  
                  
                  
                  
+                //변수에 클릭 타겟 넣기
+                entity = allNode.findAncestor('.entity');
+
+                entity_container = entity.findOne('.entity_container');
+                entity_logical = entity.findOne('.entity_logical');
+                entity_phisical = entity.findOne('.entity_phisical');
+                entity_logical_txt = entity.findOne('.entity_logical_txt');
+                entity_phisical_txt = entity.findOne('.entity_phisical_txt');
+                
+                btn_entity_group = entity.findOne('.btn_entity_group');
+                
+                btn_entity_delete = btn_entity_group.findOne('.btn_entity_delete');
+                btn_color = btn_entity_group.findOne('.btn_color');
+                btn_pk_add = btn_entity_group.findOne('.btn_pk_add');
+                btn_col_add = btn_entity_group.findOne('.btn_col_add');
                  
-                 
-                 
-                 
-                 
-                if(allNode.parent.attrs.name === "entity"){
-                    entity = allNode.parent;
-                }
+    
                 //리사이징 시작
-                 entity_resize();
+                entity_resize();
                  
                 layer.draw();
+                 
                 document.body.removeChild(inputss);
                 //this.removeEventListener('keydown',arguments.callee);
-                 console.log("엔터입력 완료");
+                console.log("엔터입력 완료");
               }
         }
         
@@ -679,15 +720,10 @@
             btn_color_txt.x(btn_color.x()+7);
             
             
-            
-            
-            
+ 
         }
         
-        
-        
-        
-        
+
         
         
         //스크롤 확대 축소
