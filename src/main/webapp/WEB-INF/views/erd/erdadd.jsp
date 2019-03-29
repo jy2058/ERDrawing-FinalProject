@@ -47,9 +47,8 @@
 		
 		<script>
 		
-$("#erdAdd").on("click", function(){
-	 				$("#erdAddFrm").submit();
-	 			});
+			$("#erdAdd").on("click", function(){
+ 				$("#erdAddFrm").submit();
+ 			});
 
 		</script>
-<!-- css와 script는 moduleControl에서 작성 -->

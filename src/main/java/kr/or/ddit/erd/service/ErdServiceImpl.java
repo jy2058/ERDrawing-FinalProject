@@ -66,7 +66,7 @@ public class ErdServiceImpl implements IErdService{
 					int tagNo = teamDao.getTagNo(tagContent);	// 입력한 태그의 tagNo 가져오기
 					
 					TagHistVo tagHistVo = new TagHistVo();
-					tagHistVo.setErdNo(erdVo.getErdNo() + 1);	//erdNo nextKey 가져올 때 시퀀스보다 1씩 작게 가져옴. 임시로 +1 해줌
+					tagHistVo.setErdNo(erdVo.getErdNo());	//erdNo nextKey 가져올 때 시퀀스보다 1씩 작게 가져옴. 임시로 +1 해줌
 					tagHistVo.setTagNo(tagNo);
 					
 					teamDao.insertTagHist(tagHistVo);

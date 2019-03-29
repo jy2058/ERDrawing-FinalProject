@@ -18,8 +18,9 @@
 				
 			<div class="profile-info">
 				<div class="memberId">${SESSION_MEMBERVO.memId }</div>
-				<div class="memberEmail">${SESSION_MEMBERVO.memMail }이메일 출력 위치</div>
-				<div><div class="sampleImg"><div class="exText">${SESSION_MEMBERVO.memImg }Profile Image</div></div></div>
+				<div class="memberEmail">${SESSION_MEMBERVO.memMail }</div>
+<%-- 				<div><div class="sampleImg"><div class="exText">${SESSION_MEMBERVO.memImg }Profile Image</div></div></div> --%>
+				<div><div class="sampleImg"><div class="exText"><img src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }"></div></div></div>
 			</div>
 		</div>
 	</div>
@@ -40,7 +41,7 @@
 				<div style="background:#232323; color:#fff; height:100px; line-height:100px; padding-left:20px; font-size:20px; font-weight:600;">
 					<ul style=" min-height:72px; line-height: 1.5">
 					<c:forEach var="teamList" items="${teamInfoList }" >
-						<li><a href="/team">
+						<li><a href="/team?teamNo=${teamList.teamNo }">
 						${fn:toUpperCase(fn:substring(teamList.teamNm,0,1 ))}
 							${teamList.teamImg }
 							<span>${teamList.teamNm }</span>

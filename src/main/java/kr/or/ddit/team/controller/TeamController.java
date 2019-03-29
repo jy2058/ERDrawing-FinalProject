@@ -7,7 +7,7 @@ import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.team.model.TeamVo;
+import kr.or.ddit.team.service.ITeamService;
 
 @RequestMapping("/team")
 @Controller
@@ -32,18 +33,27 @@ public class TeamController {
 	
 	@Resource(name="memberService")
 	private IMemberService memberService;
+	@Resource(name="teamService")
+	private ITeamService teamService;
 	
 	@RequestMapping(path="/teamCreate", method=RequestMethod.POST)
-	public String teamCreate(TeamVo teamVo, @RequestParam("teamMember")List<String> teamMember, HttpServletRequest req, @RequestPart("profileImg")MultipartFile multipartFile){
+	public String teamCreate(TeamVo teamVo, @RequestParam("teamMember")List<String> teamMember, HttpServletRequest req, @RequestPart("profileImg")MultipartFile multipartFile, HttpSession session){
 
 		logger.debug("===teamNm : {}", teamVo.getTeamNm());
 		logger.debug("===getTeamIntro : {}", teamVo.getTeamIntro());
 		logger.debug("===teamMember : {}", teamMember);
 		
+		logger.debug("===getOriginalFilename : {}", multipartFile.getOriginalFilename());
+		
+		String[] split = multipartFile.getOriginalFilename().split("\\.");
+		String fileName = split[0];	// 파일 이름
+		String ext = split[1];	// 확장자
+		
+		logger.debug("===fileName : {}, ext : {}", fileName, ext);
 		
 		String path = req.getRealPath("image");
 		
-		String filename = multipartFile.getOriginalFilename() + "_" + UUID.randomUUID().toString();
+		String filename = fileName + "_" + UUID.randomUUID().toString() + "." + ext;
 		
 		// 불러온 파일 저장할 공간 생성
 		File profile = new File(path +"\\" + filename);
@@ -55,6 +65,14 @@ public class TeamController {
 			e.printStackTrace();
 		}
 		
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		String memId = memberVo.getMemId();
+		
+		teamVo.setMakerId(memId);
+		teamVo.setTeamImg(path +"\\" + filename);
+		
+		teamService.insertTeam(teamVo);
+		int teamNo = teamVo.getTeamNo();
 		
 		return "redirect:/mypage";
 	}
@@ -80,6 +98,14 @@ public class TeamController {
 		model.addAttribute("array", array);
 		return "jsonView";
 		
+	}
+	
+	@RequestMapping("/teamImg")
+	public void teamImg(){
+		//userController profileImg 참고
+		//team이미지 없을 때 / 있을 때 사진 조회
+		
+		// view는 user.jsp
 	}
 
 }

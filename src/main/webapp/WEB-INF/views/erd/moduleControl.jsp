@@ -2,10 +2,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
     
     
-    <!-- css와 스크립트는 여기서 작성 -->
-    
-
-
 <style>
 .background-etc{
 position:absolute;

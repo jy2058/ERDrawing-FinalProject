@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
 import kr.or.ddit.team.model.TeamListVo;
@@ -144,6 +145,46 @@ public class TeamDaoImplTest extends logicTestConfig{
 
 		/***Then***/
 		assertNotNull(erdTag);
+	}
+	
+	/**
+	* Method : testInsertTeam
+	* 작성자 : PC08
+	* 변경이력 :
+	* Method 설명 : 팀 생성 테스트
+	*/
+	@Test
+	public void testInsertTeam(){
+		/***Given***/
+		TeamVo teamVo = new TeamVo();
+		teamVo.setMakerId("user3");
+		teamVo.setTeamNm("테스트코드");
+		teamVo.setTeamNo(9);
+		
+		/***When***/
+		int insertTeam = teamDao.insertTeam(teamVo);
+
+		/***Then***/
+		assertNotNull(insertTeam);
+		logger.debug("teamVo.getTeamNo : {}", teamVo.getTeamNo());
+
+	}
+	
+	/**
+	* Method : testGetTeamErdList
+	* 작성자 : PC08
+	* 변경이력 :
+	* Method 설명 : teamErd 가져오기
+	*/
+	@Test
+	public void testGetTeamErdList(){
+		/***Given***/
+		int teamNo = 2;
+		/***When***/
+		List<ErdVo> teamErdList = teamDao.getTeamErdList(teamNo);
+		/***Then***/
+		assertNotNull(teamErdList);
+		logger.debug("===teamErdList : {}", teamErdList);
 	}
 	
 }

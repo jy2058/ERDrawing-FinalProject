@@ -48,4 +48,21 @@
 		where a.tagno = b.tagno 
 			and a.erdNo = #{erdNo}
 	</select>
+	
+	<!-- 팀 생성 -->
+	<insert id="insertTeam" parameterType="teamVo">
+		<selectKey keyProperty="teamNo" resultType="int" order="BEFORE">
+   			 select seq_teamno.nextval FROM DUAL
+  		</selectKey>
+		insert into team
+		(teamno,teamnm,teamintro,teamimg,makerid)
+		values(#{teamNo},#{teamNm},#{teamIntro, jdbcType=VARCHAR}, #{teamImg,jdbcType=VARCHAR}, #{makerId})
+	</insert>
+	
+	<!-- team Erd 가져오기 -->
+	<select id="getTeamErdList" parameterType="int" resultType="erdVo">
+		select *
+		from erd
+		where teamno= #{teamNo}
+	</select>
 </mapper>

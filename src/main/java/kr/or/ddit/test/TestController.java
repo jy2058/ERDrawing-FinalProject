@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.ddit.erd.service.IErdService;
 import kr.or.ddit.member.model.MemberVo;
@@ -81,7 +82,17 @@ public class TestController {
 	
 	
 	@RequestMapping(path="/team")
-	public String team(){
+	public String team(@RequestParam("teamNo")int teamNo, Model model, HttpSession session){
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		String memId = memberVo.getMemId();
+		
+		List<TeamVo> teamInfoList = teamService.getMemberAgreTeamInfoList(memId);
+		model.addAttribute("teamInfoList", teamInfoList);
+		
+		// erd와 tagList를 Map으로 넘겨줌
+		Map<String, Object> teamErdTagMap = teamService.getTeamErdTagMap(teamNo);
+		model.addAllAttributes(teamErdTagMap);
+		
 		return "team";
 	}
 	
@@ -103,7 +114,7 @@ public class TestController {
 	
 	
 	
-	
+	// 모달 페이지 변경 메소드 
 	@RequestMapping("/pageViewAjax")
 	public String testAjax(String value){
 		String page = "";

@@ -3,6 +3,7 @@ package kr.or.ddit.team.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
 import kr.or.ddit.team.model.TeamListVo;
@@ -69,4 +70,33 @@ public interface ITeamService {
 	*/
 	int insertTagHist(TagHistVo tagHistVo);
 	
+	/**
+	* Method : insertTeam
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param teamVo
+	* @return
+	* Method 설명 : 팀 생성
+	*/
+	int insertTeam(TeamVo teamVo);
+	
+	/**
+	* Method : getTeamErdList
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param teamNo
+	* @return
+	* Method 설명 : 팀 erd 가져오기
+	*/
+	List<ErdVo>getTeamErdList(int teamNo);
+	
+	/**
+	* Method : getTeamErdTagMap
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param teamNo
+	* @return
+	* Method 설명 : team erd + tag 가져오기
+	*/
+	Map<String, Object> getTeamErdTagMap(int teamNo);
 }

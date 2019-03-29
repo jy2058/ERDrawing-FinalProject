@@ -22,12 +22,12 @@
 
 			<div class="input-box">
 				<label>팀설명</label>
-				<textarea rows="" cols="" name="teamIntro"></textarea>
+				<textarea style="color: black" rows="" cols="" name="teamIntro"></textarea>
 			</div>
 			<div class="input-box">
 				<label>썸네일 이미지</label>
-				<input type="image" src="${cp }/image/no_img.jpg">
-				<input type="file" name="profileImg"> 
+				<img alt="" src="${cp }/image/no_img.jpg" id="image">
+				<input type="file" name="profileImg" onchange="loadImg(this)" style="width: 300px"> 
 			</div>
 			
 		</form>
@@ -35,6 +35,7 @@
 		<div class="btn-style1" id="teamCreate">만들기</div>
 		
 <script>
+var list = new Array();
 $( "#autocomplete" ).autocomplete({
     source : function( request, response ) {
          $.ajax({
@@ -75,9 +76,11 @@ $( "#autocomplete" ).autocomplete({
         $("#ul").append(html); 
         $("#autocomplete").val('');
         
-        $("#teamMember").val(ui.item.value);
+        list.push(ui.item.value);
+        $("#teamMember").val(list);
         
-        //var searchId = $("input[name=searchId]").eq(1).val();
+        console.log(list);
+        
         return false;	// text clear
         
         }
@@ -95,6 +98,15 @@ $("#teamCreate").on("click", function(){
 	$("#teamCreateFrm").submit();
 });
 
+function loadImg(value){
+	if(value.files && value.files[0]){
+		var reader = new FileReader();
+		reader.onload = function(e){
+			$("#image").attr('src', e.target.result);
+		}
+		reader.readAsDataURL(value.files[0]);
+	}
+}
+
 
 </script>
-<!-- css와 script는 moduleControl에서 작성 -->

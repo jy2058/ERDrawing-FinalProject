@@ -3,6 +3,7 @@ package kr.or.ddit.team.dao;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
 import kr.or.ddit.team.model.TeamListVo;
@@ -71,4 +72,23 @@ public interface ITeamDao {
 	*/
 	List<TagVo> getErdTag(int erdNo);
 	
+	/**
+	* Method : insertTeam
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param teamVo
+	* @return
+	* Method 설명 : 팀 생성
+	*/
+	int insertTeam(TeamVo teamVo);
+	
+	/**
+	* Method : getTeamErdList
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param teamNo
+	* @return
+	* Method 설명 : 팀 erd 가져오기
+	*/
+	List<ErdVo>getTeamErdList(int teamNo);
 }

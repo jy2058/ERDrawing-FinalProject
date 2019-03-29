@@ -19,7 +19,7 @@
 		insert into erd
 			(erdno, erdtitle, erdscope, erdcdt, memid, teamno)
 		values
-			(seq_erdno.nextval, #{erdTitle}, #{erdScope}, sysdate, #{memId, jdbcType=VARCHAR}, nullif(#{teamNo},0))
+			(#{erdNo}, #{erdTitle}, #{erdScope}, sysdate, #{memId, jdbcType=VARCHAR}, nullif(#{teamNo},0))
 			
 	</insert>
 	
