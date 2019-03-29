@@ -29,6 +29,7 @@
     select * 
     from post
     where boardNo = #{boardNo}
+    ORDER BY postRegDt DESC
   </select>
   
   <!-- 특정 게시글 조회 -->

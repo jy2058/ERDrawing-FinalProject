@@ -1,11 +1,13 @@
 package kr.or.ddit.post.model;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import org.springframework.format.annotation.DateTimeFormat;
 
 public class PostVo {
 	private int postNo;           //게시글번호
 	private String postContent;   //게시글내용
+	//@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date postRegDt;       //작성일시
 	private int postGn;           //그룹번호
 	private String postDelFlag;   //삭제여부
@@ -43,13 +45,17 @@ public class PostVo {
 	public void setPostContent(String postContent) {
 		this.postContent = postContent;
 	}
-
-	// yyyy-MM-dd 포맷팅
+	
+	/*// yyyy-MM-dd 포맷팅
 	public String getPostRegDt_fmt() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		return sdf.format(postRegDt);
 	}
 	
+	public Date getPostRegDt() {
+		return postRegDt;
+	}*/
+
 	public Date getPostRegDt() {
 		return postRegDt;
 	}

@@ -58,15 +58,14 @@
 			</div>
 			
 			<%-- 파일첨부 --%>
-			<%-- <div class="form-group">
+			<div class="form-group">
 				<label for="content" class="col-sm-2 control-label">첨부파일</label>
 				<div class="col-sm-7">
 					<c:forEach items="${fileList}" var="file">
-						<a href="${cp}/fileDownload?file_num=${file.file_num}">${file.filename }</a>
+						<a href="${cp}/post/fileDownload?uploadFileNo=${file.uploadFileNo}">${file.uploadFileNm}</a>
 					</c:forEach>
 				</div>
-			</div> --%>
-
+			</div>
 
 			<div class="form-group">
 				<label for="content" class="col-sm-1 control-label">댓글</label>

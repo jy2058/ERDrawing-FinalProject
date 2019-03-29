@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,74 +25,80 @@
 <body>
 	<%-- <%@ include file="/WEB-INF/views/module/header.jsp"%> --%>
 	<div class="container-fluid">
-      <div class="row">
-      	<%@ include file="/WEB-INF/views/post/left.jsp"%>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			 <h3 class="page-header">게시글 수정</h3> 
-				<form id="frm" action="${cp}/post/postUpdate" method="post"
-						class="form-horizontal" role="form" enctype="multipart/form-data">
-					<div class="form-group">
-						<label for="postTitle" class="col-sm-2 control-label">글제목</label>
-						<div class="col-sm-7">
-							<input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="글제목" value="${postList.postTitle}" />
-						</div>
+		<div class="row">
+			<%@ include file="/WEB-INF/views/post/left.jsp"%>
+		</div>
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+			<h3 class="page-header">게시글 수정</h3>
+			<form id="frm" action="${cp}/post/postUpdate" method="post"
+				  class="form-horizontal" role="form" enctype="multipart/form-data">
+				  
+				<div class="form-group">
+					<label for="postTitle" class="col-sm-2 control-label">글제목</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="글제목" value="${postVo.postTitle}" />
 					</div>
-
-					<div class="form-group">
-						<label for="writer" class="col-sm-2 control-label">작성자</label>
-						<div class="col-sm-7">
-							<label class="control-label">${postList.writerId}</label>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="insertDate" class="col-sm-2 control-label">작성일</label>
-						<div class="col-sm-7">
-							<label class="control-label"><fmt:formatDate value="${postList.postRegDt}" pattern="yyyy-MM-dd" /></label>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<label for="postContent" class="col-sm-2 control-label">글내용</label>
-						<div class="col-sm-10">
-							<textarea name="postContent" id="smarteditor" rows="10" cols="100" style="width:766px; height:412px;">
-							 	${postList.postContent}
-							</textarea>
-						</div>
-					</div>
-
-					<%-- <div class="form-group">
-						<label for="files" class="col-sm-2 control-label">첨부파일</label>
-						<div id="fileUpload" class="col-sm-7">
-							<c:forEach items="${fileList }" var="file">
-								<input id="file_num${file.file_num }" type="text" class="form-control" value="${file.filename }" readonly />
-							</c:forEach>
-						</div>
-						<div class="col-sm-1">
-							<c:forEach items="${fileList }" var="file">
-								<button data-filenum="${file.file_num }" type="button" class="delFileBtn btn btn-default">삭제</button>
-							</c:forEach>
-							<button id="fileAddBtn" type="button" class="btn btn-default">추가</button>
-						</div>
-					</div> --%>
+				</div>
 				
-					<div class="form-group">
-						<div class="col-sm-offset-5 col-sm-10">
-							<button id="cancelBtn" type="button" class="btn btn-default">취소</button>
-							<button id="saveBtn" type="button" class="btn btn-default">저장</button>
-						</div>
+				<div class="form-group">
+					<label for="writerId" class="col-sm-2 control-label">작성자</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="writerId" name="writerId" placeholder="작성자" value="${postVo.writerId}" readonly/>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="postRegDt" class="col-sm-2 control-label">등록일</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="postRegDt" name="postRegDt" placeholder="등록일" value='<fmt:formatDate value="${postVo.postRegDt}" pattern="yyyy-MM-dd"/>' readonly/>
+						
 					</div>
 					
-					<div id="saveInfo">
-						<input type="hidden" id="postNo" name="postNo" value="${postList.postNo}" />
+				</div>
+
+				<div class="form-group">
+					<label for="postContent" class="col-sm-2 control-label">글내용</label>
+					<div class="col-sm-10">
+						<textarea name="postContent" id="postContent" rows="10" cols="100"
+							style="width: 766px; height: 412px;">
+								${postVo.postContent}
+							</textarea>
 					</div>
-				</form>
-			</div>
+				</div>
+
+				<%-- <div class="form-group">
+					<label for="files" class="col-sm-2 control-label">첨부파일</label>
+					<div id="fileUpload" class="col-sm-7">
+						<c:forEach items="${fileList }" var="file">
+							<input id="file_num${file.file_num }" type="text"
+								class="form-control" value="${file.filename }" readonly />
+						</c:forEach>
+					</div>
+					<div class="col-sm-1">
+						<c:forEach items="${fileList }" var="file">
+							<button data-filenum="${file.file_num }" type="button"
+								class="delFileBtn btn btn-default">삭제</button>
+						</c:forEach> 
+						<button id="fileAddBtn" type="button" class="btn btn-default">추가</button>
+					</div>
+				</div>--%>
+
+				<div class="form-group">
+					<div class="col-sm-offset-5 col-sm-10">
+						<button id="cancelBtn" type="button" class="btn btn-default">취소</button>
+						<button id="saveBtn" type="button" class="btn btn-default">저장</button>
+					</div>
+				</div>
+
+				<div id="saveInfo">
+					<input type="hidden" id="postNo" name="postNo" value="${postVo.postNo}" />
+				</div>
+			</form>
 		</div>
 	</div>
-	
+
 <form id="cancelFrm" action="${cp}/post/postDetail" method="get">
-	<input type="hidden" name="postNo" value="${postList.postNo}" />
+	<input type="hidden" name="postNo" value="${postVo.postNo}" />
 </form>
 
 	<!-- Bootstrap core JavaScript
@@ -107,7 +114,7 @@
 			// Editor Setting
 			nhn.husky.EZCreator.createInIFrame({
 				oAppRef : oEditors, // 전역변수 명과 동일해야 함.
-				elPlaceHolder : "smarteditor", // 에디터가 그려질 textarea ID 값과 동일 해야 함.
+				elPlaceHolder : "postContent", // 에디터가 그려질 textarea ID 값과 동일 해야 함.
 				sSkinURI : "../SE2/SmartEditor2Skin.html", // Editor HTML
 				fCreator : "createSEditor2", // SE2BasicCreator.js 메소드명이니 변경 금지 X
 				htParams : {
@@ -129,7 +136,7 @@
 			$("#saveBtn").click(function(){
 				if(confirm("게시글을 저장하시겠습니까?")) {
 					// id가 smarteditor인 textarea에 에디터에서 대입
-					oEditors.getById["smarteditor"].exec("UPDATE_CONTENTS_FIELD", []);
+					oEditors.getById["postContent"].exec("UPDATE_CONTENTS_FIELD", []);
 
 					// 이부분에 에디터 validation 검증
 					if(validation()) {

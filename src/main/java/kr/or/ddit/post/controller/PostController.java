@@ -1,6 +1,7 @@
 package kr.or.ddit.post.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,6 +9,8 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -133,37 +136,12 @@ public class PostController {
 		ra.addAttribute("boardNo", postVo.getBoardNo());
 		return "redirect:/post/postInsert";
 	}
-	
-	/*해야됨*/
-	/*// 게시글 등록
-	@RequestMapping(path = "/postInsert", method = RequestMethod.POST)
-	public String postInsert(PostVo postVo, HttpSession session, Model model) {
-	    Object memId = session.getAttribute("SESSION_MEMBERVO");
-	    logger.debug("===postVo{}",postVo);
-		model.addAttribute("boardNo", postVo.getBoardNo());
 
-		int insertCnt = postService.insertPost(postVo);
-
-		// 정상 입력(성공)
-		if (insertCnt == 1) {
-			int postNo = postVo.getPostNo();
-
-			model.addAttribute("msg", "게시글이 정상 등록 되었습니다.");
-			return "redirect:/post/postList"; //리스트 되면 수정필요
-			// 정상 입력(실패)
-		} else {
-			model.addAttribute("msg", "게시글 등록이 실패 되었습니다.");
-			return "post/postInsert";
-		}
-	}*/
-
-	/* 해야됨 */
 	// 게시글 상세 화면
 	@RequestMapping(path = "/postDetail", method = RequestMethod.GET)
 	public String postDetailForm(Model model, String postNo) {
 
 		model.addAttribute("postNo", postNo);
-		
 		
 		// 업로드 파일 조회
 		List<UploadFileVo> fileList = uploadFileService.getAllFile(postNo);
@@ -240,6 +218,55 @@ public class PostController {
 			model.addAttribute("msg", "댓글 삭제에 실패했습니다.");
 		}
 		return "redirect:/post/postDetail";
+	}
+	
+	// 첨부파일 다운로드
+	@RequestMapping(path = "/fileDownload", method = RequestMethod.GET)
+	public String fileDownload(@RequestParam("uploadFileNo") String uploadFileNo,
+							   HttpSession session, HttpServletResponse response) throws Exception {
+	    UploadFileVo uploadFileVo = uploadFileService.selectFile(uploadFileNo);
+	    String filename = uploadFileVo.getUploadFileNm();
+	    String realfilename = uploadFileVo.getUploadRealFilePath();
+
+	    File outputFile = new File(realfilename);
+	    
+	    // 파일을 읽어와 저장할 버퍼를 임시로 만들고 버퍼의 용량은 업로드할 수 있는 파일 크기로 지정함
+	    byte[] temp = new byte[1024 * 1024 * 5];
+
+	    FileInputStream fis = new FileInputStream(outputFile);
+	    
+	    // 유형 확인 : 읽어올 경로의 파일 유형 -> 페이지 생성할 때 타입을 설정해야 함
+	    String mimeType = session.getServletContext().getMimeType(realfilename);
+
+	    // 지정되지 않은 유형 예외처리
+	    if (mimeType == null){
+	    	mimeType = "application.octec-stream"; // 일련된 8bit 스트림 형식
+	    }
+	    
+	    // 파일 다운로드 시작
+	    response.setContentType(mimeType); // 유형 지정
+	    
+	    String encoding = new String(filename.getBytes("euc-kr"),"8859_1");
+	  
+	    String AA = "Content-Disposition";
+	    String BB = "attachment;filename="+ encoding;
+	    response.setHeader(AA,BB);
+	     
+	    // 브라우저에 쓰기
+	    ServletOutputStream sos = response.getOutputStream();
+	     
+	    int numRead = 0;
+	    while((numRead = fis.read(temp,0,temp.length)) != -1){
+	    	// 브라우저에 출력
+	    	sos.write(temp,0,numRead);
+	    }
+	    
+	    // 자원 해제
+	    sos.flush();
+	    sos.close();
+	    fis.close();
+		
+		return "";
 	}
 	
 	
