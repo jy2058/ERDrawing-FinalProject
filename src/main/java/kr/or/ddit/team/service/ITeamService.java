@@ -19,6 +19,16 @@ public interface ITeamService {
 	* Method 설명 : 팀 리스트 가져오기
 	*/
 	List<TeamListVo> getTeamAllList(String memId);
+	
+	/**
+	* Method : getTeamInfo
+	* 작성자 : kjy
+	* 변경이력 :
+	* @param teamNo
+	* @return
+	* Method 설명 : 팀 정보 가져오기
+	*/
+	TeamVo getTeamInfo(int teamNo);
 
 	/**
 	* Method : getMemberTeamInfoList
@@ -78,7 +88,7 @@ public interface ITeamService {
 	* @return
 	* Method 설명 : 팀 생성
 	*/
-	int insertTeam(TeamVo teamVo);
+	int insertTeam(TeamVo teamVo, List<String> teamMember);
 	
 	/**
 	* Method : getTeamErdList
@@ -99,4 +109,24 @@ public interface ITeamService {
 	* Method 설명 : team erd + tag 가져오기
 	*/
 	Map<String, Object> getTeamErdTagMap(int teamNo);
+	
+	/**
+	* Method : getTeamAllListTeamNo
+	* 작성자 : kjy
+	* 변경이력 :
+	* @param teamNo
+	* @return
+	* Method 설명 : 팀리스트 가져오기(팀 번호)
+	*/
+	List<TeamListVo> getTeamAllListTeamNo(int teamNo);
+
+	/**
+	* Method : teamMemberListMap
+	* 작성자 : kjy
+	* 변경이력 :
+	* @param teamNo
+	* @return
+	* Method 설명 : 팀 멤버, 팀 멤버 내역 Map
+	*/
+	Map<String, Object> teamMemberListMap(int teamNo);
 }

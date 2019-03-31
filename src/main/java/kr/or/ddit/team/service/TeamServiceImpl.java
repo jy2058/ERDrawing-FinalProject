@@ -10,6 +10,7 @@ import javax.annotation.Resource;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.erd.model.ErdVo;
+import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.team.dao.ITeamDao;
 import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
@@ -71,8 +72,21 @@ public class TeamServiceImpl implements ITeamService{
 	}
 
 	@Override
-	public int insertTeam(TeamVo teamVo) {
-		return teamDao.insertTeam(teamVo);
+	public int insertTeam(TeamVo teamVo, List<String> teamMember) {
+		int insertTeam = teamDao.insertTeam(teamVo);
+
+		for (String member : teamMember) {
+			TeamListVo vo = new TeamListVo();
+			if (teamVo.getMakerId().equals(member)) {	// 팀 생성자일 경우
+				vo.setTeamAgreeFlag("y");
+				vo.setTeamAuth("creator");
+			}
+			// 멤버일 경우
+			vo.setMemId(member);
+			vo.setTeamNo(teamVo.getTeamNo());
+			teamDao.insertTeamMember(vo);	// 멤버 추가
+		}
+		return insertTeam;
 	}
 
 	@Override
@@ -96,6 +110,28 @@ public class TeamServiceImpl implements ITeamService{
 		erdTagMap.put("erdTagListMap", erdTagListMap);
 		
 		return erdTagMap;
+	}
+
+	@Override
+	public TeamVo getTeamInfo(int teamNo) {
+		return teamDao.getTeamInfo(teamNo);
+	}
+
+	@Override
+	public List<TeamListVo> getTeamAllListTeamNo(int teamNo) {
+		return teamDao.getTeamAllListTeamNo(teamNo);
+	}
+
+	@Override
+	public Map<String, Object> teamMemberListMap(int teamNo) {
+		List<TeamListVo> teamList = teamDao.getTeamAllListTeamNo(teamNo);	// 초대 수락 한 팀 리스트
+		List<MemberVo> teamMember = teamDao.getTeamMember(teamNo);	// 초대 수락 한 회원 리스트
+		
+		Map<String, Object> teamMemberMap = new HashMap<String, Object>();
+		teamMemberMap.put("teamList", teamList);
+		teamMemberMap.put("teamMember", teamMember);
+		
+		return teamMemberMap;
 	}
 
 

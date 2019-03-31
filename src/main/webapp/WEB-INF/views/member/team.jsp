@@ -13,6 +13,7 @@
 .memberId{
 	margin-bottom:10px;
 }
+
 </style>
 
 <div id="contents">
@@ -25,8 +26,8 @@
 				
 				
 			<div class="profile-info">
-				<div class="memberId">팀 이름 출력 위치</div>
-				<div><div class="sampleImg"><div class="exText">Profile Image</div></div></div>
+				<div class="memberId">${teamInfo.teamNm }</div>
+				<div><div class="sampleImg"><div class="exText"><img src="${cp }/team/teamImg?teamNo=${teamInfo.teamNo}"></div></div></div>
 			</div>
 		</div>
 	</div>
@@ -40,7 +41,7 @@
 		
 			<div class="line-title">
 				<h2 class="page-title">TEAM</h2>
-				<a class="add-btn1">+</a>
+				<a class="add-btn1" id="teamAdd">+</a>
 			</div>
 			
 			<div class="row">
@@ -49,15 +50,12 @@
 					<c:forEach var="teamList" items="${teamInfoList }" >
 						<li><a href="/team?teamNo=${teamList.teamNo }">
 						${fn:toUpperCase(fn:substring(teamList.teamNm,0,1 ))}
-							${teamList.teamImg }
 							<span>${teamList.teamNm }</span>
 							</a>
 						</li>
 					</c:forEach>
 					</ul>
-					
 				</div>
-					<!-- <a href="/team">팀 리스트 출력위치 (클릭시 해당 팀관리 페이지로 이동)</a> -->
 			</div>
 	
 	
@@ -67,21 +65,31 @@
 			
 			<div class="row">
 				<div style="background:#232323; color:#fff; height:100px; line-height:100px; padding-left:20px; font-size:20px; font-weight:600;">
-					팀 멤버 리스트 출력위치 (멤버 삭제 기능)
+					<ul style=" min-height:72px; line-height: 1.5">
+						<c:forEach var="teamMember" items="${teamMember }" varStatus="status">
+							<li>
+								<a>
+									<div>
+										<img alt="" src="/member/memberImg?memId=${teamMember.memId }">
+									</div>
+									<div>
+										<strong>${teamMember.memId }</strong>
+										<span>${teamMember.memMail }</span>
+									</div>
+								</a>
+								<div>
+									<span>${teamList[status.index].teamAuth }</span>
+								</div>
+							</li>
+						</c:forEach>
+					</ul>
 				</div>
 			</div>
-			
-			
-			
 			<div class="line-title">
 				<h2 class="page-title">TEAM ERD</h2>
-				<a class="add-btn1">+</a>
+				<a class="add-btn1" id="myAdd">+</a>
 			</div>
-			
-			
 			<div class="row">
-				
-
 						<div class="col-sm-12">
 							 <ul class="erd-box-list">
 							 

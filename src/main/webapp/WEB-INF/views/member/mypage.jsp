@@ -43,7 +43,6 @@
 					<c:forEach var="teamList" items="${teamInfoList }" >
 						<li><a href="/team?teamNo=${teamList.teamNo }">
 						${fn:toUpperCase(fn:substring(teamList.teamNm,0,1 ))}
-							${teamList.teamImg }
 							<span>${teamList.teamNm }</span>
 							</a>
 						</li>

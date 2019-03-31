@@ -7,7 +7,7 @@
 	<select id="getTeamAllList" parameterType="String" resultType="teamListVo">
 		select *
 		from team_list
-		where memid = #{memId}
+		where memid = #{memId} 
 	</select>
 	
 	<!-- 팀 정보 가져오기 -->
@@ -64,5 +64,30 @@
 		select *
 		from erd
 		where teamno= #{teamNo}
+	</select>
+	
+	<!-- teamMember 추가 -->
+	<insert id="insertTeamMember" parameterType="teamListVo">
+		insert into team_list
+		(memid, teamno, teamauth, teamagreeflag)
+		values
+		(#{memId}, #{teamNo}, nvl(#{teamAuth,jdbcType=VARCHAR}, 'user'), nvl(#{teamAgreeFlag,jdbcType=VARCHAR},'n'))
+	</insert>
+
+	<!-- 팀 내역 가져오기 (팀번호로) -->
+	<select id="getTeamAllListTeamNo" parameterType="int" resultType="teamListVo">
+		select *
+		from team_list
+		where teamno = #{teamNo}
+			and teamagreeflag='y'
+	</select>
+	
+	<!-- 팀 멤버 가져오기 -->
+	<select id="getTeamMember" parameterType="int" resultType="MemberVo">
+		select *
+		from team_list a, member b
+		where a.memid = b.memid
+		    and a.teamno = #{teamNo}
+		    and a.teamagreeflag='y'
 	</select>
 </mapper>

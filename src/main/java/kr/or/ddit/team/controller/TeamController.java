@@ -1,12 +1,17 @@
 package kr.or.ddit.team.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.json.simple.JSONArray;
@@ -44,14 +49,20 @@ public class TeamController {
 		logger.debug("===teamMember : {}", teamMember);
 		
 		logger.debug("===getOriginalFilename : {}", multipartFile.getOriginalFilename());
+
+		String[] split;
+		String fileName="";
+		String ext="";
 		
-		String[] split = multipartFile.getOriginalFilename().split("\\.");
-		String fileName = split[0];	// 파일 이름
-		String ext = split[1];	// 확장자
+		if(!multipartFile.isEmpty()){
+			split = multipartFile.getOriginalFilename().split("\\.");
+			fileName = split[0];	// 파일 이름
+			ext = split[1];	// 확장자
+		}
 		
 		logger.debug("===fileName : {}, ext : {}", fileName, ext);
 		
-		String path = req.getRealPath("image");
+		String path = req.getRealPath("image");	// image폴더 path
 		
 		String filename = fileName + "_" + UUID.randomUUID().toString() + "." + ext;
 		
@@ -71,8 +82,9 @@ public class TeamController {
 		teamVo.setMakerId(memId);
 		teamVo.setTeamImg(path +"\\" + filename);
 		
-		teamService.insertTeam(teamVo);
-		int teamNo = teamVo.getTeamNo();
+		// 팀 생성
+		teamMember.add(memId);	// 멤버에 생성자 추가
+		teamService.insertTeam(teamVo, teamMember);
 		
 		return "redirect:/mypage";
 	}
@@ -92,20 +104,43 @@ public class TeamController {
 			obj.put("img", vo.getMemImg());
 			obj.put("id", vo.getMemId());
 			array.add(obj);
-			
 		}
-		
 		model.addAttribute("array", array);
 		return "jsonView";
-		
 	}
 	
 	@RequestMapping("/teamImg")
-	public void teamImg(){
-		//userController profileImg 참고
-		//team이미지 없을 때 / 있을 때 사진 조회
-		
-		// view는 user.jsp
+	public void teamImg(HttpServletRequest req, HttpServletResponse resp, @RequestParam("teamNo") int teamNo) throws IOException{
+		// 1. 사용자 아이디 파라미터 확인
+		// String userId = request.getParameter("userId");
+
+		// 2. 해당 사용자 아이디로 사용자 정보 조회(realFilename)
+		TeamVo teamInfo = teamService.getTeamInfo(teamNo);
+
+		// 3-1. memImg 존재 할 경우
+		// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다.
+		FileInputStream fis;
+		if (teamInfo != null && teamInfo.getTeamImg() != null) {
+			fis = new FileInputStream(new File(teamInfo.getTeamImg()));
+		}
+		// 3-2. memImg 존재하지 않을 경우
+		// 3-2-1. /image/noImg.png(application.getRealPath())
+		else {
+			ServletContext application = req.getServletContext();
+			String noimgPath = application.getRealPath("/image/noImg.png");
+			fis = new FileInputStream(new File(noimgPath));
+		}
+		// 4. FileInputStream을 response객체의 outputStream 객체에 write
+		ServletOutputStream sos = resp.getOutputStream();
+
+		byte[] buff = new byte[512];
+		int len = 0;
+		while ((len = fis.read(buff)) > -1) {
+			sos.write(buff);
+		}
+
+		sos.close();
+		fis.close();
 	}
 
 }

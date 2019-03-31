@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertNotNull;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -177,11 +177,16 @@ public class TeamServiceImplTest extends logicTestConfig{
 		/***Given***/
 		TeamVo teamVo = new TeamVo();
 		teamVo.setMakerId("user3");
-		teamVo.setTeamNm("테스트코드");
+		teamVo.setTeamNm("팀멤버생성테스트코드");
 		teamVo.setTeamNo(11);
 		
+		List<String> member = new ArrayList<String>();
+		member.add("user2");
+		member.add("user1");
+		member.add("user3");
+		
 		/***When***/
-		int insertTeam = teamService.insertTeam(teamVo);
+		int insertTeam = teamService.insertTeam(teamVo, member);
 
 		/***Then***/
 		assertNotNull(insertTeam);
@@ -217,6 +222,25 @@ public class TeamServiceImplTest extends logicTestConfig{
 		/***Then***/
 		assertNotNull(teamErdList);
 		logger.debug("===teamErdList : {}", teamErdList);
+	}
+	
+	/**
+	* Method : testGetTeamAllListTeamNo
+	* 작성자 : kjy
+	* 변경이력 :
+	* Method 설명 : 팀리스트 가져오기(팀 번호)
+	*/
+	@Test
+	public void testGetTeamAllListTeamNo(){
+		/***Given***/
+		int teamNo = 1010;
+		/***When***/
+		List<TeamListVo> teamAllListTeamNo = teamService.getTeamAllListTeamNo(teamNo);
+
+		/***Then***/
+		assertNotNull(teamAllListTeamNo);
+		logger.debug("===teamAllListTeamNo", teamAllListTeamNo);
+
 	}
 
 }

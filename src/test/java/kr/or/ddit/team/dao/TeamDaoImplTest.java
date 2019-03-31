@@ -13,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import kr.or.ddit.erd.model.ErdVo;
+import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
 import kr.or.ddit.team.model.TeamListVo;
@@ -185,6 +186,84 @@ public class TeamDaoImplTest extends logicTestConfig{
 		/***Then***/
 		assertNotNull(teamErdList);
 		logger.debug("===teamErdList : {}", teamErdList);
+	}
+	
+	/**
+	* Method : testInsertTeamMember
+	* 작성자 : kjy
+	* 변경이력 :
+	* Method 설명 : 팀 멤버 추가 테스트
+	*/
+	@Test
+	public void testInsertTeamMember(){
+		/***Given***/
+		TeamListVo teamListVo = new TeamListVo();
+		teamListVo.setMemId("user2");
+		teamListVo.setTeamNo(1008);
+		/***When***/
+		int insertTeamMember = teamDao.insertTeamMember(teamListVo);
+
+		/***Then***/
+		assertNotNull(insertTeamMember);
+
+	}
+	/**
+	* Method : testInsertTeamMember
+	* 작성자 : kjy
+	* 변경이력 :
+	* Method 설명 : 팀 멤버 추가 테스트 생성자
+	*/
+	@Test
+	public void testInsertTeamMemberCreator(){
+		/***Given***/
+		TeamListVo teamListVo = new TeamListVo();
+		teamListVo.setMemId("user3");
+		teamListVo.setTeamNo(1009);
+		teamListVo.setTeamAgreeFlag("y");
+		teamListVo.setTeamAuth("creator");
+		/***When***/
+		int insertTeamMember = teamDao.insertTeamMember(teamListVo);
+
+		/***Then***/
+		assertNotNull(insertTeamMember);
+
+	}
+	
+	/**
+	* Method : testGetTeamAllListTeamNo
+	* 작성자 : kjy
+	* 변경이력 :
+	* Method 설명 : 팀리스트 가져오기(팀 번호)
+	*/
+	@Test
+	public void testGetTeamAllListTeamNo(){
+		/***Given***/
+		int teamNo = 1010;
+		/***When***/
+		List<TeamListVo> teamAllListTeamNo = teamDao.getTeamAllListTeamNo(teamNo);
+
+		/***Then***/
+		assertNotNull(teamAllListTeamNo);
+		logger.debug("===teamAllListTeamNo:{}", teamAllListTeamNo);
+
+	}
+	
+	/**
+	* Method : testGetTeamMember
+	* 작성자 : kjy
+	* 변경이력 :
+	* Method 설명 : 팀 멤버 가져오기
+	*/
+	@Test
+	public void testGetTeamMember(){
+		/***Given***/
+		int teamNo = 1010;
+		/***When***/
+		List<MemberVo> teamMember = teamDao.getTeamMember(teamNo);
+		/***Then***/
+		assertNotNull(teamMember);
+		logger.debug("===teamMember : {}", teamMember);
+
 	}
 	
 }

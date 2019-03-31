@@ -62,6 +62,8 @@ public class TestController {
 		List<TeamVo> teamInfoList = teamService.getMemberAgreTeamInfoList(memId);
 		model.addAttribute("teamInfoList", teamInfoList);
 		
+		session.setAttribute("teamInfoList", teamInfoList);
+		
 		logger.debug("====teamInfoList : {}", teamInfoList);
 		
 		// erd와 tagList Map으로 넘겨줌
@@ -92,6 +94,13 @@ public class TestController {
 		// erd와 tagList를 Map으로 넘겨줌
 		Map<String, Object> teamErdTagMap = teamService.getTeamErdTagMap(teamNo);
 		model.addAllAttributes(teamErdTagMap);
+		
+		TeamVo teamInfo = teamService.getTeamInfo(teamNo);
+		model.addAttribute("teamInfo",teamInfo);
+		
+		// 팀 수락한  teamList와 teamMember 리스트
+		Map<String, Object> teamMemberListMap = teamService.teamMemberListMap(teamNo);
+		model.addAllAttributes(teamMemberListMap);
 		
 		return "team";
 	}

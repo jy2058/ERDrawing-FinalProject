@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.erd.model.ErdVo;
+import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
 import kr.or.ddit.team.model.TeamListVo;
@@ -56,6 +57,21 @@ public class TeamDaoImpl implements ITeamDao{
 	@Override
 	public List<ErdVo> getTeamErdList(int teamNo) {
 		return sqlSession.selectList("team.getTeamErdList", teamNo);
+	}
+
+	@Override
+	public int insertTeamMember(TeamListVo teamListVo) {
+		return sqlSession.insert("team.insertTeamMember", teamListVo);
+	}
+
+	@Override
+	public List<TeamListVo> getTeamAllListTeamNo(int teamNo) {
+		return sqlSession.selectList("team.getTeamAllListTeamNo", teamNo);
+	}
+
+	@Override
+	public List<MemberVo> getTeamMember(int teamNo) {
+		return sqlSession.selectList("team.getTeamMember", teamNo);
 	}
 
 }
