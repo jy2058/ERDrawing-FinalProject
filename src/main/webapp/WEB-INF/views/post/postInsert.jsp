@@ -31,12 +31,11 @@
 			<h3 class="page-header">새 글 등록</h3>
 			<form id="frm" action="${cp}/post/postInsert" method="post"
 				  class="form-horizontal" role="form" enctype="multipart/form-data">
-				<input type="hidden" id="boardNo" name="boardNo" value="${boardNo}">
-
-
+				<input type="hidden" id="boardNo" name="boardNo" value="${postVo.boardNo}">
 				글제목 : <input type="text" id="postTitle" name="postTitle" rows="10" cols="100" style="width: 400px; height: 30px;" /></br></br> 
 			        작성자 : <input type="text" id="writerId" name="writerId" value="${SESSION_MEMBERVO.memId}" 
 			                  rows="10" cols="100" style="width: 400px; height: 30px;" readonly /></br></br>
+			           <%-- <input type="hidden" class="form-control" id="postGn" name="postGn" value="${postVo.postGn}"> --%>
 				<textarea name="postContent" id="smarteditor" rows="10" cols="100" style="width: 766px; height: 412px;" ></textarea>
 
 				<div class="form-group">
@@ -51,7 +50,7 @@
 
 				<div class="form-group">
 					<div class="col-sm-1">
-						<input type="hidden" id="boardNo" name="boardNo" />
+						<input type="hidden" id="postNum" name="postNum" value="${postVo.postNo}" />
 						<input type="hidden" name="memId" value="${SESSION_MEMBERVO.memId}" />
 						<button id="saveBtn" type="button" class="btn btn-default">등록</button>
 					</div>
@@ -94,6 +93,12 @@
 								// 이부분에 에디터 validation 검증
 								if (validation()) {
 									$("#boardNo").val("${boardNo}");
+									
+									 if($("#postNum").val() != ''){
+										$("#frm").attr("method","post");
+										$("#frm").attr("action","/post/postReply");
+											$("#frm").submit();
+									}else 
 									$("#frm").submit();
 								}
 							}

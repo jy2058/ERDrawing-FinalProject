@@ -88,6 +88,7 @@ public class PostController {
 	@RequestMapping(path = "/postInsert", method = RequestMethod.POST)
 	public String postInsert(PostVo postVo, @RequestPart("file") List<MultipartFile> files, Model model,
 			               HttpSession session, RedirectAttributes ra) throws IllegalStateException, IOException {
+	
 		Object memId = session.getAttribute("SESSION_MEMBERVO");
 		model.addAttribute("boardNo", postVo.getBoardNo());
 
@@ -139,9 +140,11 @@ public class PostController {
 
 	// 게시글 상세 화면
 	@RequestMapping(path = "/postDetail", method = RequestMethod.GET)
-	public String postDetailForm(Model model, String postNo) {
+	public String postDetailForm(Model model, String postNo, String boardNo) {
 
+		logger.debug("#### : {}", postNo);
 		model.addAttribute("postNo", postNo);
+		model.addAttribute("boardNo", boardNo);
 		
 		// 업로드 파일 조회
 		List<UploadFileVo> fileList = uploadFileService.getAllFile(postNo);
@@ -330,6 +333,89 @@ public class PostController {
 	    fis.close();
 		
 		return "";
+	}
+	
+	// 답글 등록 화면
+	@RequestMapping(path={"/postReply"}, method={RequestMethod.GET})
+	public String postReplyForm(@RequestParam("postNo")String postNo,
+								@RequestParam("boardNo")String boardNo,
+								Model model) {
+		List<BoardVo> boardList = boardService.getAllBoard();
+		PostVo postVo = postService.getSelectPost(postNo);
+		
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("boardNo", boardNo);
+		model.addAttribute("postVo", postVo);
+		
+		return "post/postInsert";
+	}
+	
+	// 답글 등록
+	@RequestMapping(path={"/postReply"}, method={RequestMethod.POST})
+	public String postReply(@RequestParam("postTitle") String postTitle,
+							@RequestParam("postContent") String postContent,
+							@RequestParam("postNum") int postNo,
+						    @RequestParam("boardNo") int boardNo,
+							@RequestPart("file") List<MultipartFile> files,
+							HttpSession session, RedirectAttributes ra) throws IllegalStateException, IOException {
+		Object memId = session.getAttribute("SESSION_MEMBERVO");
+		
+		PostVo parentVo = postService.getSelectPost("" + postNo);
+		logger.debug("$$$$$$$$ : {}", parentVo);
+		int gn = parentVo.getPostGn();
+			
+		List<String> filenames = new ArrayList<>();
+		List<String> realFilenames = new ArrayList<>();
+		
+		for (int i = 0; i < files.size(); i++) {
+			if (!files.get(i).isEmpty() && files.get(i).getSize() > 0) {
+				MultipartFile file = files.get(i);
+
+				String filename = file.getOriginalFilename();
+				String realFilename = "d:\\uploadFile\\" + UUID.randomUUID().toString();
+				file.transferTo(new File(realFilename));
+				
+				filenames.add(filename);
+				realFilenames.add(realFilename);
+			}
+		}
+		
+		PostVo postVo = new PostVo();
+		postVo.setPostTitle(postTitle);
+		postVo.setPostContent(postContent);
+		postVo.setPostGn(gn);
+		postVo.setWriterId((String)memId);
+		postVo.setParentPostNo(postNo);
+		postVo.setBoardNo(boardNo);
+		
+		int cnt = postService.insertReply(postVo);
+		
+		// 게시글 등록 성공
+		if(cnt > 0) {
+			// post : insert 실행 후 적용된 postNo
+			int postCnt = postVo.getPostNo();
+			// ploadFile : 정상 실행된 행 개수
+			int fileCnt = 0;
+			
+			for (int i = 0; i < filenames.size(); i++) {
+				UploadFileVo uploadFileVo = new UploadFileVo();
+				uploadFileVo.setUploadFileNm(filenames.get(i));
+				uploadFileVo.setUploadRealFilePath(realFilenames.get(i));
+				uploadFileVo.setPostNo(postCnt);
+				
+				fileCnt += uploadFileService.insertFile(uploadFileVo);
+			}
+			
+			if (fileCnt == filenames.size()) {
+				ra.addAttribute("postNo", postNo);
+				return "redirect:/post/postDetail";
+			} else {
+				System.out.println("첨부파일 등록 오류");
+			}
+		}
+		// 게시글 등록 실패
+		ra.addAttribute("boardNo", postVo.getBoardNo());
+		return "redirect:/post/postInsert";
 	}
 	
 	
