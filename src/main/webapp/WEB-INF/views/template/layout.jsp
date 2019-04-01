@@ -14,6 +14,8 @@
 <script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
+  
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 		
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->

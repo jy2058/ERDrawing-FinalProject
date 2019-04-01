@@ -35,21 +35,26 @@ background:#4B4B4B;
 			<input type="text" id="memId" name="memId"/>
 			<span>비밀번호</span>
 			<input type="password" id="memPass" name="memPass"/>
-			<div class="submit-btn btn-style1">로그인</div> <div class="btn-style3">비밀번호를 잊으셨나요?</div>
+			<div class="submit-btn btn-style1">로그인</div>
+			
+			 <div class="btn-style3">비밀번호를 잊으셨나요?</div>
+      <input type="hidden" id="capResponse"  name="capResponse"/>
 		</form>
-
+		
+		
+<div id="fmdiv" style="display: none;"><div class="g-recaptcha" data-sitekey="6LfnUpoUAAAAAMtKydIehTmTDdm7JZUubAfHHVuf"></div>
+      <br/></div>
+      
+      
 
 		<form action="${cp }/logins" id="apiFrm" method="post" class="col-sm-3 col-sm-offset-1" >
 
 			<div class="g-signin2" data-onsuccess="onSignIn"></div>
 			<input type="hidden" name="info" id="info"/>
-	<!-- 		<div class="facebook-btn btn-style1">KaKao 로그인</div>
-			<div class="github-btn btn-style1" >Github 로그인</div> -->
-<a id="kakao-login-btn"></a>
+			<a id="kakao-login-btn"></a>
 		</form>
 		
 </div>
-
 
 <div class="lable-style1 col-sm-10 col-sm-offset-1">
 	계정이 필요하세요? <div class="join-btn btn-style3" onclick="join()">지금 회원가입을 하세요.</div>
@@ -63,11 +68,20 @@ background:#4B4B4B;
 
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
-
     
  
 <script >	
+
 	$(document).ready(function () {
+	var count=	"${count }";
+	var on =0;
+		if(count>=3){
+			on=1;
+			$("#fmdiv").show();
+			
+		}
+	
+	
 		 Kakao.init('8eded83f4085ba344e793801d05f3722');
 		    // 카카오 로그인 버튼을 생성합니다.
 		    
@@ -114,6 +128,16 @@ $("#apiFrm").attr("action","${cp}/kakaoLogin");
 				return false;
 			}
 			
+			
+		var sst=$("#g-recaptcha-response").val();
+		if(on==1){
+			if(sst==''){
+				alert("리캡챠를 먼저해주세요 ");
+				return;
+			}
+		}
+			
+			$("#capResponse").val(sst);
 			$("#erdFrm").submit();
 		});
 	

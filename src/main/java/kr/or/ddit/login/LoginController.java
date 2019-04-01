@@ -1,5 +1,13 @@
 package kr.or.ddit.login;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -20,9 +28,11 @@ import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
 
 @Controller
 public class LoginController {
-
+	
 	private Logger logger = LoggerFactory.getLogger(LoginController.class);
-
+	private int count = 0;
+	private int captchaCk = 0;
+	
 
 	@Resource(name = "memberService")
 	private IMemberService memberService;
@@ -31,44 +41,80 @@ public class LoginController {
 	public String login(Model model) {
 		return "login";
 	}
+	
+	@RequestMapping(path = "/loginCks")
+	public String loginCks(Model model,RedirectAttributes ra, HttpServletRequest req) {
+		ra.addFlashAttribute("msg", "로그인후 이용해주세요~");
+		 return "redirect:" + req.getContextPath() + "/login";
+
+	}
 
 	@RequestMapping(path = { "/login" }, method = { RequestMethod.POST })
-	public String Login(MemberVo vo, HttpSession session, RedirectAttributes ra, HttpServletRequest req) {
+	public String Login(String capResponse,MemberVo vo, HttpSession session, RedirectAttributes ra, HttpServletRequest req) throws IOException {
 		MemberVo checkMemVo = memberService.selectMember(vo.getMemId());
 		
 		
 		if (checkMemVo == null) {
 			ra.addFlashAttribute("msg", "Id를 다시 확인해 주세요");
-			return "redirect:" + req.getContextPath() + "/login";
+			session.setAttribute("count", count++);
+			 return "redirect:" + req.getContextPath() + "/login";
+
 		} else if (checkMemVo.getMemId().equals(vo.getMemId())
 				&& checkMemVo.getMemPass().equals(KISA_SHA256.encrypt(vo.getMemPass()))) {
+			
+			if(capResponse!=""){
+			String checkOk=captCahs(capResponse);
+				if(checkOk.equals("ok")){
+					logger.debug("ooooooooooooookkkkkkkkkkkkkkk");
+					session.setAttribute("SESSION_MEMBERVO", vo);
+					captchaCk=1;
+					count=0;
+					session.setAttribute("count", count);
+					return "redirect:" + req.getContextPath()+"/" ;
+				}else{
+					ra.addFlashAttribute("msg", "인증이 실패 하였습니다.");
+					session.setAttribute("count", count++);
+					 return "redirect:" + req.getContextPath() + "/login";
+				}
+			}
+			
 			session.setAttribute("SESSION_MEMBERVO", vo);
-			return "main";
+			count=0;
+			session.setAttribute("count", count);
+			return "redirect:" + req.getContextPath()+"/" ;
+			
+			
 		}else if(checkMemVo.getMemEmailDiv().equals("google")){
 			ra.addFlashAttribute("msg", "google로 로그인 해주세요");
-			return "redirect:" + req.getContextPath() + "/login";
+			 return "redirect:" + req.getContextPath() + "/login";
+
 		}
 		else if(checkMemVo.getMemEmailDiv().equals("kakao")){
 			ra.addFlashAttribute("msg", "kakao로 로그인 해주세요");
-			return "redirect:" + req.getContextPath() + "/login";
+			 return "redirect:" + req.getContextPath() + "/login";
+
 		}
 		else {
 			ra.addFlashAttribute("msg", "PassWord를 다시 확인해 주세요");
-			return "redirect:" + req.getContextPath() + "/login";
+			session.setAttribute("count", count++);
+			 return "redirect:" + req.getContextPath() + "/login";
+
 		}
+		
+		
 	}
 
 	@RequestMapping(value = "/logout")
-	public String logout(HttpSession session,HttpServletRequest request,HttpServletResponse response) {
+	public String logout(HttpSession session,HttpServletRequest request,HttpServletResponse response, HttpServletRequest req) {
 		// session.invalidate(); // 세션 전체를 날려버림
 
 	logger.debug("==cooc{}",request.getCookies().length);
 	session.removeAttribute("SESSION_MEMBERVO"); // 하나씩 하려면 이렇게 해도 됨.
-		return "main";
+	return "redirect:" + req.getContextPath()+"/" ;
 	}
 
 	@RequestMapping(value = "/logins", method = { RequestMethod.GET, RequestMethod.POST })
-	public String googleCallback(String[] info,HttpSession session) throws Exception {
+	public String googleCallback(String[] info,HttpSession session, HttpServletRequest req) throws Exception {
 		MemberVo memId = memberService.selectMember(info[3]);
 		MemberVo vo = new MemberVo(info[3], info[3], "--", info[1], "kr","google");
 		vo.setMemImg(info[2]);
@@ -79,11 +125,11 @@ public class LoginController {
 		else{
 			session.setAttribute("SESSION_MEMBERVO", vo);
 		}
-		return "main";
+		return "redirect:" + req.getContextPath()+"/" ;
 	}
 	
 	@RequestMapping(value = "/kakaoLogin")
-	public String kakaoLogin(String info, HttpSession session) {
+	public String kakaoLogin(String info, HttpSession session, HttpServletRequest req) {
 		logger.debug("==info{}",info);
 		String[] email =info.split(",");
 		if(email.length<5){	//이메일 수락 안햇을시
@@ -152,6 +198,53 @@ public class LoginController {
 				session.setAttribute("SESSION_MEMBERVO", vo);
 			}
 		}
-		return "main";
+
+		return "redirect:" + req.getContextPath()+"/" ;
 	}
+
+	
+	
+	public String captCahs(String capResponse) throws IOException {
+		logger.debug("===ddD??");
+				
+		logger.debug("===capResponse : {}",capResponse);
+		
+		
+		    System.out.println(capResponse);
+		    
+		    // 토큰과 보안키를 가지고 성공 여부를 확인 함
+		    HttpURLConnection conn = (HttpURLConnection) new URL("https://www.google.com/recaptcha/api/siteverify").openConnection();
+		    String params = "secret=6LfnUpoUAAAAAN0XY-LedNPrfHMqsaxjpFY0fn3I" + "&response=" + capResponse;
+		    conn.setRequestMethod("POST");
+		    conn.setDoOutput(true);
+		    DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+		    wr.writeBytes(params);
+		    wr.flush();
+		    wr.close();
+		    
+		    // 결과코드 확인(200 : 성공)
+		    int responseCode = conn.getResponseCode();
+		    StringBuffer responseBody = new StringBuffer();
+		    if (responseCode == 200) {
+		        
+		        // 데이터 추출
+		        BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
+		        BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+		        String line;
+		        while ((line = reader.readLine()) != null) {
+		            responseBody.append(line);
+		        }
+		        bis.close();
+		        
+		        // JSON으로 변환 하여야 하지만 기본 모듈에서 처리하기위하여 아래와 같이 진행 합니다
+		        if(responseBody.toString().indexOf("\"success\": true") > -1){
+		        	logger.debug("===인증 되었습니다:");
+
+					return "ok";}
+		
+	}
+		    return "no";
+	}
+	
+	
 	}
