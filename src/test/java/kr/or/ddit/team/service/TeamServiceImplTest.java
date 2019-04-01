@@ -242,5 +242,43 @@ public class TeamServiceImplTest extends logicTestConfig{
 		logger.debug("===teamAllListTeamNo", teamAllListTeamNo);
 
 	}
+	
+	/**
+	* Method : testAuthUpdate
+	* 작성자 : PC08
+	* 변경이력 :
+	* Method 설명 : 멤버 권한 수정 테스트
+	*/
+	@Test
+	public void testAuthUpdate(){
+		/***Given***/
+		TeamListVo vo = new TeamListVo();
+		/***When***/
+		vo.setMemId("user2");
+		vo.setTeamNo(1010);
+		vo.setTeamAuth("admin");
+		
+		int authUpdate = teamService.authUpdate(vo);
+		/***Then***/
+		assertNotNull(authUpdate);
+	}
 
+	/**
+	* Method : testDelMember
+	* 작성자 : PC08
+	* 변경이력 :
+	* Method 설명 : 팀 멤버 삭제
+	*/
+	@Test
+	public void testDelMember(){
+		/***Given***/
+		TeamListVo vo = new TeamListVo();
+		vo.setMemId("user2");
+		vo.setTeamNo(1010);
+		/***When***/
+		int delMember = teamService.delMember(vo);
+		/***Then***/
+		assertNotNull(delMember);
+
+	}
 }

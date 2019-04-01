@@ -2,7 +2,6 @@ package kr.or.ddit.team.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -28,6 +27,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
+import kr.or.ddit.team.model.TeamListVo;
 import kr.or.ddit.team.model.TeamVo;
 import kr.or.ddit.team.service.ITeamService;
 
@@ -141,6 +141,36 @@ public class TeamController {
 
 		sos.close();
 		fis.close();
+	}
+	
+	@RequestMapping("/authUpdate")
+	public String authUpdate(TeamListVo teamListVo, Model model){
+		logger.debug("===teamNo : {}", teamListVo.getTeamNo());
+		logger.debug("===getMemId : {}", teamListVo.getMemId());
+		logger.debug("===getTeamAuth : {}", teamListVo.getTeamAuth());
+		
+		teamService.authUpdate(teamListVo);
+		
+		String teamAuth = teamListVo.getTeamAuth();
+		String auth = "";
+		if(teamAuth.equals("user")){
+			auth = "admin";
+		}else if(teamAuth.equals("admin")){
+			auth = "user";
+		}
+		model.addAttribute("auth", auth);
+		
+		return "jsonView";
+	}
+	
+	@RequestMapping("/delMember")
+	public String delMember(TeamListVo teamListVo, Model model){
+		logger.debug("===teamNo : {}", teamListVo.getTeamNo());
+		logger.debug("===getMemId : {}", teamListVo.getMemId());
+		
+		teamService.delMember(teamListVo);
+		
+		return "jsonView";
 	}
 
 }
