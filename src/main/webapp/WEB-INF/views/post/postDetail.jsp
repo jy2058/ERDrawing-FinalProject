@@ -92,13 +92,13 @@
 								<td>${cmt.cmtNo}</td>
 								<td>${cmt.memId}</td>
 								<td>${cmt.cmtContent}</td>
+								<td>
+								<button type="button" class="btnLike btn-default" data-cmtnum="${cmt.cmtNo}">좋아요</button>
 								<c:if test="${SESSION_MEMBERVO.memId == cmt.memId}">
-									<td>
-										<!-- <button id="cmtUpdBtn" type="button" class="btnUpd btn-default">수정</button> -->
 										<button type="button" class="btnDel btn-default" data-cmtnum="${cmt.cmtNo}">삭제</button>
-											<%-- <c:choose>
+											<%--  <c:choose>
 												<c:when test="${SESSION_MEMBERVO.memId ne null}">
-													<a href="javascript: like_func();"><img src=""></a>
+													<a href="javascript: like_func();"><img src="">좋아요</a>
 												</c:when>
 											</c:choose> --%>
 									</td>
@@ -148,15 +148,25 @@
 	<input type="hidden" name="memId" value="${SESSION_MEMBERVO.memId}" />
 </form>
 
-<!-- 해야됨 -->
-<form id="replyFrm" action="${cp}/post/postReply" method="get" class="form-horizontal" role="form">
-	<input type="hidden" id="postNo" name="postNo" value="${postVo.postNo}" />
-	<input type="hidden" id="boardNo" name="boardNo" value="${postVo.boardNo}" />
-</form>
-
 <form id="cmtDelFrm" action="${cp}/post/deleteCmt" method="get">
 	<input type="hidden" name="postNo" value="${postList.postNo}" />
 	<input type="hidden" name="cmtNo" id="cmtNo" />
+</form>
+
+<!-- 해야됨 -->
+<!-- 댓글 좋아요 -->
+<%-- <form id="cmtLikeFrm" action="${cp}/post/likeCmt" method="get">
+	<input type="hidden" id="cmtContent" name="cmtContent"/>
+	<input type="hidden" name="postNo" value="${postList.postNo}" />
+	<input type="hidden" name="cmtNo" value="${.cmtNo}" />
+	
+	<input type="hidden" name="memId" value="${SESSION_MEMBERVO.memId}" />
+</form> --%>
+
+<!-- 해야됨 -->
+<form id="replyFrm" action="${cp}/post/postReply" method="get" class="form-horizontal" role="form">
+	<input type="hidden" id="postNo" name="postNo" value="${postNo}" />
+	<input type="hidden" id="boardNo" name="boardNo" value="${boardNo}" />
 </form>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -180,6 +190,11 @@
 			$("#delBtn").click(function() {
 				alert("게시글을 삭제 하시겠습니까?");
 				$("#delFrm").submit();
+			});
+			
+			//답글버튼 클릭이벤트
+			$("#replyBtn").click(function() {
+				$("#replyFrm").submit();
 			});
 			
 			//댓글등록버튼 클릭이벤트

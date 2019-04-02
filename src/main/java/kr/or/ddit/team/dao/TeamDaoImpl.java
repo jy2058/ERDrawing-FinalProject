@@ -74,4 +74,14 @@ public class TeamDaoImpl implements ITeamDao{
 		return sqlSession.selectList("team.getTeamMember", teamNo);
 	}
 
+	@Override
+	public int authUpdate(TeamListVo teamListVo) {
+		return sqlSession.update("team.authUpdate", teamListVo);
+	}
+
+	@Override
+	public int delMember(TeamListVo teamListVo) {
+		return sqlSession.delete("team.delMember", teamListVo);
+	}
+
 }

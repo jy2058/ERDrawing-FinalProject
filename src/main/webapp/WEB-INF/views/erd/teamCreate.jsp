@@ -98,6 +98,7 @@ $("#teamCreate").on("click", function(){
 	$("#teamCreateFrm").submit();
 });
 
+// 이미지 미리보기
 function loadImg(value){
 	if(value.files && value.files[0]){
 		var reader = new FileReader();

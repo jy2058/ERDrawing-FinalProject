@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="/css/boxErd.css">
 <link rel="stylesheet" href="/css/member/modify.css">
 <link rel="stylesheet" href="/css/member/mypage.css">
+<link rel="stylesheet" href="/css/team/toggle-switches.css">
 
 <style>
 .profile-info{
@@ -66,20 +67,37 @@
 			<div class="row">
 				<div style="background:#232323; color:#fff; height:100px; line-height:100px; padding-left:20px; font-size:20px; font-weight:600;">
 					<ul style=" min-height:72px; line-height: 1.5">
-						<c:forEach var="teamMember" items="${teamMember }" varStatus="status">
-							<li>
+						<c:forEach var="teamMemberGet" items="${teamMember }" varStatus="status">
+							<li data-memid="${teamMemberGet.memId }" data-teamno="${teamList[status.index].teamNo }"> <!-- ajax를 위한 커스텀 데이터 생성 -->
 								<a>
 									<div>
-										<img alt="" src="/member/memberImg?memId=${teamMember.memId }">
+										<img alt="" src="/member/memberImg?memId=${teamMemberGet.memId }">
 									</div>
 									<div>
-										<strong>${teamMember.memId }</strong>
-										<span>${teamMember.memMail }</span>
+										<strong>${teamMemberGet.memId }</strong>
+										<span>${teamMemberGet.memMail }</span>
 									</div>
 								</a>
 								<div>
-									<span>${teamList[status.index].teamAuth }</span>
+									<span class="memAuth">${teamList[status.index].teamAuth }</span>
 								</div>
+								 
+								 <!-- 팀 생성자이면서 권한이 creator가 아닌 것(user, admin) -->
+								  <c:if test="${teamList[status.index].teamAuth ne 'creator' and teamInfo.makerId eq loginId }"> 
+									<input type="checkbox" class="toggle-switch" name="authCheck" style="font-size: 1px;" value="${teamList[status.index].teamAuth }"
+									<c:if test="${teamList[status.index].teamAuth eq 'admin'}"> <!-- 권한 admin일 경우 checked -->
+										checked
+									</c:if>
+									>
+									<button type="button" class="close delBtn" style="color: white">x</button>
+								</c:if>
+								
+								<c:if test="${teamMemberGet.memId eq loginId and teamInfo.makerId ne loginId}"> <!-- 본인일 경우 삭제버튼 활성화(생성자는 삭제 X) -->
+									<button type="button" class="close delBtn" style="color: white">x</button>
+									
+								</c:if>
+
+	
 							</li>
 						</c:forEach>
 					</ul>
@@ -95,7 +113,6 @@
 							 
 							 	<c:forEach var="teamErdList" varStatus="status" items="${teamErdList }">
 							  	<li class="erd-box-item">
-									
 								  		<a class="preview-box">
 								  			<div class="bg-box">
 								  				<div class="bg-img">
@@ -146,3 +163,57 @@
 		
 	</div>
 </div>
+
+<script>
+	// 팀 멤버 권한 변경(user <-> admin)
+	$("input[name=authCheck]").on("click", function(e){ 
+		var teamAuth = this.value;
+		var memId = $(e.target).closest('li').data("memid");
+		var teamNo = $(e.target).closest('li').data("teamno");
+		
+		$.ajax({
+			type : "get",
+			url : "${cp}/team/authUpdate",
+			data : {teamNo : teamNo,
+					memId : memId,
+					teamAuth : teamAuth},
+			success : function(data){
+				$(e.target).closest('li').find(".memAuth").html(data.auth);
+				$(e.target).val(data.auth);
+			},
+			error : function(xhr, status, error){
+				aalert("에러");
+			}
+		});
+	});
+	
+	
+	
+	
+	
+	// 팀 멤버 삭제
+	$(".delBtn").on("click", function(e){
+		var memId = $(e.target).closest('li').data("memid");
+		var teamNo = $(e.target).closest('li').data("teamno");		
+		
+		var result = confirm("삭제하시겠습니까?");
+		if(!result){
+			return;
+		}
+		
+		$.ajax({
+			type : "get",
+			url : "${cp}/team/delMember",
+			data : {teamNo : teamNo,
+					memId : memId },
+			success : function(data){
+				$(e.target).closest('li').remove();
+			},
+			error : function(xhr, status, error){
+				alert("에러");
+			}
+		});
+		
+	});
+</script>
+

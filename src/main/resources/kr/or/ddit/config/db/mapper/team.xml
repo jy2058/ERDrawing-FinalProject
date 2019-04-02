@@ -90,4 +90,20 @@
 		    and a.teamno = #{teamNo}
 		    and a.teamagreeflag='y'
 	</select>
+	
+	<!-- 팀 멤버 권한 수정하기 -->
+	<update id="authUpdate" parameterType="teamListVo">
+		update team_list 
+		<set>
+	      <if test="teamAuth == 'user'">teamauth='admin'</if>
+	      <if test="teamAuth == 'admin'">teamauth='user'</if>
+     	</set>
+		where memid=#{memId} and teamno = #{teamNo}
+	</update>
+	
+	<!-- 팀 멤버 삭제 -->
+	<delete id="delMember" parameterType="teamListVo">
+		delete from team_list
+		where memid=#{memId} and teamno =#{teamNo}
+	</delete>
 </mapper>

@@ -87,7 +87,7 @@ public class TestController {
 	public String team(@RequestParam("teamNo")int teamNo, Model model, HttpSession session){
 		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		String memId = memberVo.getMemId();
-		
+		model.addAttribute("loginId", memId);
 		List<TeamVo> teamInfoList = teamService.getMemberAgreTeamInfoList(memId);
 		model.addAttribute("teamInfoList", teamInfoList);
 		

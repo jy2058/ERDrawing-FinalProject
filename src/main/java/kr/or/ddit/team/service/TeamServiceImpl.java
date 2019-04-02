@@ -134,5 +134,15 @@ public class TeamServiceImpl implements ITeamService{
 		return teamMemberMap;
 	}
 
+	@Override
+	public int authUpdate(TeamListVo teamListVo) {
+		return teamDao.authUpdate(teamListVo);
+	}
+
+	@Override
+	public int delMember(TeamListVo teamListVo) {
+		return teamDao.delMember(teamListVo);
+	}
+
 
 }

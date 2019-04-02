@@ -129,4 +129,24 @@ public interface ITeamService {
 	* Method 설명 : 팀 멤버, 팀 멤버 내역 Map
 	*/
 	Map<String, Object> teamMemberListMap(int teamNo);
+	
+	/**
+	* Method : authUpdate
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param teamListVo
+	* @return
+	* Method 설명 : 팀 멤버 권한 수정하기
+	*/
+	int authUpdate(TeamListVo teamListVo);
+	
+	/**
+	* Method : delMember
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param teamListVo
+	* @return
+	* Method 설명 : 팀 멤버 삭제
+	*/
+	int delMember(TeamListVo teamListVo);
 }
