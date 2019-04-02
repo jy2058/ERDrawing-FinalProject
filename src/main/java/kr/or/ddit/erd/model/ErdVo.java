@@ -14,6 +14,7 @@ public class ErdVo {
 	private String erdColor;	//배경색
 	private String memId;		//회원아이디(팀 erd인 경우 null이 들어감)
 	private int teamNo;			//팀 번호 ( 팀 erd가 아닌 경우, null값이 들어감)
+	private String erdImg;
 	
 	
 	public ErdVo() {
@@ -91,12 +92,20 @@ public class ErdVo {
 	public void setTeamNo(int teamNo) {
 		this.teamNo = teamNo;
 	}
+	
+	public String getErdImg() {
+		return erdImg;
+	}
+
+	public void setErdImg(String erdImg) {
+		this.erdImg = erdImg;
+	}
 
 	@Override
 	public String toString() {
 		return "ErdVo [erdNo=" + erdNo + ", erdTitle=" + erdTitle + ", erdScope=" + erdScope + ", erdReadCnt="
 				+ erdReadCnt + ", erdCDt=" + erdCDt + ", erdUDt=" + erdUDt + ", erdColor=" + erdColor + ", memId="
-				+ memId + ", teamNo=" + teamNo + "]";
+				+ memId + ", teamNo=" + teamNo + ", erdImg=" + erdImg + "]";
 	}
-	
+
 }

@@ -110,9 +110,13 @@
 			<div class="row">
 						<div class="col-sm-12">
 							 <ul class="erd-box-list">
-							 
 							 	<c:forEach var="teamErdList" varStatus="status" items="${teamErdList }">
 							  	<li class="erd-box-item">
+							  		<c:if test="${myTeam.teamAuth ne 'user'}"> <!-- 권한이 유저가 아닐 때 erd 삭제 가능 -->
+								  		<button type="button" class="btn btn-default delBtn" aria-label="trash" value="${myErdList.erdNo }">
+										  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+										</button>
+									</c:if>
 								  		<a class="preview-box">
 								  			<div class="bg-box">
 								  				<div class="bg-img">

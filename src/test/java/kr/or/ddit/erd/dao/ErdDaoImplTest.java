@@ -59,6 +59,22 @@ public class ErdDaoImplTest extends logicTestConfig{
 
 	}
 	
+	/**
+	* Method : testDelErd
+	* 작성자 : PC08
+	* 변경이력 :
+	* Method 설명 : erd 삭제
+	*/
+	@Test
+	public void testDelErd(){
+		/***Given***/
+		int erdNo = 1194;
+		/***When***/
+		int delErd = erdDao.delErd(erdNo);
+		/***Then***/
+		assertNotNull(delErd);
+	}
+	
 	
 
 }

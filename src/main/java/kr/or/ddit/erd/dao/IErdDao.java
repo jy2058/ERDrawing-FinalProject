@@ -23,5 +23,15 @@ public interface IErdDao {
 	* Method 설명 : 나의 Erd리스트 가져오기
 	*/
 	List<ErdVo> getMyErdList(String memId);
+	
+	/**
+	* Method : delErd
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdNo
+	* @return
+	* Method 설명 : erd 삭제
+	*/
+	int delErd(int erdNo);
 
 }

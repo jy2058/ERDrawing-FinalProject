@@ -25,4 +25,9 @@ public class ErdDaoImpl implements IErdDao{
 		return sqlSession.selectList("erd.getMyErdList", memId);
 	}
 
+	@Override
+	public int delErd(int erdNo) {
+		return sqlSession.delete("erd.delErd", erdNo);
+	}
+
 }

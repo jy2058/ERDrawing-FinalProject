@@ -30,4 +30,9 @@
 		where memid = #{memId}
 	</select>
 	
+	<!-- erd 삭제 -->
+	<delete id="delErd" parameterType="int">
+		delete from erd where erdno = #{erdNo}
+	</delete>
+	
 </mapper>
