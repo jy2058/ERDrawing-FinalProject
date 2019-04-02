@@ -55,5 +55,19 @@
 		from member
 		where memid like '%'||#{memId}||'%'
 	</select>
+	
+	<update id="updateMemPw" parameterType="memberVo">
+	update member
+	 set mempass = #{memPass}
+	 where memId = #{memId}
+	</update>
+	
+		<!-- 회원 id검색 -->
+	<select id="getMemId" parameterType="memberVo" resultType="memberVo" >
+		select *
+		from member
+		where memNm like '%'||#{memNm}||'%' and
+			 memTel =#{memTel}
+	</select>
 
 </mapper>

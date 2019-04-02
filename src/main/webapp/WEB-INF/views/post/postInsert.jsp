@@ -32,10 +32,9 @@
 			<form id="frm" action="${cp}/post/postInsert" method="post"
 				  class="form-horizontal" role="form" enctype="multipart/form-data">
 				<input type="hidden" id="boardNo" name="boardNo" value="${postVo.boardNo}">
-				글제목 : <input type="text" id="postTitle" name="postTitle" rows="10" cols="100" style="width: 400px; height: 30px;" /></br></br> 
-			        작성자 : <input type="text" id="writerId" name="writerId" value="${SESSION_MEMBERVO.memId}" 
+				글제목  <input type="text" id="postTitle" name="postTitle" rows="10" cols="100" style="width: 400px; height: 30px;" /></br></br> 
+			        작성자  <input type="text" id="writerId" name="writerId" value="${SESSION_MEMBERVO.memId}" 
 			                  rows="10" cols="100" style="width: 400px; height: 30px;" readonly /></br></br>
-			           <%-- <input type="hidden" class="form-control" id="postGn" name="postGn" value="${postVo.postGn}"> --%>
 				<textarea name="postContent" id="smarteditor" rows="10" cols="100" style="width: 766px; height: 412px;" ></textarea>
 
 				<div class="form-group">
@@ -94,11 +93,11 @@
 								if (validation()) {
 									$("#boardNo").val("${boardNo}");
 									
-									 if($("#postNum").val() != ''){
+									/*  if($("#postNum").val() != ''){
 										$("#frm").attr("method","post");
 										$("#frm").attr("action","/post/postReply");
 											$("#frm").submit();
-									}else 
+									}else  */
 									$("#frm").submit();
 								}
 							}

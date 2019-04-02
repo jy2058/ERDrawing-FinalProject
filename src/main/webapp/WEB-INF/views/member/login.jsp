@@ -1,76 +1,84 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <link rel="stylesheet" href="/css/member/login.css">
 
 <style>
-#contents{
-background:#4B4B4B;
+#contents {
+	background: #4B4B4B;
 }
 
-	
-.join-title{
-	margin-top:50px;
-	margin-bottom:50px;
-	
+.join-title {
+	margin-top: 50px;
+	margin-bottom: 50px;
 }
 
-.join-btn{
-	margin-left:5px;
-	margin-right:5px;
+.join-btn {
+	margin-left: 5px;
+	margin-right: 5px;
 }
 </style>
 
- <div class="member">
- 
- <div class="row">
-	<div class="join-title col-sm-4 col-sm-offset-1">
-		<h1>Login</h1>
+<div class="member">
+
+	<div class="row">
+		<div class="join-title col-sm-4 col-sm-offset-1">
+			<h1>Login</h1>
+		</div>
 	</div>
-</div>
-	
-<div class="row">
 
-		<form id="erdFrm" class="col-sm-4 col-sm-offset-2" action="${cp }/login" method="post">
-			<span>이메일</span>
-			<input type="text" id="memId" name="memId"/>
-			<span>비밀번호</span>
-			<input type="password" id="memPass" name="memPass"/>
-			<div class="submit-btn btn-style1">로그인</div>
+	<div class="row">
+
+		<form id="erdFrm" class="col-sm-4 col-sm-offset-2"
+			action="${cp }/login" method="post">
+			<span>이메일</span> <input type="text" id="memId" name="memId" /> <span>비밀번호</span>
+			<input type="password" id="memPass" name="memPass" />
+			<div class="submit-btn btn-style1" >로그인</div>
 			
-			 <div class="btn-style3">비밀번호를 잊으셨나요?</div>
-      <input type="hidden" id="capResponse"  name="capResponse"/>
+			
+			
+			<div class="IdSearch btn-style3">아이디를  잊으셨나요?</div>
+			<div class="pwSearch btn-style3">비밀번호를  잊으셨나요?</div>
+			<input type="hidden" id="capResponse" name="capResponse" />
 		</form>
-		
-		
-<div id="fmdiv" style="display: none;"><div class="g-recaptcha" data-sitekey="6LfnUpoUAAAAAMtKydIehTmTDdm7JZUubAfHHVuf"></div>
-      <br/></div>
-      
-      
 
-		<form action="${cp }/logins" id="apiFrm" method="post" class="col-sm-3 col-sm-offset-1" >
 
-			<div class="g-signin2" data-onsuccess="onSignIn"></div>
-			<input type="hidden" name="info" id="info"/>
-			<a id="kakao-login-btn"></a>
+		<div id="fmdiv" style="display: none;">
+			<div class="g-recaptcha"
+				data-sitekey="6LfnUpoUAAAAAMtKydIehTmTDdm7JZUubAfHHVuf"></div>
+			<br />
+		</div>
+<br/>
+
+
+		<form action="${cp }/logins" id="apiFrm" method="post"
+			class="col-sm-3 col-sm-offset-1">
+
+			<div class="g-signin2" data-onsuccess="onSignIn"></div><br/><br/><br/>
+			<input type="hidden" name="info" id="info" /> <a
+				id="kakao-login-btn"></a>
 		</form>
-		
+
+	</div>
+
+	<div class="lable-style1 col-sm-10 col-sm-offset-1">
+		계정이 필요하세요?
+		<div class="join-btn btn-style3" onclick="join()">지금 회원가입을 하세요.</div>
+	</div>
+
+
 </div>
 
-<div class="lable-style1 col-sm-10 col-sm-offset-1">
-	계정이 필요하세요? <div class="join-btn btn-style3" onclick="join()">지금 회원가입을 하세요.</div>
-</div>
-	
-</div>
 
-	
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script
+	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 
-    
- 
-<script >	
+
+
+<script>	
 
 	$(document).ready(function () {
 	var count=	"${count }";
@@ -80,6 +88,9 @@ background:#4B4B4B;
 			$("#fmdiv").show();
 			
 		}
+		
+		
+
 	
 	
 		 Kakao.init('8eded83f4085ba344e793801d05f3722');
@@ -96,7 +107,7 @@ background:#4B4B4B;
 					            url: '/v1/user/me',
 					            success: function (res) {
 					                alert(JSON.stringify(res));
-$("#apiFrm").attr("action","${cp}/kakaoLogin");	
+						$("#apiFrm").attr("action","${cp}/kakaoLogin");	
 			            $("#info").val(JSON.stringify(res));
 			            $("#apiFrm").submit();	
 					            }
@@ -142,7 +153,21 @@ $("#apiFrm").attr("action","${cp}/kakaoLogin");
 		});
 	
 		
-	});
+		//비밀번호 찾기 클리깃 
+		$(".pwSearch").on("click",function(){
+			 var page = "pwSearch";
+			gogogo1(page); 
+		    });
+		
+		$(".IdSearch").on("click",function(){
+			 var page = "IdSearch";
+			gogogo1(page); 
+		    });
+		
+
+		});
+		
+		
 	function onSignIn(googleUser) {
 		  var info = new Array();
 		  var profile = googleUser.getBasicProfile();
@@ -162,7 +187,30 @@ $("#apiFrm").attr("action","${cp}/kakaoLogin");
 	function join() {
 		location.href = '${cp }/join';
 	}
+	
+	function gogogo1(page){
+		 $.ajax({
+               type: 'get',
+               url: "/pageViewAjax",
+               data: { value : page },
+               success: function(data) {
 
+          			// 모달 띄우기
+               	var height = $(document).height();
+       			$(".background-etc").css({"display":"block", "height" : height + "px"});
+               	$('.inner-add').html(data);
+               	
+                   
+               	// 취소버튼 클릭 시 화면 띄우기
+       			$(".cancle-btn99").on("click", function(){
+        				$(".background-etc").css("display","none");
+       				$('.inner-add').html("");
+       			});
+                   
+               } 
+		 });
+	}	
+	
 
 
 </script>

@@ -34,6 +34,16 @@ public class MemberServiceImpl implements IMemberService{
 	public List<MemberVo> getAutoFindMem(String memId) {
 		return memberDao.getAutoFindMem(memId);
 	}
+
+	@Override
+	public int updateMemPw(MemberVo vo) {
+		return memberDao.updateMemPw(vo);
+	}
+
+	@Override
+	public List<MemberVo> getMemId(MemberVo vo) {
+		return memberDao.getMemId(vo);
+	}
 	
 	
 	

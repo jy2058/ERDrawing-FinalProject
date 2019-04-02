@@ -78,7 +78,7 @@ public class LoginController {
 				}
 			}
 			
-			session.setAttribute("SESSION_MEMBERVO", vo);
+			session.setAttribute("SESSION_MEMBERVO", checkMemVo);
 			count=0;
 			session.setAttribute("count", count);
 			return "redirect:" + req.getContextPath()+"/" ;
@@ -206,45 +206,45 @@ public class LoginController {
 	
 	public String captCahs(String capResponse) throws IOException {
 		logger.debug("===ddD??");
-				
-		logger.debug("===capResponse : {}",capResponse);
-		
-		
-		    System.out.println(capResponse);
-		    
-		    // 토큰과 보안키를 가지고 성공 여부를 확인 함
-		    HttpURLConnection conn = (HttpURLConnection) new URL("https://www.google.com/recaptcha/api/siteverify").openConnection();
-		    String params = "secret=6LfnUpoUAAAAAN0XY-LedNPrfHMqsaxjpFY0fn3I" + "&response=" + capResponse;
-		    conn.setRequestMethod("POST");
-		    conn.setDoOutput(true);
-		    DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
-		    wr.writeBytes(params);
-		    wr.flush();
-		    wr.close();
-		    
-		    // 결과코드 확인(200 : 성공)
-		    int responseCode = conn.getResponseCode();
-		    StringBuffer responseBody = new StringBuffer();
-		    if (responseCode == 200) {
-		        
-		        // 데이터 추출
-		        BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
-		        BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
-		        String line;
-		        while ((line = reader.readLine()) != null) {
-		            responseBody.append(line);
-		        }
-		        bis.close();
-		        
-		        // JSON으로 변환 하여야 하지만 기본 모듈에서 처리하기위하여 아래와 같이 진행 합니다
-		        if(responseBody.toString().indexOf("\"success\": true") > -1){
-		        	logger.debug("===인증 되었습니다:");
 
-					return "ok";}
-		
+		logger.debug("===capResponse : {}", capResponse);
+
+		System.out.println(capResponse);
+
+		// 토큰과 보안키를 가지고 성공 여부를 확인 함
+		HttpURLConnection conn = (HttpURLConnection) new URL("https://www.google.com/recaptcha/api/siteverify")
+				.openConnection();
+		String params = "secret=6LfnUpoUAAAAAN0XY-LedNPrfHMqsaxjpFY0fn3I" + "&response=" + capResponse;
+		conn.setRequestMethod("POST");
+		conn.setDoOutput(true);
+		DataOutputStream wr = new DataOutputStream(conn.getOutputStream());
+		wr.writeBytes(params);
+		wr.flush();
+		wr.close();
+
+		// 결과코드 확인(200 : 성공)
+		int responseCode = conn.getResponseCode();
+		StringBuffer responseBody = new StringBuffer();
+		if (responseCode == 200) {
+
+			// 데이터 추출
+			BufferedInputStream bis = new BufferedInputStream(conn.getInputStream());
+			BufferedReader reader = new BufferedReader(new InputStreamReader(bis));
+			String line;
+			while ((line = reader.readLine()) != null) {
+				responseBody.append(line);
+			}
+			bis.close();
+
+			// JSON으로 변환 하여야 하지만 기본 모듈에서 처리하기위하여 아래와 같이 진행 합니다
+			if (responseBody.toString().indexOf("\"success\": true") > -1) {
+				logger.debug("===인증 되었습니다:");
+
+				return "ok";
+			}
+
+		}
+		return "no";
 	}
-		    return "no";
-	}
-	
 	
 	}
