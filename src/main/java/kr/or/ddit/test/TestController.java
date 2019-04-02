@@ -153,8 +153,9 @@ public class TestController {
 			case "IdSearch":
 				page = "member/idSearch";
 				break;
-				
-				
+			case "message":
+				page = "member/message";
+				break;
 		}
 		
 		return page;

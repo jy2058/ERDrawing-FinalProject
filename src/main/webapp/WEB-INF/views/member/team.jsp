@@ -85,7 +85,7 @@
 								 <!-- 팀 생성자이면서 권한이 creator가 아닌 것(user, admin) -->
 								  <c:if test="${teamList[status.index].teamAuth ne 'creator' and teamInfo.makerId eq loginId }"> 
 									<input type="checkbox" class="toggle-switch" name="authCheck" style="font-size: 1px;" value="${teamList[status.index].teamAuth }"
-									<c:if test="${teamList[status.index].teamAuth eq 'admin'}"> <!-- 권한 admin일 경우 checked -->
+									<c:if test="${teamList[status.index].teamAuth eq 'admin'}">
 										checked
 									</c:if>
 									>
@@ -151,7 +151,6 @@
 								  		</div>
 							  
 							  	</li>
-							  	
 							  	
 							  	
 							  	
