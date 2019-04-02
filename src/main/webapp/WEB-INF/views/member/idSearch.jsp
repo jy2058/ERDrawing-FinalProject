@@ -53,10 +53,10 @@ background:#4B4B4B;
 			return;
 		}
 		
-		if($("#memId").val().trim()==""){
+		if($("#memTel").val().trim()==""){
 			//$("#memId").val().trim()
-			alert("아이디를 입력해 주세요");
-			$("#memId").focus();
+			alert("전화번호를 입력해 주세요");
+			$("#memTel").focus();
 			return;
 		}
 		

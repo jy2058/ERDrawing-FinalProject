@@ -33,7 +33,8 @@
 			action="${cp }/login" method="post">
 			<span>이메일</span> <input type="text" id="memId" name="memId" /> <span>비밀번호</span>
 			<input type="password" id="memPass" name="memPass" />
-			<div class="submit-btn btn-style1">로그인</div>
+			<div class="submit-btn btn-style1" >로그인</div>
+			
 			
 			
 			<div class="IdSearch btn-style3">아이디를  잊으셨나요?</div>
@@ -87,6 +88,9 @@
 			$("#fmdiv").show();
 			
 		}
+		
+		
+
 	
 	
 		 Kakao.init('8eded83f4085ba344e793801d05f3722');
@@ -207,7 +211,6 @@
 		 });
 	}	
 	
-
 
 
 </script>

@@ -21,7 +21,9 @@
 					<%@ include file="/WEB-INF/views/template/module/communityMenu.jsp"%>
 				</li>
 				<li class="navbar-brand"><a href="/er">ErdTest</a></li>
-
+				<c:if test="${SESSION_MEMBERVO.memAuth == 'T' }">
+					<li class="navbar-brand"><a href="${cp }/member/memberList">MemberList</a></li>
+				</c:if>
 			</ul>
 
 		</div>

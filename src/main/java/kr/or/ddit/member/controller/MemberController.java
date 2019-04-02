@@ -182,4 +182,12 @@ public class MemberController {
 		 return "jsonView";
 	}
 	
+	//전체회원 리스트 페이지 요청
+	 @RequestMapping("/memberList")
+	    public String memberList(HttpSession session,Model model, MemberVo memVo) {
+		 return "memList";
+	 }
+		 
+	
+	
 }

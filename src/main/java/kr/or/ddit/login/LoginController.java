@@ -78,7 +78,7 @@ public class LoginController {
 				}
 			}
 			
-			session.setAttribute("SESSION_MEMBERVO", vo);
+			session.setAttribute("SESSION_MEMBERVO", checkMemVo);
 			count=0;
 			session.setAttribute("count", count);
 			return "redirect:" + req.getContextPath()+"/" ;
