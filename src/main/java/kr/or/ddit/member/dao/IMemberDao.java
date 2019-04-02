@@ -46,7 +46,7 @@ public interface IMemberDao {
 	List<MemberVo> getAutoFindMem(String memId);
 	
 	int updateMemPw(MemberVo vo);
-	
+	 
 	List<MemberVo> getMemId(MemberVo vo);
 	
 }
