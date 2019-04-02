@@ -22,7 +22,7 @@
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
   </head>
-			 
+			
 			  <div class="row">
         		<%@ include file="/WEB-INF/views/post/left.jsp" %>
               </div>
@@ -84,28 +84,21 @@
 			</table>
 			
 			<form action="${cp}/post/postInsert" method="get">
-			
-			<input type = "hidden" name="boardNo" value="${boardNo}"> 
-			   <button type="submit" class="btn btn-default">게시글 등록</button>
+			<c:choose>
+				<c:when test="${boardNo == '1'}">
+					<c:if test="${SESSION_MEMBERVO.memAuth == 'T'}">
+						<input type = "hidden" name="boardNo" value="${boardNo}"> 
+			   			<button type="submit" class="btn btn-default">게시글 등록</button> 
+					</c:if>
+				</c:when>
+				
+				<c:otherwise>
+					<input type = "hidden" name="boardNo" value="${boardNo}"> 
+			   		<button type="submit" class="btn btn-default">게시글 등록</button>
+				</c:otherwise>
+			</c:choose>
 			</form>
 		</div>
-		
-		
-		<%-- <div class="form-group">
-				<div class="col-sm-3">
-					
-					<c:if test="${SESSION_MEMBERVO.memId == postList.writerId}">
-						<input type="button" id="updBtn" value="수정" class="btn btn-default" />
-					</c:if>
-					
-					<input type="button" id="replyBtn" value="답글" class="btn btn-default" />
-				</div>
-			</div>	
-			</div>
-		 --%>
-		
-		
-		
 
 		<nav style="text-align: center;">
 			<ul class="pagination">
