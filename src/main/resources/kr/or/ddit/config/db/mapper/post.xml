@@ -87,7 +87,7 @@
 
 	<!-- 답글 생성 -->
 	<insert parameterType="postVo" id="insertReply">
-		<selectKey resultType="String" order="BEFORE" keyProperty="posNo">
+		<selectKey resultType="int" order="BEFORE" keyProperty="postNo">
 			select seq_postNo.nextval from dual
 		</selectKey>
 		insert into post (postNo, postTitle, postContent, postRegDt, postDelFlag, postGn, writerId, parentPostNo, boardNo)

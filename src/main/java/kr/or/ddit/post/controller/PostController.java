@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.post.model.BoardVo;
 import kr.or.ddit.post.model.CommentsVo;
 import kr.or.ddit.post.model.PostVo;
@@ -142,7 +143,6 @@ public class PostController {
 	@RequestMapping(path = "/postDetail", method = RequestMethod.GET)
 	public String postDetailForm(Model model, String postNo, String boardNo) {
 
-		logger.debug("#### : {}", postNo);
 		model.addAttribute("postNo", postNo);
 		model.addAttribute("boardNo", boardNo);
 		
@@ -179,9 +179,9 @@ public class PostController {
 	// 게시글 수정
 	@RequestMapping(path = "/postUpdate", method = RequestMethod.POST)
 	public String postUpdate(RedirectAttributes ra,
-			@RequestParam("postNo") int postNo,
-			 @RequestParam("postTitle") String postTitle,
-			 @RequestParam("postContent") String postContent,
+			                 @RequestParam("postNo") int postNo,
+			                 @RequestParam("postTitle") String postTitle,
+			                 @RequestParam("postContent") String postContent,
 							 @RequestParam(name="delFile", defaultValue="")String[] arrDelFile,
 							 @RequestPart("file") List<MultipartFile> files) throws IllegalStateException, IOException {
 		
@@ -347,21 +347,19 @@ public class PostController {
 		model.addAttribute("boardNo", boardNo);
 		model.addAttribute("postVo", postVo);
 		
-		return "post/postInsert";
+		return "post/postReply";
 	}
 	
 	// 답글 등록
 	@RequestMapping(path={"/postReply"}, method={RequestMethod.POST})
 	public String postReply(@RequestParam("postTitle") String postTitle,
 							@RequestParam("postContent") String postContent,
-							@RequestParam("postNum") int postNo,
+							@RequestParam("postNo") int postNo,
 						    @RequestParam("boardNo") int boardNo,
 							@RequestPart("file") List<MultipartFile> files,
 							HttpSession session, RedirectAttributes ra) throws IllegalStateException, IOException {
-		Object memId = session.getAttribute("SESSION_MEMBERVO");
-		
+		MemberVo memId = (MemberVo)session.getAttribute("SESSION_MEMBERVO");
 		PostVo parentVo = postService.getSelectPost("" + postNo);
-		logger.debug("$$$$$$$$ : {}", parentVo);
 		int gn = parentVo.getPostGn();
 			
 		List<String> filenames = new ArrayList<>();
@@ -383,10 +381,10 @@ public class PostController {
 		PostVo postVo = new PostVo();
 		postVo.setPostTitle(postTitle);
 		postVo.setPostContent(postContent);
-		postVo.setPostGn(gn);
-		postVo.setWriterId((String)memId);
-		postVo.setParentPostNo(postNo);
-		postVo.setBoardNo(boardNo);
+		postVo.setWriterId(memId.getMemId());
+		postVo.setPostGn(parentVo.getPostGn());
+		postVo.setParentPostNo(parentVo.getPostNo());
+		postVo.setBoardNo(parentVo.getBoardNo());
 		
 		int cnt = postService.insertReply(postVo);
 		
@@ -407,7 +405,7 @@ public class PostController {
 			}
 			
 			if (fileCnt == filenames.size()) {
-				ra.addAttribute("postNo", postNo);
+				ra.addAttribute("postNo", postVo.getPostNo());
 				return "redirect:/post/postDetail";
 			} else {
 				System.out.println("첨부파일 등록 오류");
