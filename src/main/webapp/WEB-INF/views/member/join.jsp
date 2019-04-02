@@ -68,7 +68,7 @@ margin: 0 0 0 0;
 		</div>
 		
 		<span>핸드폰 번호</span> <input type="text" id="memTel" name="memTel" />
-
+ <div class="g-recaptcha" data-sitekey="6LfnUpoUAAAAAMtKydIehTmTDdm7JZUubAfHHVuf"></div>
 
 		<div class="submit-btn btn-style1">회원가입</div>
 	</form>
@@ -96,12 +96,25 @@ var checkEmail=0;
 				return;
 			}
 			
-			if($("#memMail").val().trim()==""){
+			if($("#memMail").val().trim()==""  ){
 				//$("#memId").val().trim()
+				
 				alert("이메일을 입력해 주세요");
 				$("#memMail").focus();
 				return;
 			}
+			
+			var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+			if($("#memMail").val().trim()==""  || exptext.test($("#memMail").val())==false){
+				//$("#memId").val().trim()
+				alert(" 메일형식이 올바르지 않습니다");
+				$("#memMail").focus();
+				return;
+			}
+			
+			
+		
+			
 			
 			if($("#memPass").val().trim()==""){
 				//$("#memId").val().trim()
@@ -132,6 +145,17 @@ var checkEmail=0;
 			  alert("비밀번호는 숫자, 영문, 특수문자 조합으로 6~15자리를 사용해야 합니다."); 
 			  return false;
 			 }
+			
+			var sst=$("#g-recaptcha-response").val();
+				if(sst==''){
+					alert("리캡챠를 먼저해주세요 ");
+					return;
+				}
+			
+			if(checkEmail==0){
+				alert("이메일 인증을 해주세요");
+				return;
+			}
 			
 			if(checkId==0){
 				alert("중복체크를 먼저 해주세요")
@@ -185,7 +209,7 @@ var checkEmail=0;
 			}
 			if($("#memMail").val().trim()==""){
 				//$("#memId").val().trim()
-				alert("아이디를 입력해 주세요");
+				alert("메일을 입력해 주세요");
 				$("#memMail").focus();
 				return;
 			}
@@ -207,6 +231,7 @@ var checkEmail=0;
 						 if(data.joinCode==$("#citationVal").val()){
 							
 						alert("인증");
+						checkEmail++;
 						} 
 					});
 					

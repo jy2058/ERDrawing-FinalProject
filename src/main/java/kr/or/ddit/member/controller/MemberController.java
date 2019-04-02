@@ -1,9 +1,13 @@
 package kr.or.ddit.member.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.List;
 import java.util.Random;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
@@ -113,4 +117,69 @@ public class MemberController {
 			sos.close();
 			fis.close();
 	 }
+	 
+
+	 
+	 //임시 비밀번호 보내기
+	 @RequestMapping("/sendMailPw")
+	    public String sendMailPw(HttpSession session, @RequestParam String email,Model model, MemberVo memVo) {
+		 MemberVo memvo = null;
+		if(memVo.getMemId()!=null || !memVo.getMemId().equals(""))
+		 memvo = memberService.selectMember(memVo.getMemId());
+		 
+		 if(memvo!=null&&memvo.getMemEmailDiv().equals("basic")){
+		 
+		 String uuid = UUID.randomUUID().toString().replaceAll("-", ""); // -를 제거해 주었다. 
+	        uuid = uuid.substring(0, 10); //uuid를 앞에서부터 10자리 잘라줌. 
+
+	        String subject = "회원가입 인증 코드 발급 안내 입니다.";
+	        StringBuilder sb = new StringBuilder();
+	        sb.append("귀하의 인증 코드는 " + uuid + " 입니다.");
+	        mailService.send(subject, sb.toString(), "prings196s@gmail.com", email, null);
+	        
+	        memvo.setMemPass(KISA_SHA256.encrypt(uuid));
+	        memvo.setMemId(memVo.getMemId());
+	        memberService.updateMemPw(memvo);	
+	        model.addAttribute("check", "ok");
+	        return "jsonView";
+		 }else if(memvo!=null&&memvo.getMemEmailDiv().equals("google")){
+			 model.addAttribute("check", "bx");
+			 return "jsonView";
+		 }else if(memvo!=null&&memvo.getMemEmailDiv().equals("kakao")){
+			 model.addAttribute("check", "bx");
+			 return "jsonView";
+		 }else{
+			 model.addAttribute("check", "no");
+			 return "jsonView";
+		 }
+	    }
+	 
+	 //아이디 찾기
+	@RequestMapping("/idSearch")
+	public String idSearch(HttpServletRequest req, HttpServletResponse resp, MemberVo memVo, Model model)
+			throws IOException {
+		logger.debug("===sss{}", memVo);
+		List<MemberVo> memList = memberService.getMemId(memVo);
+
+		if (memList != null) {
+			for (MemberVo memvo : memList) {
+				if(memvo.getMemEmailDiv().equals("basic")){
+					model.addAttribute("check", "ok");
+					model.addAttribute("id", memvo.getMemId());
+			        return "jsonView";
+				}else if(memvo.getMemEmailDiv().equals("google")){
+					 model.addAttribute("check", "bx");
+					 return "jsonView";
+				 }else{
+					 model.addAttribute("check", "bx");
+					 return "jsonView";
+				 }
+			}
+		}else{
+			 model.addAttribute("check", "no");
+			 return "jsonView";
+		 } model.addAttribute("check", "no");
+		 return "jsonView";
+	}
+	
 }

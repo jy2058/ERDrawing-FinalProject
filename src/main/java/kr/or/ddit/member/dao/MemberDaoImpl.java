@@ -34,6 +34,15 @@ public class MemberDaoImpl implements IMemberDao{
 	public List<MemberVo> getAutoFindMem(String memId) {
 		return sqlSession.selectList("member.getAutoFindMem", memId);
 	}
-	
+
+	@Override
+	public int updateMemPw(MemberVo vo) {
+		return sqlSession.update("member.updateMemPw", vo);
+	}
+
+	@Override
+	public List<MemberVo> getMemId(MemberVo vo) {
+		return sqlSession.selectList("member.getMemId", vo);
+	}
 
 }

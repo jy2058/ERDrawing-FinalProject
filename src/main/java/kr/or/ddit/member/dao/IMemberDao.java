@@ -44,4 +44,9 @@ public interface IMemberDao {
 	* Method 설명 : 회원 자동검색
 	*/
 	List<MemberVo> getAutoFindMem(String memId);
+	
+	int updateMemPw(MemberVo vo);
+	
+	List<MemberVo> getMemId(MemberVo vo);
+	
 }

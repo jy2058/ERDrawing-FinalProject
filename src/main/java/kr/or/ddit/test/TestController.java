@@ -137,6 +137,16 @@ public class TestController {
 			case "createTeam":
 				page = "erd/teamCreate";
 				break;
+				
+			case "pwSearch":
+				page = "member/pwSearch";
+				break;
+				
+			case "IdSearch":
+				page = "member/idSearch";
+				break;
+				
+				
 		}
 		
 		return page;
