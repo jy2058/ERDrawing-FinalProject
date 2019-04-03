@@ -71,8 +71,7 @@
         <definition name="memList" extends="layoutMain">
         	<put-attribute name="content" value="/WEB-INF/views/member/memList.jsp" />
         </definition>
-        
-       
+
         
         
         

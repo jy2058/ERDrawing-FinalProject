@@ -1,7 +1,5 @@
 package kr.or.ddit.member.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -185,6 +183,8 @@ public class MemberController {
 	//전체회원 리스트 페이지 요청
 	 @RequestMapping("/memberList")
 	    public String memberList(HttpSession session,Model model, MemberVo memVo) {
+		 List<MemberVo> memList = memberService.getAllMember();
+		 model.addAttribute("memList", memList);
 		 return "memList";
 	 }
 		 
