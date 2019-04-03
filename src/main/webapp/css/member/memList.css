@@ -1,0 +1,65 @@
+#guswl {
+    width: 100%;
+    max-width: 1170px;
+    padding-right: 0px;
+    padding-left: 0px;
+    margin-right: 0px;
+    margin-left: -155px;
+    position: absolute;
+    }
+    
+#divNav{
+	 margin-left: 0px;
+	 	width: 123%;
+}
+tbody tr:nth-child(even) {
+	background-color: #dddddd;
+	height: 50px;
+	
+}
+
+tbody tr:nth-child(odd) {
+	background-color: #ffffff;
+	height: 50px;
+}
+
+table {
+	width: 123%;
+	height: 150px;
+	font-size: 18px
+}
+
+thead {
+	background: #cacaca;
+}
+
+
+.d1 ul li {
+	display:block;
+	width: 100px;
+	text-align: center;
+	
+}
+
+.d1 ul ul {
+	position: absolute;
+	display: none;background: rgb(109,109,109);
+display:none;  /* 평상시에는 서브메뉴가 안보이게 하기 */
+height:auto;
+padding:0px;
+margin:0px;
+border:0px;
+position:absolute;
+width:100px;
+z-index:200;
+}
+ul{
+color: #ffffff;
+}
+.d1 ul ul li {
+	display: block;
+}
+
+#setTd{
+width: 1px;
+}

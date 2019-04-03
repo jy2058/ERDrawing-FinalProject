@@ -76,5 +76,29 @@
 		from message
 		where receiverid = #{receiverId}
 	</select>
+	
+	<select id="selectMemPagingList" parameterType="pageVo" resultType="memberVo">
+
+	select *
+	from
+	( select a.*, rownum rn
+	from
+	(select member.*
+	from member
+	order by memId) a
+	where memauth='F') a
+	where rn between ((#{pageNo}-1)*10)+1 and (#{pageNo})*10 
+	</select>
+	
+	<select id="getMemCnt" resultType="int">
+	select count(*)
+        from member
+        where memauth='F'
+	</select>
+	
+	<delete id="delMember" parameterType="String">
+  delete from member
+  where memId = #{memId}
+	</delete>
 
 </mapper>

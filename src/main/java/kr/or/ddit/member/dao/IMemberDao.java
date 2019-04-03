@@ -3,6 +3,7 @@ package kr.or.ddit.member.dao;
 import java.util.List;
 
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.util.model.PageVo;
 
 public interface IMemberDao {
 	
@@ -65,4 +66,33 @@ public interface IMemberDao {
 	 */
 	List<MemberVo> getMemId(MemberVo vo);
 	
+	/**
+	 * Method : selectMemPagingList
+	 * 작성자 : PC02
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 전체 사용자 페이징
+	 */
+	List<MemberVo> selectMemPagingList(PageVo vo);
+	
+	
+	/**
+	 * Method : getMemCnt
+	 * 작성자 : PC02
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 회원 정보 갯수
+	 */
+	int getMemCnt();
+	
+	/**
+	 * Method : delMember
+	 * 작성자 : PC02
+	 * 변경이력 :
+	 * @param memId
+	 * @return
+	 * Method 설명 :특정회원삭제
+	 */
+	int delMember(String memId);
 }
