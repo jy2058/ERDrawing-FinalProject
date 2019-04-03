@@ -4,44 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
-<link rel="stylesheet" href="/css/boxErd.css">
-<link rel="stylesheet" href="/css/member/memList.css">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-
-<div id="contents">
-
-	<div class="best-erd-title">
-		<h1></h1>
-		<p class="lead"></p>
-	</div>
-
-
-	<div class="youtube-title">
-		<h2>회원정보 리스트</h2>
-	</div>
-	<br />
-	<br />
-
-<!----------------------------- 회원정보 테이블 -------------------------->
-	<form id="frm" action="${cp }/member/memberDel">
-	<table class="table3">
-
-		<thead>
-			<tr>
-				<th>#</th>
-				<th>Name</th>
-				<th>Date Created</th>
-				<th>Auth</th>
-				<th>Status</th>
-
-				<th>Action</th>
-				<th></th>
-			</tr>
-		</thead>
-
-		<tbody>
 			<c:forEach items="${memList }" var="mem">
 				<tr>
 					<td>--</td>
@@ -57,7 +19,7 @@
 							</c:otherwise>
 						</c:choose>
 					</td>
-					
+					<td>${mem.memId }</td>
 					<td><fmt:formatDate value="${mem.memInDt }" pattern="yyyy/MM/dd" /></td>
 					<td>${mem.memAuth }</td>
 					<td><span class="status text-success ">●</span> ${mem.memBlackFlag }</td>
@@ -89,35 +51,47 @@
 					<td><img  class="delImg btn-style3" data-memid="${mem.memId }"	src="https://img.icons8.com/color/48/000000/cancel.png"	width="35" height="30"></td>
 				</tr>
 			</c:forEach>
-		</tbody>
-	</table>
-</form>
-</div>
-
-
-<script type="text/javascript">
-//톱니바퀴 눌렀을때 드롭다운나오는 속도?
-	$(".d1 ul li").hover(function() {
-		$(this).find("ul").stop().fadeToggle(300);
-	});
 	
-	//이미지 x표시 클릭시 사용자 삭제
-	$(".delImg").on("click",function() {
-		if (confirm("정말 삭제하시겠습니까??") == true){   
-		var memIds = $(this).data("memid");
-		alert(memIds);	
-		$("#frm").submit();
-		}else{   //취소
-
-		     return false;
-
-		 }
-	});
 	
-</script>
+	
+	======================seperator==========================
+	<c:choose>
+							<c:when test="${paging.pageNo eq 1}">
+								<li class="disabled"><a ria-label="Previous"> <span
+										aria-hidden="true">&laquo;</span>
+								</a></li>
+							</c:when>
+							<c:otherwise>
+								<li><a
+									href="javascript:getPostPageListHtml(${paging.prevPageNo})" aria-label="Previous"> <span aria-hidden="true">&laquo;</span>
+								</a></li>
+							</c:otherwise>
+						</c:choose>
+						<c:forEach begin="${paging.startPageNo}" end="${paging.endPageNo}" var="i">
+							<c:set var="active" value="" />
+						<!-- 	초기화 과정 값이 계속 남기때문에 -->
+							<c:if test="${i eq paging.pageNo}">
+								<c:set var="active" value="active" />
+							<!-- 	현재 페이지일 때 활성화를 위해서 -->
+							</c:if>
+							<li class="${active}"><a
+<%-- 								href="${cp}/postList?boardNo=${boardNo}&boardNm=${boardNm}&page=${i}">${i}</a> --%>
+								href="javascript:getPostPageListHtml(${i})">${i}</a>
+							</li>
+						</c:forEach>
 
-
-
-
-
-<!-- /row -->
+						<c:choose>
+							<c:when test="${paging.finalPageNo eq paging.pageNo}">
+								<li class="disabled"><a ria-label="Next"> <span
+										aria-hidden="true">&raquo;</span>
+								</a></li>
+							</c:when>
+							<c:otherwise>
+							
+								<li><a
+									<%-- href="${cp}/postList?boardNo=${boardNo}&boardNm=${boardNm}&page=${paging.nextPageNo}" --%>
+									href="javascript:getPostPageListHtml(${paging.nextPageNo})"
+									aria-label="Next"> <span aria-hidden="true">&raquo;</span>
+								</a></li>
+							</c:otherwise>
+						</c:choose>

@@ -3,6 +3,7 @@ package kr.or.ddit.member.service;
 import java.util.List;
 
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.util.model.PageVo;
 
 public interface IMemberService {
 	
@@ -66,4 +67,8 @@ public interface IMemberService {
 	 */
 	List<MemberVo> getMemId(MemberVo vo);
 
+	List<MemberVo> selectMemPagingList(PageVo vo);
+	
+	int delMember(String memId);
+	
 }

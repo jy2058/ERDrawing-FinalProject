@@ -1,7 +1,5 @@
 package kr.or.ddit.member.controller;
 
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.model;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,6 +26,7 @@ import kr.or.ddit.api.mail.IMailService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
+import kr.or.ddit.util.model.PageVo;
 
 @RequestMapping("/member")
 @Controller
@@ -184,10 +183,61 @@ public class MemberController {
 	
 	//전체회원 리스트 페이지 요청
 	 @RequestMapping("/memberList")
-	    public String memberList(HttpSession session,Model model, MemberVo memVo) {
+	    public String memberList(@RequestParam(name = "page", defaultValue = "1") int page, Model model) {
+
+
+		 PageVo paging = new PageVo(); // 페이징 처리를 위해 페이징 객체 생성 Paging 이라는 VO가 존재함
+			paging.setPageNo(page);
+			paging.setPageSize(10);
+
+			List<MemberVo> memList = memberService.selectMemPagingList(paging);
+
+			model.addAttribute("memList", memList);
+			model.addAttribute("paging", paging);
+
 		 return "memList";
 	 }
 		 
+	 
+	 @RequestMapping("/memberDel")
+	 public String memberDel(@RequestParam(name = "page", defaultValue = "1") int page, Model model,MemberVo memVo,RedirectAttributes ra){
+logger.debug("name=={}",memVo.getMemId());
+				MemberVo vo = memberService.selectMember(memVo.getMemId());
+		 if(vo!=null){
+		 int delCnt =memberService.delMember(memVo.getMemId());
+		 	if(delCnt==1){
+		 	ra.addFlashAttribute("msg", "삭제가 완료 되었습니다.");	
+		 	}
+		 	else{
+		 		ra.addFlashAttribute("msg", "삭제가 되지 않았습니다.");}
+		 }	 
+		 PageVo paging = new PageVo(); // 페이징 처리를 위해 페이징 객체 생성 Paging 이라는 VO가 존재함
+			paging.setPageNo(page);
+			paging.setPageSize(10);
+			
+			List<MemberVo> memList = memberService.selectMemPagingList(paging);
+			
+			model.addAttribute("memList", memList);
+			model.addAttribute("paging", paging);
+			 
+		 return "member/memListPagingHtml";
+	 }
+
 	
-	
+	 
+		//전체회원 리스트 페이지 요청
+	 @RequestMapping("/memberAjaxList")
+	    public String memberAjaxList(@RequestParam(name = "page", defaultValue = "1") int page, Model model) {
+
+		 PageVo paging = new PageVo(); // 페이징 처리를 위해 페이징 객체 생성 Paging 이라는 VO가 존재함
+			paging.setPageNo(page);
+			paging.setPageSize(10);
+			
+			List<MemberVo> memList = memberService.selectMemPagingList(paging);
+			
+			model.addAttribute("memList", memList);
+			model.addAttribute("paging", paging);
+			 
+		 return "member/memListPagingHtml";
+	 }
 }

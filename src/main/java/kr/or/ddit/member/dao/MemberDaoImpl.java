@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.util.model.PageVo;
 
 @Repository("memberDao")
 public class MemberDaoImpl implements IMemberDao{
@@ -43,6 +44,21 @@ public class MemberDaoImpl implements IMemberDao{
 	@Override
 	public List<MemberVo> getMemId(MemberVo vo) {
 		return sqlSession.selectList("member.getMemId", vo);
+	}
+
+	@Override
+	public List<MemberVo> selectMemPagingList(PageVo vo) {
+		return sqlSession.selectList("member.selectMemPagingList", vo);
+	}
+
+	@Override
+	public int getMemCnt() {
+		return sqlSession.selectOne("member.getMemCnt");
+	}
+
+	@Override
+	public int delMember(String memId) {
+		return sqlSession.delete("member.delMember",memId);
 	}
 
 }

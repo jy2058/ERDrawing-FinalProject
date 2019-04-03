@@ -78,6 +78,7 @@
 		order by senddt desc
 	</select>
 	
+<<<<<<< HEAD
 	<!-- 단체알림 전송-->
 	<insert id="insertMsg" parameterType="java.util.Map">
 		insert into message(msgno, senderid, senddt, receiverid, msgcontent, msgtype, teamno)
@@ -119,6 +120,30 @@
 	<delete id="delMsg" parameterType="int">
 		delete from message
         where msgno = #{msgNo}
+=======
+	<select id="selectMemPagingList" parameterType="pageVo" resultType="memberVo">
+
+	select *
+	from
+	( select a.*, rownum rn
+	from
+	(select member.*
+	from member
+	order by memId) a
+	where memauth='F') a
+	where rn between ((#{pageNo}-1)*10)+1 and (#{pageNo})*10 
+	</select>
+	
+	<select id="getMemCnt" resultType="int">
+	select count(*)
+        from member
+        where memauth='F'
+	</select>
+	
+	<delete id="delMember" parameterType="String">
+  delete from member
+  where memId = #{memId}
+>>>>>>> branch 'master' of https://gitlab.com/ddit/erdrawing.git
 	</delete>
 
 	<!-- 알림 전체 삭제  -->

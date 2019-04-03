@@ -1,5 +1,6 @@
 package kr.or.ddit.member.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -8,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.member.dao.IMemberDao;
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.util.model.PageVo;
 
 @Service("memberService")
 public class MemberServiceImpl implements IMemberService{
@@ -43,6 +45,20 @@ public class MemberServiceImpl implements IMemberService{
 	@Override
 	public List<MemberVo> getMemId(MemberVo vo) {
 		return memberDao.getMemId(vo);
+	}
+
+	@Override
+	public List<MemberVo> selectMemPagingList(PageVo vo) {
+		int totalCnt = memberDao.getMemCnt();
+		vo.setTotalCount(totalCnt);
+
+		 List<MemberVo> memList = memberDao.selectMemPagingList(vo);
+		return memList;
+	}
+
+	@Override
+	public int delMember(String memId) {
+		return memberDao.delMember(memId);
 	}
 	
 	

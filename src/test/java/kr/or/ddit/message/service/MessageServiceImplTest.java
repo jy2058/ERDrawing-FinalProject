@@ -2,7 +2,10 @@ package kr.or.ddit.message.service;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
@@ -35,6 +38,68 @@ public class MessageServiceImplTest extends logicTestConfig{
 		/***Then***/
 		assertNotNull(allMsg);
 		logger.debug("===allMsg : {}", allMsg);
+	}
+	
+	/**
+	* Method : testInsertMsg
+	* 작성자 : PC08
+	* 변경이력 :
+	* Method 설명 : 알림 전송 테스트
+	*/
+	@Test
+	public void testInsertMsg(){
+		/***Given***/
+		Map<String, Object> memberMap = new HashMap<String, Object>();
+		List<MessageVo> memList = new ArrayList<MessageVo>();
+		
+		String senderId = "user2";
+		String content = senderId + "님이 ~팀에 초대하였습니다.";
+		
+		MessageVo vo = new MessageVo();
+		vo.setSenderId(senderId);
+		vo.setReceiverId("user3");
+		vo.setMsgContent(content);
+
+		MessageVo vo1 = new MessageVo();
+		vo1.setSenderId(senderId);
+		vo1.setReceiverId("user3");
+		vo1.setMsgContent(content);
+		
+		MessageVo vo2 = new MessageVo();
+		vo2.setSenderId(senderId);
+		vo2.setReceiverId("user3");
+		vo2.setMsgContent(content);
+		
+		memList.add(vo);
+		memList.add(vo1);
+		memList.add(vo2);
+		
+		memberMap.put("memList", memList);
+		
+		/***When***/
+		int insertMsg = messageService.insertMsg(memberMap);
+
+		/***Then***/
+		assertNotNull(insertMsg);
+		logger.debug("===memList : {}", memList);
+		logger.debug("===insertMsg : {}", insertMsg);
+
+	}
+	
+	/**
+	* Method : testDelMsg
+	* 작성자 : PC08
+	* 변경이력 :
+	* Method 설명 : 알림 삭제 테스트 
+	*/
+	@Test
+	public void testDelMsg(){
+		/***Given***/
+		int msgNo = 1015;
+		/***When***/
+		int delMsg = messageService.delMsg(msgNo);
+		/***Then***/
+		assertEquals(1, delMsg);
 	}
 
 }
