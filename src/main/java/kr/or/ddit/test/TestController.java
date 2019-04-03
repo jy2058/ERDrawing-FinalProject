@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.ddit.erd.service.IErdService;
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.team.model.TeamListVo;
 import kr.or.ddit.team.model.TeamVo;
 import kr.or.ddit.team.service.ITeamService;
 
@@ -102,6 +103,13 @@ public class TestController {
 		Map<String, Object> teamMemberListMap = teamService.teamMemberListMap(teamNo);
 		model.addAllAttributes(teamMemberListMap);
 		
+		List<TeamListVo> teamAllList = teamService.getTeamAllList(memId);
+		for(TeamListVo vo : teamAllList){
+			if(vo.getTeamNo() == teamNo){
+				model.addAttribute("myTeam", vo);
+			}
+		}
+		
 		return "team";
 	}
 	
@@ -145,8 +153,9 @@ public class TestController {
 			case "IdSearch":
 				page = "member/idSearch";
 				break;
-				
-				
+			case "message":
+				page = "member/message";
+				break;
 		}
 		
 		return page;

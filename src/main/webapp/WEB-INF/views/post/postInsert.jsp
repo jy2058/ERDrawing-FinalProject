@@ -21,7 +21,7 @@
   </head>
 
 <body>
-	<%-- <%@ include file="/WEB-INF/views/module/header.jsp" %> --%>
+	<%-- <%@ include file="/WEB-INF/views/template/header.jsp" %> --%>
 
 	<div class="container-fluid">
 		<div class="row">
@@ -48,15 +48,20 @@
 				</div>
 
 				<div class="form-group">
-					<div class="col-sm-1">
+					<div class="col-sm-offset-1 col-sm-10">
 						<input type="hidden" id="postNum" name="postNum" value="${postVo.postNo}" />
 						<input type="hidden" name="memId" value="${SESSION_MEMBERVO.memId}" />
-						<button id="saveBtn" type="button" class="btn btn-default">등록</button>
+						<button id="cancelBtn" type="button" class="btn btn-default">취소</button>
+						<button id="saveBtn" type="button" class="btn btn-default">저장</button>
 					</div>
 				</div>
 			</form>
 		</div>
 	</div>
+	
+	<form id="cancelFrm" action="${cp}/post/postList" method="get">
+		<input type="hidden" id="boardNo" name="boardNo" value="${boardNo}">
+	</form>
 
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -80,6 +85,11 @@
 							bUseModeChanger : true,
 						}
 					});
+					
+					// 취소버튼 클릭이벤트
+					$("#cancelBtn").click(function() {
+						$("#cancelFrm").submit();
+					});
 
 					// 전송버튼 클릭이벤트
 					$("#saveBtn").click(
@@ -92,12 +102,6 @@
 								// 이부분에 에디터 validation 검증
 								if (validation()) {
 									$("#boardNo").val("${boardNo}");
-									
-									/*  if($("#postNum").val() != ''){
-										$("#frm").attr("method","post");
-										$("#frm").attr("action","/post/postReply");
-											$("#frm").submit();
-									}else  */
 									$("#frm").submit();
 								}
 							}

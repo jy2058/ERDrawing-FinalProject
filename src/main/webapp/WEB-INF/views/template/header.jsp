@@ -41,7 +41,8 @@
 					</c:when>
 					<c:otherwise>
 						<li><a href="${cp }/mypage"><img alt="" src="${SESSION_MEMBERVO.memImg}" width="35" height="30"> </a></li>
-						<li><a href="/message">메세지</a></li>
+<%-- 						<li><a href="${cp }/message/messageView">메세지</a></li> --%>
+						<li><a id="message">메세지</a></li>
 						<li><a id="logout" href="#" hidden="">로그아웃</a></li>
 					</c:otherwise>
 				</c:choose>

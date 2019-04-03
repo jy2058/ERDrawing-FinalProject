@@ -67,7 +67,10 @@
 							 
 							 	<c:forEach var="myErdList" varStatus="status" items="${myErdList }">
 							  	<li class="erd-box-item">
-									
+						  			
+						  			<button type="button" class="btn btn-default delBtn" aria-label="trash" value="${myErdList.erdNo }">
+									  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+									</button>
 								  		<a class="preview-box">
 								  			<div class="bg-box">
 								  				<div class="bg-img">
@@ -117,6 +120,28 @@
 	</div>
 </div>
 
+<script>
+	// erd 삭제
+	$(".delBtn").on("click", function(e){
+		var result = confirm("삭제하시겠습니까?");
+		if(!result){
+			return;
+		}
+		
+		var erdNo = $(this).val();
+		$.ajax({
+			type : "get",
+			url : "${cp}/erd/delErd",
+			data : {erdNo : erdNo},
+			success : function(data){
+				$(e.target).closest('li').remove();
+			},
+			error : function(xhr, status, error){
+				alert("에러");
+			}
+		});
+	});
+</script>
 
 
 

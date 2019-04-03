@@ -57,4 +57,11 @@ public class ErdController {
 		
 		return "redirect:/mypage";
 	}
+	
+	@RequestMapping("/delErd")
+	public String delErd(@RequestParam("erdNo")int erdNo){
+		erdService.delErd(erdNo);
+		
+		return "jsonView";
+	}
 }

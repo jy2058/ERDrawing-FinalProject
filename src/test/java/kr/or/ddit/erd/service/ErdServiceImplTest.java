@@ -100,4 +100,20 @@ public class ErdServiceImplTest extends logicTestConfig{
 		logger.debug("===List : {}", list);
 		
 	}
+	
+	/**
+	* Method : testDelErd
+	* 작성자 : PC08
+	* 변경이력 :
+	* Method 설명 : erd 삭제
+	*/
+	@Test
+	public void testDelErd(){
+		/***Given***/
+		int erdNo = 1196;
+		/***When***/
+		int delErd = erdService.delErd(erdNo);
+		/***Then***/
+		assertNotNull(delErd);
+	}
 }

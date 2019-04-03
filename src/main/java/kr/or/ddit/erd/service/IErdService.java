@@ -47,5 +47,15 @@ public interface IErdService {
 	* Method 설명 : 나의 erd리스트와 태그 리스트 가져오기
 	*/
 	Map<String, Object> getMyErdTagMap(String memId);
+	
+	/**
+	* Method : delErd
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdNo
+	* @return
+	* Method 설명 : erd 삭제
+	*/
+	int delErd(int erdNo);
 
 }

@@ -73,7 +73,7 @@ public class PostController {
 		model.addAttribute("boardNo", boardNo);
 		model.addAttribute("paging", paging);
 
-		return "post/postList";
+		return "postList";
 	}
 	
 	// 게시글 등록 화면
@@ -82,7 +82,7 @@ public class PostController {
 
 		model.addAttribute("boardNo", boardNo);
 
-		return "post/postInsert";
+		return "postInsert";
 	}
 
 	// 게시글 등록
@@ -157,7 +157,7 @@ public class PostController {
 		PostVo postList = postService.getSelectPost(postNo);
 		model.addAttribute("postList", postList);
 
-		return "post/postDetail";
+		return "postDetail";
 	}
 	
 	// 게시글 수정 화면
@@ -173,7 +173,7 @@ public class PostController {
 		model.addAttribute("fileList", fileList);
 		model.addAttribute("boardList", boardList);
 		
-		return "post/postUpdate";
+		return "postUpdate";
 	}
 	
 	// 게시글 수정
@@ -347,7 +347,7 @@ public class PostController {
 		model.addAttribute("boardNo", boardNo);
 		model.addAttribute("postVo", postVo);
 		
-		return "post/postReply";
+		return "postReply";
 	}
 	
 	// 답글 등록

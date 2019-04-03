@@ -98,6 +98,11 @@ display: block;
 
 			});
 			
+			$("#message").on("click", function(){
+				page = "message";
+				gogogo1(page);
+			});
+			
 			
 			
 			function gogogo1(page){
@@ -106,7 +111,7 @@ display: block;
 	                    url: "/pageViewAjax",
 	                    data: { value : page },
 	                    success: function(data) {
-	
+	                    	
 	               			// 모달 띄우기
 	                    	var height = $(document).height();
 	            			$(".background-etc").css({"display":"block", "height" : height + "px"});

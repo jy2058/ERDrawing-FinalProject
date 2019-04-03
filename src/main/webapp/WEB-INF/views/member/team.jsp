@@ -85,7 +85,7 @@
 								 <!-- 팀 생성자이면서 권한이 creator가 아닌 것(user, admin) -->
 								  <c:if test="${teamList[status.index].teamAuth ne 'creator' and teamInfo.makerId eq loginId }"> 
 									<input type="checkbox" class="toggle-switch" name="authCheck" style="font-size: 1px;" value="${teamList[status.index].teamAuth }"
-									<c:if test="${teamList[status.index].teamAuth eq 'admin'}"> <!-- 권한 admin일 경우 checked -->
+									<c:if test="${teamList[status.index].teamAuth eq 'admin'}">
 										checked
 									</c:if>
 									>
@@ -110,9 +110,13 @@
 			<div class="row">
 						<div class="col-sm-12">
 							 <ul class="erd-box-list">
-							 
 							 	<c:forEach var="teamErdList" varStatus="status" items="${teamErdList }">
 							  	<li class="erd-box-item">
+							  		<c:if test="${myTeam.teamAuth ne 'user'}"> <!-- 권한이 유저가 아닐 때 erd 삭제 가능 -->
+								  		<button type="button" class="btn btn-default delBtn" aria-label="trash" value="${myErdList.erdNo }">
+										  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+										</button>
+									</c:if>
 								  		<a class="preview-box">
 								  			<div class="bg-box">
 								  				<div class="bg-img">

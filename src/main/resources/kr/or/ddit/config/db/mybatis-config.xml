@@ -14,6 +14,7 @@
 	<typeAlias alias="teamVo" type="kr.or.ddit.team.model.TeamVo"/> 
 	<typeAlias alias="tagVo" type="kr.or.ddit.team.model.TagVo"/> 
 	<typeAlias alias="tagHistVo" type="kr.or.ddit.team.model.TagHistVo"/> 
+	<typeAlias alias="messageVo" type="kr.or.ddit.message.model.MessageVo"/> 
 	
 	<typeAlias alias="boardVo" type="kr.or.ddit.post.model.BoardVo"/>
 	<typeAlias alias="postVo" type="kr.or.ddit.post.model.PostVo"/>

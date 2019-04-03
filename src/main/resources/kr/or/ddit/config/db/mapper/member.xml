@@ -69,5 +69,12 @@
 		where memNm like '%'||#{memNm}||'%' and
 			 memTel =#{memTel}
 	</select>
+	
+	<!-- 회원별 메시지 조회 -->
+	<select id="getAllMsg" parameterType="String" resultType="messageVo">
+		select *
+		from message
+		where receiverid = #{receiverId}
+	</select>
 
 </mapper>

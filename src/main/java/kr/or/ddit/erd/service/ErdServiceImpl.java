@@ -105,4 +105,9 @@ public class ErdServiceImpl implements IErdService{
 		return erdTagMap;
 	}
 
+	@Override
+	public int delErd(int erdNo) {
+		return erdDao.delErd(erdNo);
+	}
+
 }
