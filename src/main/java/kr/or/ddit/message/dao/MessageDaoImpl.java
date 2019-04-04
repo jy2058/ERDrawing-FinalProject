@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.message.model.MessageVo;
+import kr.or.ddit.util.model.PageVo;
 
 @Repository("messageDao")
 public class MessageDaoImpl implements IMessageDao{
@@ -39,6 +40,16 @@ public class MessageDaoImpl implements IMessageDao{
 	@Override
 	public int delMsgAll(String memId) {
 		return sqlSession.delete("member.delMsgAll", memId);
+	}
+
+	@Override
+	public List<MessageVo> msgPagingList(PageVo pageVo) {
+		return sqlSession.selectList("member.msgPagingList", pageVo);
+	}
+
+	@Override
+	public int getMsgCnt(String receiverId) {
+		return sqlSession.selectOne("member.getMsgCnt", receiverId);
 	}
 
 }

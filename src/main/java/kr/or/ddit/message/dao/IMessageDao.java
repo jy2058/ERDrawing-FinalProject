@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.message.model.MessageVo;
+import kr.or.ddit.util.model.PageVo;
 
 public interface IMessageDao {
 
@@ -56,4 +57,25 @@ public interface IMessageDao {
 	* Method 설명 : 메시지 전체 삭제
 	*/
 	int delMsgAll(String memId);
+	
+	/**
+	* Method : msgPagingList
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param pageVo
+	* @return
+	* Method 설명 : 알림 페이징 리스트
+	*/
+	List<MessageVo> msgPagingList(PageVo pageVo);
+	
+	/**
+	* Method : getMsgCnt
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param receiverId
+	* @return
+	* Method 설명 : 알림 갯수
+	*/
+	int getMsgCnt(String receiverId);
+
 }

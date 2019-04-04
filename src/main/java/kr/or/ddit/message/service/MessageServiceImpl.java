@@ -9,10 +9,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.message.dao.IMessageDao;
 import kr.or.ddit.message.model.MessageVo;
 import kr.or.ddit.team.dao.ITeamDao;
 import kr.or.ddit.team.model.TeamListVo;
+import kr.or.ddit.util.model.PageVo;
 
 @Service("messageService")
 public class MessageServiceImpl implements IMessageService{
@@ -49,6 +51,24 @@ public class MessageServiceImpl implements IMessageService{
 	@Override
 	public int delMsgAll(String memId) {
 		return messageDao.delMsgAll(memId);
+	}
+
+	@Override
+	public List<MessageVo> msgPagingList(PageVo pageVo, String memId) {
+		int totalCnt = messageDao.getMsgCnt(memId);
+		
+		pageVo.setTotalCount(totalCnt);
+		pageVo.setReceiverId(memId);
+		pageVo.setPageSize(5);
+
+		 List<MessageVo> msgList = messageDao.msgPagingList(pageVo);
+		return msgList;
+		
+	}
+
+	@Override
+	public int getMsgCnt(String receiverId) {
+		return messageDao.getMsgCnt(receiverId);
 	}
 
 }

@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import kr.or.ddit.message.model.MessageVo;
 import kr.or.ddit.test.logicTestConfig;
+import kr.or.ddit.util.model.PageVo;
 
 public class MessageDaoImplTest extends logicTestConfig{
 	private Logger logger = LoggerFactory.getLogger(MessageDaoImplTest.class);
@@ -121,6 +122,26 @@ public class MessageDaoImplTest extends logicTestConfig{
 		int delMsg = messageDao.delMsg(msgNo);
 		/***Then***/
 		assertEquals(1, delMsg);
+	}
+	
+	/**
+	* Method : testMsgPagingList
+	* 작성자 : PC08
+	* 변경이력 :
+	* Method 설명 : 알림 페이징 리스트 테스트
+	*/
+	@Test
+	public void testMsgPagingLit(){
+		/***Given***/
+		PageVo pageVo = new PageVo();
+		pageVo.setReceiverId("user3");
+		pageVo.setPageNo(1);
+
+		/***When***/
+		List<MessageVo> msgPagingList = messageDao.msgPagingList(pageVo);
+
+		/***Then***/
+		assertEquals(5, msgPagingList.size());
 	}
 
 }

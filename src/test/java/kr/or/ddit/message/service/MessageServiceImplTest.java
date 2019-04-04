@@ -1,6 +1,7 @@
 package kr.or.ddit.message.service;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import org.slf4j.LoggerFactory;
 
 import kr.or.ddit.message.model.MessageVo;
 import kr.or.ddit.test.logicTestConfig;
+import kr.or.ddit.util.model.PageVo;
 
 public class MessageServiceImplTest extends logicTestConfig{
 	private Logger logger = LoggerFactory.getLogger(MessageServiceImplTest.class);
@@ -101,5 +103,27 @@ public class MessageServiceImplTest extends logicTestConfig{
 		/***Then***/
 		assertEquals(1, delMsg);
 	}
+	
+	/**
+	* Method : testMsgPagingList
+	* 작성자 : PC08
+	* 변경이력 :
+	* Method 설명 : 알림 페이징 리스트 테스트
+	*/
+	@Test
+	public void testMsgPagingList(){
+		/***Given***/
+		String memId = "user3";
+		PageVo vo = new PageVo();
+		vo.setReceiverId("user3");
+		
+		/***When***/
+		List<MessageVo> msgPagingList = messageService.msgPagingList(vo, memId);
+		
+		/***Then***/
+		assertEquals(5, msgPagingList.size());
+		logger.debug("===msgPagingList : {}", msgPagingList);
+	}
+	
 
 }

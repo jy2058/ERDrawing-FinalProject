@@ -3,6 +3,8 @@ package kr.or.ddit.member.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -239,5 +241,21 @@ logger.debug("name=={}",memVo.getMemId());
 			model.addAttribute("paging", paging);
 			 
 		 return "member/memListPagingHtml";
+	 }
+	 
+	 
+	 @RequestMapping("/memModifyModal")
+	    public String memModifyModal(@RequestParam(name = "page", defaultValue = "1") int page, Model model,MemberVo memVo) {
+		 logger.debug("====memVo1{}",memVo);
+		 
+		 memVo = memberService.selectMember(memVo.getMemId());
+
+		 SimpleDateFormat transFormat = new SimpleDateFormat("yyyy-MM-dd");
+		 String inDate = transFormat.format(memVo.getMemInDt());
+		 
+		 model.addAttribute("memVo", memVo);
+		 model.addAttribute("inDate", inDate);
+			 
+		 return "jsonView";
 	 }
 }

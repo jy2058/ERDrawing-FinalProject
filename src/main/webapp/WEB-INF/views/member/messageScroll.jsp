@@ -6,7 +6,7 @@
 
 <div class="message" style="overflow: scroll;">
 	<h1>
-		<div class="massage-title">알림</div>
+		<div class="massage-title">알림스크롤</div>
 		<button class="btn glyphicon glyphicon-trash" value="delAll"></button>
 		<button class="glyphicon glyphicon-remove cancle-btn99"></button>
 	</h1>

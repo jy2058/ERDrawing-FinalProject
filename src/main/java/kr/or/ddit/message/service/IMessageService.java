@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.or.ddit.message.model.MessageVo;
 import kr.or.ddit.team.model.TeamListVo;
+import kr.or.ddit.util.model.PageVo;
 
 public interface IMessageService {
 	
@@ -57,5 +58,25 @@ public interface IMessageService {
 	* Method 설명 : 메시지 전체 삭제
 	*/
 	int delMsgAll(String memId);
-
+	
+	/**
+	* Method : msgPagingList
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param pageVo
+	* @return
+	* Method 설명 : 알림 페이징 리스트
+	*/
+	List<MessageVo> msgPagingList(PageVo pageVo, String memId);
+	
+	/**
+	* Method : getMsgCnt
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param receiverId
+	* @return
+	* Method 설명 : 알림 갯수
+	*/
+	int getMsgCnt(String receiverId);
+	
 }
