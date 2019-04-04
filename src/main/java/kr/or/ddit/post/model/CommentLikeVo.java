@@ -5,8 +5,7 @@ import java.util.Date;
 public class CommentLikeVo {
 	private int cmtNo;		// 댓글번호
 	private String memId;	// 회원아이디
-	private Date cmtLikeDt; // 댓글 좋아요를 누른 날짜
-	//private int likeCheck; //T/F   
+	private Date cmtLikeDt; // 댓글 좋아요를 누른 날짜 
 	
 	public CommentLikeVo(){
 		
