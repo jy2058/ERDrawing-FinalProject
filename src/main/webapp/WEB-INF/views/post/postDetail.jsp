@@ -88,12 +88,12 @@
 					</thead>
 					<tbody>
 						<c:forEach items="${cmtList}" var="cmt">
-							<tr class="cmtTr" data-cmtNo="${cmt.cmtNo}">
+							<tr class="cmtTr" data-cmtno="${cmt.cmtNo}">
 								<td>${cmt.cmtNo}</td>
 								<td>${cmt.memId}</td>
 								<td>${cmt.cmtContent}</td>
 								<td>
-								<button type="button" class="btnLike btn-default" data-cmtnum="${cmt.cmtNo}">좋아요</button>
+								<button type="button" id="likeBtn" class="btnLike btn-default" data-cmtnum="${cmt.cmtNo}">좋아요</button>
 								<c:if test="${SESSION_MEMBERVO.memId == cmt.memId}">
 										<button type="button" class="btnDel btn-default" data-cmtnum="${cmt.cmtNo}">삭제</button>
 											<%--  <c:choose>
@@ -150,20 +150,17 @@
 
 <form id="cmtDelFrm" action="${cp}/post/deleteCmt" method="get">
 	<input type="hidden" name="postNo" value="${postList.postNo}" />
-	<input type="hidden" name="cmtNo" id="cmtNo" />
+	<input type="hidden" name="cmtNo" id="cmtNoDel" />
 </form>
 
 <!-- 해야됨 -->
 <!-- 댓글 좋아요 -->
-<%-- <form id="cmtLikeFrm" action="${cp}/post/likeCmt" method="get">
-	<input type="hidden" id="cmtContent" name="cmtContent"/>
-	<input type="hidden" name="postNo" value="${postList.postNo}" />
-	<input type="hidden" name="cmtNo" value="${.cmtNo}" />
-	
+<form id="cmtLikeFrm" action="${cp}/post/likeCmt" method="post">
+	<input type="hidden" name="postNo" value="${postNo}" />
+	<input type="hidden" id="cmtNo" name="cmtNo" />
 	<input type="hidden" name="memId" value="${SESSION_MEMBERVO.memId}" />
-</form> --%>
+</form> 
 
-<!-- 해야됨 -->
 <form id="replyFrm" action="${cp}/post/postReply" method="get" class="form-horizontal" role="form">
 	<input type="hidden" id="postNo" name="postNo" value="${postNo}" />
 	<input type="hidden" id="boardNo" name="boardNo" value="${boardNo}" />
@@ -210,9 +207,22 @@
 				var cmtNoDel = $(this).data("cmtnum");
 				alert("댓글을 삭제 하시겠습니까?");
 				//input id.val(cmtNoDel);
-				$("#cmtNo").val(cmtNoDel);
+				$("#cmtNoDel").val(cmtNoDel);
 				$("#cmtDelFrm").submit();
 			});
+			
+			//댓글좋아요버튼 클릭이벤트
+			$("#likeBtn").click(function() {
+				console.log("cmt click");
+				
+				//클릭한 cmtTr의 cmtNo값을 출력
+				var cmtNo = $(this).data("cmtnum");
+				
+				$("#cmtNo").val(cmtNo);
+				console.log("cmtNo" +  cmtNo);
+				$("#cmtLikeFrm").submit();
+			});
+			
 		});
 	</script>
   </body>

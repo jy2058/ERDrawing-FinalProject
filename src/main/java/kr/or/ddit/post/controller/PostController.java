@@ -26,10 +26,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.post.model.BoardVo;
+import kr.or.ddit.post.model.CommentLikeVo;
 import kr.or.ddit.post.model.CommentsVo;
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.post.model.UploadFileVo;
 import kr.or.ddit.post.service.IBoardService;
+import kr.or.ddit.post.service.ICommentLikeService;
 import kr.or.ddit.post.service.ICommentsService;
 import kr.or.ddit.post.service.IPostService;
 import kr.or.ddit.post.service.IUploadFileService;
@@ -53,6 +55,9 @@ public class PostController {
 	
 	@Resource(name="commentsService")
 	private ICommentsService commentsService;
+	
+	@Resource(name="commentLikeService")
+	private ICommentLikeService commentLikeService;
 	
 	// 게시판 페이징 리스트
 	@RequestMapping(path = "/postList")
@@ -89,7 +94,6 @@ public class PostController {
 	@RequestMapping(path = "/postInsert", method = RequestMethod.POST)
 	public String postInsert(PostVo postVo, @RequestPart("file") List<MultipartFile> files, Model model,
 			               HttpSession session, RedirectAttributes ra) throws IllegalStateException, IOException {
-	
 		Object memId = session.getAttribute("SESSION_MEMBERVO");
 		model.addAttribute("boardNo", postVo.getBoardNo());
 
@@ -141,11 +145,10 @@ public class PostController {
 
 	// 게시글 상세 화면
 	@RequestMapping(path = "/postDetail", method = RequestMethod.GET)
-	public String postDetailForm(Model model, String postNo, String boardNo) {
-
+	public String postDetailForm(Model model, String postNo, String boardNo, CommentLikeVo commentLikeVo) {
 		model.addAttribute("postNo", postNo);
 		model.addAttribute("boardNo", boardNo);
-		
+		logger.debug("============={}", commentLikeVo);
 		// 업로드 파일 조회
 		List<UploadFileVo> fileList = uploadFileService.getAllFile(postNo);
 		model.addAttribute("fileList", fileList);
@@ -153,7 +156,13 @@ public class PostController {
 		// 댓글 조회
 		List<CommentsVo> cmtList = commentsService.getAllComments(postNo);
 		model.addAttribute("cmtList", cmtList);
-
+		
+		if(commentLikeVo.getMemId() != null){
+			// 댓글 좋아요 조회
+			List<CommentLikeVo> cmtLikeList = commentLikeService.getSelectCmtLike(commentLikeVo.getMemId());
+			model.addAttribute("cmtLikeList", cmtLikeList);
+		}
+		
 		PostVo postList = postService.getSelectPost(postNo);
 		model.addAttribute("postList", postList);
 
@@ -284,6 +293,28 @@ public class PostController {
 			model.addAttribute("msg", "댓글 삭제에 실패했습니다.");
 		}
 		return "redirect:/post/postDetail";
+	}
+	
+	// 댓글 좋아요
+	@RequestMapping(path = "/likeCmt", method = RequestMethod.POST)
+	public String likeCmt(int cmtNo, String memId, String postNo, Model model, RedirectAttributes ra) {
+	
+		model.addAttribute("cmtNo", cmtNo);
+		model.addAttribute("memId", memId);
+		model.addAttribute("postNo", postNo);
+		
+		CommentLikeVo commentLikeVo = new CommentLikeVo();
+		commentLikeVo.setCmtNo(cmtNo);
+		commentLikeVo.setMemId(memId);
+
+		int insertCnt = commentLikeService.insertCmtLike(commentLikeVo);
+
+		if (insertCnt > 0) {
+			model.addAttribute("msg", "좋아요?");
+		}
+		ra.addAttribute("postNo", postNo);
+		return "redirect:/post/postDetail";
+		
 	}
 	
 	// 첨부파일 다운로드
