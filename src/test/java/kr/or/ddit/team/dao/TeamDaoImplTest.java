@@ -305,4 +305,17 @@ public class TeamDaoImplTest extends logicTestConfig{
 
 	}
 	
+	@Test
+	public void testUpdateAgreeFlag(){
+		/***Given***/
+		TeamListVo vo = new TeamListVo();
+		vo.setMemId("user2");
+		vo.setTeamNo(1027);
+		vo.setTeamAgreeFlag("n");
+		/***When***/
+		int updateAgreeFlag = teamDao.updateAgreeFlag(vo);
+		/***Then***/
+		assertNotNull(updateAgreeFlag);
+	}
+	
 }

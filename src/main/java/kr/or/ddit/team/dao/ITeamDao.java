@@ -141,4 +141,15 @@ public interface ITeamDao {
 	* Method 설명 : 팀 멤버 삭제
 	*/
 	int delMember(TeamListVo teamListVo);
+	
+	
+	/**
+	* Method : updateAgreeFlag
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param teamListVo
+	* @return
+	* Method 설명 : 팀 수락여부 수정하기
+	*/
+	int updateAgreeFlag(TeamListVo teamListVo);
 }
