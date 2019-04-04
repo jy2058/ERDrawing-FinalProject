@@ -8,6 +8,9 @@
     position: absolute;
     }
     
+.btn-st3{
+ cursor: pointer;}   
+    
 #divNav{
 	 margin-left: 0px;
 	 	width: 123%;

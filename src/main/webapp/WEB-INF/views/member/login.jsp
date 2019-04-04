@@ -183,6 +183,7 @@
 		  info.push(profile.getEmail());
 		  $("#info").val(info);
 		  
+		  
 			 $("#apiFrm").submit();	
 		}   
 	function join() {
