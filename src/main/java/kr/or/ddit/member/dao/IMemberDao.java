@@ -95,4 +95,14 @@ public interface IMemberDao {
 	 * Method 설명 :특정회원삭제
 	 */
 	int delMember(String memId);
+	
+	/**
+	 * Method : updateMemberInfo
+	 * 작성자 : hyuns
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 회원정보수정
+	 */
+	int updateMemberInfo(MemberVo vo);
 }

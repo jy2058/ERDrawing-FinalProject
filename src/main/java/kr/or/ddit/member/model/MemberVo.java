@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class MemberVo {
 	private String memId;  			//회원아이디
-	private String memMail;			//이메일
+	private String memEmail;			//이메일
 	private String memPass;			//비밀번호
 	private String memCancelFlag;	//탈퇴여부
 	private String memImg;			//프로필이미지
@@ -23,7 +23,7 @@ public class MemberVo {
 	
 	public MemberVo(String memId, String memMail, String memPass, String memNm, String memLang,String memEmailDiv) {
 		this.memId = memId;
-		this.memMail = memMail;
+		this.memEmail = memMail;
 		this.memPass = memPass;
 		this.memNm = memNm;
 		this.memLang = memLang;
@@ -46,10 +46,10 @@ public class MemberVo {
 		this.memId = memId;
 	}
 	public String getMemMail() {
-		return memMail;
+		return memEmail;
 	}
 	public void setMemMail(String memMail) {
-		this.memMail = memMail;
+		this.memEmail = memMail;
 	}
 	public String getMemPass() {
 		return memPass;
@@ -121,7 +121,7 @@ public class MemberVo {
 	
 	@Override
 	public String toString() {
-		return "MemberVo [memId=" + memId + ", memMail=" + memMail + ", memPass=" + memPass + ", memCancelFlag="
+		return "MemberVo [memId=" + memId + ", memMail=" + memEmail + ", memPass=" + memPass + ", memCancelFlag="
 				+ memCancelFlag + ", memImg=" + memImg + ", memAuth=" + memAuth + ", memNm=" + memNm + ", memIntro="
 				+ memIntro + ", memLang=" + memLang + ", memTel=" + memTel + ", memPeriod=" + memPeriod + ", memInDt="
 				+ memInDt + ", memBlackFlag=" + memBlackFlag + "]";

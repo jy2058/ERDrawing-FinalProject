@@ -1,6 +1,5 @@
 package kr.or.ddit.member.service;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -59,6 +58,11 @@ public class MemberServiceImpl implements IMemberService{
 	@Override
 	public int delMember(String memId) {
 		return memberDao.delMember(memId);
+	}
+
+	@Override
+	public int updateMemberInfo(MemberVo vo) {
+		return memberDao.updateMemberInfo(vo);
 	}
 	
 	

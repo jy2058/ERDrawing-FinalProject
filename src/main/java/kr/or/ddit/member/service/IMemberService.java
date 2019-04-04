@@ -71,4 +71,6 @@ public interface IMemberService {
 	
 	int delMember(String memId);
 	
+	int updateMemberInfo(MemberVo vo);
+	
 }

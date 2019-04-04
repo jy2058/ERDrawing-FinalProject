@@ -61,4 +61,9 @@ public class MemberDaoImpl implements IMemberDao{
 		return sqlSession.delete("member.delMember",memId);
 	}
 
+	@Override
+	public int updateMemberInfo(MemberVo vo) {
+		return sqlSession.update("member.updateMemberInfo",vo);
+	}	
+
 }

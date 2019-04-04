@@ -33,7 +33,7 @@
 				memEmailDiv
 		) values (
 				#{memId},
-				#{memMail},
+				#{memEmail},
 				#{memPass},
 				'F',
 				#{memImg, jdbcType=VARCHAR},
@@ -174,5 +174,20 @@
 		delete from member
 		where memId = #{memId}
 	</delete>
+	
+	<update id="updateMemberInfo" parameterType="memberVo">
+	update member
+		set mememail =#{memEmail, jdbcType=VARCHAR},
+			memPass =#{memPass, jdbcType=VARCHAR},
+			memCancelFlag =#{memCancelFlag, jdbcType=VARCHAR},
+			memImg =#{memImg, jdbcType=VARCHAR},
+			
+			memNm =#{memNm, jdbcType=VARCHAR},
+			memIntro =#{memIntro, jdbcType=VARCHAR},
+			memTel =#{memTel, jdbcType=VARCHAR},
+			memPeriod =#{memPeriod, jdbcType=VARCHAR},
+			memBlackFlag =#{memBlackFlag, jdbcType=VARCHAR}
+		where memId =#{memId}
+	</update>
 	
 </mapper>

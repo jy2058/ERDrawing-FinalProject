@@ -16,6 +16,7 @@
 	<br />
 
    <!-- ------------------------회원정보 모달창-------------------- -->
+   <form id="modalFrm" action="${cp }/member/memModalModify" method="post">
    <div class="modal modal-center fade" id="modalEvn" tabindex="1" role="dialog" aria-labelledby="my80sizeCenterModalLabel" >
       <div class="modal-dialog modal-80size modal-center" role="document" >
          <div class="modal-content modal-80size">
@@ -71,7 +72,7 @@
                
                 <div class="form-group">
                   <label class="modalLabel">회원 가입날짜</label> 
-                  <input type="text" name="memInDt" id="memInDt" >    
+                  <input type="text" name="memInDts" id="memInDts" >    
                </div>
                
                <div class="form-group">
@@ -87,19 +88,19 @@
                
                 <div class="form-group">
                   <label class="modalLabel">이용권 기한</label> 
-                  <input type="text" name="memPeriod" id="memPeriod" >    
+                  <input type="text" name="memPeriods" id="memPeriods" >    
                </div>
                
                
                </div>   
                <div class="modal-footer">
-                  <button type="button" id="insertBtn" class="btn btn-default" data-dismiss="modal">등록</button>
+                  <button type="button" id="insertBtn" class="btn btn-default" data-dismiss="modal">수정</button>
                   <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
                </div>
             </div>
          </div>
       </div>
-      
+ </form>     
 
 <!----------------------------- 회원정보 테이블 -------------------------->
 <form id="frm" action="${cp }/member/memberDel">
@@ -152,6 +153,30 @@
 				memId = $(this).data("memid");
 				alert(memId + "dd");
 				getMemListPageListHtmlDel(1, memId);
+			} else { //취소
+				return false;
+			}
+		});
+		
+		//회원정보수정시 
+		$("#insertBtn").on("click", function() {
+			if (confirm("수정 하시겠습니까??") == true) {
+				/* function getMemberModifyModal(memId) {
+					$.ajax({
+							url : "${cp}/member/memModifyModal",
+							data : {
+								memId : memId
+							},
+							success : function(data) {
+								console.log(data.memVo);
+								//모달창에  해당 회원의 값 넣어주기
+								modalResult(data);
+								
+							}
+						});
+					} */
+					
+				$("#modalFrm").submit();
 			} else { //취소
 				return false;
 			}
@@ -246,11 +271,11 @@
 		$("#memId").val(data.memVo.memId);
 		$("#memNm").val(data.memVo.memNm);
 		$("#memIntro").val(data.memVo.memIntro);
-		$("#memInDt").val(data.inDate);
+		$("#memInDts").val(data.inDate);
 
 		$("#memTel").val(data.memVo.memTel);
 		$("#memMail").val(data.memVo.memMail);
-		$("#memPeriod").val(data.memVo.memPeriod);
+		$("#memPeriods").val(data.memVo.memPeriod);
 		$("#memBlackFlag").val(data.memVo.memBlackFlag);
 		$("#memCancelFlag").val(data.memVo.memCancelFlag);
 		

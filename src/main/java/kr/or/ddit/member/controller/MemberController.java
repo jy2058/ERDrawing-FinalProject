@@ -258,4 +258,23 @@ logger.debug("name=={}",memVo.getMemId());
 			 
 		 return "jsonView";
 	 }
+	 
+	 @RequestMapping("/memModalModify")
+	    public String memModalModify(@RequestParam(name = "page", defaultValue = "1") int page, Model model,MemberVo memVo) {
+		 logger.debug("====ssss{}",memVo);
+		 memberService.updateMemberInfo(memVo);
+		 
+		 PageVo paging = new PageVo(); // 페이징 처리를 위해 페이징 객체 생성 Paging 이라는 VO가 존재함
+			paging.setPageNo(page);
+			paging.setPageSize(10);
+
+			List<MemberVo> memList = memberService.selectMemPagingList(paging);
+
+			model.addAttribute("memList", memList);
+			model.addAttribute("paging", paging);
+			 
+		 return "memList";
+	 }
+	 
+	 
 }
