@@ -5,8 +5,8 @@ import java.util.Date;
 public class CommentLikeVo {
 	private int cmtNo;		// 댓글번호
 	private String memId;	// 회원아이디
-	private Date CmtLikeDt; // 댓글 좋아요를 누른 날짜
-	private int likeCheck;    
+	private Date cmtLikeDt; // 댓글 좋아요를 누른 날짜
+	//private int likeCheck; //T/F   
 	
 	public CommentLikeVo(){
 		
@@ -31,20 +31,24 @@ public class CommentLikeVo {
 		this.memId = memId;
 	}
 	public Date getCmtLikeDt() {
-		return CmtLikeDt;
+		return cmtLikeDt;
 	}
 	public void setCmtLikeDt(Date cmtLikeDt) {
-		CmtLikeDt = cmtLikeDt;
+		this.cmtLikeDt = cmtLikeDt;
 	}
 
-	public int getLikeCheck() {
+
+	/*public int getLikeCheck() {
 		return likeCheck;
 	}
 
 	public void setLikeCheck(int likeCheck) {
 		this.likeCheck = likeCheck;
-	}
+	}*/
 
-	
+	@Override
+	public String toString() {
+		return "CommentLikeVo [cmtNo=" + cmtNo + ", memId=" + memId + ", cmtLikeDt=" + cmtLikeDt + "]";
+	}
 	
 }
