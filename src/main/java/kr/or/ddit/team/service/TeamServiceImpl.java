@@ -7,10 +7,14 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.message.dao.IMessageDao;
+import kr.or.ddit.message.model.MessageVo;
 import kr.or.ddit.team.dao.ITeamDao;
 import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
@@ -19,8 +23,14 @@ import kr.or.ddit.team.model.TeamVo;
 
 @Service("teamService")
 public class TeamServiceImpl implements ITeamService{
+	
+	private Logger logger = LoggerFactory.getLogger(TeamServiceImpl.class);
+	
 	@Resource(name="teamDao")
 	private ITeamDao teamDao;
+	
+	@Resource(name="messageDao")
+	private IMessageDao messageDao;
 
 	@Override
 	public List<TeamListVo> getTeamAllList(String memId) {
@@ -73,8 +83,14 @@ public class TeamServiceImpl implements ITeamService{
 
 	@Override
 	public int insertTeam(TeamVo teamVo, List<String> teamMember) {
-		int insertTeam = teamDao.insertTeam(teamVo);
+		int insertTeam = teamDao.insertTeam(teamVo);	//팀 생성
 
+		String teamNm = teamVo.getTeamNm();
+		String makerId = teamVo.getMakerId();
+		int teamNo = teamVo.getTeamNo();
+		String msgContent = "";
+		
+		// 멤버 추가
 		for (String member : teamMember) {
 			TeamListVo vo = new TeamListVo();
 			if (teamVo.getMakerId().equals(member)) {	// 팀 생성자일 경우
@@ -86,6 +102,26 @@ public class TeamServiceImpl implements ITeamService{
 			vo.setTeamNo(teamVo.getTeamNo());
 			teamDao.insertTeamMember(vo);	// 멤버 추가
 		}
+		
+		// 알림 전송
+		List<MessageVo> memList = new ArrayList<MessageVo>();
+		Map<String, Object> memMap = new HashMap<>();		
+		
+		for(String memId : teamMember){
+			if(!memId.equals(makerId)){
+				msgContent = makerId + " 님이 " + teamNm + " 팀에 " + memId + " 님을 초대 하였습니다. 팀에 가입하시겠습니까?";
+				MessageVo msgVo = new MessageVo();
+				msgVo.setReceiverId(memId);
+				msgVo.setSenderId(makerId);
+				msgVo.setMsgContent(msgContent);
+				msgVo.setMsgType("y");
+				msgVo.setTeamNo(teamNo);
+				memList.add(msgVo);
+			}
+		}
+		memMap.put("memList", memList);
+		messageDao.insertMsg(memMap);
+		
 		return insertTeam;
 	}
 

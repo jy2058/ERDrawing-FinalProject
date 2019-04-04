@@ -70,11 +70,85 @@
 			 memTel =#{memTel}
 	</select>
 	
-	<!-- 회원별 메시지 조회 -->
+	<!-- 회원별 알림 조회 -->
 	<select id="getAllMsg" parameterType="String" resultType="messageVo">
 		select *
 		from message
 		where receiverid = #{receiverId}
+		order by senddt desc
 	</select>
+	
+	<!-- 단체알림 전송-->
+	<insert id="insertMsg" parameterType="java.util.Map">
+		insert into message(msgno, senderid, senddt, receiverid, msgcontent, msgtype, teamno)
+		select seq_msgno.nextval, A.* 
+		from(
+		<foreach item="item" collection="memList" separator="UNION ALL">
+			select 
+				#{item.senderId} as senderid,
+				sysdate as senddt,
+				#{item.receiverId} as receiverid,
+				#{item.msgContent} as msgcontent,
+				#{item.msgType} as msgtype,
+				#{item.teamNo} as teamno
+			from dual
+		</foreach>
+		) A
+	</insert>
+	
+	 <!-- <insert id="insertMsg" parameterType="java.util.Map">
+		insert all
+		<foreach collection="memList" item="item" separator=" ">
+			into message 
+				(msgno, senderid, senddt, receiverid, msgcontent, msgtype)
+			values 
+				(seq_msgno.nextval, #{item.senderId}, sysdate, #{item.receiverId}, #{item.msgContent}, 'n')
+		</foreach>
+		select * from dual
+	</insert> -->
+	
+	<!-- 회신 알림 전송-->
+	<insert id="insertAplyMsg" parameterType="messageVo">
+		insert into message 
+			(msgno, senderid, senddt, receiverid, msgcontent, msgtype, teamno)
+		values 
+			(seq_msgno.nextval, #{senderId}, sysdate, #{receiverId}, #{msgContent}, #{msgType}, #{teamNo})
+	</insert>
+	
+	<!-- 알림 삭제 -->
+	<delete id="delMsg" parameterType="int">
+		delete from message
+        where msgno = #{msgNo}
+	</delete>
 
+	<!-- 알림 전체 삭제 -->
+	<delete id="delMsgAll" parameterType="String">
+		delete from message
+		where receiverid = #{receiverid}
+	</delete>
+	
+		<select id="selectMemPagingList" parameterType="pageVo" resultType="memberVo">
+
+	select *
+	from
+	( select a.*, rownum rn
+	from
+	(select member.*
+	from member
+	order by memId) a
+	where memauth='F') a
+	where rn between ((#{pageNo}-1)*10)+1 and (#{pageNo})*10 
+	</select>
+	
+	<select id="getMemCnt" resultType="int">
+	select count(*)
+        from member
+        where memauth='F'
+	</select>
+	
+	<delete id="delMember" parameterType="String">
+  delete from member
+  where memId = #{memId}
+	</delete>
+	
 </mapper>

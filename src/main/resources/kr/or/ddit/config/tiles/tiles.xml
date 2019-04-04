@@ -68,8 +68,8 @@
         	<put-attribute name="content" value="/WEB-INF/views/member/modify.jsp" />
         </definition>
         
-        <definition name="memList" extends="layoutMain">
-        	<put-attribute name="content" value="/WEB-INF/views/member/memList.jsp" />
+        <definition name="memList" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/member/memListPagingContent.jsp" />
         </definition>
 
 
