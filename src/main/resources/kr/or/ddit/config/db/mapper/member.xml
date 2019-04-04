@@ -124,8 +124,29 @@
 	<!-- 알림 전체 삭제 -->
 	<delete id="delMsgAll" parameterType="String">
 		delete from message
-		where receiverid = #{receiverid}
+		where receiverid = #{receiverId}
 	</delete>
+	
+	<!-- 알림 페이징 -->
+	<select id="msgPagingList" parameterType="pageVo" resultType="messageVo">
+		select *
+		from
+			(select a.*, rownum rn
+			 from
+				(select message.*
+				 from message
+				 order by msgno desc) a
+			 where receiverid = #{receiverId})
+		where rn between ((#{pageNo}-1)*#{pageSize})+1 and (#{pageNo})*#{pageSize}
+	</select>
+	
+	<!-- 알림 갯수 -->
+	<select id="getMsgCnt" parameterType="String" resultType="int">
+		select count(*)
+		from message
+		where receiverid = #{receiverId}
+	</select>
+	
 	
 		<select id="selectMemPagingList" parameterType="pageVo" resultType="memberVo">
 
