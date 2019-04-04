@@ -1,10 +1,10 @@
 input[type=checkbox].toggle-switch {
-	font-size: 10px;
+    font-size: 10px;
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
-    width: 6em;
-    height: 3em;
+    width: 23px;
+    height: 14px;
     border-radius: 3em;
     background-color: #ddd;
     outline: 0;
@@ -16,20 +16,20 @@ input[type=checkbox].toggle-switch {
 input[type=checkbox].toggle-switch:checked {
     background-color: #3af;
 }
-
 input[type=checkbox].toggle-switch::after {
+    margin-top: 0.5px;
     content: '';
-    width: 3em;
-    height: 3em;
+    width: 12.5px;
+    height: 12.5px;
     background-color: white;
     border-radius: 3em;
     position: absolute;
-    transform: scale(0.7);
+    transform: scale(0.8);
     left: 0;
     transition: left 0.09s ease-in-out;
     box-shadow: 0 0.1em rgba(0, 0, 0, 0.5);
 }
 
 input[type=checkbox].toggle-switch:checked::after {
-    left: 3em;
+    left: 10px;
 }
