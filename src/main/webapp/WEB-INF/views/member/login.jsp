@@ -81,6 +81,7 @@
 <script>	
 
 	$(document).ready(function () {
+
 	var count=	"${count }";
 	var on =0;
 		if(count>=3){
@@ -182,9 +183,7 @@
 		  info.push(profile.getImageUrl());
 		  info.push(profile.getEmail());
 		  $("#info").val(info);
-		  
-		  
-			 $("#apiFrm").submit();	
+			 $("#apiFrm").submit();
 		}   
 	function join() {
 		location.href = '${cp }/join';

@@ -47,12 +47,15 @@
                   <label class="modalLabel">회원 아이디</label> 
                   <input type="text" name="memId" id="memId" >    
                </div>   
+  		
+  			 <div class="pass form-group">
+                  <label class="modalLabel"  >회원 비밀번호</label> 
+                  	<input	type="password" class="memPass" id="memPass"  oninput="checkPwd()" />
+               </div>
                
-               <div class="form-group">
-                  <label class="modalLabel" >회원 비밀번호</label> 
-                  <input  type="password" name="inputMemPass" id="inputMemPass" > 
-                  <input  type="hidden" name="memPass" id="memPass" > 
-                 <!--  <input type="button" data-toggle="modal" data-target="#my80sizeModal2" value="검색" > -->
+                 <div class="pass form-group">
+                  <label class="modalLabel" >회원 비밀번호 확인</label> 
+		 			<input	type="password" class="memPass" id="reMemPass" name="memPass" oninput="checkPwd()" />
                </div>
                
                 <div class="form-group">
@@ -84,7 +87,7 @@
                   <label class="modalLabel" style="width: 30px"> </label> 
                   
                   <label class="modalLabel" style="width: 30px">탈퇴 여부</label> 
-                  <input type="checkbox" name="chMemCancelFlag" id=""chMemCancelFlag"" data-toggle="toggle"  data-on="O" data-off="X"/>
+                  <input type="checkbox" name="chMemCancelFlag" id="chMemCancelFlag" data-toggle="toggle"  data-on="O" data-off="X"/>
                   <input type="hidden" name="memCancelFlag" id="memCancelFlag"/>
 		  
                </div>
@@ -102,6 +105,7 @@
             </div>
          </div>
       </div>
+       
  </form>     
 
 <!----------------------------- 회원정보 테이블 -------------------------->
@@ -114,9 +118,10 @@
 					<th>Name</th>
 					<th>Id</th>
 					<th>Date Created</th>
-					<th>Auth</th>
+					<th>Black List</th>
 
-					<th>Status</th>
+					<!-- <th>Status</th> -->
+					<th>Secession</th>
 					<th>Action</th>
 					<th></th>
 				</tr>
@@ -163,19 +168,70 @@
 		$("#insertBtn").on("click", function() {
 			if (confirm("수정 하시겠습니까??") == true) {
 				
+				
+				if($("#memNm").val().trim()==""){
+					//$("#memId").val().trim()
+					alert("이름을 입력해 주세요");
+					$("#memNm").focus();
+					return;
+				}
+				
+				if($("#memId").val().trim()==""){
+					//$("#memId").val().trim()
+					alert("아이디를 입력해 주세요");
+					$("#memId").focus();
+					return;
+				}
+				
+				if($("#memMail").val().trim()==""  ){
+					//$("#memId").val().trim()
+					
+					alert("이메일을 입력해 주세요");
+					$("#memMail").focus();
+					return;
+				}
+				
+				var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+				if($("#memMail").val().trim()==""  || exptext.test($("#memMail").val())==false){
+					//$("#memId").val().trim()
+					alert(" 메일형식이 올바르지 않습니다");
+					$("#memMail").focus();
+					return;
+				}
+				
+				
+			
+				
+			
+				
+			
+				if($("#memTel").val().trim()==""){
+					//$("#memId").val().trim()
+					alert("핸드폰 번호를 입력해 주세요");
+					$("#memTel").focus();
+					return;
+				}
+				
+				
+				if(!/^[a-zA-Z0-9!@#$%^&*()?_~]{6,15}$/.test($("#reMemPass").val()))
+				 { 
+				  alert("비밀번호는 숫자, 영문, 특수문자 조합으로 6~15자리를 사용해야 합니다."); 
+				  return false;
+				 }
+				
+				
+				
 				if($("#chMemBlackFlag").is(':checked')){
 					$("#memBlackFlag").val("T");
 				}else{
 					$("#memBlackFlag").val("F");
 				}
-				console.log($("#memBlackFlag").val());
 					
 				if($("#chMemCancelFlag").is(':checked')){
 					$("#memCancelFlag").val("T");					
 				}else{
 					$("#memCancelFlag").val("F");
 				}
-				console.log($("#memCancelFlag").val());
 					
 				$("#modalFrm").submit();
 			} else { //취소
@@ -262,13 +318,8 @@
 		}
 		
 		//구글 카카오는 비밀번호 변경불가 
-		if (data.memVo.memEmailDiv == "basic") {
-			$("#inputMemPass").val(data.memVo.memPass);
-			$("#memPass").val($("#inputMemPass").val());
-		} else {
-			$("#memPass").val(data.memVo.memPass);
-			$("#inputMemPass").remove();
-			$("#inputMemPass").remove();
+		if (data.memVo.memEmailDiv != "basic") {
+			$(".pass").remove();
 		}
 		
 		if(black=='T'){
@@ -292,6 +343,26 @@
 		$("#memTel").val(data.memVo.memTel);
 		$("#memMail").val(data.memVo.memMail);
 		$("#memPeriods").val(data.memVo.memPeriod);
+
+	}
+	
+	var pwdCheck=0;
+	function checkPwd() {
+		var inputed = $(".memPass").val();
+        var reinputed = $("#reMemPass").val();
+		console.log(inputed);
+		
+	     if(reinputed=="" && (inputed != reinputed || inputed == reinputed)){
+	            $("#reMemPass").css("background-color", "#FFCECE");
+	        }
+	        else if (inputed == reinputed) {
+	            $("#reMemPass").css("background-color", "#B0F6AC");
+	            pwdCheck = 1;
+	        } else if (inputed != reinputed) {
+	            pwdCheck = 0;
+	            $("#reMemPass").css("background-color", "#FFCECE");
+	            
+	        }
 
 	}
 </script>

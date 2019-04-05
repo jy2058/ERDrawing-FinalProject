@@ -53,14 +53,18 @@ public class LoginController {
 	public String Login(String capResponse,MemberVo vo, HttpSession session, RedirectAttributes ra, HttpServletRequest req) throws IOException {
 		MemberVo checkMemVo = memberService.selectMember(vo.getMemId());
 		
-		
 		if (checkMemVo == null) {
 			ra.addFlashAttribute("msg", "Id를 다시 확인해 주세요");
 			session.setAttribute("count", count++);
 			 return "redirect:" + req.getContextPath() + "/login";
 
 		} else if (checkMemVo.getMemId().equals(vo.getMemId())
-				&& checkMemVo.getMemPass().equals(KISA_SHA256.encrypt(vo.getMemPass()))) {
+				&& checkMemVo.getMemPass().equals(KISA_SHA256.encrypt(vo.getMemPass())) ) {
+			
+			if( checkMemVo.getMemCancelFlag().equals("T")){
+				ra.addFlashAttribute("msg", "이 계정은 탈퇴한 계정입니다.");
+				return "redirect:" + req.getContextPath()+"/" ;
+			}
 			
 			if(capResponse!=""){
 			String checkOk=captCahs(capResponse);
@@ -114,7 +118,7 @@ public class LoginController {
 	}
 
 	@RequestMapping(value = "/logins", method = { RequestMethod.GET, RequestMethod.POST })
-	public String googleCallback(String[] info,HttpSession session, HttpServletRequest req) throws Exception {
+	public String googleCallback(String[] info,HttpSession session, HttpServletRequest req, RedirectAttributes ra) throws Exception {
 		MemberVo memId = memberService.selectMember(info[3]);
 		MemberVo vo = new MemberVo(info[3], info[3], "--", info[1], "kr","google");
 		vo.setMemImg(info[2]);
@@ -123,13 +127,14 @@ public class LoginController {
 			session.setAttribute("SESSION_MEMBERVO", vo);
 		}
 		else{
+			
 			session.setAttribute("SESSION_MEMBERVO", vo);
 		}
 		return "redirect:" + req.getContextPath()+"/" ;
 	}
 	
 	@RequestMapping(value = "/kakaoLogin")
-	public String kakaoLogin(String info, HttpSession session, HttpServletRequest req) {
+	public String kakaoLogin(String info, HttpSession session, HttpServletRequest req, RedirectAttributes ra) {
 		logger.debug("==info{}",info);
 		String[] email =info.split(",");
 		if(email.length<5){	//이메일 수락 안햇을시
@@ -195,6 +200,11 @@ public class LoginController {
 				session.setAttribute("SESSION_MEMBERVO", vo);
 			}
 			else{
+				
+				if( memId.getMemCancelFlag().equals("T")){
+					ra.addFlashAttribute("msg", "이 계정은 탈퇴한 계정입니다.");
+					return "redirect:" + req.getContextPath()+"/" ;
+				}
 				session.setAttribute("SESSION_MEMBERVO", vo);
 			}
 		}

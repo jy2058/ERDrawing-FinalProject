@@ -206,7 +206,7 @@ public class MemberController {
 logger.debug("name=={}",memVo.getMemId());
 				MemberVo vo = memberService.selectMember(memVo.getMemId());
 		 if(vo!=null){
-			 vo.setMemBlackFlag("F");
+			 vo.setMemCancelFlag("T");
 		 int delCnt =memberService.updateMemberDel(vo);
 		 	if(delCnt==1){
 		 	ra.addFlashAttribute("msg", "삭제가 완료 되었습니다.");	
@@ -263,8 +263,14 @@ logger.debug("name=={}",memVo.getMemId());
 	 @RequestMapping("/memModalModify")
 	    public String memModalModify(@RequestParam(name = "page", defaultValue = "1") int page, Model model,MemberVo memVo) {
 		 logger.debug("====ssss{}",memVo);
-		 memberService.updateMemberInfo(memVo);
 		 
+		 if(memVo.getMemPass()==null){
+			MemberVo vo =memberService.selectMember(memVo.getMemId());
+			memVo.setMemPass(vo.getMemPass());
+			 memberService.updateMemberInfo(memVo);
+		 }else{
+		 memberService.updateMemberInfo(memVo);
+		 }
 		 PageVo paging = new PageVo(); // 페이징 처리를 위해 페이징 객체 생성 Paging 이라는 VO가 존재함
 			paging.setPageNo(page);
 			paging.setPageSize(10);
