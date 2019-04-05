@@ -40,6 +40,7 @@ public class MessageServiceImpl implements IMessageService{
 	public int insertAplyMsg(MessageVo messageVo, TeamListVo teamListVo) {
 		messageDao.insertAplyMsg(messageVo);	// 회신 알림 전송
 		int cnt = teamDao.updateAgreeFlag(teamListVo);	// 팀 동의여부 수정
+		messageDao.delMsg(messageVo.getMsgNo());	// 회신 성공 한 알림 삭제
 		return cnt;
 	}
 
@@ -57,9 +58,10 @@ public class MessageServiceImpl implements IMessageService{
 	public List<MessageVo> msgPagingList(PageVo pageVo, String memId) {
 		int totalCnt = messageDao.getMsgCnt(memId);
 		
+		pageVo.setPageSize(5);
 		pageVo.setTotalCount(totalCnt);
 		pageVo.setReceiverId(memId);
-		pageVo.setPageSize(5);
+		
 
 		 List<MessageVo> msgList = messageDao.msgPagingList(pageVo);
 		return msgList;

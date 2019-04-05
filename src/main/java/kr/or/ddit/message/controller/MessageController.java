@@ -90,6 +90,7 @@ public class MessageController {
 		
 		PageVo pageVo = new PageVo();
 		pageVo.setPageNo(page);
+		//pageVo.setPageSize(5);
 		
 		List<MessageVo> msgPagingList = messageService.msgPagingList(pageVo, memVo.getMemId());
 		
