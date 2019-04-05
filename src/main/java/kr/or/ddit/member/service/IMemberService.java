@@ -69,7 +69,7 @@ public interface IMemberService {
 
 	List<MemberVo> selectMemPagingList(PageVo vo);
 	
-	int delMember(String memId);
+	int updateMemberDel(MemberVo vo);
 	
 	int updateMemberInfo(MemberVo vo);
 	

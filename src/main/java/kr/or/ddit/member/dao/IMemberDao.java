@@ -94,7 +94,7 @@ public interface IMemberDao {
 	 * @return
 	 * Method 설명 :특정회원삭제
 	 */
-	int delMember(String memId);
+	int updateMemberDel(MemberVo vo);
 	
 	/**
 	 * Method : updateMemberInfo

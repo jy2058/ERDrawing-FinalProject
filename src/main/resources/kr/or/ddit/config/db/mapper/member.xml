@@ -170,10 +170,11 @@
 		where memauth='F'
 	</select>
 
-	<delete id="delMember" parameterType="String">
-		delete from member
+	<update id="updateMemberDel" parameterType="memberVo">
+		update member
+		set memCancelFlag =#{memCancelFlag}
 		where memId = #{memId}
-	</delete>
+	</update>
 	
 	<update id="updateMemberInfo" parameterType="memberVo">
 	update member

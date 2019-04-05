@@ -3,10 +3,10 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <link rel="stylesheet" href="/css/boxErd.css">
 <link rel="stylesheet" href="/css/member/memList.css">
-<link rel="stylesheet" href="/css/team/toggle-switches.css">
 
 
 	<div class="youtube-title">
@@ -49,8 +49,9 @@
                </div>   
                
                <div class="form-group">
-                  <label class="modalLabel" id="mempass">회원 비밀번호</label> 
-                  <input  type="password" name="memPass" id="memPass" > 
+                  <label class="modalLabel" >회원 비밀번호</label> 
+                  <input  type="password" name="inputMemPass" id="inputMemPass" > 
+                  <input  type="hidden" name="memPass" id="memPass" > 
                  <!--  <input type="button" data-toggle="modal" data-target="#my80sizeModal2" value="검색" > -->
                </div>
                
@@ -77,20 +78,21 @@
                
                <div class="form-group">
                   <label class="modalLabel">블랙리스트 여부</label> 
-                  <input type="text" name="memBlackFlag" id="memBlackFlag" >    
-               </div>
-               
-                <div class="form-group">
-                  <label class="modalLabel">탈퇴 여부</label> 
-                  <input type="text" name="memCancelFlag" id="memCancelFlag" >    
-                  <input type="checkbox" id="ch" class="toggle-switch" name="authCheck" style="font-size: 1px;">
+				  <input type="checkbox"  name="chMemBlackFlag" id="chMemBlackFlag"  data-toggle="toggle"  data-on="O" data-off="X"/>
+				  <input type="hidden"  name="memBlackFlag" id="memBlackFlag"  />
+				  
+                  <label class="modalLabel" style="width: 30px"> </label> 
+                  
+                  <label class="modalLabel" style="width: 30px">탈퇴 여부</label> 
+                  <input type="checkbox" name="chMemCancelFlag" id=""chMemCancelFlag"" data-toggle="toggle"  data-on="O" data-off="X"/>
+                  <input type="hidden" name="memCancelFlag" id="memCancelFlag"/>
+		  
                </div>
                
                 <div class="form-group">
                   <label class="modalLabel">이용권 기한</label> 
                   <input type="text" name="memPeriods" id="memPeriods" >    
                </div>
-               
                
                </div>   
                <div class="modal-footer">
@@ -139,7 +141,6 @@
 	
 	var memId = "";
 	
-	
 	$(document).ready(function() {
 		getMemListPageListHtml(1);
 
@@ -161,20 +162,20 @@
 		//회원정보수정시 
 		$("#insertBtn").on("click", function() {
 			if (confirm("수정 하시겠습니까??") == true) {
-				/* function getMemberModifyModal(memId) {
-					$.ajax({
-							url : "${cp}/member/memModifyModal",
-							data : {
-								memId : memId
-							},
-							success : function(data) {
-								console.log(data.memVo);
-								//모달창에  해당 회원의 값 넣어주기
-								modalResult(data);
-								
-							}
-						});
-					} */
+				
+				if($("#chMemBlackFlag").is(':checked')){
+					$("#memBlackFlag").val("T");
+				}else{
+					$("#memBlackFlag").val("F");
+				}
+				console.log($("#memBlackFlag").val());
+					
+				if($("#chMemCancelFlag").is(':checked')){
+					$("#memCancelFlag").val("T");					
+				}else{
+					$("#memCancelFlag").val("F");
+				}
+				console.log($("#memCancelFlag").val());
 					
 				$("#modalFrm").submit();
 			} else { //취소
@@ -262,24 +263,35 @@
 		
 		//구글 카카오는 비밀번호 변경불가 
 		if (data.memVo.memEmailDiv == "basic") {
-			$("#memPass").val(data.memVo.memPass);
+			$("#inputMemPass").val(data.memVo.memPass);
+			$("#memPass").val($("#inputMemPass").val());
 		} else {
-			$("#mempass").remove();
-			$("#memPass").remove();
+			$("#memPass").val(data.memVo.memPass);
+			$("#inputMemPass").remove();
+			$("#inputMemPass").remove();
+		}
+		
+		if(black=='T'){
+			$("input[name=chMemBlackFlag]").prop("checked", true).change();
+		}else{
+			$("input[name=chMemBlackFlag]").prop("checked", false).change();
+		}
+		
+		if(cancel=='T'){
+			$("input[name=chMemCancelFlag]").prop("checked", true).change();
+		}else{
+			$("input[name=chMemCancelFlag]").prop("checked", false).change();
 		}
 		
 		$("#memId").val(data.memVo.memId);
 		$("#memNm").val(data.memVo.memNm);
 		$("#memIntro").val(data.memVo.memIntro);
+		$("#memImg").val(data.memVo.memImg);
 		$("#memInDts").val(data.inDate);
 
 		$("#memTel").val(data.memVo.memTel);
 		$("#memMail").val(data.memVo.memMail);
 		$("#memPeriods").val(data.memVo.memPeriod);
-		$("#memBlackFlag").val(data.memVo.memBlackFlag);
-		$("#memCancelFlag").val(data.memVo.memCancelFlag);
-		
-		
 
 	}
 </script>

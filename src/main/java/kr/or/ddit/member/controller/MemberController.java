@@ -206,7 +206,8 @@ public class MemberController {
 logger.debug("name=={}",memVo.getMemId());
 				MemberVo vo = memberService.selectMember(memVo.getMemId());
 		 if(vo!=null){
-		 int delCnt =memberService.delMember(memVo.getMemId());
+			 vo.setMemBlackFlag("F");
+		 int delCnt =memberService.updateMemberDel(vo);
 		 	if(delCnt==1){
 		 	ra.addFlashAttribute("msg", "삭제가 완료 되었습니다.");	
 		 	}

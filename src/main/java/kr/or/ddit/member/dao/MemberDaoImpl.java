@@ -57,8 +57,8 @@ public class MemberDaoImpl implements IMemberDao{
 	}
 
 	@Override
-	public int delMember(String memId) {
-		return sqlSession.delete("member.delMember",memId);
+	public int updateMemberDel(MemberVo vo) {
+		return sqlSession.update("member.updateMemberDel",vo);
 	}
 
 	@Override

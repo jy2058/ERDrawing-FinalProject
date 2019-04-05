@@ -56,8 +56,8 @@ public class MemberServiceImpl implements IMemberService{
 	}
 
 	@Override
-	public int delMember(String memId) {
-		return memberDao.delMember(memId);
+	public int updateMemberDel(MemberVo vo) {
+		return memberDao.updateMemberDel(vo);
 	}
 
 	@Override
