@@ -36,7 +36,7 @@
 		
 ======================seperator==========================
 
-	<c:choose>
+						<c:choose>
 							<c:when test="${paging.pageNo eq 1}">
 								<li class="disabled"><a ria-label="Previous"> <span
 										aria-hidden="true">&laquo;</span>
