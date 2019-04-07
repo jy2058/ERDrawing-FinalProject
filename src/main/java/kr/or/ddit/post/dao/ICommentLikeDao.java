@@ -7,12 +7,11 @@ import kr.or.ddit.post.model.CommentLikeVo;
 public interface ICommentLikeDao {
 	
 	// 댓글 좋아요 특정 조회
-	List<CommentLikeVo> getSelectCmtLike(String memId);
+	List<CommentLikeVo> getSelectCmtLike(CommentLikeVo commentLikeVo);
 
 	// 댓글 좋아요 선택(생성)
 	int insertCmtLike(CommentLikeVo commentLikeVo);
 	
 	// 댓글 좋아요 취소(삭제)
 	int deleteCmtLike(CommentLikeVo commentLikeVo);
-
 }

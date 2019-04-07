@@ -10,6 +10,7 @@ public class CommentsVo {
 	private String cmtDelFlag;	//댓글삭제구분(T/F)
 	private int postNo;			//게시글번호
 	private String memId;		//댓글작성자아이디
+	private int cnt;			//좋아요 건수
 	
 	public CommentsVo(){
 		
@@ -76,6 +77,14 @@ public class CommentsVo {
 	public String toString() {
 		return "CommentsVo [cmtNo=" + cmtNo + ", cmtRegDt=" + cmtRegDt + ", cmtContent=" + cmtContent + ", cmtDelFlag="
 				+ cmtDelFlag + ", postNo=" + postNo + ", memId=" + memId + "]";
+	}
+
+	public int getCnt() {
+		return cnt;
+	}
+
+	public void setCnt(int cnt) {
+		this.cnt = cnt;
 	}
 	
 }

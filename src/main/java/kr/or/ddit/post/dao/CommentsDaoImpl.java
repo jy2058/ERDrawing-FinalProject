@@ -37,13 +37,6 @@ public class CommentsDaoImpl implements ICommentsDao {
 	}
 
 	@Override
-	public int updateComments(CommentsVo commentsVo) {
-		int updateCnt = sqlSessionTemplate.update("post.updateComments", commentsVo);
-		
-		return updateCnt;
-	}
-	
-	@Override
 	public int deleteComments(String cmtNo) {
 		int deleteCnt = sqlSessionTemplate.delete("post.deleteComments", cmtNo);
 		

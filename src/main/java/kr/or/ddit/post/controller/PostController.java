@@ -148,7 +148,7 @@ public class PostController {
 	public String postDetailForm(Model model, String postNo, String boardNo, CommentLikeVo commentLikeVo) {
 		model.addAttribute("postNo", postNo);
 		model.addAttribute("boardNo", boardNo);
-		logger.debug("============={}", commentLikeVo);
+		
 		// 업로드 파일 조회
 		List<UploadFileVo> fileList = uploadFileService.getAllFile(postNo);
 		model.addAttribute("fileList", fileList);
@@ -159,7 +159,7 @@ public class PostController {
 		
 		if(commentLikeVo.getMemId() != null){
 			// 댓글 좋아요 조회
-			List<CommentLikeVo> cmtLikeList = commentLikeService.getSelectCmtLike(commentLikeVo.getMemId());
+			List<CommentLikeVo> cmtLikeList = commentLikeService.getSelectCmtLike(commentLikeVo);
 			model.addAttribute("cmtLikeList", cmtLikeList);
 		}
 		
@@ -306,12 +306,16 @@ public class PostController {
 		CommentLikeVo commentLikeVo = new CommentLikeVo();
 		commentLikeVo.setCmtNo(cmtNo);
 		commentLikeVo.setMemId(memId);
+		
+		int cmtLikeCnt = 0;
 
-		int insertCnt = commentLikeService.insertCmtLike(commentLikeVo);
-
-		if (insertCnt > 0) {
-			model.addAttribute("msg", "좋아요?");
+		List<CommentLikeVo> cmtLikeLst =  commentLikeService.getSelectCmtLike(commentLikeVo);
+		if( cmtLikeLst.size() <= 0 ) {
+			cmtLikeCnt = commentLikeService.insertCmtLike(commentLikeVo);
+		} else {
+			cmtLikeCnt = commentLikeService.deleteCmtLike(commentLikeVo);
 		}
+		
 		ra.addAttribute("postNo", postNo);
 		return "redirect:/post/postDetail";
 		

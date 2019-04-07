@@ -19,8 +19,8 @@ public class CommentLikeServiceImpl implements ICommentLikeService {
 	}
 
 	@Override
-	public List<CommentLikeVo> getSelectCmtLike(String memId) {
-		List<CommentLikeVo> cmtLikeList = commentLikeDao.getSelectCmtLike(memId);
+	public List<CommentLikeVo> getSelectCmtLike(CommentLikeVo commentLikeVo) {
+		List<CommentLikeVo> cmtLikeList = commentLikeDao.getSelectCmtLike(commentLikeVo);
 		
 		return cmtLikeList;
 	}
@@ -38,5 +38,6 @@ public class CommentLikeServiceImpl implements ICommentLikeService {
 		
 		return deleteCnt;
 	}
+
 
 }
