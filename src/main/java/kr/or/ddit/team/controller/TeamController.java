@@ -184,9 +184,42 @@ public class TeamController {
 		return "jsonView";
 	}
 	
-	@RequestMapping(path="/teamModify", method=RequestMethod.POST)
-	public String teamModifyPost(TeamVo teamVo){
+	// 아직 테스트 안 돌림 / 복붙만 함
+	@RequestMapping(path = "/teamModify", method = RequestMethod.POST)
+	public String teamModifyPost(TeamVo teamVo, HttpServletRequest req,
+			@RequestPart("profileImg") MultipartFile multipartFile) throws Exception, IOException {
 		logger.debug("===teamVo : {}", teamVo);
+
+		logger.debug("===fileSize: {}", multipartFile.getSize());
+		logger.debug("===getOriginalFilename : {}", multipartFile.getOriginalFilename());
+
+		if (multipartFile.getSize() > 0) {
+			String[] split;
+			String fileName = "";
+			String ext = "";
+
+			split = multipartFile.getOriginalFilename().split("\\.");
+			fileName = split[0]; // 파일 이름
+			ext = split[1]; // 확장자
+
+			logger.debug("===fileName : {}, ext : {}", fileName, ext);
+
+			String path = req.getRealPath("image"); // image폴더 path
+
+			String filename = fileName + "_" + UUID.randomUUID().toString() + "." + ext;
+
+			// 불러온 파일 저장할 공간 생성
+			File profile = new File(path + "\\" + filename);
+			multipartFile.transferTo(profile);
+
+			teamVo.setTeamImg(path + "\\" + filename);
+			
+			//멤버도 가져와야 돼~
+			// 그리고 멤버 삭제도 ajax로 구현 해야 돼 / 음...굳이 안해도 되나? 어차피 여기로 올 때 리스트 뽑잖아. / 그럼 삭제된 애 판단 어떻게 해 ? 여기서 또 리스트 돌리면서 없는 애 찾아?
+			// 흠
+			
+		}
+
 		return "redirect:/team?teamNo=" + teamVo.getTeamNo();
 	}
 
