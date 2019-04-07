@@ -98,6 +98,13 @@ display: block;
 
 			});
 			
+			// team 수정 스크립트
+			$("#teamModify").on("click", function(){
+				page = "teamModify";
+				gogogo1(page);
+
+			});
+			
 			$("#message").on("click", function(){
 				page = "message";
 				gogogo1(page);

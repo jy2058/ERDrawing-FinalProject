@@ -156,6 +156,9 @@ public class TestController {
 			case "message":
 				page = "member/messagePaging";
 				break;
+			case "teamModify":
+				page = "erd/teamModify";
+				break;
 		}
 		
 		return page;

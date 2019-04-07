@@ -48,8 +48,8 @@ public class TeamController {
 		logger.debug("===getTeamIntro : {}", teamVo.getTeamIntro());
 		logger.debug("===teamMember : {}", teamMember);
 		
-		logger.debug("===getOriginalFilename : {}", multipartFile.getOriginalFilename());
 
+		logger.debug("===getOriginalFilename : {}", multipartFile.getOriginalFilename());
 		String[] split;
 		String fileName="";
 		String ext="";
@@ -171,6 +171,23 @@ public class TeamController {
 		teamService.delMember(teamListVo);
 		
 		return "jsonView";
+	}
+	
+	@RequestMapping(path="/teamModify", method=RequestMethod.GET)
+	public String teamModify(@RequestParam("teamNo")int teamNo, Model model){
+		TeamVo teamInfoVo = teamService.getTeamInfo(teamNo);
+		List<MemberVo> teamMemberList = teamService.getTeamMember(teamNo);
+		
+		model.addAttribute("teamInfoVo", teamInfoVo);
+		model.addAttribute("teamMemberList", teamMemberList);
+		
+		return "jsonView";
+	}
+	
+	@RequestMapping(path="/teamModify", method=RequestMethod.POST)
+	public String teamModifyPost(TeamVo teamVo){
+		logger.debug("===teamVo : {}", teamVo);
+		return "redirect:/team?teamNo=" + teamVo.getTeamNo();
 	}
 
 }

@@ -21,10 +21,11 @@
 	
 	<div class="my-bg">
 		<div class="container">
-			<div class="inner-container">
-				<a href="#" class="btn-style2">Edit Team</a>
-			</div>	
-				
+			<c:if test="${teamInfo.makerId eq loginId }">
+				<div class="inner-container">
+					<a class="btn-style2" id="teamModify">Edit Team</a>
+				</div>	
+			</c:if>	
 				
 			<div class="profile-info">
 				<div class="memberId">${teamInfo.teamNm }</div>
@@ -32,13 +33,10 @@
 			</div>
 		</div>
 	</div>
-		
-		
 	
 	
 	<div class="container">
 		<div class="member">
-		
 		
 			<div class="line-title">
 				<h2 class="page-title">TEAM</h2>
@@ -151,9 +149,6 @@
 								  		</div>
 							  
 							  	</li>
-							  	
-							  	
-							  	
 								</c:forEach>
 				
 						  	</ul>
@@ -191,10 +186,6 @@
 		});
 	});
 	
-	
-	
-	
-	
 	// 팀 멤버 삭제
 	$(".delBtn").on("click", function(e){
 		var memId = $(e.target).closest('li').data("memid");
@@ -219,5 +210,53 @@
 		});
 		
 	});
+	
+	$("#teamModify").on("click", function(){
+		var teamNo = ${teamInfo.teamNo};
+		teamModifyModal(teamNo);
+	});
+	// 수정에 필요한 정보 가져오는 ajax 메소드
+	 function teamModifyModal(teamNo) {
+		$.ajax({
+			url : "${cp}/team/teamModify",
+			type : "get",
+			data : {
+				teamNo : teamNo
+			},
+			success : function(data) {
+				//모달창에  해당 팀의 정보 넣어주기
+				insertInfoToModal(data);
+			}
+		});
+	}
+	 // 모달창에 정보 넣어주는 메소드
+	 function insertInfoToModal(data){
+		 var teamInfo = data.teamInfoVo;
+		 var teamMember = data.teamMemberList;
+		 
+		 $("#title").val(teamInfo.teamNm);
+		 $("#teamIntro").val(teamInfo.teamIntro);
+		 
+		 /* if(!teamInfo.teamImg){
+			$("#image").attr("src", '${cp}/image/no_img.jpg');
+		 } */
+		 //$("#image").attr("src", teamInfo.teamImg);
+		 
+		 $("#teamNo").val(teamInfo.teamNo);
+		 console.log(teamInfo.teamNo);
+		 
+		 var html = '';
+		 for(var i in teamMember){
+			 if(teamMember[i].memId != teamInfo.makerId){
+		        html += '<li class="teamMem">';
+		        html += '	<div><img src="'+ teamMember[i].memImg + '"></div>';
+		        html += '	<div>' + teamMember[i].memId + '</div>';
+		        html += '	<input id="delBtn" type="button" value="삭제">';
+		        html += '</li>';
+			 }
+		 }
+        $("#ul").append(html);  
+	 };
+	
 </script>
 
