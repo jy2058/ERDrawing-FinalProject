@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.erd.model.ErdVo;
+import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
 import kr.or.ddit.team.model.TeamListVo;
@@ -149,4 +150,14 @@ public interface ITeamService {
 	* Method 설명 : 팀 멤버 삭제
 	*/
 	int delMember(TeamListVo teamListVo);
+	
+	/**
+	* Method : getTeamMember
+	* 작성자 : kjy
+	* 변경이력 :
+	* @param teamNo
+	* @return
+	* Method 설명 : 팀 멤버 리스트
+	*/
+	List<MemberVo> getTeamMember(int teamNo);
 }

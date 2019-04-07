@@ -19,6 +19,16 @@
 
     <!-- Custom styles for this template -->
    <link href="${cp}/css/dashboard.css" rel="stylesheet">
+   
+   
+  
+   
+   
+   
+<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+   
+   
   </head>
 
   <body>
@@ -92,10 +102,10 @@
 								<td>${cmt.cmtNo}</td>
 								<td>${cmt.memId}</td>
 								<td>${cmt.cmtContent}</td>
-								<td>
+								<td> ( ${cmt.cnt} 건 ) 
 								<button type="button" id="likeBtn" class="btnLike btn-default" data-cmtnum="${cmt.cmtNo}">좋아요</button>
 								<c:if test="${SESSION_MEMBERVO.memId == cmt.memId}">
-										<button type="button" class="btnDel btn-default" data-cmtnum="${cmt.cmtNo}">삭제</button>
+										<button type="button" class="btnDel btn-default" data-cmtnum="${cmt.cmtNo}">댓글 삭제</button>
 											<%--  <c:choose>
 												<c:when test="${SESSION_MEMBERVO.memId ne null}">
 													<a href="javascript: like_func();"><img src="">좋아요</a>
@@ -128,6 +138,100 @@
 		</form>
         </div>
       </div>
+      
+<style>
+#layer_popup {display:none; border:5px solid #cccccc;margin:0;padding:5px;background-color:#ffffff;z-index:2000;}
+#layer_popup .b-close {position:absolute;top:10px;right:15px;color:#f37a20;font-weight:bold;cursor:hand;}
+#layer_popup .popupContent {margin:0;padding:0;text-align:center;border:0;width:800px;height:500px;}
+#layer_popup .popupContent iframe {border:0;padding:0px;margin:0;z-index:10;}
+</style>
+<input type="button" onclick="layer_open();" value="모달 띄우기">
+<!-- <input type="button" value="레이어팝업 열기" onclick="layer_open();"  style="cursor:pointer; background-color:#663333; color:#FFF;" /> -->
+<!-- 팝업 -->
+<div id="layer_popup" style="display:none; ">
+	<span>     
+	    <div class="b-close">X</div>
+	</span>
+	<div class="popupContent">
+		<div class="modal-header">
+			<label>| 회원정보 수정</label>
+		   
+		</div>
+		
+		<div class="modal-body">
+                           
+           <!-- 여기부터 언니가 하고 싶은것들 작성 -->
+           
+        
+           <div class="form-group">
+              <label class="modalLabel">회원 이름</label> 
+              <input type="text" id="memNm" name="memNm"> 
+               
+              <div id="dupleCode"></div>
+           </div>
+           
+            <div class="form-group">
+              <label class="modalLabel">회원 아이디</label> 
+              <input type="text" name="memId" id="memId" >    
+           </div>   
+    
+        <div class="pass form-group">
+              <label class="modalLabel"  >회원 비밀번호</label> 
+                 <input type="password" class="memPass" id="memPass"  oninput="checkPwd()" />
+           </div>
+           
+           </div>  
+           
+           <div class="modal-footer">
+                  <button type="button" id="insertBtn" class="btn btn-default" data-dismiss="modal">수정</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+               </div>
+	</div>
+</div>
+<!-- 팝업 -->      
+      <!-- dsjflskfjslkdf -->
+
+      <div class="modal modal-center fade" id="modalEvnTest123" tabindex="1" role="dialog" aria-labelledby="my80sizeCenterModalLabel" >
+      <div class="modal-dialog modal-80size modal-center" role="document" >
+         <div class="modal-content modal-80size">
+            <div class="modal-header">
+            <label>| 회원정보 수정</label>
+               <button type="button" class="close" data-dismiss="modal"aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            <div class="modal-body">
+                           
+               <!-- 여기부터 언니가 하고 싶은것들 작성 -->
+               
+            
+               <div class="form-group">
+                  <label class="modalLabel">회원 이름</label> 
+                  <input type="text" id="memNm" name="memNm"> 
+                   
+                  <div id="dupleCode"></div>
+               </div>
+               
+                <div class="form-group">
+                  <label class="modalLabel">회원 아이디</label> 
+                  <input type="text" name="memId" id="memId" >    
+               </div>   
+        
+            <div class="pass form-group">
+                  <label class="modalLabel"  >회원 비밀번호</label> 
+                     <input type="password" class="memPass" id="memPass"  oninput="checkPwd()" />
+               </div>
+               
+               </div>   
+               <div class="modal-footer">
+                  <button type="button" id="insertBtn" class="btn btn-default" data-dismiss="modal">수정</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+               </div>
+            </div>
+         </div>
+      </div>
+<!--       <input type="button" data-toggle="modal" data-target="#modalEvnTest" value="모달 띄우기"> -->
+      <!--dfdfdfdffd  -->
       
 <form id="listFrm" action="${cp}/post/postList" method="get">
 	<input type="hidden" name="boardNo" value="${postList.boardNo}" />
@@ -168,12 +272,33 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-	
+	 <script src="${cp}/js/popup/bpopup.js"></script>
+   	
+	<script>
+	function layer_open() { 
+	 $("#layer_popup").bPopup();
+	}
+	</script>  
 	<script type="text/javascript">
 	
 	
 		// 목록버튼 클릭이벤트
 		$(document).ready(function() {
+			
+		//버튼 눌렀을때 참고
+			 	$('#modalEvnTest').on('show.bs.modal', function (event) {
+			 		
+
+// 		         var button = $(event.relatedTarget);
+// 		         var deleteUrl = button.data('title');
+// 		         var modal = $(this);
+
+		         //alert("test");
+// 			 		$('#modalEvnTest123').bPopup();
+
+		         }); 
+			
+			
 			$("#listBtn").click(function() {
 				$("#listFrm").submit();
 			});
@@ -213,7 +338,6 @@
 			
 			//댓글좋아요버튼 클릭이벤트
 			$("#likeBtn").click(function() {
-				console.log("cmt click");
 				
 				//클릭한 cmtTr의 cmtNo값을 출력
 				var cmtNo = $(this).data("cmtnum");

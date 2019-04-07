@@ -16,8 +16,8 @@ public class CommentLikeImpl implements ICommentLikeDao{
 	private SqlSessionTemplate sqlSessionTemplate;
 
 	@Override
-	public List<CommentLikeVo> getSelectCmtLike(String memId) {
-		List<CommentLikeVo> cmtLikeList = sqlSessionTemplate.selectList("post.getSelectCmtLike", memId);
+	public List<CommentLikeVo> getSelectCmtLike(CommentLikeVo commentLikeVo) {
+		List<CommentLikeVo> cmtLikeList = sqlSessionTemplate.selectList("post.getSelectCmtLike", commentLikeVo);
 
 		return cmtLikeList;
 	}

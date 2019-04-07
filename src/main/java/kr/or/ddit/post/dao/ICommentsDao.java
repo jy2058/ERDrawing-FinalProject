@@ -15,9 +15,6 @@ public interface ICommentsDao {
 	// 댓글 생성
 	int insertComments(CommentsVo commentsVo);
 	
-	// 댓글 수정
-	int updateComments(CommentsVo commentsVo);
-
 	// 댓글 삭제
 	int deleteComments(String cmtNo);
 

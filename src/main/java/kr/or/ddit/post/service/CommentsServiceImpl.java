@@ -40,13 +40,6 @@ public class CommentsServiceImpl implements ICommentsService{
 	}
 
 	@Override
-	public int updateComments(CommentsVo commentsVo) {
-		int updateCnt = commentsDao.updateComments(commentsVo); 
-		
-		return updateCnt;
-	}
-
-	@Override
 	public int deleteComments(String cmtNo) {
 		int deleteCnt = commentsDao.deleteComments(cmtNo);
 		

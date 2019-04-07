@@ -180,5 +180,10 @@ public class TeamServiceImpl implements ITeamService{
 		return teamDao.delMember(teamListVo);
 	}
 
+	@Override
+	public List<MemberVo> getTeamMember(int teamNo) {
+		return teamDao.getTeamMember(teamNo);
+	}
+
 
 }
