@@ -56,7 +56,7 @@
 							 ${post.postTitle}
 							</c:when>
 							<c:otherwise>
-							삭제된 답글입니다.
+							<span style="color: red;">삭제된 답글입니다.</span>
 							</c:otherwise>								
 						</c:choose>
 					 
@@ -88,13 +88,13 @@
 				<c:when test="${boardNo == '1'}">
 					<c:if test="${SESSION_MEMBERVO.memAuth == 'T'}">
 						<input type = "hidden" name="boardNo" value="${boardNo}"> 
-			   			<button type="submit" class="btn btn-default">게시글 등록</button> 
+			   			<button type="submit" class="insertBtn btn-default">게시글 등록</button> 
 					</c:if>
 				</c:when>
 				
 				<c:otherwise>
 					<input type = "hidden" name="boardNo" value="${boardNo}"> 
-			   		<button type="submit" class="btn btn-default">게시글 등록</button>
+			   		<button type="submit" class="insertBtn btn-default">게시글 등록</button>
 				</c:otherwise>
 			</c:choose>
 			</form>
@@ -173,8 +173,17 @@
 				console.log("postGn" +  postGn);
 				// $("#frm").attr("action","/userAllList"); 속성값 수정하는 방법  
 				$("#frm").submit();
-
 			});
+			
+		      
+			/* //로그인한 아이디가 블랙리스트일때 글쓰기권한 없음
+			$(".insertBtn").click(function() {
+		      var blackMemId = "${SESSION_MEMBERVO.memBlackFlag == 'T'}";
+		    	
+		     	 if(blackMemId=='T'){
+		         alert("sdfsdfsdf")
+		         return;
+		      } */
 		});
 	</script>
 		

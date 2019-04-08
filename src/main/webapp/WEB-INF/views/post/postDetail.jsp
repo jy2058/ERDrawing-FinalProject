@@ -20,13 +20,9 @@
     <!-- Custom styles for this template -->
    <link href="${cp}/css/dashboard.css" rel="stylesheet">
    
-   
-  
-   
-   
-   
-<link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
+
+<!-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
+<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> -->
    
    
   </head>
@@ -44,6 +40,48 @@
 				<div class="col-sm-7">
 					<label class="control-label">${postList.postTitle}</label>
 				</div>
+				
+				
+<style>
+	#layer_popup {display:none; border:5px solid #cccccc;margin:0;padding:5px;background-color:#ffffff;z-index:2000;}
+	#layer_popup .b-close {position:absolute;top:10px;right:30px;color:#f37a20;font-weight:bold;cursor:hand;}
+	#layer_popup .popupContent {margin:0;padding:0;text-align:center;border:0;width:650px;height:200px;}
+	#layer_popup .popupContent iframe {border:0;padding:0px;margin:0;z-index:10;}
+</style>
+<input type="button" onclick="layer_open();" value="신고">
+<!-- <input type="button" value="레이어팝업 열기" onclick="layer_open();"  style="cursor:pointer; background-color:#663333; color:#FFF;" /> -->
+<!-- 팝업 -->
+<div id="layer_popup" style="display:none; ">
+	<span>     
+	    <div class="b-close">X</div>
+	</span>
+	<div class="popupContent">
+		<div class="modal-header">
+			<label>게시글 신고</label>
+		</div>
+		
+		<div class="modal-body">
+                           
+        <%--  <div class="form-group">
+              <label class="modalLabel">작성자</label> 
+              <input type="text" id="memNm" name="memNm" value="${postList.writerId}" readonly /> 
+              <div id="dupleCode"></div>
+           </div>  --%>
+           
+            <div class="form-group">
+              <label class="modalLabel">신고사유</label> 
+              <input type="text" id="reasonTxt" rows="10" cols="100" style="width: 500px; height: 30px;">    
+           </div>   
+        </div>  
+           
+           <div class="modal-footer">
+                  <button type="button" id="reportBtn" class="btn btn-default" data-dismiss="modal">신고</button>
+                  <button type="button" id="cancelBtn" class="btn btn-default" data-dismiss="modal">취소</button>
+           </div>
+	</div>
+</div>
+				
+		
 			</div>
 			
 			<div class="form-group">
@@ -105,7 +143,7 @@
 								<td> ( ${cmt.cnt} 건 ) 
 								<button type="button" id="likeBtn" class="btnLike btn-default" data-cmtnum="${cmt.cmtNo}">좋아요</button>
 								<c:if test="${SESSION_MEMBERVO.memId == cmt.memId}">
-										<button type="button" class="btnDel btn-default" data-cmtnum="${cmt.cmtNo}">댓글 삭제</button>
+										<button type="button" class="btnDel btn-default" data-cmtnum="${cmt.cmtNo}">삭제</button>
 											<%--  <c:choose>
 												<c:when test="${SESSION_MEMBERVO.memId ne null}">
 													<a href="javascript: like_func();"><img src="">좋아요</a>
@@ -138,126 +176,49 @@
 		</form>
         </div>
       </div>
-      
-<style>
-#layer_popup {display:none; border:5px solid #cccccc;margin:0;padding:5px;background-color:#ffffff;z-index:2000;}
-#layer_popup .b-close {position:absolute;top:10px;right:15px;color:#f37a20;font-weight:bold;cursor:hand;}
-#layer_popup .popupContent {margin:0;padding:0;text-align:center;border:0;width:800px;height:500px;}
-#layer_popup .popupContent iframe {border:0;padding:0px;margin:0;z-index:10;}
-</style>
-<input type="button" onclick="layer_open();" value="모달 띄우기">
-<!-- <input type="button" value="레이어팝업 열기" onclick="layer_open();"  style="cursor:pointer; background-color:#663333; color:#FFF;" /> -->
-<!-- 팝업 -->
-<div id="layer_popup" style="display:none; ">
-	<span>     
-	    <div class="b-close">X</div>
-	</span>
-	<div class="popupContent">
-		<div class="modal-header">
-			<label>| 회원정보 수정</label>
-		   
-		</div>
-		
-		<div class="modal-body">
-                           
-           <!-- 여기부터 언니가 하고 싶은것들 작성 -->
-           
-        
-           <div class="form-group">
-              <label class="modalLabel">회원 이름</label> 
-              <input type="text" id="memNm" name="memNm"> 
-               
-              <div id="dupleCode"></div>
-           </div>
-           
-            <div class="form-group">
-              <label class="modalLabel">회원 아이디</label> 
-              <input type="text" name="memId" id="memId" >    
-           </div>   
-    
-        <div class="pass form-group">
-              <label class="modalLabel"  >회원 비밀번호</label> 
-                 <input type="password" class="memPass" id="memPass"  oninput="checkPwd()" />
-           </div>
-           
-           </div>  
-           
-           <div class="modal-footer">
-                  <button type="button" id="insertBtn" class="btn btn-default" data-dismiss="modal">수정</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-               </div>
-	</div>
-</div>
-<!-- 팝업 -->      
-      <!-- dsjflskfjslkdf -->
-
-      <div class="modal modal-center fade" id="modalEvnTest123" tabindex="1" role="dialog" aria-labelledby="my80sizeCenterModalLabel" >
-      <div class="modal-dialog modal-80size modal-center" role="document" >
-         <div class="modal-content modal-80size">
-            <div class="modal-header">
-            <label>| 회원정보 수정</label>
-               <button type="button" class="close" data-dismiss="modal"aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-               </button>
-            </div>
-            <div class="modal-body">
-                           
-               <!-- 여기부터 언니가 하고 싶은것들 작성 -->
-               
-            
-               <div class="form-group">
-                  <label class="modalLabel">회원 이름</label> 
-                  <input type="text" id="memNm" name="memNm"> 
-                   
-                  <div id="dupleCode"></div>
-               </div>
-               
-                <div class="form-group">
-                  <label class="modalLabel">회원 아이디</label> 
-                  <input type="text" name="memId" id="memId" >    
-               </div>   
-        
-            <div class="pass form-group">
-                  <label class="modalLabel"  >회원 비밀번호</label> 
-                     <input type="password" class="memPass" id="memPass"  oninput="checkPwd()" />
-               </div>
-               
-               </div>   
-               <div class="modal-footer">
-                  <button type="button" id="insertBtn" class="btn btn-default" data-dismiss="modal">수정</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-               </div>
-            </div>
-         </div>
-      </div>
-<!--       <input type="button" data-toggle="modal" data-target="#modalEvnTest" value="모달 띄우기"> -->
-      <!--dfdfdfdffd  -->
-      
+         
+<!-- 목록 -->
 <form id="listFrm" action="${cp}/post/postList" method="get">
 	<input type="hidden" name="boardNo" value="${postList.boardNo}" />
 </form>
 
+<!-- 게시글 수정 -->
 <form id="updFrm" action="${cp}/post/postUpdate" method="get">
 	<input type="hidden" name="postNo" value="${postList.postNo}" />
 </form>	
 
+<!-- 게시글 삭제 -->
 <form id="delFrm" action="${cp}/post/postDel" method="get">
 	<input type="hidden" name="boardNo" value="${postList.boardNo}" />
 	<input type="hidden" name="postNo" value="${postList.postNo}" />
-</form>	
+</form>
 
+<!-- 신고 확인 -->
+<form id="reportFrm" action="${cp}/post/postReport" method="get">
+	<input type="hidden" name="postNo" value="${postList.postNo}" />
+	<input type="hidden" name="fromMemId" value="${SESSION_MEMBERVO.memId}" />
+	<input type="hidden" name="toMemId" value="${postList.writerId}" />
+	<input type="hidden" id="reason" name="reason" />
+</form>
+
+<!-- 신고 취소 -->
+<form id="cancelFrm" action="${cp}/post/postDetail" method="get">
+	<input type="hidden" name="postNo" value="${postList.postNo}" />
+</form>
+
+<!-- 댓글 등록 -->
 <form id="cmtFrm" action="${cp}/post/insertCmt" method="get">
 	<input type="hidden" id="cmtContent" name="cmtContent"/>
 	<input type="hidden" name="postNo" value="${postList.postNo}" />
 	<input type="hidden" name="memId" value="${SESSION_MEMBERVO.memId}" />
 </form>
 
+<!-- 댓글 삭제 -->
 <form id="cmtDelFrm" action="${cp}/post/deleteCmt" method="get">
 	<input type="hidden" name="postNo" value="${postList.postNo}" />
 	<input type="hidden" name="cmtNo" id="cmtNoDel" />
 </form>
 
-<!-- 해야됨 -->
 <!-- 댓글 좋아요 -->
 <form id="cmtLikeFrm" action="${cp}/post/likeCmt" method="post">
 	<input type="hidden" name="postNo" value="${postNo}" />
@@ -265,6 +226,7 @@
 	<input type="hidden" name="memId" value="${SESSION_MEMBERVO.memId}" />
 </form> 
 
+<!-- 답글 -->
 <form id="replyFrm" action="${cp}/post/postReply" method="get" class="form-horizontal" role="form">
 	<input type="hidden" id="postNo" name="postNo" value="${postNo}" />
 	<input type="hidden" id="boardNo" name="boardNo" value="${boardNo}" />
@@ -272,7 +234,7 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
-	 <script src="${cp}/js/popup/bpopup.js"></script>
+	<script src="${cp}/js/popup/bpopup.js"></script>
    	
 	<script>
 	function layer_open() { 
@@ -281,12 +243,10 @@
 	</script>  
 	<script type="text/javascript">
 	
-	
-		// 목록버튼 클릭이벤트
 		$(document).ready(function() {
 			
 		//버튼 눌렀을때 참고
-			 	$('#modalEvnTest').on('show.bs.modal', function (event) {
+		 	$('#modalEvnTest').on('show.bs.modal', function (event) {
 			 		
 
 // 		         var button = $(event.relatedTarget);
@@ -296,9 +256,9 @@
 		         //alert("test");
 // 			 		$('#modalEvnTest123').bPopup();
 
-		         }); 
+	         }); 
 			
-			
+			// 목록버튼 클릭이벤트
 			$("#listBtn").click(function() {
 				$("#listFrm").submit();
 			});
@@ -312,6 +272,19 @@
 			$("#delBtn").click(function() {
 				alert("게시글을 삭제 하시겠습니까?");
 				$("#delFrm").submit();
+			});
+			
+			//신고확인버튼 클릭이벤트
+			$("#reportBtn").click(function() {
+				var reportReason = $("#reasonTxt").val();
+				alert("해당 게시글을 신고하시겠습니까?");
+				$("#reason").val(reportReason);
+				$("#reportFrm").submit();
+			});
+			
+			//신고취소버튼 클릭이벤트
+			$("#cancelBtn").click(function() {
+				$("#cancelFrm").submit();
 			});
 			
 			//답글버튼 클릭이벤트

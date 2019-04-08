@@ -18,6 +18,7 @@
 	
 	<typeAlias alias="boardVo" type="kr.or.ddit.post.model.BoardVo"/>
 	<typeAlias alias="postVo" type="kr.or.ddit.post.model.PostVo"/>
+	<typeAlias alias="reportVo" type="kr.or.ddit.post.model.ReportVo"/>
 	<typeAlias alias="uploadFileVo" type="kr.or.ddit.post.model.UploadFileVo"/>
 	<typeAlias alias="commentsVo" type="kr.or.ddit.post.model.CommentsVo"/>
 	<typeAlias alias="commentLikeVo" type="kr.or.ddit.post.model.CommentLikeVo"/>

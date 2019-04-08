@@ -29,11 +29,13 @@ import kr.or.ddit.post.model.BoardVo;
 import kr.or.ddit.post.model.CommentLikeVo;
 import kr.or.ddit.post.model.CommentsVo;
 import kr.or.ddit.post.model.PostVo;
+import kr.or.ddit.post.model.ReportVo;
 import kr.or.ddit.post.model.UploadFileVo;
 import kr.or.ddit.post.service.IBoardService;
 import kr.or.ddit.post.service.ICommentLikeService;
 import kr.or.ddit.post.service.ICommentsService;
 import kr.or.ddit.post.service.IPostService;
+import kr.or.ddit.post.service.IReportService;
 import kr.or.ddit.post.service.IUploadFileService;
 import kr.or.ddit.post.service.UploadFileServiceImpl;
 import kr.or.ddit.util.model.PageVo;
@@ -49,6 +51,9 @@ public class PostController {
 	
 	@Resource(name="postService")
 	private IPostService postService;
+	
+	@Resource(name="reportService")
+	private IReportService reportService;
 	
 	@Resource(name="uploadFileService")
 	private IUploadFileService uploadFileService;
@@ -84,7 +89,6 @@ public class PostController {
 	// 게시글 등록 화면
 	@RequestMapping(path = "/postInsert", method = RequestMethod.GET)
 	public String postInsertForm(HttpSession session, Model model, String boardNo) {
-
 		model.addAttribute("boardNo", boardNo);
 
 		return "postInsert";
@@ -265,6 +269,27 @@ public class PostController {
 		return "redirect:/post/postList";
 	}
 	
+	// 게시글 신고
+	@RequestMapping(path = "/postReport", method = RequestMethod.GET)
+	public String postReport(Model model, RedirectAttributes ra, String postNo, String fromMemId, String toMemId, String reason) {
+		model.addAttribute("postNo", postNo);
+		
+		ReportVo reportVo = new ReportVo(); 
+		reportVo.setFromMemId(fromMemId);
+		reportVo.setToMemId(toMemId);
+		reportVo.setReportReason(reason);
+		
+		int insertCnt = reportService.insertReport(reportVo);
+
+		if (insertCnt > 0) {
+			model.addAttribute("msg", "해당 게시글이 신고되었습니다.");
+		}
+		
+		ra.addAttribute("postNo", postNo);
+		return "redirect:/post/postDetail";
+	}
+	
+	
 	// 댓글 등록
 	@RequestMapping(path = "/insertCmt", method = RequestMethod.GET)
 	public String insertCmt(CommentsVo commentsVo, Model model, String memId, String postNo) {
@@ -318,7 +343,6 @@ public class PostController {
 		
 		ra.addAttribute("postNo", postNo);
 		return "redirect:/post/postDetail";
-		
 	}
 	
 	// 첨부파일 다운로드
