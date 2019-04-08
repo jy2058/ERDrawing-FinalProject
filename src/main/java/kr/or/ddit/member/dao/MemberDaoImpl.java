@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.post.model.ReportVo;
 import kr.or.ddit.util.model.PageVo;
 
 @Repository("memberDao")
@@ -64,6 +65,11 @@ public class MemberDaoImpl implements IMemberDao{
 	@Override
 	public int updateMemberInfo(MemberVo vo) {
 		return sqlSession.update("member.updateMemberInfo",vo);
+	}
+
+	@Override
+	public List<ReportVo> selectReport(String tomemid) {
+		return sqlSession.selectList("post.selectReport",tomemid);
 	}	
 
 }

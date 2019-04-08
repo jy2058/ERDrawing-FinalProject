@@ -40,7 +40,12 @@
 						<li><a href="${cp }/join">회원가입</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="${cp }/mypage"><img alt="" src="${SESSION_MEMBERVO.memImg}" width="35" height="30"> </a></li>
+						<li><a href="${cp }/mypage">
+					<img alt="" src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }" width="35" height="30"> 
+							
+						
+						
+						</a></li>
 <%-- 						<li><a href="${cp }/message/messageView">메세지</a></li> --%>
 						<li><a id="message">메세지</a></li>
 						<li><a id="logout" href="#" hidden="">로그아웃</a></li>

@@ -31,7 +31,7 @@
                <div class="form-group">
                   <label class="modalLabel" >회원 이미지</label> 
                   
-				  <img alt="" src="" name="memImg" id="memImg" width="100px" height="100px">
+				  <img alt="" src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }" name="memImg" id="memImg" width="100px" height="100px">
                </div>
             
             
@@ -47,12 +47,15 @@
                   <label class="modalLabel">회원 아이디</label> 
                   <input type="text" name="memId" id="memId" >    
                </div>   
+  		
+  			 <div class="pass form-group">
+                  <label class="modalLabel"  >회원 비밀번호</label> 
+                  	<input	type="password" class="memPass" id="memPass"  oninput="checkPwd()" />
+               </div>
                
-               <div class="form-group">
-                  <label class="modalLabel" >회원 비밀번호</label> 
-                  <input  type="password" name="inputMemPass" id="inputMemPass" > 
-                  <input  type="hidden" name="memPass" id="memPass" > 
-                 <!--  <input type="button" data-toggle="modal" data-target="#my80sizeModal2" value="검색" > -->
+                 <div class="pass form-group">
+                  <label class="modalLabel" >회원 비밀번호 확인</label> 
+		 			<input	type="password" class="memPass" id="reMemPass" name="memPass" oninput="checkPwd()" />
                </div>
                
                 <div class="form-group">
@@ -84,7 +87,7 @@
                   <label class="modalLabel" style="width: 30px"> </label> 
                   
                   <label class="modalLabel" style="width: 30px">탈퇴 여부</label> 
-                  <input type="checkbox" name="chMemCancelFlag" id=""chMemCancelFlag"" data-toggle="toggle"  data-on="O" data-off="X"/>
+                  <input type="checkbox" name="chMemCancelFlag" id="chMemCancelFlag" data-toggle="toggle"  data-on="O" data-off="X"/>
                   <input type="hidden" name="memCancelFlag" id="memCancelFlag"/>
 		  
                </div>
@@ -102,6 +105,57 @@
             </div>
          </div>
       </div>
+       
+ </form>     
+ 
+  <!-- ------------------------신고사유 모달창-------------------- -->
+   <form id="modalReportFrm" action="${cp }/member/memReportList" method="post">
+   <div class="modal modal-center fade" id="modalReEvn" tabindex="1" role="dialog" aria-labelledby="my80sizeCenterModalLabel" >
+      <div class="modal-dialog modal-80size modal-center" role="document" >
+         <div class="modal-content modal-80size">
+            <div class="modal-header">
+            <label>| 회원정보 수정</label>
+               <button type="button" class="close" data-dismiss="modal"aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            
+            <div class="modal-body">
+                       
+               <!-- 여기부터 로직작성 -->    
+               <div class="form-group">
+                  <label class="modalLabel" >신고 내역</label> 
+				  <table>
+				 	 <thead>
+				  		<tr>
+					  		<th>신고한 회원</th>
+					  		<th>신고 사유</th>
+					  		<th>신고 당한 날짜</th>
+					    </tr>
+				  	</thead>
+				  	<tbody id="modalTd">
+				  		
+				  	</tbody>
+				  </table>
+				  
+               </div>
+            
+               <div class="form-group">
+                  <label class="modalLabel">신고당한 횟수</label> 
+                  <input type="text" id="cnt" name="cnt"> 
+                   
+                  <div id="dupleCode"></div>
+               </div>
+               
+               </div>   
+               <div class="modal-footer">
+                  <button type="button" id="insertBtn" class="btn btn-default" data-dismiss="modal">확인</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+               </div>
+            </div>
+         </div>
+      </div>
+       
  </form>     
 
 <!----------------------------- 회원정보 테이블 -------------------------->
@@ -114,9 +168,10 @@
 					<th>Name</th>
 					<th>Id</th>
 					<th>Date Created</th>
-					<th>Auth</th>
+					<th>Black List</th>
 
-					<th>Status</th>
+					<!-- <th>Status</th> -->
+					<th>Secession</th>
 					<th>Action</th>
 					<th></th>
 				</tr>
@@ -163,19 +218,64 @@
 		$("#insertBtn").on("click", function() {
 			if (confirm("수정 하시겠습니까??") == true) {
 				
+				
+				if($("#memNm").val().trim()==""){
+					//$("#memId").val().trim()
+					alert("이름을 입력해 주세요");
+					$("#memNm").focus();
+					return false;
+				}
+				
+				if($("#memId").val().trim()==""){
+					//$("#memId").val().trim()
+					alert("아이디를 입력해 주세요");
+					$("#memId").focus();
+					return false;
+				}
+				
+				if($("#memMail").val().trim()==""  ){
+					//$("#memId").val().trim()
+					
+					alert("이메일을 입력해 주세요");
+					$("#memMail").focus();
+					return false;
+				}
+				
+				var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+				if($("#memMail").val().trim()==""  || exptext.test($("#memMail").val())==false){
+					//$("#memId").val().trim()
+					alert(" 메일형식이 올바르지 않습니다");
+					$("#memMail").focus();
+					return false;
+				}
+			
+				if($("#memTel").val().trim()==""){
+					//$("#memId").val().trim()
+					alert("핸드폰 번호를 입력해 주세요");
+					$("#memTel").focus();
+					return false;
+				}
+				
+				
+				if(!/^[a-zA-Z0-9!@#$%^&*()?_~]{6,15}$/.test($("#reMemPass").val()))
+				 { 
+				  alert("비밀번호는 숫자, 영문, 특수문자 조합으로 6~15자리를 사용해야 합니다."); 
+				  return false;
+				 }
+				
+				
+				
 				if($("#chMemBlackFlag").is(':checked')){
 					$("#memBlackFlag").val("T");
 				}else{
 					$("#memBlackFlag").val("F");
 				}
-				console.log($("#memBlackFlag").val());
 					
 				if($("#chMemCancelFlag").is(':checked')){
 					$("#memCancelFlag").val("T");					
 				}else{
 					$("#memCancelFlag").val("F");
 				}
-				console.log($("#memCancelFlag").val());
 					
 				$("#modalFrm").submit();
 			} else { //취소
@@ -189,14 +289,12 @@
 			getMemberModifyModal(memId);
 		});
 		
-		$('#modalEvn').on('show.bs.modal', function (event) {
-			var button = $(event.relatedTarget);
-			var deleteUrl = button.data('title');
-			var modal = $(this);
-			
-			alert(memId);
+		//신고사유 클릭시
+		$("#memListTbody").on('click', "#liReport", function() {
+			memId = $(this).data("memid");
+			getMemberReportList(memId);
+		});
 		
-			});
 	});
 
 	//삭제후 Ajax처리
@@ -242,7 +340,6 @@
 					console.log(data.memVo);
 					//모달창에  해당 회원의 값 넣어주기
 					modalResult(data);
-					
 				}
 			});
 		}
@@ -255,22 +352,18 @@
 		var cancel = data.memVo.memCancelFlag;
 		
 		//이미지
-		if (src == "" || src == null) {
-			$("#memImg").attr("src", "../image/noImg.png");
-		} else {
-			$("#memImg").attr("src", src);
-		}
+		$("#memImg").attr("src", "${cp }/member/memberImg?memId="+data.memVo.memId);
+	
 		
 		//구글 카카오는 비밀번호 변경불가 
-		if (data.memVo.memEmailDiv == "basic") {
-			$("#inputMemPass").val(data.memVo.memPass);
-			$("#memPass").val($("#inputMemPass").val());
-		} else {
-			$("#memPass").val(data.memVo.memPass);
-			$("#inputMemPass").remove();
-			$("#inputMemPass").remove();
+		if (data.memVo.memEmailDiv != "basic") {
+			$("#memPass").attr("disabled", true);
+			$("#reMemPass").attr("disabled", true);
+		}else{
+			$("#memPass").attr("disabled", false);
+			$("#reMemPass").attr("disabled", false);
 		}
-		
+
 		if(black=='T'){
 			$("input[name=chMemBlackFlag]").prop("checked", true).change();
 		}else{
@@ -294,6 +387,53 @@
 		$("#memPeriods").val(data.memVo.memPeriod);
 
 	}
+	
+	var pwdCheck=0;
+	function checkPwd() {
+		var inputed = $(".memPass").val();
+        var reinputed = $("#reMemPass").val();
+		console.log(inputed);
+		
+	     if(reinputed=="" && (inputed != reinputed || inputed == reinputed)){
+	            $("#reMemPass").css("background-color", "#FFCECE");
+	        }
+	        else if (inputed == reinputed) {
+	            $("#reMemPass").css("background-color", "#B0F6AC");
+	            pwdCheck = 1;
+	        } else if (inputed != reinputed) {
+	            pwdCheck = 0;
+	            $("#reMemPass").css("background-color", "#FFCECE");
+	            
+	        }
+
+	}
+	
+	var appends = 0;
+	function getMemberReportList(memId) {
+		$.ajax({
+				url : "${cp}/member/memRepotList",
+				data : {
+					memId : memId
+				},
+				success : function(data) {
+					console.log(data.reportList);
+					console.log(data.inDate);
+					var str ="";
+					for(var i=0; i<data.reportList.length; i++){
+						str += "<tr><td>"+data.reportList[i].fromMemId+"</td>"	+
+						"<td>"+data.reportList[i].reportReason+"</td>	"+
+						"<td>"+data.inDate[i]+"</td></tr>"
+					}
+					
+					if(appends==0)
+					$("#modalTd").append(str);
+					
+					appends++;
+					
+					$("#cnt").val(data.reportList[0].cnt);
+				}
+			});
+		}
 </script>
 
 

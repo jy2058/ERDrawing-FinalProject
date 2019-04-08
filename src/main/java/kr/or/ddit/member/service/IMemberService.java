@@ -3,6 +3,7 @@ package kr.or.ddit.member.service;
 import java.util.List;
 
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.post.model.ReportVo;
 import kr.or.ddit.util.model.PageVo;
 
 public interface IMemberService {
@@ -67,10 +68,20 @@ public interface IMemberService {
 	 */
 	List<MemberVo> getMemId(MemberVo vo);
 
+	/**
+	 * Method : selectMemPagingList
+	 * 작성자 : PC02
+	 * 변경이력 :
+	 * @param vo
+	 * @return
+	 * Method 설명 : 페ㄹ이징 처리
+	 */
 	List<MemberVo> selectMemPagingList(PageVo vo);
 	
 	int updateMemberDel(MemberVo vo);
 	
 	int updateMemberInfo(MemberVo vo);
+	
+	List<ReportVo> selectReport(String tomemid);
 	
 }

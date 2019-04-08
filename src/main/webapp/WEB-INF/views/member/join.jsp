@@ -77,6 +77,7 @@ margin: 0 0 0 0;
 var checkId=0;
 var checkInput=0;
 var checkEmail=0;
+var pwdCheck=0;
 
 	$(document).ready(function() {
 		//회원가입 버튼 클릭시
@@ -156,6 +157,12 @@ var checkEmail=0;
 				alert("이메일 인증을 해주세요");
 				return;
 			}
+			if(pwdCheck==0){
+				alert("비밀번호가 일치하지않습니다.");
+				return;
+			}
+			
+			
 			
 			if(checkId==0){
 				alert("중복체크를 먼저 해주세요")
@@ -246,7 +253,6 @@ var checkEmail=0;
 		});
 		});
 	});
-	var pwdCheck=0;
 	function checkPwd() {
 		var inputed = $(".memPass").val();
         var reinputed = $("#reMemPass").val();

@@ -3,6 +3,7 @@ package kr.or.ddit.member.dao;
 import java.util.List;
 
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.post.model.ReportVo;
 import kr.or.ddit.util.model.PageVo;
 
 public interface IMemberDao {
@@ -105,4 +106,14 @@ public interface IMemberDao {
 	 * Method 설명 : 회원정보수정
 	 */
 	int updateMemberInfo(MemberVo vo);
+	
+	/**
+	 * Method : selectReport
+	 * 작성자 : PC02
+	 * 변경이력 :
+	 * @param tomemid
+	 * @return
+	 * Method 설명 :신고사유 조회
+	 */
+	List<ReportVo> selectReport(String tomemid);
 }

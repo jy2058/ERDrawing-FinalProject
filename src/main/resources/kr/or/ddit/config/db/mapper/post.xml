@@ -83,7 +83,9 @@
 		set postDelFlag = 'F'
 		where postNo = #{postNo}
 	</delete>
+	
 
+	
 	<!-- 답글 생성 -->
 	<insert parameterType="postVo" id="insertReply">
 		<selectKey resultType="int" order="BEFORE" keyProperty="postNo">
@@ -157,7 +159,6 @@
 		delete from comments
 		where cmtNo = #{cmtNo}
 	</delete>
-
    
 	<!-- 댓글 좋아요 특정 조회 -->
 	<select id="getSelectCmtLike" resultType="commentLikeVo" parameterType="commentLikeVo">
@@ -178,6 +179,20 @@
 		delete from comment_like
 		where cmtNo = #{cmtNo} and memId = #{memId}
 	</delete>
-    
+	
+	
+	<!-- 게시글 신고 -->
+	<insert parameterType="reportVo" id="insertReport">
+		insert into report (fromMemId, toMemId, reportReason, reportDt)
+		values (#{fromMemId}, #{toMemId}, #{reportReason}, sysdate)
+	</insert>
+	
+	<!-- 신고사유 조회 -->
+    <select id="selectReport" parameterType="String" resultType="reportVo">
+    select a.* ,
+       (select count(*) from report where tomemid =a.tomemid) as cnt
+	 from report a
+	 where tomemid =#{tomemid}
+    </select>
 </mapper>
 
