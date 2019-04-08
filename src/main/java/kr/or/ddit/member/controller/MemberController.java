@@ -22,6 +22,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.api.mail.IMailService;
@@ -287,10 +288,20 @@ public class MemberController {
 	}
 
 	@RequestMapping("/memberModify")
-	public String memberModify(HttpSession session, Model model, MemberVo memVo, HttpServletRequest req) {
+	public String memberModify(MultipartFile profileImg,HttpSession session, Model model, MemberVo memVo, HttpServletRequest req) throws IllegalStateException, IOException {
 		logger.debug("====ssss{}", memVo);
+		logger.debug("====ssss{}", profileImg);
 
 		MemberVo vo = memberService.selectMember(memVo.getMemId());
+		
+		String realFilename=vo.getMemImg(); 
+		if(profileImg.getSize()>0){
+			String filename = profileImg.getOriginalFilename();
+			realFilename = "d:\\picture\\" + UUID.randomUUID()+filename;
+			
+			profileImg.transferTo(new File(realFilename));
+		}
+		vo.setMemImg(realFilename);
 		vo.setMemNm(memVo.getMemNm());
 		vo.setMemPass(KISA_SHA256.encrypt(memVo.getMemPass()));
 		vo.setMemMail(memVo.getMemMail());
@@ -318,3 +329,5 @@ public class MemberController {
 		return "redirect:" + req.getContextPath() + "/";
 	}
 }
+
+

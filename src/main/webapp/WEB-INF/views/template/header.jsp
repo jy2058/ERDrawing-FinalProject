@@ -41,14 +41,8 @@
 					</c:when>
 					<c:otherwise>
 						<li><a href="${cp }/mypage">
-						<c:choose>
-							<c:when test="${SESSION_MEMBERVO.memImg != null}">
-								<img alt="" src="${SESSION_MEMBERVO.memImg}" width="35" height="30"> 
-							</c:when>
-							<c:otherwise>
-								<img alt="" src="../image/noImg.png" width="35" height="30">
-							</c:otherwise>
-						</c:choose>
+					<img alt="" src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }" width="35" height="30"> 
+							
 						
 						
 						</a></li>
