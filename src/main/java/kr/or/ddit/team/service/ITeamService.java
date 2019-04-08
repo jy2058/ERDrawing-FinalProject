@@ -160,4 +160,16 @@ public interface ITeamService {
 	* Method 설명 : 팀 멤버 리스트
 	*/
 	List<MemberVo> getTeamMember(int teamNo);
+	
+	/**
+	* Method : teamMofify
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param teamVo
+	* @param addMember
+	* @param delMember
+	* @return
+	* Method 설명 : 팀 수정
+	*/
+	int teamMofify(TeamVo teamVo, List<String> addMember, List<String> delMember);
 }

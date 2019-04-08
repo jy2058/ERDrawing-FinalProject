@@ -89,4 +89,9 @@ public class TeamDaoImpl implements ITeamDao{
 		return sqlSession.update("team.updateAgreeFlag", teamListVo);
 	}
 
+	@Override
+	public int teamModify(TeamVo teamVo) {
+		return sqlSession.update("team.teamModify", teamVo);
+	}
+
 }

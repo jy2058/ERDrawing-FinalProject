@@ -3,7 +3,7 @@
 
 
 		<h1 class="erd-add h1">Modify team</h1>
-		<form action="/team/teamModify" id=teamModifyFrm method="post" enctype="multipart/form-data">
+		<form action="/team/teamModify" id="teamModifyFrm" method="post" enctype="multipart/form-data">
 			<div class="input-box">
 				<label>팀이름</label>
 				<input type="text" id="title" name="teamNm" placeholder="팀이름">
@@ -18,7 +18,9 @@
 				</ul>
 			</div>
 			
-			<input type="hidden" name="teamMember" id="teamMember" value="">
+			<input type="hidden" name="addMember" id="addMember" value="">
+			<input type="hidden" name="delMember" id="delMember" value="">
+			<input type="hidden" name="makerId" id="makerId" value="">
 
 			<div class="input-box">
 				<label>팀설명</label>
@@ -37,7 +39,9 @@
 		<div class="btn-style1" id="teamModifyBtn">업데이트</div>
 		
 <script>
-var list = new Array();
+var addList = new Array();
+var delList = new Array();
+
 $( "#autocomplete" ).autocomplete({
     source : function( request, response ) {
          $.ajax({
@@ -69,7 +73,7 @@ $( "#autocomplete" ).autocomplete({
         console.log("ui.label : " + ui.item.label + " ui.value : " + ui.item.value);
         
         var html = '';
-        html += '<li class="teamMem">';
+        html += '<li class="teamMem addNew" value="' + ui.item.value + '">';
         html += '	<div><img src="'+ ui.item.data + '"></div>';
         html += '	<div>' + ui.item.value + '</div>';
         html += '	<input id="delBtn" type="button" value="삭제">';
@@ -78,13 +82,9 @@ $( "#autocomplete" ).autocomplete({
         $("#ul").append(html); 
         $("#autocomplete").val('');
         
-        list.push(ui.item.value);
-        $("#teamMember").val(list);
-        
-        console.log(list);
+        addList.push(ui.item.value);
         
         return false;	// text clear
-        
         }
 });
 
@@ -92,11 +92,25 @@ $( "#autocomplete" ).autocomplete({
 
 //추가된 회원 삭제
 $(document).on("click","#delBtn", function(e){
-	$(e.target).parent('li').remove();	
+	$(e.target).parent('li').remove();
+	
+	var targetId = $(e.target).parent('li').attr('value');
+	
+	// 이미 팀에 속해있는 멤버 중 삭제할 멤버                 	
+	if($(e.target).parent('li').is('.dbLoad')){
+		delList.push(targetId);
+	}
+	// 새로 추가한 멤버 중 삭제한 멤버 리스트에서 꺼내기
+	else if($(e.target).parent('li').is('.addNew')){
+		addList = jQuery.grep(addList, function(value){
+			return value != targetId;
+		});
+	}
 });
 
-
 $("#teamModifyBtn").on("click", function(){
+    $("#addMember").val(addList);
+    $("#delMember").val(delList);
 	$("#teamModifyFrm").submit();
 });
 

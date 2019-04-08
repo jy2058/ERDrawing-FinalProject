@@ -66,8 +66,8 @@
 				<div style="background:#232323; color:#fff; height:100px; line-height:100px; padding-left:20px; font-size:20px; font-weight:600;">
 					<ul style=" min-height:72px; line-height: 1.5">
 						<c:forEach var="teamMemberGet" items="${teamMember }" varStatus="status">
-							<li data-memid="${teamMemberGet.memId }" data-teamno="${teamList[status.index].teamNo }"> <!-- ajax를 위한 커스텀 데이터 생성 -->
-								<a>
+							<li data-memid="${teamMemberGet.memId }" data-teamno="${teamList[status.index].teamNo }" data-teamnm="${teamInfo.teamNm }" data-makerid="${teamInfo.makerId }"> <!-- ajax를 위한 커스텀 데이터 생성 -->
+								<a class="selectMem" href="">
 									<div>
 										<img alt="" src="/member/memberImg?memId=${teamMemberGet.memId }">
 									</div>
@@ -190,6 +190,8 @@
 	$(".delBtn").on("click", function(e){
 		var memId = $(e.target).closest('li').data("memid");
 		var teamNo = $(e.target).closest('li').data("teamno");		
+		var teamNm = $(e.target).closest('li').data("teamnm");		
+		var makerId = $(e.target).closest('li').data("makerid");		
 		
 		var result = confirm("삭제하시겠습니까?");
 		if(!result){
@@ -200,7 +202,9 @@
 			type : "get",
 			url : "${cp}/team/delMember",
 			data : {teamNo : teamNo,
-					memId : memId },
+					memId : memId, 
+					teamNm : teamNm,
+					makerId : makerId},
 			success : function(data){
 				$(e.target).closest('li').remove();
 			},
@@ -211,6 +215,7 @@
 		
 	});
 	
+	// 팀 수정
 	$("#teamModify").on("click", function(){
 		var teamNo = ${teamInfo.teamNo};
 		teamModifyModal(teamNo);
@@ -236,11 +241,12 @@
 		 
 		 $("#title").val(teamInfo.teamNm);
 		 $("#teamIntro").val(teamInfo.teamIntro);
+		 $("#makerId").val(teamInfo.makerId);
 		 
-		 /* if(!teamInfo.teamImg){
+		  /* if(!teamInfo.teamImg){
 			$("#image").attr("src", '${cp}/image/no_img.jpg');
-		 } */
-		 //$("#image").attr("src", teamInfo.teamImg);
+		 } 
+		 $("#image").attr("src", teamInfo.teamImg); */
 		 
 		 $("#teamNo").val(teamInfo.teamNo);
 		 console.log(teamInfo.teamNo);
@@ -248,7 +254,7 @@
 		 var html = '';
 		 for(var i in teamMember){
 			 if(teamMember[i].memId != teamInfo.makerId){
-		        html += '<li class="teamMem">';
+		        html += '<li class="teamMem dbLoad" value="' + teamMember[i].memId + '">';
 		        html += '	<div><img src="'+ teamMember[i].memImg + '"></div>';
 		        html += '	<div>' + teamMember[i].memId + '</div>';
 		        html += '	<input id="delBtn" type="button" value="삭제">';
@@ -257,6 +263,11 @@
 		 }
         $("#ul").append(html);  
 	 };
+	 
+	 $(".selectMem").on("click", function(){
+		 var memId = $(this).closest('li').data('memid');
+		 $(".selectMem").attr('href', "${cp}/member/memberErd?memId=" + memId);
+	 });
 	
 </script>
 

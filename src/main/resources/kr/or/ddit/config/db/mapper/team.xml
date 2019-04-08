@@ -113,4 +113,14 @@
 	  set teamagreeflag = #{teamAgreeFlag}
 	  where memid = #{memId} and teamno= #{teamNo}
 	</update>
+	
+	<!-- 팀 수정 -->
+	<update id="teamModify" parameterType="teamVo">
+	  update team
+	  set 
+	  	teamnm = #{teamNm},
+	  	teamintro = #{teamIntro, jdbcType=VARCHAR}, 
+	  	teamimg = #{teamImg,jdbcType=VARCHAR}
+	  where teamno= #{teamNo}
+	</update>
 </mapper>

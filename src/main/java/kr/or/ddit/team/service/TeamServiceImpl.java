@@ -185,5 +185,61 @@ public class TeamServiceImpl implements ITeamService{
 		return teamDao.getTeamMember(teamNo);
 	}
 
+	@Override
+	public int teamMofify(TeamVo teamVo, List<String> addMember, List<String> delMember) {
+		int teamModify = teamDao.teamModify(teamVo);
+		
+		String msgContent = "";
+		String makerId = teamVo.getMakerId();
+		String teamNm = teamVo.getTeamNm();
+		int teamNo = teamVo.getTeamNo();
+		
+		List<MessageVo> memList = new ArrayList<MessageVo>();
+		Map<String, Object> memMap = new HashMap<>();		
+
+		for(String memId : addMember){
+			TeamListVo vo = new TeamListVo();
+			vo.setMemId(memId);
+			vo.setTeamNo(teamNo);
+			
+			teamDao.insertTeamMember(vo);
+			
+			// 알림 전송
+			msgContent = makerId + " 님이 " + teamNm + " 팀에 " + memId + " 님을 초대 하였습니다. 팀에 가입하시겠습니까?";
+			MessageVo msgVo = new MessageVo();
+			msgVo.setReceiverId(memId);
+			msgVo.setMsgContent(msgContent);
+			msgVo.setMsgType("y");
+			msgVo.setTeamNo(teamNo);
+			msgVo.setSenderId(makerId);
+
+			memList.add(msgVo);
+		}
+		
+		for(String memId : delMember){
+			TeamListVo vo = new TeamListVo();
+			vo.setMemId(memId);
+			vo.setTeamNo(teamVo.getTeamNo());
+			
+			teamDao.delMember(vo);
+			
+			// 알림 전송
+			msgContent = makerId + " 님이 " + teamNm + " 팀에 " + memId + " 님을 제외 하였습니다. ";
+			MessageVo msgVo = new MessageVo();
+			msgVo.setReceiverId(memId);
+			msgVo.setMsgContent(msgContent);
+			msgVo.setMsgType("n");
+			msgVo.setTeamNo(teamNo);
+			msgVo.setSenderId(makerId);
+
+			memList.add(msgVo);
+		}
+		
+		memMap.put("memList", memList);
+		messageDao.insertMsg(memMap);
+		
+		return teamModify;
+	}
+
 
 }

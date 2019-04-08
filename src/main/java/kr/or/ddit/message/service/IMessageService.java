@@ -79,4 +79,13 @@ public interface IMessageService {
 	*/
 	int getMsgCnt(String receiverId);
 	
+	/**
+	* Method : insertMsgOne
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param messageVo
+	* @return
+	* Method 설명 : 한명에게 알림 전송
+	*/
+	int insertMsgOne(MessageVo messageVo);
 }

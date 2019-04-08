@@ -318,4 +318,18 @@ public class TeamDaoImplTest extends logicTestConfig{
 		assertNotNull(updateAgreeFlag);
 	}
 	
+	@Test
+	public void testTeamMofify(){
+		/***Given***/
+		TeamVo teamVo = new TeamVo();
+		teamVo.setTeamIntro("팀 수정 테스트");
+		teamVo.setTeamNo(1010);
+		teamVo.setTeamNm("바꿨지");
+		/***When***/
+		int teamModify = teamDao.teamModify(teamVo);
+		/***Then***/
+		assertNotNull(teamModify);
+
+	}
+	
 }

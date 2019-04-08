@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 import java.util.UUID;
 
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.api.mail.IMailService;
+import kr.or.ddit.erd.service.IErdService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
@@ -41,6 +43,9 @@ public class MemberController {
 	
 	@Resource(name = "mailService")
 	private IMailService mailService;
+	
+	@Resource(name="erdService")
+	private IErdService erdService;
 	
 	@RequestMapping("/join")	//회원가입
 	public String join(MemberVo memVo,RedirectAttributes ra,HttpServletRequest req){
@@ -275,6 +280,20 @@ logger.debug("name=={}",memVo.getMemId());
 			model.addAttribute("paging", paging);
 			 
 		 return "memList";
+	 }
+	 
+	 @RequestMapping("/memberErd")
+	 public String memberErd(@RequestParam("memId")String memId, Model model){
+		 logger.debug("---memId : {}", memId);
+		 
+		 MemberVo memberVo = memberService.selectMember(memId);
+		 model.addAttribute("memberVo", memberVo);
+		 
+		// erd와 tagList Map으로 넘겨줌
+		Map<String, Object> myErdTagMap = erdService.getMyErdTagMap(memId);
+		model.addAllAttributes(myErdTagMap);
+		 
+		 return "member/memberErdPage";
 	 }
 	 
 	 

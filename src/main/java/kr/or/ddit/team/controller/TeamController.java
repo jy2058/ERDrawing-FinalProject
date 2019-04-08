@@ -27,6 +27,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
+import kr.or.ddit.message.model.MessageVo;
+import kr.or.ddit.message.service.IMessageService;
 import kr.or.ddit.team.model.TeamListVo;
 import kr.or.ddit.team.model.TeamVo;
 import kr.or.ddit.team.service.ITeamService;
@@ -40,6 +42,8 @@ public class TeamController {
 	private IMemberService memberService;
 	@Resource(name="teamService")
 	private ITeamService teamService;
+	@Resource(name="messageService")
+	private IMessageService messageService;
 	
 	@RequestMapping(path="/teamCreate", method=RequestMethod.POST)
 	public String teamCreate(TeamVo teamVo, @RequestParam("teamMember")List<String> teamMember, HttpServletRequest req, @RequestPart("profileImg")MultipartFile multipartFile, HttpSession session){
@@ -164,11 +168,39 @@ public class TeamController {
 	}
 	
 	@RequestMapping("/delMember")
-	public String delMember(TeamListVo teamListVo, Model model){
+	public String delMember(TeamListVo teamListVo, TeamVo teamVo, Model model, HttpSession session){
 		logger.debug("===teamNo : {}", teamListVo.getTeamNo());
 		logger.debug("===getMemId : {}", teamListVo.getMemId());
 		
+		logger.debug("---teamListVo : {}", teamListVo);
+		logger.debug("---teamVo : {}", teamVo);
+		
+		Object memberVoObj = session.getAttribute("SESSION_MEMBERVO");
+		MemberVo memberVo = (MemberVo) memberVoObj;
+		
+		String loginId = memberVo.getMemId();
+		
 		teamService.delMember(teamListVo);
+		
+		MessageVo vo = new MessageVo();
+		String msgContent = "";
+		vo.setTeamNo(teamVo.getTeamNo());
+		vo.setMsgType("n");
+		
+		if(loginId.equals(teamListVo.getMemId())){
+			// 팀 생성자에게 탈퇴 알림 보내기
+			msgContent = teamListVo.getMemId() + " 님이 " + teamVo.getTeamNm() + " 팀을 탈퇴하였습니다.";
+			vo.setReceiverId(teamVo.getMakerId());
+			vo.setSenderId(memberVo.getMemId());
+			
+		}else if(loginId.equals(teamVo.getMakerId())){
+			// 팀에서 제외당한 멤버에게 알림 보내기
+			msgContent = teamVo.getMakerId() + " 님이 " + teamVo.getTeamNm() + " 팀에 " + teamListVo.getMemId() + " 님을 제외 하였습니다. ";
+			vo.setReceiverId(teamListVo.getMemId());
+			vo.setSenderId(teamVo.getMakerId());
+		}
+		vo.setMsgContent(msgContent);
+		messageService.insertMsgOne(vo);
 		
 		return "jsonView";
 	}
@@ -186,12 +218,10 @@ public class TeamController {
 	
 	// 아직 테스트 안 돌림 / 복붙만 함
 	@RequestMapping(path = "/teamModify", method = RequestMethod.POST)
-	public String teamModifyPost(TeamVo teamVo, HttpServletRequest req,
+	public String teamModifyPost(TeamVo teamVo, @RequestParam("addMember")List<String> addMember, @RequestParam("delMember")List<String> delMember, HttpServletRequest req,
 			@RequestPart("profileImg") MultipartFile multipartFile) throws Exception, IOException {
-		logger.debug("===teamVo : {}", teamVo);
-
-		logger.debug("===fileSize: {}", multipartFile.getSize());
-		logger.debug("===getOriginalFilename : {}", multipartFile.getOriginalFilename());
+		
+		logger.debug("---teamVo : {}", teamVo);
 
 		if (multipartFile.getSize() > 0) {
 			String[] split;
@@ -202,7 +232,7 @@ public class TeamController {
 			fileName = split[0]; // 파일 이름
 			ext = split[1]; // 확장자
 
-			logger.debug("===fileName : {}, ext : {}", fileName, ext);
+			logger.debug("---fileName : {}, ext : {}", fileName, ext);
 
 			String path = req.getRealPath("image"); // image폴더 path
 
@@ -213,13 +243,12 @@ public class TeamController {
 			multipartFile.transferTo(profile);
 
 			teamVo.setTeamImg(path + "\\" + filename);
-			
-			//멤버도 가져와야 돼~
-			// 그리고 멤버 삭제도 ajax로 구현 해야 돼 / 음...굳이 안해도 되나? 어차피 여기로 올 때 리스트 뽑잖아. / 그럼 삭제된 애 판단 어떻게 해 ? 여기서 또 리스트 돌리면서 없는 애 찾아?
-			// 흠
-			
 		}
-
+		logger.debug("---addList : {}", addMember);
+		logger.debug("---delMember : {}", delMember);
+		 
+		teamService.teamMofify(teamVo, addMember, delMember);
+		
 		return "redirect:/team?teamNo=" + teamVo.getTeamNo();
 	}
 

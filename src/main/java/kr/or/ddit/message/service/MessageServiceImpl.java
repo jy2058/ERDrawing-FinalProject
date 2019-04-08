@@ -73,4 +73,9 @@ public class MessageServiceImpl implements IMessageService{
 		return messageDao.getMsgCnt(receiverId);
 	}
 
+	@Override
+	public int insertMsgOne(MessageVo messageVo) {
+		return messageDao.insertAplyMsg(messageVo);
+	}
+
 }
