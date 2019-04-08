@@ -107,6 +107,56 @@
       </div>
        
  </form>     
+ 
+  <!-- ------------------------신고사유 모달창-------------------- -->
+   <form id="modalReportFrm" action="${cp }/member/memReportList" method="post">
+   <div class="modal modal-center fade" id="modalReEvn" tabindex="1" role="dialog" aria-labelledby="my80sizeCenterModalLabel" >
+      <div class="modal-dialog modal-80size modal-center" role="document" >
+         <div class="modal-content modal-80size">
+            <div class="modal-header">
+            <label>| 회원정보 수정</label>
+               <button type="button" class="close" data-dismiss="modal"aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+            </div>
+            
+            <div class="modal-body">
+                       
+               <!-- 여기부터 로직작성 -->    
+               <div class="form-group">
+                  <label class="modalLabel" >신고 내역</label> 
+				  <table>
+				 	 <thead>
+				  		<tr>
+					  		<th>신고한 회원</th>
+					  		<th>신고 사유</th>
+					  		<th>신고 당한 날짜</th>
+					    </tr>
+				  	</thead>
+				  	<tbody id="modalTd">
+				  		
+				  	</tbody>
+				  </table>
+				  
+               </div>
+            
+               <div class="form-group">
+                  <label class="modalLabel">신고당한 횟수</label> 
+                  <input type="text" id="cnt" name="cnt"> 
+                   
+                  <div id="dupleCode"></div>
+               </div>
+               
+               </div>   
+               <div class="modal-footer">
+                  <button type="button" id="insertBtn" class="btn btn-default" data-dismiss="modal">확인</button>
+                  <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+               </div>
+            </div>
+         </div>
+      </div>
+       
+ </form>     
 
 <!----------------------------- 회원정보 테이블 -------------------------->
 <form id="frm" action="${cp }/member/memberDel">
@@ -239,6 +289,12 @@
 			getMemberModifyModal(memId);
 		});
 		
+		//신고사유 클릭시
+		$("#memListTbody").on('click', "#liReport", function() {
+			memId = $(this).data("memid");
+			getMemberReportList(memId);
+		});
+		
 	});
 
 	//삭제후 Ajax처리
@@ -284,7 +340,6 @@
 					console.log(data.memVo);
 					//모달창에  해당 회원의 값 넣어주기
 					modalResult(data);
-					
 				}
 			});
 		}
@@ -352,6 +407,33 @@
 	        }
 
 	}
+	
+	var appends = 0;
+	function getMemberReportList(memId) {
+		$.ajax({
+				url : "${cp}/member/memRepotList",
+				data : {
+					memId : memId
+				},
+				success : function(data) {
+					console.log(data.reportList);
+					console.log(data.inDate);
+					var str ="";
+					for(var i=0; i<data.reportList.length; i++){
+						str += "<tr><td>"+data.reportList[i].fromMemId+"</td>"	+
+						"<td>"+data.reportList[i].reportReason+"</td>	"+
+						"<td>"+data.inDate[i]+"</td></tr>"
+					}
+					
+					if(appends==0)
+					$("#modalTd").append(str);
+					
+					appends++;
+					
+					$("#cnt").val(data.reportList[0].cnt);
+				}
+			});
+		}
 </script>
 
 

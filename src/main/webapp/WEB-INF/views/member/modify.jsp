@@ -175,8 +175,6 @@ cursor: pointer;}
       function handleImgFileSelect(e) {
           var files = e.target.files;
           var filesArr = Array.prototype.slice.call(files);
-			alert(files);
-			alert(filesArr);
           filesArr.forEach(function(f) {
               if(!f.type.match("image.*")) {
                   alert("확장자는 이미지 확장자만 가능합니다.");
@@ -188,7 +186,6 @@ cursor: pointer;}
               var reader = new FileReader();
               reader.onload = function(e) {
                   $("#memImg").attr("src", e.target.result);
-			alert(e.target.result);
               }
               reader.readAsDataURL(f);
           });

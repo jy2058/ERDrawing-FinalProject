@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -28,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import kr.or.ddit.api.mail.IMailService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
+import kr.or.ddit.post.model.ReportVo;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
 import kr.or.ddit.util.model.PageVo;
 
@@ -328,6 +330,25 @@ public class MemberController {
 
 		return "redirect:" + req.getContextPath() + "/";
 	}
+	
+	//회원별 신고사유 조회
+	@RequestMapping("/memRepotList")
+	public String memRepotList(HttpSession session, Model model, MemberVo memVo, HttpServletRequest req,RedirectAttributes ra) {
+		logger.debug("====ssss{}", memVo);
+		List<ReportVo> reportList= memberService.selectReport(memVo.getMemId());
+		model.addAttribute("reportList", reportList);
+		
+		List<String >inDate =new ArrayList<>();
+		for(ReportVo reVo : reportList){
+			
+			SimpleDateFormat sdf  = new SimpleDateFormat("yy-MM-ss");
+			inDate.add(sdf.format(reVo.getReportDt()));
+		}
+		model.addAttribute("inDate", inDate);
+		return "jsonView";
+	}
+	
+	
 }
 
 

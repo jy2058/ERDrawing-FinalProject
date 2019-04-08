@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.member.dao.IMemberDao;
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.post.model.ReportVo;
 import kr.or.ddit.util.model.PageVo;
 
 @Service("memberService")
@@ -63,6 +64,11 @@ public class MemberServiceImpl implements IMemberService{
 	@Override
 	public int updateMemberInfo(MemberVo vo) {
 		return memberDao.updateMemberInfo(vo);
+	}
+
+	@Override
+	public List<ReportVo> selectReport(String tomemid) {
+		return memberDao.selectReport(tomemid);
 	}
 	
 	
