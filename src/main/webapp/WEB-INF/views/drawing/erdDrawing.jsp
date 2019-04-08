@@ -14,6 +14,7 @@
 <script src="/js/drawing/minimap.js"></script>
 <script src="/js/drawing/attribute.js"></script>
 <script src="/js/drawing/style.js"></script>
+<script src="/js/drawing/realation.js"></script>
 </head>
 
 <body id='my_body'>
@@ -25,8 +26,10 @@
 			<div id="button2" class="buttons">확대/축소 초기화</div>
 			<div id="button3" class="buttons">테이블 추가하기</div>
 			<div id="button4" class="buttons">미니맵 Toggle</div>
-            <div id="button5" class="buttons">바꾸기</div>
-            
+            <div id="button5" class="buttons">1대1 연결</div>
+			<div id="button6" class="buttons">1대 다 연결</div>
+			<div id="identifying" class ="identify_hs">identifying RelationShip</div>
+			<div id="nonidentifying" class ="identify_hs">Non - identifying RelationShip</div>
 		</div>
 	<div id="container_mini"></div>
 		
@@ -116,10 +119,8 @@
         
     });
  
-     $("#button5").on('click', function(){
-           alert('change');
-         change();
-        });
+   
+    
 
         //버튼 이벤트
         $("#button1").on('click', function(){
@@ -166,6 +167,40 @@
            });
         });
         
+        //관계 연결선 1대 1
+        $("#button5").on('click', function(){
+      	  $('html').css({'cursor':'url(/image/erase.cur), auto'});
+      	  cardinality = 'single';
+      	  isRRelationClick = true;
+      });
+      
+      //관계 연결선 1대 다
+        $("#button6").on('click', function(){
+      	  $('html').css({'cursor':'url(/image/erase.cur), auto'});
+      	  cardinality = 'multi';
+      	  isRRelationClick = true;
+      });
+      
+      //identifying을 클릭했을 때
+        $("#identifying").on('click', function(){
+      	  console.log('identifyingclick')
+      	  relationType = true;
+      $('.identify_hs').css('display','none');
+      compareEntityPosition(); 
+      });
+      
+      //nonidentifying을 클릭했을 때
+        $("#nonidentifying").on('click', function(){
+      	  console.log('nonidentifyingclick')
+      	  relationType = false;
+      $('.identify_hs').css('display','none');
+      compareEntityPosition();
+      	  
+      });
+        
+        
+        
+        
 //    1. 변수 선언 및 초기화
       var width = window.innerWidth;
       var height = window.innerHeight;
@@ -196,6 +231,19 @@
     
       var tmp_PosY = 0;
     
+      //yhs
+      var isRRelationClick = false;  
+      var temp_arrow_layer;
+      var temp_arrow;  
+      var relationLine; //실제 관계를 연결해주는 선
+      var relationLine_layer; 
+      var relationType;  //identifying or non-identifying        
+      var cardinality //차수 1대1인지 1대 다 인지?
+      var firstEntity //첫번째로 클릭한 엔티티
+      var secondEntity  //두번째로 클릭한 엔티티
+      var relationSwitchFlag;
+      
+      
     
 //    2. ERD화면 초기화
       function init_ERD(){
@@ -504,8 +552,38 @@
              stage.off('click');
              stage.on('click', stageClick);
 
+            //yhs================================
+             // 엔티티를 클릭했을 경우(mouseup) 엔티티와 관계된 관계선들을 보여준다. 
+             entity.on('mouseup',function(e){
+             	 console.log('마우스업');
+             	 var first_Entity = e.target.findAncestor('.entity'); // 첫번째 객체를 얻어옴 (내가 클릭한 객체)
+             	 
+             	entityMouseUp(first_Entity,true); 
+             	
+             }); 
+             
+          
+             // 엔티티를 클릭했을 경우(mousedown) 엔티티와 관계된 관계선들을 숨겨준다.
+             entity.on('mousedown',function(e){
+            	 console.log('마우스 다운');
+            	
+            	 // e.target.findAncestor('.entity');
+            	 var arr_line_To= relationLine_layer.find('.'+e.target.findAncestor('.entity')._id);
+				 
+            	 var arr_line_From = findLineRefPos(e.target.findAncestor('.entity')._id);
+            	 for(var i=0; i<arr_line_To.length; i++){
+            		 arr_line_To[i].hide();
+            	 }
+            	 
+            	 for(var i = 0; i<arr_line_From.length; i++){
+            		 arr_line_From[i].hide();
+            	 }
+            		relationLine_layer.draw();
+            });
+              
             
             
+            //yhs===========================================
             
             
             //dragEvent1
@@ -524,14 +602,18 @@
              }); // move end
         }
         //entity 생성 종료
-    
+     temp_arrow_layer = new Konva.Layer();
+        relationLine_layer = new Konva.Layer();
+        var relationSwitchFlag = true;
+        
+        
     
         //전역변수로 빼기
         var old_entity;
         
         //스테이지 클릭
         function stageClick(e){
-            
+            console.log('스테이지 클릭');
             
             
             
@@ -567,8 +649,77 @@
                document.body.removeChild(inputss);
            }
             
+            /////yhs
+           if(allNode.parent === null || temp_arrow != null ){  // 좀 더 생각해보자 temp_arrow != null말고 e.를 활용해서 
+               console.log('temp_arrow'+ temp_arrow);
+               console.log('allNode'+ allNode);
+               old_btn_entity_group.hide();
+               old_entity.draggable(false);
+               old_container.strokeWidth(0);
+               
+               if(temp_arrow != null ){ //빈스테이지를 찍어 temp_arrow를 제거해주는 것.
+               	
+               	//객체 클릭 했을 때
+                   if(allNode.findAncestor('.entity')){
+                  	console.log('객체 선택');
+                  	
+                  	//identifying을 물어보는 창 생성
+                  	$('.identify_hs').css('display','block');
+                  	
+                  	//새로운 화살표 생성 단  relationType가 true/false인지 확인해야람 identifying인지 non-identify인지
+                  
+                  	secondEntity = allNode.findAncestor('.entity');
+                  	
+                  }
+               	
+               	//빈 스테이지 클릭했을 때.
+               	stage.off('mousemove');
+               	temp_arrow.remove();
+               	temp_arrow_layer.draw();
+               	isRRelationClick=false;
+               	temp_arrow=null;
+               }
+           }
             
-            //스테이지 클릭시
+            
+            
+            
+            ///yhs
+           if(allNode.parent === null || temp_arrow != null ){  // 좀 더 생각해보자 temp_arrow != null말고 e.를 활용해서 
+               console.log('temp_arrow'+ temp_arrow);
+               console.log('allNode'+ allNode);
+               old_btn_entity_group.hide();
+               old_entity.draggable(false);
+               old_container.strokeWidth(0);
+               
+               if(temp_arrow != null ){ //빈스테이지를 찍어 temp_arrow를 제거해주는 것.
+               	
+               	//객체 클릭 했을 때
+                   if(allNode.findAncestor('.entity')){
+                  	console.log('객체 선택');
+                  	
+                  	//identifying을 물어보는 창 생성
+                  	$('.identify_hs').css('display','block');
+                  	
+                  	//새로운 화살표 생성 단  relationType가 true/false인지 확인해야람 identifying인지 non-identify인지
+                  
+                  	secondEntity = allNode.findAncestor('.entity');
+                  	
+                  }
+               	
+               	//빈 스테이지 클릭했을 때.
+               	stage.off('mousemove');
+               	temp_arrow.remove();
+               	temp_arrow_layer.draw();
+               	isRRelationClick=false;
+               	temp_arrow=null;
+               }
+           }
+            
+            
+            
+            
+        /*     //스테이지 클릭시
             if(allNode.parent === null){
                 console.log("스테이지 선택");
                 
@@ -577,7 +728,10 @@
                 old_entity.draggable(false);
                 old_container.strokeWidth(0);
                 
-            }
+            } */
+            
+            
+            
             //객체 선택시
             else {
                 
@@ -673,6 +827,8 @@
                 entity.moveTo(layer);
                 
                 
+                console.log('makeArrow');
+                makeArrow(e);
             }
             
             //리사이징 시작
