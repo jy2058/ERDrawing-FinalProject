@@ -121,3 +121,6 @@ input:focus {
   outline: none;
 }
 
+
+
+.drawing_bottom label{line-height:40px; padding-left:8px; cursor:pointer;} 

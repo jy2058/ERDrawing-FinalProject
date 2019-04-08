@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -12,13 +13,7 @@
 <script src="https://unpkg.com/konva@3.2.0/konva.min.js"></script>
 <script src="/js/drawing/minimap.js"></script>
 <script src="/js/drawing/attribute.js"></script>
-<style>
-
-    .attr_container{
-        background: green;
-    }
-    
-</style>
+<script src="/js/drawing/style.js"></script>
 </head>
 
 <body id='my_body'>
@@ -30,6 +25,8 @@
 			<div id="button2" class="buttons">확대/축소 초기화</div>
 			<div id="button3" class="buttons">테이블 추가하기</div>
 			<div id="button4" class="buttons">미니맵 Toggle</div>
+            <div id="button5" class="buttons">바꾸기</div>
+            
 		</div>
 	<div id="container_mini"></div>
 		
@@ -44,7 +41,18 @@
             </session>
 
             <session class="drawing_bottom drawing_pannel">
-                B
+                
+                <label><input type="checkbox" value="attr_logical" class="test_check" checked> 논리 켜기/끄기</label>
+                 <label><input type="checkbox" value="attr_phisical" class="test_check" checked> 물리 켜기/끄기</label>
+                
+                <label><input type="checkbox" value="attr_domain" class="test_check" checked> DOMAIN</label>
+                 <label><input type="checkbox" value="attr_type" class="test_check" checked> TYPE</label>
+                
+                
+                <label><input type="checkbox" value="attr_null" class="test_check" checked> NULL</label>
+                <label><input type="checkbox" value="attr_default" class="test_check" checked> DEFAULT</label>
+                <label><input type="checkbox" value="attr_comment" class="test_check" checked> COMMENT</label>
+                 
             </session>
 
             <session class="drawing_content drawing_pannel">
@@ -57,23 +65,74 @@
 </body>
 
 
-
+        
 
 
 
 <script>
         
+    
+    //속성 visible 기본값 설정
+    var visible_save = {"attr_logical":true,
+                        "attr_phisical":true,
+                        "attr_domain":true,
+                        "attr_type":true,
+                        "attr_null":false,
+                        "attr_default":false,
+                        "attr_comment":false};
+    
+    
+    //체크박스 초기화
+    $(".test_check").each(function(s){
+        var setInit_Value = visible_save[$(this).val()];
+       $(this).prop("checked",setInit_Value);
+    });
+    
+    //체크박스 선택 이벤트
+    $(".test_check").on("change",function(changes){
+        
+        check_name = $(this).val();
+        if($(this).prop("checked")){
+            
+            stage.find("."+check_name).each(function(get){
+                get.parent.attrs.visible = true;
+                visible_save[check_name] = true;
+            });
+        }else{
+        
+            stage.find("."+check_name).each(function(get){
+                get.parent.attrs.visible = false;
+                visible_save[check_name] = false;
+            });
+        }
 
+
+        layer.find('.entity').each(function(z){
+            entity = z;
+            stageClick();
+        });
+        
+        stageClick(0);
+        
+    });
+ 
+     $("#button5").on('click', function(){
+           alert('change');
+         change();
+        });
+
+        //버튼 이벤트
         $("#button1").on('click', function(){
            alert(textNode.text());
         });
         $("#button2").on('click', function(){
+            
         	//미니맵 빨간 사각형 초기화
-        	 console.log('mini_width/3'+mini_width/3);
-             mini_rect.x(0),
+        	
+            mini_rect.x(0),
   			mini_rect.y(0),
-  			mini_rect.width(mini_width/3),
-  			mini_rect.height(mini_height/2)
+  			mini_rect.width(screenWidth*0.048),
+  			mini_rect.height(screenHeight*0.048)
   			
   			mini_layer.draw();
              
@@ -107,7 +166,7 @@
            });
         });
         
-//    1. 변수 초기화
+//    1. 변수 선언 및 초기화
       var width = window.innerWidth;
       var height = window.innerHeight;
 
@@ -118,47 +177,7 @@
       console.log("height2 : "+height2);
         
       var BORDER_SIZE = 3;
-      var color1 = [ 'red', 'black', 'blue' ];
-    
-      var colorPick = [
-      { 
-          name : 'yellow',           //명칭
-          entityBg : '#6d6c27',     //엔티티 배경색
-          entityColor : '#ffffff',  //엔티티 폰트색
-          groupColor : '#53521f',          //속성 테두리
-          groupColorActive : '#a68db4',    //속성 테두리(선택시)
-          pkBg : '#AAA94D',                //pk 배경색
-          pkColor : '#ffffff',             //pk 폰트색
-          fkBg : '#5f5f3a',
-          fkColor : '#ffffff',
-          atBg : '#49492f',
-          atColor : '#ffffff'
-      },{ 
-          name : 'black',           //명칭
-          entityBg : '#000000',     //엔티티 배경색
-          entityColor : '#ffffff',  //엔티티 폰트색
-          groupColor : '#000000',          //속성 테두리
-          groupColorActive : '#eeeeee',    //속성 테두리(선택시)
-          pkBg : '#412d1b',                //pk 배경색
-          pkColor : '#ffffff',             //pk 폰트색
-          fkBg : '#4a3f3f',
-          fkColor : '#ffffff',
-          atBg : '#2c2c2c',
-          atColor : '#ffffff'
-      },{ 
-          name : 'red',           //명칭
-          entityBg : '#65271a',     //엔티티 배경색
-          entityColor : '#ffffff',  //엔티티 폰트색
-          groupColor : '#4a1e15',          //속성 테두리
-          groupColorActive : '#a68db4',    //속성 테두리(선택시)
-          pkBg : '#9f5849',                //pk 배경색
-          pkColor : '#ffffff',             //pk 폰트색
-          fkBg : '#573932',
-          fkColor : '#ffffff',
-          atBg : '#45312c',
-          atColor : '#ffffff'
-      }];
-        
+
       var color1_num, target, activeWedge, stage, layer, wheel, pointer, box, textNode, allNode;
       
       // entity
@@ -169,13 +188,19 @@
         
       // attribute group.
       var pk_group, fk_group, attr_group;
-        
+    
+      //미니맵 관련 전연변수 선언
+      var mini_width, mini_height, screenWidth, screenHeight;;
+      var mini_stage, mini_layer, mini_rect;
+
+    
+      var tmp_PosY = 0;
     
     
-        
 //    2. ERD화면 초기화
       function init_ERD(){
           
+         //기본 레이어 생성
           stage = new Konva.Stage({
             container: 'container_Shin',
             width: width2,
@@ -186,52 +211,68 @@
           layer = new Konva.Layer();
           layer2 = new Konva.Layer();
           
-          stage.add(layer).add(layer2);
           
-          layer.draw();
           
-      }  
-        
+        // 미니맵용 스테이지 생성
+        mini_width = $('#container_mini').width();
+		mini_height = $('#container_mini').height();
     
-      init_ERD();
-      console.log(stage);
-        
-  // 미니맵용 스테이지 생성
-  var mini_width = $('#container_mini').width();
-		var mini_height = $('#container_mini').height();
-		var mini_stage = new Konva.Stage({
+        screenWidth = $('#container_Shin').width();
+        screenHeight = $('#container_Shin').height();
+    
+    
+		mini_stage = new Konva.Stage({
 			container: 'container_mini',
 			width: mini_width,
 			height: mini_height
 		});
 		
-		var mini_layer = new Konva.Layer();
+		mini_layer = new Konva.Layer();
 	
 		//미니맵에 보이는 사각형 생성(빨간네모)
-		var mini_rect = new Konva.Rect({
+		mini_rect = new Konva.Rect({
 			x: 0,
 			y: 0,
-			width: mini_width/3,
-			height: mini_height/2,
+			width: screenWidth*0.048,
+			height: screenHeight*0.048,
 			stroke: 'red',
 			strokeWidth: 2
 			/* opacity: 0.3 */
 		});
 		mini_rect.draggable('true');
 		mini_layer.add(mini_rect);
-		mini_stage.add(mini_layer);
+          
+          
+		  mini_stage.add(mini_layer);
+          stage.add(layer).add(layer2);
+          
+          mini_layer.draw();
+          layer.draw();
+          
+      }  
+        
+    
+      init_ERD();
+ 
 
         
 //        테이블 생성
         function entityAdd(circlePos){
             
-            color1_num = Math.floor(Math.random() * 3);
+            color1_num = Math.floor(Math.random() * 6);
+            //color1_num = 3;
             
             entity = new Konva.Group({
                 x: circlePos.x,
                 y: circlePos.y,
-                class: color1_num,
+                opacity: 0.9,
                 name: 'entity'
+            });
+            
+            var giveColor = new Konva.Text({
+                text: color1_num+'',
+                name: 'giveColor',
+                visible:false
             });
             
           
@@ -250,15 +291,15 @@
             
             //미니맵에 표시할 테이블 생성
             var mini_tb = new Konva.Rect({
-				x: circlePos.x/30,
-				y: circlePos.y/40,
+				x: circlePos.x*0.048,
+				y: circlePos.y*0.048,
 				fill: 'black',
 				id :entity._id        //메인스테이지 테이블의 id값을 참조함 
 				/* opacity: 0.3 */
 			});
-            console.log('mini_tb 아이디 :'+mini_tb.id());
-            console.log('entity_container.width:'+entity_container.width());
-            console.log('entity_container.height:'+entity_container.height());
+//            console.log('mini_tb 아이디 :'+mini_tb.id());
+//            console.log('entity_container.width:'+entity_container.width());
+//            console.log('entity_container.height:'+entity_container.height());
 			
             
             entity_logical = new Konva.Rect({
@@ -284,7 +325,7 @@
             });
             
             entity_logical_txt = new Konva.Text({
-                text: 'tableName',
+                text: '테이블명',
                 x: entity_logical.x(),
                 y: entity_logical.y(),
                 padding: 5,
@@ -294,7 +335,7 @@
             });
 
             entity_phisical_txt = new Konva.Text({
-                text: '테이블명(물리)',
+                text: 'TableName' + cntEntity(),
                 x: entity_phisical.x(),
                 y: entity_phisical.y(),
                 padding: 5,
@@ -303,7 +344,7 @@
                 name: 'entity_phisical_txt'
             });
             
-            entity.add(entity_container);
+            entity.add(entity_container).add(giveColor);
             entity.add(entity_logical).add(entity_phisical);
             entity.add(entity_logical_txt).add(entity_phisical_txt);
             
@@ -417,19 +458,19 @@
             pk_group = new Konva.Group({
                 x: 0,
                 y: 26,
-                name: 'pk_group'
+                name: 'key_group pk_group'
             });
             
             fk_group = new Konva.Group({
                 x: 0,
                 y: 0,
-                name: 'fk_group'
+                name: 'key_group fk_group'
             });
             
             attr_group = new Konva.Group({
                 x: 0,
                 y: 0,
-                name: 'attr_group'
+                name: 'key_group attr_group'
             });
             
             
@@ -442,57 +483,79 @@
             
             entity_resize();
              
-            layer.draw();
+            
             
             //리사이즈 된 크기에 맞춰서 미니맵테이블의 크기 설정
-            mini_tb.width(entity_container.width()/30);
-            mini_tb.height(entity_container.height()/40);
+            mini_tb.width(entity_container.width()*0.048);
+            mini_tb.height(entity_container.height()*0.048);
             
-            console.log('entity_container.width()'+ entity_container.width());
-            console.log('entity_container.height()'+ entity_container.height());
             mini_layer.add(mini_tb);
-			mini_stage.add(mini_layer);
+            mini_rect.zIndex(mini_layer.children.length-1);
+            
+            
+            layer.draw();
+            mini_layer.draw();
+            
             
              entity.off('dblclick');
              entity.on('dblclick', textClick);
             
+            
              stage.off('click');
              stage.on('click', stageClick);
 
-             //미니맵 이벤트
-             entity.on('dragmove click', function(e){
-//             	 e.target
-//             	 if(e.target.findaasdasd(.length != old_target.findaasdasd().length){
-            		 
-//             	 }
-				
-            	 var mini_entity = mini_stage.find('#'+e.target._id+'');
-            	 mini_entity.x(e.target.x()/30);
-            	 mini_entity.y(e.target.y()/40);
-            	 //리사이즈 된 후에 첫번 째  값 즉 entity의 width를 가져옴
-            	 mini_entity.width(this.children[0].width()/30);
-            	 mini_entity.height(this.children[0].height()/40);
-            	 mini_layer.draw();
-            	 
-            	 
-            	 old_target = e.target;
-            	 
-
-             });
+            
+            
+            
+            
+            //dragEvent1
+             stage.off('.dragSetup');
+             stage.on('dragmove.dragSetup', function dragEvent1(evt){
+                 
+                 allNode = evt.target;
+                 
+                     if(allNode.hasName('entity')){
+                     console.log("entity : "+allNode.x());
+                     var mini_entity = mini_stage.find('#'+evt.target._id+'');
+                     mini_entity.x(evt.target.x()*0.048);
+                     mini_entity.y(evt.target.y()*0.048);
+                     mini_layer.draw();
+                     }
+             }); // move end
         }
         //entity 생성 종료
-        
-        
-        
- 
+    
+    
+        //전역변수로 빼기
+        var old_entity;
         
         //스테이지 클릭
         function stageClick(e){
             
             
-            allNode = e.target;
+            
+            
+            
+            if(e === 0){
+                allNode = stage;
+            }else if(e != null){
+                allNode = e.target;
+            }else{
+                allNode = entity.findOne('.entity_logical_txt');
+            }
+            
+            
+            //이동버튼 클릭시
+                if(allNode.name().indexOf('attr_btn_move') > -1){
+                    return;
+                    
+                    //return;
+                }
+            
+            
+
             var old_container = entity_container;
-            var old_entity = entity;
+            old_entity = entity;
             var old_btn_pk_add = btn_pk_add;
             var old_btn_col_add = btn_col_add;
             var old_btn_entity_delete = btn_entity_delete;
@@ -500,7 +563,7 @@
             var old_btn_entity_group = btn_entity_group;
             
             //입력창 삭제
-           if(document.body.getElementsByTagName('input').length > 0){
+           if(document.body.getElementsByClassName('attrInput').length > 0){
                document.body.removeChild(inputss);
            }
             
@@ -517,17 +580,19 @@
             }
             //객체 선택시
             else {
-
                 
                 //변수에 클릭 타겟 넣기
                 entity = allNode.findAncestor('.entity');
                 
-                
+ 
                 //entity 삭제버튼 이벤트 
-                if(allNode.attrs.name.indexOf('btn_entity_delete') > -1){
+                if(allNode.name().indexOf('btn_entity_delete') > -1){
+                    
                     var removeTableNo=allNode.findAncestor('.entity')._id;
                     console.log('삭제할번호'+ removeTableNo);
+                    
                     mini_stage.find('#'+removeTableNo+'').remove(); //미니맵 테이블 삭제
+                    
                     allNode.findAncestor('.entity').remove();
                     mini_layer.draw();
                     layer.draw();
@@ -536,22 +601,37 @@
                 
                 
                 //pk버튼 이벤트
-                if(allNode.attrs.name.indexOf('btn_pk_add') > -1){
-                    attributeAdd("pk_group",entity)
-                    return;
+                if(allNode.name().indexOf('btn_pk_add') > -1){
+                    fn_attributeAdd("pk_group",entity);
+                    //return;
                 }
                 
                 //attr버튼 이벤트
-                if(allNode.attrs.name.indexOf('btn_col_add') > -1){
-                    attributeAdd("attr_group",entity)
-                    return;
+                if(allNode.name().indexOf('btn_col_add') > -1){
+                    fn_attributeAdd("attr_group",entity);
+                    //return;
                 }
                 
                 //fk 테스트
-                if(allNode.attrs.name.indexOf('btn_color') > -1){
-                    attributeAdd("fk_group",entity)
-                    return;
+                if(allNode.name().indexOf('btn_color') > -1){
+                    fn_attributeAdd("fk_group",entity);
+                    
+                    //return;
                 }
+                
+                
+                
+                
+     
+                
+                //속성 삭제 버튼 테스트
+                if(allNode.name().indexOf('attr_btn_remove') > -1){
+         
+                    allNode.findAncestor('.attribute').destroy();
+     
+                }
+                
+                
                 
                 
                 entity_container = entity.findOne('.entity_container');
@@ -563,13 +643,18 @@
                 btn_entity_group = entity.findOne('.btn_entity_group');
                 
                 btn_entity_delete = btn_entity_group.findOne('.btn_entity_delete');
+                btn_entity_delete_txt = btn_entity_group.findOne('.btn_entity_delete_txt');
+                
                 btn_color = btn_entity_group.findOne('.btn_color');
+                btn_color_txt = btn_entity_group.findOne('.btn_color_txt');
+                
                 btn_pk_add = btn_entity_group.findOne('.btn_pk_add');
+                btn_pk_add_txt = btn_entity_group.findOne('.btn_pk_add_txt');
+                
                 btn_col_add = btn_entity_group.findOne('.btn_col_add');
-                
-                
+                btn_col_add_txt = btn_entity_group.findOne('.btn_col_add_txt');
 
-  
+                
                 
                 //로직 시작
                 entity.moveTo(layer2);
@@ -589,6 +674,20 @@
                 
                 
             }
+            
+            //리사이징 시작
+            entity_resize();
+            
+            
+            
+            //미니맵에 객체 갱신
+             var mini_entity = mini_stage.find('#'+entity._id+'');
+             mini_entity.width(entity.children[0].width()*0.048);
+             mini_entity.height(entity.children[0].height()*0.048);
+             mini_layer.draw();
+            
+            
+            
             layer.draw();
         }
         
@@ -605,7 +704,7 @@
             
             textNode = e.target;
             
-            if(textNode.className != "Text" || textNode.attrs.name.indexOf('btn') > -1){
+            if(textNode.className != "Text" || textNode.name().indexOf('btn') > -1){
                 return;
             }
             
@@ -625,7 +724,7 @@
 
 			console.log((textNode.width()*stage.scale().x)+3);
             document.body.appendChild(inputss);
-
+            $(inputss).addClass('attrInput');
             inputss.value = textNode.text();
             inputss.style.position = 'absolute';
             inputss.style.top = (areaPosition.y) + 'px';	/* (areaPosition.y-(stage.scale().x+1)) + 'px'; */
@@ -661,15 +760,26 @@
                 //텍스트 입력 값 적용
                  textNode.text(inputss.value);
                  
-                //형제들 돌려
-                 textNode.parent.children.each(function(f){
-                     
-                    if(textNode.attrs.name === f.attrs.name+"_txt"){
-                        f.width(textNode.width());
-                    }
-                     
-                });
+  
+                 //텍스트 미입력시 최소값 설정
+                 if(textNode.width() < 40){
+                     textNode.textWidth = 30;
+                 }
                  
+                 
+                 //플레이스홀더 설정
+                 if(textNode.findAncestor('.attr_groups') != null){
+                    if(textNode.text() === "" && textNode.findAncestor('.attr_groups').findOne('.placeHolder') != null ){
+                         textNode.findAncestor('.attr_groups').findOne('.placeHolder').visible(true);
+                     }else if(textNode.findAncestor('.attr_groups').findOne('.placeHolder') != null){
+                         textNode.findAncestor('.attr_groups').findOne('.placeHolder').visible(false);
+                     } 
+                 }
+                    
+
+                 
+                 
+
                  
                  
                  
@@ -685,14 +795,29 @@
                 btn_entity_group = entity.findOne('.btn_entity_group');
                 
                 btn_entity_delete = btn_entity_group.findOne('.btn_entity_delete');
+                btn_entity_delete_txt = btn_entity_group.findOne('.btn_entity_delete_txt');
+                
                 btn_color = btn_entity_group.findOne('.btn_color');
+                btn_color_txt = btn_entity_group.findOne('.btn_color_txt');
+                
                 btn_pk_add = btn_entity_group.findOne('.btn_pk_add');
+                btn_pk_add_txt = btn_entity_group.findOne('.btn_pk_add_txt');
+                
                 btn_col_add = btn_entity_group.findOne('.btn_col_add');
+                btn_col_add_txt = btn_entity_group.findOne('.btn_col_add_txt');
+ 
                  
-    
+                 
                 //리사이징 시작
                 entity_resize();
                  
+                 
+                //미니맵에 객체 갱신
+                 var mini_entity = mini_stage.find('#'+entity._id+'');
+                 mini_entity.width(entity.children[0].width()*0.048);
+                 mini_entity.height(entity.children[0].height()*0.048);
+                 
+                 mini_layer.draw(); 
                 layer.draw();
                  
                 document.body.removeChild(inputss);
@@ -704,16 +829,38 @@
         
       
         
-        
+        var reszie_entity_container;
         
         //리사이징
         
         function entity_resize(){
+            
+//           1. entity(테이블 리사이징)
              entity_logical.width(entity_logical_txt.width());
+             
              entity_phisical.x(entity_logical.width()+BORDER_SIZE);
              entity_phisical_txt.x(entity_phisical.x());
              entity_phisical.width(entity_phisical_txt.width()); 
-             entity_container.width(entity_logical_txt.width()+entity_phisical_txt.width()+(BORDER_SIZE*2));
+             
+           
+           reszie_entity_container = entity_logical_txt.width()+entity_phisical_txt.width()+(BORDER_SIZE*2);
+            
+               
+               
+//               entity_container.width(entity_logical_txt.width()+entity_phisical_txt.width()+(BORDER_SIZE*2));
+  
+            
+//          2. attribute(속성 리사이징)
+            resize2(entity);
+            
+            
+            
+            
+//          3. entity(테이블 논리, 물리 위치)
+            entity_phisical.x(entity_container.width()-entity_phisical.width()-BORDER_SIZE);
+            entity_phisical_txt.x(entity_phisical.x());
+            
+//          4. entity 기능 버튼 위치(pk,attr, 색상변경, 삭제 버튼 등등...)
             btn_entity_delete.x(entity_container.width() -(20-(BORDER_SIZE-1)));
             btn_color.x(btn_entity_delete.x() - 21);
             btn_entity_delete_txt.x(btn_entity_delete.x()+7);
@@ -722,43 +869,41 @@
             
  
         }
-        
-
+  
         
         
         //스크롤 확대 축소
-        var SCALE_MIN = 0.34;
+        var SCALE_MIN = 0.45;
         var SCALE_MAX = 1.8;
         var scaleBy = 1.05;
         stage.on('wheel', e => {
+                
                 e.evt.preventDefault();
                 var oldScale = stage.scaleX();
 				console.log('stage.scaleX()'+ stage.scaleX());
 				
 			
-				var plusWidth = (mini_width-(mini_width/3))/24;
-				var plusHeight= (mini_height-(mini_height/2))/24;
-				
-				console.log(plusWidth);
-				console.log(plusHeight);
-				
-				//확대할 경우에...
-			if (e.evt.deltaY > 0) {
-				if(mini_rect.width()<40){  //작은 돋보기 크기가 너무 작아지는 것을 막아줌
-					return;
-				}
-				mini_rect.width(mini_rect.width() - plusWidth);
-				mini_rect.height(mini_rect.height() - plusHeight);
-
-			}
-			//축소할 경우에...
-			else if (e.evt.deltaY < 0) {
-				if(mini_rect.width()>=184){ //작은 돋보기 크기가 너무 커지는 것을 막아줌
-					return;
-				}
-				mini_rect.width(mini_rect.width() + plusWidth);
-				mini_rect.height(mini_rect.height() + plusHeight);
-			}
+            
+            
+            
+                //미니맵 관련
+                var screenWidth = $('#container_Shin').width();
+                var screenHeight = $('#container_Shin').height();
+            
+                var plusWidth = ((screenWidth)*0.048)/(stage.scale().x);
+                var plusHeight = ((screenHeight)*0.048)/(stage.scale().y);
+            
+                mini_rect.width(plusWidth);
+                mini_rect.height(plusHeight);
+            
+                mini_rect.x((-stage.x() * 0.048)/stage.scaleX());
+		        mini_rect.y((-stage.y() * 0.048)/stage.scaleY());
+             
+                collision_check_mini();
+            
+                mini_layer.draw();//돋보기창
+                //미니맵 관련 종료
+            
 				
                 var mousePointTo = {
                   x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
@@ -769,12 +914,19 @@
                 //최소, 최대 스케일 추가
                 var newScale
                 if(stage.scaleX() <= SCALE_MIN){
-                newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale;
+                    
+                    newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale;
+                    
                 }else if(stage.scaleX() >= SCALE_MAX){
-                newScale = e.evt.deltaY > 0 ? oldScale : oldScale / scaleBy;
+                    
+                    newScale = e.evt.deltaY > 0 ? oldScale : oldScale / scaleBy;
+                    
                 }else{    
-                newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+                    
+                    newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+                    
                 }
+    
                     
                 stage.scale({ x: newScale, y: newScale });
 
@@ -786,17 +938,19 @@
                     -(mousePointTo.y - stage.getPointerPosition().y / newScale) *
                     newScale
                 };
-                mini_layer.draw();//돋보기창
+            
+  
+
                 stage.position(newPos);
                 stage.batchDraw();
                 console.log(stage.scale().x);
-                    
-      });
+            
         
+      });
+    
 
         
 </script>
-
 
 </html>
 
