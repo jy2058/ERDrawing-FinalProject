@@ -173,14 +173,14 @@
 					//$("#memId").val().trim()
 					alert("이름을 입력해 주세요");
 					$("#memNm").focus();
-					return;
+					return false;
 				}
 				
 				if($("#memId").val().trim()==""){
 					//$("#memId").val().trim()
 					alert("아이디를 입력해 주세요");
 					$("#memId").focus();
-					return;
+					return false;
 				}
 				
 				if($("#memMail").val().trim()==""  ){
@@ -188,7 +188,7 @@
 					
 					alert("이메일을 입력해 주세요");
 					$("#memMail").focus();
-					return;
+					return false;
 				}
 				
 				var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
@@ -196,20 +196,14 @@
 					//$("#memId").val().trim()
 					alert(" 메일형식이 올바르지 않습니다");
 					$("#memMail").focus();
-					return;
+					return false;
 				}
-				
-				
-			
-				
-			
-				
 			
 				if($("#memTel").val().trim()==""){
 					//$("#memId").val().trim()
 					alert("핸드폰 번호를 입력해 주세요");
 					$("#memTel").focus();
-					return;
+					return false;
 				}
 				
 				
@@ -245,14 +239,6 @@
 			getMemberModifyModal(memId);
 		});
 		
-		$('#modalEvn').on('show.bs.modal', function (event) {
-			var button = $(event.relatedTarget);
-			var deleteUrl = button.data('title');
-			var modal = $(this);
-			
-			alert(memId);
-		
-			});
 	});
 
 	//삭제후 Ajax처리
@@ -319,9 +305,13 @@
 		
 		//구글 카카오는 비밀번호 변경불가 
 		if (data.memVo.memEmailDiv != "basic") {
-			$(".pass").remove();
+			$("#memPass").attr("disabled", true);
+			$("#reMemPass").attr("disabled", true);
+		}else{
+			$("#memPass").attr("disabled", false);
+			$("#reMemPass").attr("disabled", false);
 		}
-		
+
 		if(black=='T'){
 			$("input[name=chMemBlackFlag]").prop("checked", true).change();
 		}else{

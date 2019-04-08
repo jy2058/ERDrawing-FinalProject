@@ -40,7 +40,18 @@
 						<li><a href="${cp }/join">회원가입</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="${cp }/mypage"><img alt="" src="${SESSION_MEMBERVO.memImg}" width="35" height="30"> </a></li>
+						<li><a href="${cp }/mypage">
+						<c:choose>
+							<c:when test="${SESSION_MEMBERVO.memImg != null}">
+								<img alt="" src="${SESSION_MEMBERVO.memImg}" width="35" height="30"> 
+							</c:when>
+							<c:otherwise>
+								<img alt="" src="../image/noImg.png" width="35" height="30">
+							</c:otherwise>
+						</c:choose>
+						
+						
+						</a></li>
 <%-- 						<li><a href="${cp }/message/messageView">메세지</a></li> --%>
 						<li><a id="message">메세지</a></li>
 						<li><a id="logout" href="#" hidden="">로그아웃</a></li>
