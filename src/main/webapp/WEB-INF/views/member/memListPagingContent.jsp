@@ -31,7 +31,7 @@
                <div class="form-group">
                   <label class="modalLabel" >회원 이미지</label> 
                   
-				  <img alt="" src="" name="memImg" id="memImg" width="100px" height="100px">
+				  <img alt="" src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }" name="memImg" id="memImg" width="100px" height="100px">
                </div>
             
             
@@ -297,11 +297,8 @@
 		var cancel = data.memVo.memCancelFlag;
 		
 		//이미지
-		if (src == "" || src == null) {
-			$("#memImg").attr("src", "../image/noImg.png");
-		} else {
-			$("#memImg").attr("src", src);
-		}
+		$("#memImg").attr("src", "${cp }/member/memberImg?memId="+data.memVo.memId);
+	
 		
 		//구글 카카오는 비밀번호 변경불가 
 		if (data.memVo.memEmailDiv != "basic") {
