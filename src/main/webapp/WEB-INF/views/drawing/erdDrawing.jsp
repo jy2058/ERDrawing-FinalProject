@@ -28,8 +28,12 @@
 			<div id="button4" class="buttons">미니맵 Toggle</div>
             <div id="button5" class="buttons">1대1 연결</div>
 			<div id="button6" class="buttons">1대 다 연결</div>
-			<div id="identifying" class ="identify_hs">identifying RelationShip</div>
-			<div id="nonidentifying" class ="identify_hs">Non - identifying RelationShip</div>
+			<div id="line_background" class ="identify_hs">
+				<div id="lineInformation">
+					<div id="identifying">identifying RelationShip</div>
+					<div id="nonidentifying">Non - identifying RelationShip</div>		
+				</div>
+			</div>
 		</div>
 	<div id="container_mini"></div>
 		
@@ -664,7 +668,7 @@
                   	console.log('객체 선택');
                   	
                   	//identifying을 물어보는 창 생성
-                  	$('.identify_hs').css('display','block');
+                  	$('.identify_hs').css('display','table');
                   	
                   	//새로운 화살표 생성 단  relationType가 true/false인지 확인해야람 identifying인지 non-identify인지
                   
