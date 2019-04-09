@@ -23,6 +23,7 @@
 	<typeAlias alias="commentsVo" type="kr.or.ddit.post.model.CommentsVo"/>
 	<typeAlias alias="commentLikeVo" type="kr.or.ddit.post.model.CommentLikeVo"/>
 	<typeAlias alias="pageVo" type="kr.or.ddit.util.model.PageVo"/>
+	<typeAlias alias="ticketVo" type="kr.or.ddit.ticket.model.TicketVo"/>
 	
 	 
 	
@@ -45,5 +46,6 @@
  			<mapper resource="kr/or/ddit/config/db/mapper/post.xml"/>
 			<mapper resource="kr/or/ddit/config/db/mapper/erd.xml"/>
 			<mapper resource="kr/or/ddit/config/db/mapper/team.xml"/>
+			<mapper resource="kr/or/ddit/config/db/mapper/ticket.xml"/>
   </mappers>
 </configuration>

@@ -323,8 +323,7 @@
 					page : page
 				},
 				success : function(data) {
-					var htmlArr = data
-							.split("======================seperator==========================");
+					var htmlArr = data.split("======================seperator==========================");
 					$("#memListTbody").html(htmlArr[0]);
 					$("#pagination").html(htmlArr[1]);
 				}
