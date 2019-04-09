@@ -19,6 +19,7 @@
 
 <body id='my_body'>
 
+    <div id="tmp_canvas" style="display:none;"></div>
 	<div id="drawing_container">
 		<div class="drawing_top">
 			<a id="botton0" class="buttons" href="/">홈</a>
@@ -28,6 +29,8 @@
 			<div id="button4" class="buttons">미니맵 Toggle</div>
             <div id="button5" class="buttons">1대1 연결</div>
 			<div id="button6" class="buttons">1대 다 연결</div>
+            <div id="button20" class="buttons">데이터 저장</div>
+            <div id="button21" class="buttons">데이터 불러오기</div>
 			<div id="line_background" class ="identify_hs">
 				<div id="lineInformation">
 					<div id="identifying">identifying RelationShip</div>
@@ -184,6 +187,48 @@
       	  cardinality = 'multi';
       	  isRRelationClick = true;
       });
+    
+      $('#button20').on('click', function(){
+         var json = stage.toJSON();
+          console.log(json); 
+      });
+    
+      $('#button21').on('click', function(){
+         json = '{"attrs":{"width":849,"height":719,"draggable":true},"className":"Stage","children":[{"attrs":{},"className":"Layer","children":[{"attrs":{"x":12,"y":108,"opacity":0.9,"name":"entity","id":1},"className":"Group","children":[{"attrs":{"width":125.81683349609375,"height":33,"fill":"#000000","stroke":"white","strokeWidth":0,"name":"entity_container"},"className":"Rect"},{"attrs":{"text":"1","name":"giveColor","visible":false,"fill":"black"},"className":"Text"},{"attrs":{"x":3,"y":3,"width":48.05999755859375,"height":20,"name":"entity_logical"},"className":"Rect"},{"attrs":{"x":51.05999755859375,"y":3,"width":71.7568359375,"height":20,"name":"entity_phisical"},"className":"Rect"},{"attrs":{"text":"테이블명","x":3,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_logical_txt"},"className":"Text"},{"attrs":{"text":"TableName1","x":51.05999755859375,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_phisical_txt"},"className":"Text"},{"attrs":{"visible":false,"name":"btn_entity_group"},"className":"Group","children":[{"attrs":{"x":107.81683349609375,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_entity_delete"},"className":"Rect"},{"attrs":{"x":86.81683349609375,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_color"},"className":"Rect"},{"attrs":{"text":"x","x":114.81683349609375,"y":-18.5,"fill":"#ffffff","name":"btn_entity_delete_txt"},"className":"Text"},{"attrs":{"text":"o","x":93.81683349609375,"y":-18.5,"fill":"#ffffff","name":"btn_color_txt"},"className":"Text"},{"attrs":{"x":-1,"y":-22,"width":20,"height":20,"fill":"#FFD403","cornerRadius":5,"name":"btn_pk_add"},"className":"Rect"},{"attrs":{"x":20,"y":-22,"width":20,"height":20,"fill":"#0EB6FF","cornerRadius":5,"name":"btn_col_add"},"className":"Rect"},{"attrs":{"text":"+","x":3,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_pk_add_txt"},"className":"Text"},{"attrs":{"text":"+","x":24,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_col_add_txt"},"className":"Text"}]},{"attrs":{"y":26,"name":"key_group pk_group"},"className":"Group","children":[]},{"attrs":{"name":"key_group fk_group"},"className":"Group","children":[]},{"attrs":{"name":"key_group attr_group"},"className":"Group","children":[]}]},{"attrs":{"x":160,"y":221,"opacity":0.9,"name":"entity","id":4},"className":"Group","children":[{"attrs":{"width":125.81683349609375,"height":33,"fill":"#6d6c27","stroke":"white","strokeWidth":0,"name":"entity_container"},"className":"Rect"},{"attrs":{"text":"0","name":"giveColor","visible":false,"fill":"black"},"className":"Text"},{"attrs":{"x":3,"y":3,"width":48.05999755859375,"height":20,"name":"entity_logical"},"className":"Rect"},{"attrs":{"x":51.05999755859375,"y":3,"width":71.7568359375,"height":20,"name":"entity_phisical"},"className":"Rect"},{"attrs":{"text":"테이블명","x":3,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_logical_txt"},"className":"Text"},{"attrs":{"text":"TableName4","x":51.05999755859375,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_phisical_txt"},"className":"Text"},{"attrs":{"visible":false,"name":"btn_entity_group"},"className":"Group","children":[{"attrs":{"x":107.81683349609375,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_entity_delete"},"className":"Rect"},{"attrs":{"x":86.81683349609375,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_color"},"className":"Rect"},{"attrs":{"text":"x","x":114.81683349609375,"y":-18.5,"fill":"#ffffff","name":"btn_entity_delete_txt"},"className":"Text"},{"attrs":{"text":"o","x":93.81683349609375,"y":-18.5,"fill":"#ffffff","name":"btn_color_txt"},"className":"Text"},{"attrs":{"x":-1,"y":-22,"width":20,"height":20,"fill":"#FFD403","cornerRadius":5,"name":"btn_pk_add"},"className":"Rect"},{"attrs":{"x":20,"y":-22,"width":20,"height":20,"fill":"#0EB6FF","cornerRadius":5,"name":"btn_col_add"},"className":"Rect"},{"attrs":{"text":"+","x":3,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_pk_add_txt"},"className":"Text"},{"attrs":{"text":"+","x":24,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_col_add_txt"},"className":"Text"}]},{"attrs":{"y":26,"name":"key_group pk_group"},"className":"Group","children":[]},{"attrs":{"name":"key_group fk_group"},"className":"Group","children":[]},{"attrs":{"name":"key_group attr_group"},"className":"Group","children":[]}]},{"attrs":{"x":208,"y":49,"opacity":0.9,"name":"entity","id":2},"className":"Group","children":[{"attrs":{"width":125.81683349609375,"height":33,"fill":"#000000","stroke":"white","strokeWidth":0,"name":"entity_container"},"className":"Rect"},{"attrs":{"text":"1","name":"giveColor","visible":false,"fill":"black"},"className":"Text"},{"attrs":{"x":3,"y":3,"width":48.05999755859375,"height":20,"name":"entity_logical"},"className":"Rect"},{"attrs":{"x":51.05999755859375,"y":3,"width":71.7568359375,"height":20,"name":"entity_phisical"},"className":"Rect"},{"attrs":{"text":"테이블명","x":3,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_logical_txt"},"className":"Text"},{"attrs":{"text":"TableName2","x":51.05999755859375,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_phisical_txt"},"className":"Text"},{"attrs":{"visible":false,"name":"btn_entity_group"},"className":"Group","children":[{"attrs":{"x":107.81683349609375,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_entity_delete"},"className":"Rect"},{"attrs":{"x":86.81683349609375,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_color"},"className":"Rect"},{"attrs":{"text":"x","x":114.81683349609375,"y":-18.5,"fill":"#ffffff","name":"btn_entity_delete_txt"},"className":"Text"},{"attrs":{"text":"o","x":93.81683349609375,"y":-18.5,"fill":"#ffffff","name":"btn_color_txt"},"className":"Text"},{"attrs":{"x":-1,"y":-22,"width":20,"height":20,"fill":"#FFD403","cornerRadius":5,"name":"btn_pk_add"},"className":"Rect"},{"attrs":{"x":20,"y":-22,"width":20,"height":20,"fill":"#0EB6FF","cornerRadius":5,"name":"btn_col_add"},"className":"Rect"},{"attrs":{"text":"+","x":3,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_pk_add_txt"},"className":"Text"},{"attrs":{"text":"+","x":24,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_col_add_txt"},"className":"Text"}]},{"attrs":{"y":26,"name":"key_group pk_group"},"className":"Group","children":[]},{"attrs":{"name":"key_group fk_group"},"className":"Group","children":[]},{"attrs":{"name":"key_group attr_group"},"className":"Group","children":[]}]},{"attrs":{"x":240,"y":162,"opacity":0.9,"name":"entity","id":3},"className":"Group","children":[{"attrs":{"width":125.81683349609375,"height":33,"fill":"#6d6c27","stroke":"white","strokeWidth":0,"name":"entity_container"},"className":"Rect"},{"attrs":{"text":"0","name":"giveColor","visible":false,"fill":"black"},"className":"Text"},{"attrs":{"x":3,"y":3,"width":48.05999755859375,"height":20,"name":"entity_logical"},"className":"Rect"},{"attrs":{"x":51.05999755859375,"y":3,"width":71.7568359375,"height":20,"name":"entity_phisical"},"className":"Rect"},{"attrs":{"text":"테이블명","x":3,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_logical_txt"},"className":"Text"},{"attrs":{"text":"TableName3","x":51.05999755859375,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_phisical_txt"},"className":"Text"},{"attrs":{"visible":false,"name":"btn_entity_group"},"className":"Group","children":[{"attrs":{"x":107.81683349609375,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_entity_delete"},"className":"Rect"},{"attrs":{"x":86.81683349609375,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_color"},"className":"Rect"},{"attrs":{"text":"x","x":114.81683349609375,"y":-18.5,"fill":"#ffffff","name":"btn_entity_delete_txt"},"className":"Text"},{"attrs":{"text":"o","x":93.81683349609375,"y":-18.5,"fill":"#ffffff","name":"btn_color_txt"},"className":"Text"},{"attrs":{"x":-1,"y":-22,"width":20,"height":20,"fill":"#FFD403","cornerRadius":5,"name":"btn_pk_add"},"className":"Rect"},{"attrs":{"x":20,"y":-22,"width":20,"height":20,"fill":"#0EB6FF","cornerRadius":5,"name":"btn_col_add"},"className":"Rect"},{"attrs":{"text":"+","x":3,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_pk_add_txt"},"className":"Text"},{"attrs":{"text":"+","x":24,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_col_add_txt"},"className":"Text"}]},{"attrs":{"y":26,"name":"key_group pk_group"},"className":"Group","children":[]},{"attrs":{"name":"key_group fk_group"},"className":"Group","children":[]},{"attrs":{"name":"key_group attr_group"},"className":"Group","children":[]}]}]},{"attrs":{},"className":"Layer","children":[]},{"attrs":{},"className":"Layer","children":[]},{"attrs":{},"className":"Layer","children":[{"attrs":{"lineCap":"round","linerJoin":"round","name":"29","lastPos":49,"stroke":"#e08ba3","points":[270.9084167480469,82,270.9084167480469,92,265.9084167480469,92,275.9084167480469,92,270.9084167480469,92,302.9084167480469,147,302.9084167480469,152,297.9084167480469,152,307.9084167480469,152,302.9084167480469,152,302.9084167480469,162]},"className":"Line"}]}]}';
+          
+          stage2 = Konva.Node.create(json, 'tmp_canvas');
+          
+          //stage2.children.moveTo(stage);
+          //stage2.find(".entity").moveTo(layer);
+          
+          
+          
+
+          
+          stage2.children.each(function(item1,i){
+              
+              while(item1.children.length > 0){
+                    
+                  
+                  item1.children[0].moveTo(stage.children[i]);
+                  
+                  //stage.children[i].add(item1.children[0]);
+                  
+                  console.log("객체 추가");
+
+                }
+              
+          });
+       
+          
+          //stage2.children[0].children.movoTo(stage.children[0])
+          
+          
+          
+          
+          
+      });
+       var stage2;
       
       //identifying을 클릭했을 때
         $("#identifying").on('click', function(){
@@ -297,6 +342,9 @@
           
 		  mini_stage.add(mini_layer);
           stage.add(layer).add(layer2);
+        stage.add(temp_arrow_layer);
+        stage.add(relationLine_layer);
+          
           
           mini_layer.draw();
           layer.draw();
@@ -304,13 +352,17 @@
       }  
         
     
+       temp_arrow_layer = new Konva.Layer();
+       relationLine_layer = new Konva.Layer();
+       var relationSwitchFlag = true;
+    
       init_ERD();
  
 
         
 //        테이블 생성
         function entityAdd(circlePos){
-            
+
             color1_num = Math.floor(Math.random() * 6);
             //color1_num = 3;
             
@@ -318,7 +370,8 @@
                 x: circlePos.x,
                 y: circlePos.y,
                 opacity: 0.9,
-                name: 'entity'
+                name: 'entity',
+                id: newEntity_id()
             });
             
             var giveColor = new Konva.Text({
@@ -563,7 +616,7 @@
              	 var first_Entity = e.target.findAncestor('.entity'); // 첫번째 객체를 얻어옴 (내가 클릭한 객체)
              	 
              	entityMouseUp(first_Entity,true); 
-             	
+             	relationLine_layer.draw();
              }); 
              
           
@@ -606,9 +659,7 @@
              }); // move end
         }
         //entity 생성 종료
-     temp_arrow_layer = new Konva.Layer();
-        relationLine_layer = new Konva.Layer();
-        var relationSwitchFlag = true;
+       
         
         
     
@@ -1115,5 +1166,6 @@
 </script>
 
 </html>
+
 
 

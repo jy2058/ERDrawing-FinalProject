@@ -14,6 +14,21 @@
         return entity.findOne('.attr_group').find('.attr_phisical').length + 1;
     }
 
+    //entity생성 ID생성 함수
+    function newEntity_id(){
+        var arr_Entity_num = layer.find('.entity');
+        var new_num = 0;
+        
+        if(arr_Entity_num.length > 0){
+           arr_Entity_num.each(function(item){
+               new_num = new_num < item.id() ? item.id() : new_num;
+           });
+        }
+
+        return new_num+1;
+        
+    }
+
 
 
 

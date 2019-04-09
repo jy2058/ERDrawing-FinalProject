@@ -146,7 +146,6 @@ function makeArrow(e) {
 
 		console.log('create temp_arrow');
 		temp_arrow_layer.add(temp_arrow);
-		stage.add(temp_arrow_layer);
 
 		console.log('adjustPoint 호출');
 
@@ -775,7 +774,8 @@ function getAngle(compareX,compareY) { // 두 점 사이의 각도를 구하는 
 	}
 	 
 	 relationLine_layer.add(relationLine);
-	 stage.add(relationLine_layer);
+     relationLine_layer.draw();
+	 
 };
 
 
