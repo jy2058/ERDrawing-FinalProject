@@ -3,11 +3,11 @@
  */
 
 
-// entity배열중에  중에 _id가 일치하는entity를 리턴하는  메서드
+// entity배열중에  중에 id()가 일치하는entity를 리턴하는  메서드
 function findEntity(findEntityArr, id){
 	id = parseInt(id);
 	for(var i =0; i<findEntityArr.length; i++){
-		if(findEntityArr[i]._id == id){
+		if(findEntityArr[i].id() == id){
 			return findEntityArr[i]; 
 		}
 	}
@@ -51,12 +51,12 @@ function sameEntityRelationLineaboutCreate(arr_XY,type){
 	var cnt =0;
 	for(var i = 0;i<relationLine_layer.children.length; i++){
 		
-		if(relationLine_layer.children[i].attrs.name == firstEntity._id
-				&& relationLine_layer.children[i].attrs.lastPos == secondEntity._id){
+		if(relationLine_layer.children[i].attrs.name == firstEntity.id()
+				&& relationLine_layer.children[i].attrs.lastPos == secondEntity.id()){
 			cnt++;
 		}
-		else if(relationLine_layer.children[i].attrs.name== secondEntity._id
-				&& relationLine_layer.children[i].attrs.lastPos == firstEntity._id){
+		else if(relationLine_layer.children[i].attrs.name== secondEntity.id()
+				&& relationLine_layer.children[i].attrs.lastPos == firstEntity.id()){
 			cnt++;
 		}
 	}
@@ -88,7 +88,7 @@ function sameEntityRelationLine(arr_XY,arr_line_To,type){
 	//전체 관계선에서 자기자신과 같은 객체를 참조하는 관계선이 있는 지 검사한다.  //자기자신도 포함되므로 무조건 1개이상 나옴
 	for(var i = 0;i<relationLine_layer.children.length; i++){
 		var temp_i;
-		if(arr_line_To.parent.children[arr_line_To.index]._id ==relationLine_layer.children[i]._id){ //자기자신과 만났을 때 
+		if(arr_line_To.parent.children[arr_line_To.index].id() ==relationLine_layer.children[i].id()){ //자기자신과 만났을 때 
 			console.log('자기자신을 참조');
 			temp_i = i;
 			continue;
@@ -468,7 +468,7 @@ function getAngle(compareX,compareY) { // 두 점 사이의 각도를 구하는 
  					continue;	
  					}
  					}
- 					var temp_line = findLine(arr_first_outputLine,arr_first_outputEntity[i]._id);
+ 					var temp_line = findLine(arr_first_outputLine,arr_first_outputEntity[i].id());
  					var startXYendXY = extractLineXY(temp_line); //해당 객체의 좌표정보를 얻어온다.
  					
  					 var result = calculatestartXY(arr_first_totalEntity,j);
@@ -490,7 +490,7 @@ function getAngle(compareX,compareY) { // 두 점 사이의 각도를 구하는 
  			for(var j=0; j<arr_first_totalEntity.length; j++){
  				if(arr_first_inputEntity[i]  == arr_first_totalEntity[j]){
  					
- 					var temp_line = findLineAtName(arr_first_inputLine,arr_first_inputEntity[i]._id);
+ 					var temp_line = findLineAtName(arr_first_inputLine,arr_first_inputEntity[i].id());
  					var startXYendXY = extractLineXY(temp_line); //해당 객체의 좌표정보를 얻어온다.
  					
  					var result = calculatestartXY(arr_first_totalEntity,j);
@@ -514,7 +514,7 @@ function getAngle(compareX,compareY) { // 두 점 사이의 각도를 구하는 
  					//서로 같은 엔터티에서 참조할 경우 예외가 일어날 확률이 높다...
  					
  					
- 					var temp_line = findLine(arr_second_outputLine,arr_second_outputEntity[i]._id);
+ 					var temp_line = findLine(arr_second_outputLine,arr_second_outputEntity[i].id());
  					var startXYendXY = extractLineXY(temp_line); //해당 객체의 좌표정보를 얻어온다.
  					
  					 var result = calculatestartXY(arr_second_totalEntity,j);
@@ -550,7 +550,7 @@ function getAngle(compareX,compareY) { // 두 점 사이의 각도를 구하는 
  	 					continue;	
  	 					}
  					}
- 					var temp_line = findLineAtName(arr_second_inputLine,arr_second_inputEntity[i]._id);
+ 					var temp_line = findLineAtName(arr_second_inputLine,arr_second_inputEntity[i].id());
  					var startXYendXY = extractLineXY(temp_line); //해당 객체의 좌표정보를 얻어온다.
  					
  					var result = calculatestartXY(arr_second_totalEntity,j);
@@ -592,14 +592,14 @@ function getAngle(compareX,compareY) { // 두 점 사이의 각도를 구하는 
 	endX   = secondEntity.x();
 	endY   = secondEntity.y();
 	
+		
 	// 라인객체 생성 좌표값은 switch에서 결정
 	 relationLine = new Konva.Line({  
-		 // stroke :'red',
-		 strokeWidth:2,
+		 	strokeWidth:2,
 			lineCap : 'round',
 			linerJoin: 'round',
-			name:firstEntity._id+'',   // 첫번째 엔터티에 관한 ID값을 참조
-			lastPos : secondEntity._id, // 두번째 엔터티에 관한 ID값을 참조
+			name:firstEntity.id()+'',   // 첫번째 엔터티에 관한 ID값을 참조
+			lastPos : secondEntity.id() // 두번째 엔터티에 관한 ID값을 참조
 		});
 	
 	switch(Math.floor(degree/90)){
@@ -1015,7 +1015,7 @@ function deduplicationLine(firstEntity,secondEntity){
 //엔티티를 클릭했을 경우(mouseup) 엔티티와 관계된 관계선들을 보여주는 메서드
 //보여주는 작업을 하기전에 entity들의 위치를 재조정 한다.
 function entityMouseUp(first_Entity,flag){
-	 var arr_line_To= relationLine_layer.find('.'+first_Entity._id);   //첫번째 객체가 시작점인 라인객체의 배열을 얻어옴
+	 var arr_line_To= relationLine_layer.find('.'+first_Entity.id());   //첫번째 객체가 시작점인 라인객체의 배열을 얻어옴
 	 var findEntityArr  = stage.find('.entity');
 	 var second_Entity;
 	 var arr_second_Entity = new Array();
@@ -1039,7 +1039,7 @@ function entityMouseUp(first_Entity,flag){
 	
  	//내가 클릭한 entity (first_Entity)가 관계선의 도착점(From) 일 경우에 그와 연관된 관계선의 위치 정리
 	 //관계선(line)에서 pos값에 클릭한 객체의 아이디가 있는 라인객체배열을 가져와야함
-	 var arr_line_From = findLineRefPos(first_Entity._id);
+	 var arr_line_From = findLineRefPos(first_Entity.id());
 	
 	 for(var i=0; i<arr_line_From.length; i++){
 		var seconndEntityId = arr_line_From[i].attrs.name//그 선 객체에서 name에 숨어있는객체 가져온다.
@@ -1066,4 +1066,41 @@ function entityMouseUp(first_Entity,flag){
 	
 		relationLine_layer.draw();
 	
+}
+var id=1230;
+
+function moveColumnIdentifying(){
+	console.log('test');
+	
+	var pk=firstEntity.findOne('.pk_group').children;
+	var secondEntityIdx = secondEntity.findOne('.fk_group').children.length;
+	console.log('secondEntity fk 갯수'+secondEntityIdx);
+	
+	//pk를 다 가져온다.
+	for(var i =0; i<pk.length; i++){
+	//fk 추가
+	fn_attributeAdd("fk_group",secondEntity);
+	
+	//위에서 추가한 fk
+	var fk = firstEntity.findOne('.pk_group').children[secondEntityIdx];
+	secondEntityIdx++;
+	
+	//pk 값 fk로 복사
+	copyColumnText(pk[i],fk);
+	
+	}
+	  entity_resize();
+	  layer.draw();
+}
+
+function moveColumnNonIdentifying(){
+	fn_attributeAdd("attr_group",secondEntity);
+	
+    entity_resize();
+	layer.draw();
+}
+
+function copyColumnText(pk,fk){
+	console.log('pk:'+pk);
+	console.log('fk:'+fk);
 }

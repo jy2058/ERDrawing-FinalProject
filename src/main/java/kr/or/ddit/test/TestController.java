@@ -129,6 +129,11 @@ public class TestController {
 		return "drawing/erdDrawing";
 	}
 	
+	@RequestMapping(path="yhs")
+	public String erdDrawingYhs(){
+		return "drawing/erdDrawingTestYHS";
+	}
+	
 	
 	
 	// 모달 페이지 변경 메소드 
