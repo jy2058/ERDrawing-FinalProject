@@ -28,7 +28,7 @@
 				memlang,
 				memtel,
 				memperiod,
-				memindt,
+				menindt,
 				memblackflag,
 				memEmailDiv
 		) values (
