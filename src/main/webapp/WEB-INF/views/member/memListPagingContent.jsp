@@ -300,7 +300,7 @@
 
 	//삭제후 Ajax처리
 	function getMemListPageListHtmlDel(page, memId) {
-		$.ajax({
+		$.ajax({ 
 				url : "${cp}/member/memberDel",
 				data : {
 					memId : memId,
