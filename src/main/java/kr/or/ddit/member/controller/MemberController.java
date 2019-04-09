@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -276,6 +275,7 @@ logger.debug("name=={}",memVo.getMemId());
 
 			List<MemberVo> memList = memberService.selectMemPagingList(paging);
 
+
 			model.addAttribute("memList", memList);
 			model.addAttribute("paging", paging);
 			 
@@ -293,7 +293,7 @@ logger.debug("name=={}",memVo.getMemId());
 		Map<String, Object> myErdTagMap = erdService.getMyErdTagMap(memId);
 		model.addAllAttributes(myErdTagMap);
 		 
-		 return "member/memberErdPage";
+		 return "memberErdPage";
 	 }
 	 
 	 
