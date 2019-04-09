@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -23,12 +24,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.api.mail.IMailService;
 import kr.or.ddit.erd.service.IErdService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
+import kr.or.ddit.post.model.ReportVo;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
 import kr.or.ddit.util.model.PageVo;
 
@@ -208,10 +211,10 @@ public class MemberController {
 	 
 	 @RequestMapping("/memberDel")
 	 public String memberDel(@RequestParam(name = "page", defaultValue = "1") int page, Model model,MemberVo memVo,RedirectAttributes ra){
-logger.debug("name=={}",memVo.getMemId());
+		 	logger.debug("name=={}",memVo.getMemId());
 				MemberVo vo = memberService.selectMember(memVo.getMemId());
 		 if(vo!=null){
-			 vo.setMemBlackFlag("F");
+			 vo.setMemCancelFlag("T");
 		 int delCnt =memberService.updateMemberDel(vo);
 		 	if(delCnt==1){
 		 	ra.addFlashAttribute("msg", "삭제가 완료 되었습니다.");	
@@ -268,9 +271,16 @@ logger.debug("name=={}",memVo.getMemId());
 	 @RequestMapping("/memModalModify")
 	    public String memModalModify(@RequestParam(name = "page", defaultValue = "1") int page, Model model,MemberVo memVo) {
 		 logger.debug("====ssss{}",memVo);
-		 memberService.updateMemberInfo(memVo);
 		 
+		 if(memVo.getMemPass()==null){
+			MemberVo vo =memberService.selectMember(memVo.getMemId());
+			memVo.setMemPass(vo.getMemPass());
+			 memberService.updateMemberInfo(memVo);
+		 }else{
+		 memberService.updateMemberInfo(memVo);
+		 }
 		 PageVo paging = new PageVo(); // 페이징 처리를 위해 페이징 객체 생성 Paging 이라는 VO가 존재함
+
 			paging.setPageNo(page);
 			paging.setPageSize(10);
 
@@ -295,6 +305,50 @@ logger.debug("name=={}",memVo.getMemId());
 		 
 		 return "member/memberErdPage";
 	 }
-	 
-	 
+
+	@RequestMapping("/memberModify")
+	public String memberModify(MultipartFile profileImg, HttpSession session, Model model, MemberVo memVo,
+			HttpServletRequest req) throws IllegalStateException, IOException {
+		logger.debug("====ssss{}", memVo);
+		logger.debug("====ssss{}", profileImg);
+
+		MemberVo vo = memberService.selectMember(memVo.getMemId());
+
+		String realFilename = vo.getMemImg();
+		if (profileImg.getSize() > 0) {
+			String filename = profileImg.getOriginalFilename();
+			realFilename = "d:\\picture\\" + UUID.randomUUID() + filename;
+
+			profileImg.transferTo(new File(realFilename));
+		}
+		vo.setMemImg(realFilename);
+		vo.setMemNm(memVo.getMemNm());
+		vo.setMemPass(KISA_SHA256.encrypt(memVo.getMemPass()));
+		vo.setMemMail(memVo.getMemMail());
+		memberService.updateMemberInfo(vo);
+		return "redirect:" + req.getContextPath() + "/";
+	}
+
+	@RequestMapping("/memRepotList")
+	public String memRepotList(HttpSession session, Model model, MemberVo memVo, HttpServletRequest req,
+			RedirectAttributes ra) {
+		logger.debug("====ssss{}", memVo);
+		List<ReportVo> reportList = memberService.selectReport(memVo.getMemId());
+		model.addAttribute("reportList", reportList);
+
+		List<String> inDate = new ArrayList<>();
+		for (ReportVo reVo : reportList) {
+
+			SimpleDateFormat sdf = new SimpleDateFormat("yy-MM-ss");
+			inDate.add(sdf.format(reVo.getReportDt()));
+		}
+		model.addAttribute("inDate", inDate);
+		return "jsonView";
+	}
+
 }
+
+
+	 
+	 
+

@@ -207,7 +207,6 @@
 		$("#memListTbody").on("click", ".delImg", function() {
 			if (confirm("정말 삭제하시겠습니까??") == true) {
 				memId = $(this).data("memid");
-				alert(memId + "dd");
 				getMemListPageListHtmlDel(1, memId);
 			} else { //취소
 				return false;
@@ -257,11 +256,13 @@
 				}
 				
 				
+				if($("#reMemPass").disabled == false){
 				if(!/^[a-zA-Z0-9!@#$%^&*()?_~]{6,15}$/.test($("#reMemPass").val()))
 				 { 
 				  alert("비밀번호는 숫자, 영문, 특수문자 조합으로 6~15자리를 사용해야 합니다."); 
 				  return false;
 				 }
+				}
 				
 				
 				
@@ -418,6 +419,7 @@
 				success : function(data) {
 					console.log(data.reportList);
 					console.log(data.inDate);
+					if(data.reportList.length>0){
 					var str ="";
 					for(var i=0; i<data.reportList.length; i++){
 						str += "<tr><td>"+data.reportList[i].fromMemId+"</td>"	+
@@ -429,7 +431,7 @@
 					$("#modalTd").append(str);
 					
 					appends++;
-					
+					}
 					$("#cnt").val(data.reportList[0].cnt);
 				}
 			});
