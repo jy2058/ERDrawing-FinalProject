@@ -148,7 +148,7 @@
         
         $("#button3").on('click', function(){
             
-            
+        
            $('html').css({'cursor':'url(/image/erase.cur), auto'});
            
             
@@ -666,6 +666,8 @@
                	//객체 클릭 했을 때
                    if(allNode.findAncestor('.entity')){
                   	console.log('객체 선택');
+                  	
+                  	$('html').css({'cursor':'default'});
                   	
                   	//identifying을 물어보는 창 생성
                   	$('.identify_hs').css('display','table');
