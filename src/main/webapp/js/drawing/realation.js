@@ -772,10 +772,11 @@ function getAngle(compareX,compareY) { // 두 점 사이의 각도를 구하는 
 	if(!relationType){
 		relationLine.dash([5,5]); //점선으로 바꿈
 	}
-	 
 	 relationLine_layer.add(relationLine);
      relationLine_layer.draw();
-	 
+
+     
+     
 };
 
 
