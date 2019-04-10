@@ -32,6 +32,13 @@ public class ReportServiceImpl implements IReportService {
 		
 		return reportVo;
 	}
+	
+	@Override
+	public int getReportCnt(ReportVo reportVo) {
+		int reportCnt = reportDao.getReportCnt(reportVo);
+		
+		return reportCnt;
+	}
 
 	@Override
 	public int insertReport(ReportVo reportVo) {

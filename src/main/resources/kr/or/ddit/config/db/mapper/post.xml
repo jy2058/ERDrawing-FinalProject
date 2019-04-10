@@ -84,8 +84,6 @@
 		where postNo = #{postNo}
 	</delete>
 	
-
-	
 	<!-- 답글 생성 -->
 	<insert parameterType="postVo" id="insertReply">
 		<selectKey resultType="int" order="BEFORE" keyProperty="postNo">
@@ -138,6 +136,26 @@
 		WHERE POSTNO = #{POSTNO}
 		ORDER BY CMTREGDT DESC
 	</select>
+	
+	<!-- 댓글 페이징 전체 조회 -->
+	<select id="getPagingAllComments" parameterType="pageVo" resultType="commentsVo">
+		select *
+			from
+				(select a.*, rownum rn
+				from
+					(select COMMENTS.*
+						from COMMENTS
+						order by cmtRegDt desc 
+						) a where postNo = #{postNo})
+		where rn between ((#{pageNo}-1)*#{pageSize})+1 and (#{pageNo})*#{pageSize}
+	</select>
+	
+	<!-- 댓글 갯수 -->
+	<select id="getCmtCnt" resultType="Integer" parameterType="Integer">
+		select count(*)
+		from comments
+		where postNo = #{postNo}
+	</select>
 
 	<!-- 댓글 특정 조회 -->
 	<select id="getSelectComments" resultType="commentsVo"
@@ -187,6 +205,13 @@
 		values (#{fromMemId}, #{toMemId}, #{reportReason}, sysdate)
 	</insert>
 	
+	<!-- 신고 조회 -->
+    <select id="getReportCnt" parameterType="reportVo" resultType="int">
+     select count(*)
+	 from report 
+	 where toMemId =#{toMemId} and fromMemId = #{fromMemId}
+    </select>
+	
 	<!-- 신고사유 조회 -->
     <select id="selectReport" parameterType="String" resultType="reportVo">
     select a.* ,
@@ -194,5 +219,6 @@
 	 from report a
 	 where tomemid =#{tomemid}
     </select>
+    
 </mapper>
 
