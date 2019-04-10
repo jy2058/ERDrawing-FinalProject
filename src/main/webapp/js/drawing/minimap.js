@@ -14,6 +14,21 @@
         return entity.findOne('.attr_group').find('.attr_phisical').length + 1;
     }
 
+    //entity생성 ID생성 함수
+    function newEntity_id(){
+        var arr_Entity_num = layer.find('.entity');
+        var new_num = 0;
+        
+        if(arr_Entity_num.length > 0){
+           arr_Entity_num.each(function(item){
+               new_num = new_num < item.id() ? item.id() : new_num;
+           });
+        }
+
+        return new_num+1;
+        
+    }
+
 
 
 
@@ -77,9 +92,12 @@ $(document).ready(function() {
 
 	//미니맵에 사각형을 움직였을 때. 메인 스테이지의 위치를 바꿔주는 메서드
 	function moveMiniStage() {
+		console.log('스테이지 이동')
 		stage.x((mini_rect.x() / -0.048)*stage.scaleX());
 		stage.y((mini_rect.y() / -0.048)*stage.scaleY());
 		layer.draw();
+		relationLine_layer.draw();
+		
 	}
 
 	//메인 스테이지를 드래그로  이동할 때

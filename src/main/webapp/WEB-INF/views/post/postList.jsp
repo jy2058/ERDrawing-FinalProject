@@ -83,18 +83,18 @@
 				</tbody>
 			</table>
 			
-			<form action="${cp}/post/postInsert" method="get">
+			<form id="insertFrm" action="${cp}/post/postInsert" method="get">
 			<c:choose>
 				<c:when test="${boardNo == '1'}">
 					<c:if test="${SESSION_MEMBERVO.memAuth == 'T'}">
 						<input type = "hidden" name="boardNo" value="${boardNo}"> 
-			   			<button type="submit" class="insertBtn btn-default">게시글 등록</button> 
+			   			<button type="button" class="insertBtn btn-default">게시글 등록</button> 
 					</c:if>
 				</c:when>
 				
 				<c:otherwise>
 					<input type = "hidden" name="boardNo" value="${boardNo}"> 
-			   		<button type="submit" class="insertBtn btn-default">게시글 등록</button>
+			   		<button type="button" class="insertBtn btn-default">게시글 등록</button>
 				</c:otherwise>
 			</c:choose>
 			</form>
@@ -176,14 +176,17 @@
 			});
 			
 		      
-			/* //로그인한 아이디가 블랙리스트일때 글쓰기권한 없음
+			//로그인한 아이디가 블랙리스트일때 글쓰기권한 없음
 			$(".insertBtn").click(function() {
-		      var blackMemId = "${SESSION_MEMBERVO.memBlackFlag == 'T'}";
-		    	
-		     	 if(blackMemId=='T'){
-		         alert("sdfsdfsdf")
-		         return;
-		      } */
+		      var blackMemId = "${SESSION_MEMBERVO.memBlackFlag}";
+		      
+		     	//alert(blackMemId);
+		    	 if(blackMemId == 'T'){
+		         	alert("글쓰기 권한이 없습니다.");
+		            return;
+		      } 	
+		      $("#insertFrm").submit();
+		      });
 		});
 	</script>
 		

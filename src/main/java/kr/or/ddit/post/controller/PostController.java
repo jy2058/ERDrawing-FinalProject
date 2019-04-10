@@ -1,5 +1,7 @@
 package kr.or.ddit.post.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -89,6 +91,7 @@ public class PostController {
 	// 게시글 등록 화면
 	@RequestMapping(path = "/postInsert", method = RequestMethod.GET)
 	public String postInsertForm(HttpSession session, Model model, String boardNo) {
+
 		model.addAttribute("boardNo", boardNo);
 
 		return "postInsert";
@@ -149,23 +152,20 @@ public class PostController {
 
 	// 게시글 상세 화면
 	@RequestMapping(path = "/postDetail", method = RequestMethod.GET)
-	public String postDetailForm(Model model, String postNo, String boardNo, CommentLikeVo commentLikeVo) {
+	public String postDetailForm(Model model, String postNo, String boardNo) {
 		model.addAttribute("postNo", postNo);
 		model.addAttribute("boardNo", boardNo);
 		
 		// 업로드 파일 조회
 		List<UploadFileVo> fileList = uploadFileService.getAllFile(postNo);
 		model.addAttribute("fileList", fileList);
+	
 		
-		// 댓글 조회
-		List<CommentsVo> cmtList = commentsService.getAllComments(postNo);
-		model.addAttribute("cmtList", cmtList);
-		
-		if(commentLikeVo.getMemId() != null){
+		/*if(commentLikeVo.getMemId() != null){
 			// 댓글 좋아요 조회
 			List<CommentLikeVo> cmtLikeList = commentLikeService.getSelectCmtLike(commentLikeVo);
 			model.addAttribute("cmtLikeList", cmtLikeList);
-		}
+		}*/
 		
 		PostVo postList = postService.getSelectPost(postNo);
 		model.addAttribute("postList", postList);
@@ -269,9 +269,23 @@ public class PostController {
 		return "redirect:/post/postList";
 	}
 	
+	// 게시글 중복신고 체크(ajax)
+	@RequestMapping(path = "/reportCheckId", method = RequestMethod.GET) //아이디 중복 체크
+	public String checkId(ReportVo reportVo, Model model){
+		
+		int checkId = reportService.getReportCnt(reportVo);
+		
+		if(checkId == 0){
+			model.addAttribute("check", "OK");
+		}else{
+			model.addAttribute("check", "NO");
+		}
+		return "jsonView";
+	}
+	
 	// 게시글 신고
 	@RequestMapping(path = "/postReport", method = RequestMethod.GET)
-	public String postReport(Model model, RedirectAttributes ra, String postNo, String fromMemId, String toMemId, String reason) {
+	public String postReport(Model model, RedirectAttributes ra, int postNo, String fromMemId, String toMemId, String reason) {
 		model.addAttribute("postNo", postNo);
 		
 		ReportVo reportVo = new ReportVo(); 
@@ -279,51 +293,76 @@ public class PostController {
 		reportVo.setToMemId(toMemId);
 		reportVo.setReportReason(reason);
 		
-		int insertCnt = reportService.insertReport(reportVo);
-
-		if (insertCnt > 0) {
-			model.addAttribute("msg", "해당 게시글이 신고되었습니다.");
+		int reportCnt = reportService.getReportCnt(reportVo);
+		
+		if(reportCnt <= 0){
+			reportCnt = reportService.insertReport(reportVo);
 		}
 		
 		ra.addAttribute("postNo", postNo);
 		return "redirect:/post/postDetail";
 	}
 	
+	// 댓글 조회 (ajax)
+	@RequestMapping(path = "/listCmt", method = RequestMethod.GET)
+	public String listCmt(@RequestParam(name = "page", defaultValue = "1") int page, Model model, String postNo) {
+		model.addAttribute("postNo", postNo);
+		
+		int intPostNo = Integer.parseInt(postNo);
+		
+		PageVo paging = new PageVo(); // 페이징 처리를 위해 페이징 객체 생성 Paging이라는 VO가 존재함
+		paging.setPageNo(page);
+		paging.setPageSize(10);
+		paging.setPostNo(intPostNo);
+		
+		List<CommentsVo> cmtList = commentsService.getPagingAllComments(paging);
+
+		model.addAttribute("cmtList", cmtList);
+		model.addAttribute("paging", paging);
+		return "post/postDetailHtml";
+	}
 	
 	// 댓글 등록
 	@RequestMapping(path = "/insertCmt", method = RequestMethod.GET)
-	public String insertCmt(CommentsVo commentsVo, Model model, String memId, String postNo) {
+	public String insertCmt( Model model, String memId, String postNo, String cmtContent) {
 		model.addAttribute("postNo", postNo);
 		model.addAttribute("memId", memId);
-
+		model.addAttribute("cmtContent", cmtContent);
+			
+		int intPostNo = Integer.parseInt(postNo);
+		
+		//(seq_cmtNo.nextval, #{cmtContent}, sysdate, 'T', #{memId}, #{postNo})
+		CommentsVo commentsVo = new CommentsVo();
+		commentsVo.setCmtContent(cmtContent);
+		commentsVo.setMemId(memId);
+		commentsVo.setPostNo(intPostNo);
+		
 		int insertCnt = commentsService.insertComments(commentsVo);
+		
+		List<CommentsVo> cmtList = commentsService.getAllComments(postNo);
+		model.addAttribute("cmtList", cmtList);
 
-		if (insertCnt > 0) {
-			model.addAttribute("msg", "댓글을 정상 등록되었습니다.");
-		}
-		return "redirect:/post/postDetail";
+		return "post/postDetailHtml";
 	}
-	
-	// 댓글 삭제
+		
+	// 댓글 삭제 (ajax)
 	@RequestMapping(path = "/deleteCmt", method = RequestMethod.GET)
 	public String deleteCmt(Model model, String postNo, String cmtNo) {
 		model.addAttribute("postNo", postNo);
 		model.addAttribute("cmtNo", cmtNo);
-
+		
 		int deleteCnt = commentsService.deleteComments(cmtNo);
+		
+		List<CommentsVo> cmtList = commentsService.getAllComments(postNo);
+		model.addAttribute("cmtList", cmtList);
 
-		if (deleteCnt == 1) {
-			model.addAttribute("msg", "댓글이 삭제 되었습니다.");	
-		} else {
-			model.addAttribute("msg", "댓글 삭제에 실패했습니다.");
-		}
-		return "redirect:/post/postDetail";
+		return "post/postDetailHtml";
 	}
 	
-	// 댓글 좋아요
-	@RequestMapping(path = "/likeCmt", method = RequestMethod.POST)
+	// 댓글 좋아요 (ajax)
+	@RequestMapping(path = "/likeCmt", method = RequestMethod.GET)
 	public String likeCmt(int cmtNo, String memId, String postNo, Model model, RedirectAttributes ra) {
-	
+		
 		model.addAttribute("cmtNo", cmtNo);
 		model.addAttribute("memId", memId);
 		model.addAttribute("postNo", postNo);
@@ -334,15 +373,18 @@ public class PostController {
 		
 		int cmtLikeCnt = 0;
 
-		List<CommentLikeVo> cmtLikeLst =  commentLikeService.getSelectCmtLike(commentLikeVo);
-		if( cmtLikeLst.size() <= 0 ) {
+		List<CommentLikeVo> cmtLikeList =  commentLikeService.getSelectCmtLike(commentLikeVo);
+		if( cmtLikeList.size() <= 0 ) {
 			cmtLikeCnt = commentLikeService.insertCmtLike(commentLikeVo);
 		} else {
 			cmtLikeCnt = commentLikeService.deleteCmtLike(commentLikeVo);
 		}
 		
+		List<CommentsVo> cmtList = commentsService.getAllComments(postNo);
+		model.addAttribute("cmtList", cmtList);
+		
 		ra.addAttribute("postNo", postNo);
-		return "redirect:/post/postDetail";
+		return "post/postDetailHtml";
 	}
 	
 	// 첨부파일 다운로드

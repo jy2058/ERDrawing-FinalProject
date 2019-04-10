@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
+
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -10,12 +12,14 @@
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://unpkg.com/konva@3.2.0/konva.min.js"></script>
 <script src="/js/drawing/minimap.js"></script>
+<script src="/js/drawing/attribute.js"></script>
+<script src="/js/drawing/style.js"></script>
 <script src="/js/drawing/realation.js"></script>
-
 </head>
 
 <body id='my_body'>
-	<!--http://localhost/yhs  -->
+
+    <div id="tmp_canvas" style="display:none;"></div>
 	<div id="drawing_container">
 		<div class="drawing_top">
 			<a id="botton0" class="buttons" href="/">홈</a>
@@ -23,47 +27,120 @@
 			<div id="button2" class="buttons">확대/축소 초기화</div>
 			<div id="button3" class="buttons">테이블 추가하기</div>
 			<div id="button4" class="buttons">미니맵 Toggle</div>
-			<div id="button5" class="buttons">1대1 연결</div>
+            <div id="button5" class="buttons">1대1 연결</div>
 			<div id="button6" class="buttons">1대 다 연결</div>
-			<div id="identifying" class ="identify_hs">identifying RelationShip</div>
-			<div id="nonidentifying" class ="identify_hs">Non - identifying RelationShip</div>
+            <div id="button20" class="buttons">데이터 저장</div>
+            <div id="button21" class="buttons">데이터 불러오기</div>
+			<div id="line_background" class ="identify_hs">
+				<div id="lineInformation">
+					<div id="identifying">identifying RelationShip</div>
+					<div id="nonidentifying">Non - identifying RelationShip</div>		
+				</div>
+			</div>
 		</div>
-		<div id="container_mini"></div>
+	<div id="container_mini"></div>
+		
+        <div class="drawing_box">
 
-		<div class="drawing_box">
+            <session class="drawing_left drawing_pannel">
+                L
+            </session>
 
-			<session class="drawing_left drawing_pannel"> L </session>
+            <session class="drawing_right drawing_pannel">
+                R
+            </session>
 
-			<session class="drawing_right drawing_pannel"> R </session>
+            <session class="drawing_bottom drawing_pannel">
+                
+                <label><input type="checkbox" value="attr_logical" class="test_check" checked> 논리 켜기/끄기</label>
+                 <label><input type="checkbox" value="attr_phisical" class="test_check" checked> 물리 켜기/끄기</label>
+                
+                <label><input type="checkbox" value="attr_domain" class="test_check" checked> DOMAIN</label>
+                 <label><input type="checkbox" value="attr_type" class="test_check" checked> TYPE</label>
+                
+                
+                <label><input type="checkbox" value="attr_null" class="test_check" checked> NULL</label>
+                <label><input type="checkbox" value="attr_default" class="test_check" checked> DEFAULT</label>
+                <label><input type="checkbox" value="attr_comment" class="test_check" checked> COMMENT</label>
+                 
+            </session>
 
-			<session class="drawing_bottom drawing_pannel"> B </session>
+            <session class="drawing_content drawing_pannel">
+                <div id="container_Shin"></div>
+            </session>
 
-			<session class="drawing_content drawing_pannel">
-			<div id="container_Shin"></div>
-			</session>
-
-		</div>
-	</div>
-
+        </div>
+    </div>
+    
 </body>
 
 
-
+        
 
 
 
 <script>
+        
+    
+    //속성 visible 기본값 설정
+    var visible_save = {"attr_logical":true,
+                        "attr_phisical":true,
+                        "attr_domain":true,
+                        "attr_type":true,
+                        "attr_null":false,
+                        "attr_default":false,
+                        "attr_comment":false};
+    
+    
+    //체크박스 초기화
+    $(".test_check").each(function(s){
+        var setInit_Value = visible_save[$(this).val()];
+       $(this).prop("checked",setInit_Value);
+    });
+    
+    //체크박스 선택 이벤트
+    $(".test_check").on("change",function(changes){
+        
+        check_name = $(this).val();
+        if($(this).prop("checked")){
+            
+            stage.find("."+check_name).each(function(get){
+                get.parent.attrs.visible = true;
+                visible_save[check_name] = true;
+            });
+        }else{
+        
+            stage.find("."+check_name).each(function(get){
+                get.parent.attrs.visible = false;
+                visible_save[check_name] = false;
+            });
+        }
 
+
+        layer.find('.entity').each(function(z){
+            entity = z;
+            stageClick();
+        });
+        
+        stageClick(0);
+        
+    });
+ 
+   
+    
+
+        //버튼 이벤트
         $("#button1").on('click', function(){
            alert(textNode.text());
         });
         $("#button2").on('click', function(){
+            
         	//미니맵 빨간 사각형 초기화
-        	 console.log('mini_width/3'+mini_width/3);
-             mini_rect.x(0),
+        	
+            mini_rect.x(0),
   			mini_rect.y(0),
-  			mini_rect.width(mini_width/3),
-  			mini_rect.height(mini_height/2)
+  			mini_rect.width(screenWidth*0.048),
+  			mini_rect.height(screenHeight*0.048)
   			
   			mini_layer.draw();
              
@@ -74,12 +151,11 @@
         
         $("#button3").on('click', function(){
             
-            
+        
            $('html').css({'cursor':'url(/image/erase.cur), auto'});
            
             
             stage.on("click", function(){
-            	console.log('스테이지선택??');
                 // what is transform of parent element?
                 var transform = layer.getAbsoluteTransform().copy();
 
@@ -91,7 +167,7 @@
               entityAdd(circlePos);
                 
                 
-              $('html').css({'cursor':'Default'});
+                $('html').css({'cursor':'default'});
                 
                  //stage.off('click');
 
@@ -99,39 +175,93 @@
         });
         
         //관계 연결선 1대 1
-          $("#button5").on('click', function(){
-        	  $('html').css({'cursor':'url(/image/erase.cur), auto'});
-        	  cardinality = 'single';
-        	  isRRelationClick = true;
-        });
+        $("#button5").on('click', function(){
+      	  $('html').css({'cursor':'url(/image/erase.cur), auto'});
+      	  cardinality = 'single';
+      	  isRRelationClick = true;
+      });
+      
+      //관계 연결선 1대 다
+        $("#button6").on('click', function(){
+      	  $('html').css({'cursor':'url(/image/erase.cur), auto'});
+      	  cardinality = 'multi';
+      	  isRRelationClick = true;
+      });
+    
+      $('#button20').on('click', function(){
+         var json = stage.toJSON();
+          console.log(json); 
+      });
+    
+      $('#button21').on('click', function(){
+    	  //제이슨불러오기 데이터
+         json = '{"attrs":{"width":1200,"height":498,"draggable":true},"className":"Stage","children":[{"attrs":{},"className":"Layer","children":[{"attrs":{"x":163,"y":120,"opacity":0.9,"name":"entity","id":1},"className":"Group","children":[{"attrs":{"width":283.064453125,"height":79,"fill":"#29315c","stroke":"white","strokeWidth":0,"name":"entity_container"},"className":"Rect"},{"attrs":{"text":"5","name":"giveColor","visible":false,"fill":"black"},"className":"Text"},{"attrs":{"x":3,"y":3,"width":54,"height":20,"name":"entity_logical"},"className":"Rect"},{"attrs":{"x":208.3076171875,"y":3,"width":71.7568359375,"height":20,"name":"entity_phisical"},"className":"Rect"},{"attrs":{"text":"테이블명","x":3,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_logical_txt"},"className":"Text"},{"attrs":{"text":"TableName1","x":208.3076171875,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_phisical_txt"},"className":"Text"},{"attrs":{"visible":false,"name":"btn_entity_group"},"className":"Group","children":[{"attrs":{"x":265.064453125,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_entity_delete"},"className":"Rect"},{"attrs":{"x":244.064453125,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_color"},"className":"Rect"},{"attrs":{"text":"x","x":272.064453125,"y":-18.5,"fill":"#ffffff","name":"btn_entity_delete_txt"},"className":"Text"},{"attrs":{"text":"o","x":251.064453125,"y":-18.5,"fill":"#ffffff","name":"btn_color_txt"},"className":"Text"},{"attrs":{"x":-1,"y":-22,"width":20,"height":20,"fill":"#FFD403","cornerRadius":5,"name":"btn_pk_add"},"className":"Rect"},{"attrs":{"x":20,"y":-22,"width":20,"height":20,"fill":"#0EB6FF","cornerRadius":5,"name":"btn_col_add"},"className":"Rect"},{"attrs":{"text":"+","x":3,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_pk_add_txt"},"className":"Text"},{"attrs":{"text":"+","x":24,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_col_add_txt"},"className":"Text"}]},{"attrs":{"y":26,"name":"key_group pk_group"},"className":"Group","children":[{"attrs":{"x":3,"name":"attribute"},"className":"Group","children":[{"attrs":{"width":277.064453125,"height":26,"fill":"#1a133e","name":"attr_container"},"className":"Rect"},{"attrs":{"x":3,"y":3,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":66.84228515625,"height":20,"fill":"#3e448d","name":"attr_background attr_key"},"className":"Rect"},{"attrs":{"text":"PrimaryKey","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_key_txt"},"className":"Text"}]},{"attrs":{"name":"attr_btn_group","y":3,"visible":false},"className":"Group","children":[{"attrs":{"name":"attr_btn_move","x":-23,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#0EB6FF"},"className":"Rect"},{"attrs":{"name":"attr_btn_move_t","x":-20.9,"y":2.3,"fill":"#ffffff","fontSize":18,"text":"▦"},"className":"Text"},{"attrs":{"name":"attr_btn_remove","x":30,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#4335af"},"className":"Rect"},{"attrs":{"name":"attr_btn_remove_t","x":37,"y":3.5,"fill":"#ffffff","text":"x"},"className":"Text"}]},{"attrs":{"x":72.84228515625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#3e448d","name":"attr_background attr_logical"},"className":"Rect"},{"attrs":{"text":"key_논리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key1","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_logical_txt"},"className":"Text"}]},{"attrs":{"x":131.07763671875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#3e448d","name":"attr_background attr_phisical"},"className":"Rect"},{"attrs":{"text":"key_물리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key1","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_phisical_txt"},"className":"Text"}]},{"attrs":{"x":189.31298828125,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":47.90380859375,"height":20,"fill":"#3e448d","name":"attr_background attr_domain"},"className":"Rect"},{"attrs":{"text":"Domain","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_domain_txt"},"className":"Text"}]},{"attrs":{"x":240.216796875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":33.84765625,"height":20,"fill":"#3e448d","name":"attr_background attr_type"},"className":"Rect"},{"attrs":{"text":"Type","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_type_txt"},"className":"Text"}]},{"attrs":{"x":508,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_null"},"className":"Rect"},{"attrs":{"text":"none","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"NOT NULL","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_null_txt"},"className":"Text"}]},{"attrs":{"x":609,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_default"},"className":"Rect"},{"attrs":{"text":"Default value","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_default_txt"},"className":"Text"}]},{"attrs":{"x":710,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_comment"},"className":"Rect"},{"attrs":{"text":"Comment","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_comment_txt"},"className":"Text"}]}]},{"attrs":{"x":3,"y":23,"name":"attribute"},"className":"Group","children":[{"attrs":{"width":277.064453125,"height":26,"fill":"#1a133e","name":"attr_container"},"className":"Rect"},{"attrs":{"x":3,"y":3,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":66.84228515625,"height":20,"fill":"#3e448d","name":"attr_background attr_key"},"className":"Rect"},{"attrs":{"text":"PrimaryKey","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_key_txt"},"className":"Text"}]},{"attrs":{"name":"attr_btn_group","y":3,"visible":false},"className":"Group","children":[{"attrs":{"name":"attr_btn_move","x":-23,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#0EB6FF"},"className":"Rect"},{"attrs":{"name":"attr_btn_move_t","x":-20.9,"y":2.3,"fill":"#ffffff","fontSize":18,"text":"▦"},"className":"Text"},{"attrs":{"name":"attr_btn_remove","x":30,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#4335af"},"className":"Rect"},{"attrs":{"name":"attr_btn_remove_t","x":37,"y":3.5,"fill":"#ffffff","text":"x"},"className":"Text"}]},{"attrs":{"x":72.84228515625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#3e448d","name":"attr_background attr_logical"},"className":"Rect"},{"attrs":{"text":"key_논리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key2","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_logical_txt"},"className":"Text"}]},{"attrs":{"x":131.07763671875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#3e448d","name":"attr_background attr_phisical"},"className":"Rect"},{"attrs":{"text":"key_물리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key2","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_phisical_txt"},"className":"Text"}]},{"attrs":{"x":189.31298828125,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":47.90380859375,"height":20,"fill":"#3e448d","name":"attr_background attr_domain"},"className":"Rect"},{"attrs":{"text":"Domain","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_domain_txt"},"className":"Text"}]},{"attrs":{"x":240.216796875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":33.84765625,"height":20,"fill":"#3e448d","name":"attr_background attr_type"},"className":"Rect"},{"attrs":{"text":"Type","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_type_txt"},"className":"Text"}]},{"attrs":{"x":508,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_null"},"className":"Rect"},{"attrs":{"text":"none","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"NOT NULL","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_null_txt"},"className":"Text"}]},{"attrs":{"x":609,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_default"},"className":"Rect"},{"attrs":{"text":"Default value","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_default_txt"},"className":"Text"}]},{"attrs":{"x":710,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_comment"},"className":"Rect"},{"attrs":{"text":"Comment","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_comment_txt"},"className":"Text"}]}]}]},{"attrs":{"y":72,"name":"key_group fk_group"},"className":"Group","children":[]},{"attrs":{"y":72,"name":"key_group attr_group"},"className":"Group","children":[]}]},{"attrs":{"x":736,"y":185,"opacity":0.9,"name":"entity","id":2},"className":"Group","children":[{"attrs":{"width":282.4736328125,"height":79,"fill":"#8d2d3f","stroke":"white","strokeWidth":0,"name":"entity_container"},"className":"Rect"},{"attrs":{"text":"3","name":"giveColor","visible":false,"fill":"black"},"className":"Text"},{"attrs":{"x":3,"y":3,"width":54,"height":20,"name":"entity_logical"},"className":"Rect"},{"attrs":{"x":207.716796875,"y":3,"width":71.7568359375,"height":20,"name":"entity_phisical"},"className":"Rect"},{"attrs":{"text":"테이블명","x":3,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_logical_txt"},"className":"Text"},{"attrs":{"text":"TableName2","x":207.716796875,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_phisical_txt"},"className":"Text"},{"attrs":{"visible":false,"name":"btn_entity_group"},"className":"Group","children":[{"attrs":{"x":264.4736328125,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_entity_delete"},"className":"Rect"},{"attrs":{"x":243.4736328125,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_color"},"className":"Rect"},{"attrs":{"text":"x","x":271.4736328125,"y":-18.5,"fill":"#ffffff","name":"btn_entity_delete_txt"},"className":"Text"},{"attrs":{"text":"o","x":250.4736328125,"y":-18.5,"fill":"#ffffff","name":"btn_color_txt"},"className":"Text"},{"attrs":{"x":-1,"y":-22,"width":20,"height":20,"fill":"#FFD403","cornerRadius":5,"name":"btn_pk_add"},"className":"Rect"},{"attrs":{"x":20,"y":-22,"width":20,"height":20,"fill":"#0EB6FF","cornerRadius":5,"name":"btn_col_add"},"className":"Rect"},{"attrs":{"text":"+","x":3,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_pk_add_txt"},"className":"Text"},{"attrs":{"text":"+","x":24,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_col_add_txt"},"className":"Text"}]},{"attrs":{"y":26,"name":"key_group pk_group"},"className":"Group","children":[]},{"attrs":{"y":26,"name":"key_group fk_group"},"className":"Group","children":[{"attrs":{"x":3,"name":"attribute"},"className":"Group","children":[{"attrs":{"width":276.4736328125,"height":26,"fill":"#710013","name":"attr_container"},"className":"Rect"},{"attrs":{"x":3,"y":3,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":66.25146484375,"height":20,"fill":"#9e4856","name":"attr_background attr_key"},"className":"Rect"},{"attrs":{"text":"ForeignKey","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_key_txt"},"className":"Text"}]},{"attrs":{"name":"attr_btn_group","y":3,"visible":false},"className":"Group","children":[{"attrs":{"name":"attr_btn_move","x":-23,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#0EB6FF"},"className":"Rect"},{"attrs":{"name":"attr_btn_move_t","x":-20.9,"y":2.3,"fill":"#ffffff","fontSize":18,"text":"▦"},"className":"Text"},{"attrs":{"name":"attr_btn_remove","x":30,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#4335af"},"className":"Rect"},{"attrs":{"name":"attr_btn_remove_t","x":37,"y":3.5,"fill":"#ffffff","text":"x"},"className":"Text"}]},{"attrs":{"x":72.25146484375,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#9e4856","name":"attr_background attr_logical"},"className":"Rect"},{"attrs":{"text":"key_논리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"fk이름","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_logical_txt"},"className":"Text"}]},{"attrs":{"x":130.48681640625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#9e4856","name":"attr_background attr_phisical"},"className":"Rect"},{"attrs":{"text":"key_물리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"fk이름","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_phisical_txt"},"className":"Text"}]},{"attrs":{"x":188.72216796875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":47.90380859375,"height":20,"fill":"#9e4856","name":"attr_background attr_domain"},"className":"Rect"},{"attrs":{"text":"Domain","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_domain_txt"},"className":"Text"}]},{"attrs":{"x":239.6259765625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":33.84765625,"height":20,"fill":"#9e4856","name":"attr_background attr_type"},"className":"Rect"},{"attrs":{"text":"Type","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_type_txt"},"className":"Text"}]},{"attrs":{"x":508,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_null"},"className":"Rect"},{"attrs":{"text":"none","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"NOT NULL","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_null_txt"},"className":"Text"}]},{"attrs":{"x":609,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_default"},"className":"Rect"},{"attrs":{"text":"Default value","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_default_txt"},"className":"Text"}]},{"attrs":{"x":710,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_comment"},"className":"Rect"},{"attrs":{"text":"Comment","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_comment_txt"},"className":"Text"}]}]},{"attrs":{"x":3,"y":23,"name":"attribute"},"className":"Group","children":[{"attrs":{"width":276.4736328125,"height":26,"fill":"#710013","name":"attr_container"},"className":"Rect"},{"attrs":{"x":3,"y":3,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":66.25146484375,"height":20,"fill":"#9e4856","name":"attr_background attr_key"},"className":"Rect"},{"attrs":{"text":"ForeignKey","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_key_txt"},"className":"Text"}]},{"attrs":{"name":"attr_btn_group","y":3,"visible":false},"className":"Group","children":[{"attrs":{"name":"attr_btn_move","x":-23,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#0EB6FF"},"className":"Rect"},{"attrs":{"name":"attr_btn_move_t","x":-20.9,"y":2.3,"fill":"#ffffff","fontSize":18,"text":"▦"},"className":"Text"},{"attrs":{"name":"attr_btn_remove","x":30,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#4335af"},"className":"Rect"},{"attrs":{"name":"attr_btn_remove_t","x":37,"y":3.5,"fill":"#ffffff","text":"x"},"className":"Text"}]},{"attrs":{"x":72.25146484375,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#9e4856","name":"attr_background attr_logical"},"className":"Rect"},{"attrs":{"text":"key_논리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"fk이름","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_logical_txt"},"className":"Text"}]},{"attrs":{"x":130.48681640625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#9e4856","name":"attr_background attr_phisical"},"className":"Rect"},{"attrs":{"text":"key_물리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"fk이름","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_phisical_txt"},"className":"Text"}]},{"attrs":{"x":188.72216796875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":47.90380859375,"height":20,"fill":"#9e4856","name":"attr_background attr_domain"},"className":"Rect"},{"attrs":{"text":"Domain","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_domain_txt"},"className":"Text"}]},{"attrs":{"x":239.6259765625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":33.84765625,"height":20,"fill":"#9e4856","name":"attr_background attr_type"},"className":"Rect"},{"attrs":{"text":"Type","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_type_txt"},"className":"Text"}]},{"attrs":{"x":508,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_null"},"className":"Rect"},{"attrs":{"text":"none","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"NOT NULL","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_null_txt"},"className":"Text"}]},{"attrs":{"x":609,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_default"},"className":"Rect"},{"attrs":{"text":"Default value","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_default_txt"},"className":"Text"}]},{"attrs":{"x":710,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_comment"},"className":"Rect"},{"attrs":{"text":"Comment","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_comment_txt"},"className":"Text"}]}]}]},{"attrs":{"y":72,"name":"key_group attr_group"},"className":"Group","children":[]}]}]},{"attrs":{},"className":"Layer","children":[]},{"attrs":{},"className":"Layer","children":[]},{"attrs":{},"className":"Layer","children":[{"attrs":{"lineCap":"round","linerJoin":"round","name":"1","lastPos":2,"stroke":"#86f5e5","points":[446.064453125,159.5,456.064453125,159.5,456.064453125,154.5,456.064453125,164.5,456.064453125,159.5,721,224.5,726,224.5,736,229.5,726,224.5,736,219.5,726,224.5,736,224.5],"visible":true},"className":"Line"}]}]}';
+          
+          stage2 = Konva.Node.create(json, 'tmp_canvas');
+          
+          //stage2.children.moveTo(stage);
+          //stage2.find(".entity").moveTo(layer);
+          
+          
+          
+
+          
+          stage2.children.each(function(item1,i){
+              
+              while(item1.children.length > 0){
+                    
+                  
+                  item1.children[0].moveTo(stage.children[i]);
+                  
+                  //stage.children[i].add(item1.children[0]);
+                  
+                  console.log("객체 추가");
+
+                }
+              
+          });
+       
+          
+          //stage2.children[0].children.movoTo(stage.children[0])
+          
+          
+          
+          
+          
+      });
+       var stage2;
+      
+       
+       //identifying을 클릭했을 때
+         $("#identifying").on('click', function(){
+       	  console.log('identifyingclick')
+       	  
+       $('.identify_hs').css('display','none');
+       if(firstEntity.findOne('.pk_group').children.length<1){
+     	 return;
+       }
+       moveColumnIdentifying();
+       relationType = true;
+       compareEntityPosition(); 
+       });
+       
+       //nonidentifying을 클릭했을 때
+         $("#nonidentifying").on('click', function(){
+       	  console.log('nonidentifyingclick')
+       	  
+       $('.identify_hs').css('display','none');
+       if(firstEntity.findOne('.pk_group').children.length<1){
+     	  return;
+       }
+       moveColumnNonIdentifying();
+     	  relationType = false;
+       compareEntityPosition();
+       	  
+       });
         
-        //관계 연결선 1대 다
-          $("#button6").on('click', function(){
-        	  $('html').css({'cursor':'url(/image/erase.cur), auto'});
-        	  cardinality = 'multi';
-        	  isRRelationClick = true;
-        });
-        
-        //identifying을 클릭했을 때
-          $("#identifying").on('click', function(){
-        	  console.log('identifyingclick')
-        	  relationType = true;
-        $('.identify_hs').css('display','none');
-        compareEntityPosition(); 
-        });
-        
-        //nonidentifying을 클릭했을 때
-          $("#nonidentifying").on('click', function(){
-        	  console.log('nonidentifyingclick')
-        	  relationType = false;
-        $('.identify_hs').css('display','none');
-        compareEntityPosition();
-        	  
-        });
         
         
-        
-//    1. 변수 초기화
+//    1. 변수 선언 및 초기화
       var width = window.innerWidth;
       var height = window.innerHeight;
 
@@ -142,17 +272,25 @@
       console.log("height2 : "+height2);
         
       var BORDER_SIZE = 3;
-      var color1 = [ 'red', 'black', 'blue' ];
-        
-      var target, activeWedge, stage, layer, wheel, pointer, box, textNode, allNode;
+
+      var color1_num, target, activeWedge, stage, layer, wheel, pointer, box, textNode, allNode;
       
-        
+      // entity
       var entity, entity_container, entity_logical, entity_phisical, entity_logical_txt, entity_phisical_txt;
         
-    
+      // entity버튼
       var btn_entity_group, btn_entity_delete, btn_color, btn_pk_add, btn_col_add, btn_entity_delete_txt, btn_color_txt, btn_pk_add_txt, btn_col_add_txt;
         
-      
+      // attribute group.
+      var pk_group, fk_group, attr_group;
+    
+      //미니맵 관련 전연변수 선언
+      var mini_width, mini_height, screenWidth, screenHeight;;
+      var mini_stage, mini_layer, mini_rect;
+
+    
+      var tmp_PosY = 0;
+    
       //yhs
       var isRRelationClick = false;  
       var temp_arrow_layer;
@@ -166,9 +304,11 @@
       var relationSwitchFlag;
       
       
+    
 //    2. ERD화면 초기화
       function init_ERD(){
           
+         //기본 레이어 생성
           stage = new Konva.Stage({
             container: 'container_Shin',
             width: width2,
@@ -179,52 +319,77 @@
           layer = new Konva.Layer();
           layer2 = new Konva.Layer();
           
-          stage.add(layer).add(layer2);
           
-          layer.draw();
           
-      }  
-        
+        // 미니맵용 스테이지 생성
+        mini_width = $('#container_mini').width();
+		mini_height = $('#container_mini').height();
     
-      init_ERD();
-      console.log(stage);
-        
-  // 미니맵용 스테이지 생성
-  var mini_width = $('#container_mini').width();
-		var mini_height = $('#container_mini').height();
-		var mini_stage = new Konva.Stage({
+        screenWidth = $('#container_Shin').width();
+        screenHeight = $('#container_Shin').height();
+    
+    
+		mini_stage = new Konva.Stage({
 			container: 'container_mini',
 			width: mini_width,
 			height: mini_height
 		});
 		
-		var mini_layer = new Konva.Layer();
+		mini_layer = new Konva.Layer();
 	
 		//미니맵에 보이는 사각형 생성(빨간네모)
-		var mini_rect = new Konva.Rect({
+		mini_rect = new Konva.Rect({
 			x: 0,
 			y: 0,
-			width: mini_width/3,
-			height: mini_height/2,
+			width: screenWidth*0.048,
+			height: screenHeight*0.048,
 			stroke: 'red',
 			strokeWidth: 2
 			/* opacity: 0.3 */
 		});
 		mini_rect.draggable('true');
 		mini_layer.add(mini_rect);
-		mini_stage.add(mini_layer);
-		
-		
+          
+          
+		  mini_stage.add(mini_layer);
+          stage.add(layer).add(layer2);
+        stage.add(temp_arrow_layer);
+        stage.add(relationLine_layer);
+          
+        relationLine_layer.draw();
+          mini_layer.draw();
+          layer.draw();
+          
+          
+      }  
+        
+    
+       temp_arrow_layer = new Konva.Layer();
+       relationLine_layer = new Konva.Layer();
+       var relationSwitchFlag = true;
+    
+      init_ERD();
+ 
+
         
 //        테이블 생성
         function entityAdd(circlePos){
-            
-            var color1_num = Math.floor(Math.random() * 3);
+
+            color1_num = Math.floor(Math.random() * 6);
+            //color1_num = 3;
             
             entity = new Konva.Group({
                 x: circlePos.x,
                 y: circlePos.y,
-                name: 'entity'
+                opacity: 0.9,
+                name: 'entity',
+                id: newEntity_id()
+            });
+            
+            var giveColor = new Konva.Text({
+                text: color1_num+'',
+                name: 'giveColor',
+                visible:false
             });
             
           
@@ -235,7 +400,7 @@
                 y: 0,
                 width: 200,
                 height: 26,
-                fill: color1[color1_num],
+                fill: colorPick[color1_num].entityBg,
                 stroke: 'white',
                 strokeWidth: 0,
                 name: 'entity_container'
@@ -243,15 +408,15 @@
             
             //미니맵에 표시할 테이블 생성
             var mini_tb = new Konva.Rect({
-				x: circlePos.x/30,
-				y: circlePos.y/40,
+				x: circlePos.x*0.048,
+				y: circlePos.y*0.048,
 				fill: 'black',
-				id :entity._id        //메인스테이지 테이블의 id값을 참조함 
+				id :entity.id()+10000        //메인스테이지 테이블의 id값을 참조함 
 				/* opacity: 0.3 */
 			});
-            console.log('mini_tb 아이디 :'+mini_tb.id());
-            console.log('entity_container.width:'+entity_container.width());
-            console.log('entity_container.height:'+entity_container.height());
+//            console.log('mini_tb 아이디 :'+mini_tb.id());
+//            console.log('entity_container.width:'+entity_container.width());
+//            console.log('entity_container.height:'+entity_container.height());
 			
             
             entity_logical = new Konva.Rect({
@@ -277,26 +442,26 @@
             });
             
             entity_logical_txt = new Konva.Text({
-                text: 'tableName',
+                text: '테이블명',
                 x: entity_logical.x(),
                 y: entity_logical.y(),
                 padding: 5,
-                fill: '#ffffff',
+                fill: colorPick[color1_num].entityColor,
                 fontSize: 11,
                 name: 'entity_logical_txt'
             });
 
             entity_phisical_txt = new Konva.Text({
-                text: '테이블명(물리)',
+                text: 'TableName' + cntEntity(),
                 x: entity_phisical.x(),
                 y: entity_phisical.y(),
                 padding: 5,
-                fill: '#ffffff',
+                fill: colorPick[color1_num].entityColor,
                 fontSize: 11,
                 name: 'entity_phisical_txt'
             });
             
-            entity.add(entity_container);
+            entity.add(entity_container).add(giveColor);
             entity.add(entity_logical).add(entity_phisical);
             entity.add(entity_logical_txt).add(entity_phisical_txt);
             
@@ -404,216 +569,333 @@
             btn_entity_group.add(btn_pk_add).add(btn_col_add);
             btn_entity_group.add(btn_pk_add_txt).add(btn_col_add_txt);
             
+            
+           
+            
+            pk_group = new Konva.Group({
+                x: 0,
+                y: 26,
+                name: 'key_group pk_group'
+            });
+            
+            fk_group = new Konva.Group({
+                x: 0,
+                y: 0,
+                name: 'key_group fk_group'
+            });
+            
+            attr_group = new Konva.Group({
+                x: 0,
+                y: 0,
+                name: 'key_group attr_group'
+            });
+            
+            
+            
             layer.add(entity);
             entity.add(btn_entity_group);
-			
-             entity_resize();
+            entity.add(pk_group);
+			entity.add(fk_group);
+            entity.add(attr_group);
+            
+            entity_resize();
              
-            layer.draw();
+            
             
             //리사이즈 된 크기에 맞춰서 미니맵테이블의 크기 설정
-            mini_tb.width(entity_container.width()/30);
-            mini_tb.height(entity_container.height()/40);
+            mini_tb.width(entity_container.width()*0.048);
+            mini_tb.height(entity_container.height()*0.048);
             
-            console.log('entity_container.width()'+ entity_container.width());
-            console.log('entity_container.height()'+ entity_container.height());
             mini_layer.add(mini_tb);
-			mini_stage.add(mini_layer);
+            mini_rect.zIndex(mini_layer.children.length-1);
+            
+            
+            layer.draw();
+            mini_layer.draw();
+            
             
              entity.off('dblclick');
-             entity.on('dblclick', textClick);
+             //entity.on('dblclick', textClick);
+            
+             entity.off('mouseup');
+             entity.off('mousedown');
             
              stage.off('click');
              stage.on('click', stageClick);
 
+            //yhs================================
+             // 엔티티를 클릭했을 경우(mouseup) 엔티티와 관계된 관계선들을 보여준다. 
              
-             
-             
-          // 엔티티를 클릭했을 경우(mouseup) 엔티티와 관계된 관계선들을 보여준다. 
-             entity.on('mouseup',function(e){
-             	 console.log('마우스업');
-             	 var first_Entity = e.target.findAncestor('.entity'); // 첫번째 객체를 얻어옴 (내가 클릭한 객체)
-             	 
-             	entityMouseUp(first_Entity,true); 
-             	
-             }); 
-             
-          
-             // 엔티티를 클릭했을 경우(mousedown) 엔티티와 관계된 관계선들을 숨겨준다.
-             entity.on('mousedown',function(e){
-            	 console.log('마우스 다운');
-            	
-            	 // e.target.findAncestor('.entity');
-            	 var arr_line_To= relationLine_layer.find('.'+e.target.findAncestor('.entity')._id);
-				 
-            	 var arr_line_From = findLineRefPos(e.target.findAncestor('.entity')._id);
-            	 for(var i=0; i<arr_line_To.length; i++){
-            		 arr_line_To[i].hide();
-            	 }
-            	 
-            	 for(var i = 0; i<arr_line_From.length; i++){
-            		 arr_line_From[i].hide();
-            	 }
-            		relationLine_layer.draw();
-            });
+           
               
-              
-             
-             
-             
-             
-             
-             //미니맵 이벤트
-             entity.on('dragmove click', function(e){
-//             	 e.target
-//             	 if(e.target.findaasdasd(.length != old_target.findaasdasd().length){
-//             	 }
-				
-            	 var mini_entity = mini_stage.find('#'+e.target._id+'');
-            	 mini_entity.x(e.target.x()/30);
-            	 mini_entity.y(e.target.y()/40);
-            	 //리사이즈 된 후에 첫번 째  값 즉 entity의 width를 가져옴
-            	 mini_entity.width(this.children[0].width()/30);
-            	 mini_entity.height(this.children[0].height()/40);
-            	 mini_layer.draw();
-            	 
-            	 
-            	 old_target = e.target;
-
-             });
+            
+            
+            //yhs===========================================
+            
+            
+            //dragEvent1
+             stage.off('.dragSetup');
+             stage.on('dragmove.dragSetup', function dragEvent1(evt){
+                 
+                 allNode = evt.target;
+                 
+                     if(allNode.hasName('entity')){
+                     console.log("entity : "+allNode.x());
+                     var mini_entity = mini_stage.find('#'+(evt.target.id()+10000)+'');
+                     
+                     mini_entity.x(evt.target.x()*0.048);
+                     mini_entity.y(evt.target.y()*0.048);
+                     mini_layer.draw();
+                     }
+             }); // move end
         }
         //entity 생성 종료
+       
         
         
-        
-        temp_arrow_layer = new Konva.Layer();
-        relationLine_layer = new Konva.Layer();
-        var relationSwitchFlag = true;
-        
-        
-
-        
-        
+    
+        //전역변수로 빼기
+        var old_entity;
         
         //스테이지 클릭
         function stageClick(e){
-        	console.log('스테이지 클릭');
-        	console.log('temp arrow'+ temp_arrow);
-            allNode = e.target;
+            console.log('스테이지 클릭');
+            
+            
+            
+            
+            if(e === 0){
+                allNode = stage;
+            }else if(e != null){
+                allNode = e.target;
+            }else{
+                allNode = entity.findOne('.entity_logical_txt');
+            }
+            
+            
+            //이동버튼 클릭시
+                if(allNode.name().indexOf('attr_btn_move') > -1){
+                    return;
+                    
+                    //return;
+                }
+            
+            
+
             var old_container = entity_container;
-            var old_entity = entity;
+            old_entity = entity;
             var old_btn_pk_add = btn_pk_add;
             var old_btn_col_add = btn_col_add;
             var old_btn_entity_delete = btn_entity_delete;
             var old_btn_color = btn_color;
             var old_btn_entity_group = btn_entity_group;
-            console.log('e.target'+e.target);
             
             //입력창 삭제
-           if(document.body.getElementsByTagName('input').length > 0){
+           if(document.body.getElementsByClassName('attrInput').length > 0){
                document.body.removeChild(inputss);
            }
             
-            if(allNode.parent === null || temp_arrow != null ){  // 좀 더 생각해보자 temp_arrow != null말고 e.를 활용해서 
-                console.log('temp_arrow'+ temp_arrow);
-                console.log('allNode'+ allNode);
+            /////yhs
+           if(allNode.parent === null || temp_arrow != null ){  // 좀 더 생각해보자 temp_arrow != null말고 e.를 활용해서 
+               console.log('temp_arrow'+ temp_arrow);
+               console.log('allNode'+ allNode);
+               old_btn_entity_group.hide();
+               old_entity.draggable(false);
+               old_container.strokeWidth(0);
+               
+               if(temp_arrow != null ){ //빈스테이지를 찍어 temp_arrow를 제거해주는 것.
+               	
+               	//객체 클릭 했을 때
+                   if(allNode.findAncestor('.entity')){
+                  	console.log('객체 선택');
+                  	
+                  	$('html').css({'cursor':'default'});
+                  	
+                  	//identifying을 물어보는 창 생성
+                  	$('.identify_hs').css('display','table');
+                  	
+                  	//새로운 화살표 생성 단  relationType가 true/false인지 확인해야람 identifying인지 non-identify인지
+                  
+                  	secondEntity = allNode.findAncestor('.entity');
+                  	
+                  }
+               	
+               	//빈 스테이지 클릭했을 때.
+               	stage.off('mousemove');
+               	temp_arrow.remove();
+               	temp_arrow_layer.draw();
+               	isRRelationClick=false;
+               	temp_arrow=null;
+               }
+           }
+            
+            
+            
+            
+            ///yhs
+           if(allNode.parent === null || temp_arrow != null ){  // 좀 더 생각해보자 temp_arrow != null말고 e.를 활용해서 
+               console.log('temp_arrow'+ temp_arrow);
+               console.log('allNode'+ allNode);
+               old_btn_entity_group.hide();
+               old_entity.draggable(false);
+               old_container.strokeWidth(0);
+               
+               if(temp_arrow != null ){ //빈스테이지를 찍어 temp_arrow를 제거해주는 것.
+               	
+               	//객체 클릭 했을 때
+                   if(allNode.findAncestor('.entity')){
+                  	console.log('객체 선택');
+                  	
+                  	//identifying을 물어보는 창 생성
+                  	$('.identify_hs').css('display','block');
+                  	
+                  	//새로운 화살표 생성 단  relationType가 true/false인지 확인해야람 identifying인지 non-identify인지
+                  
+                  	secondEntity = allNode.findAncestor('.entity');
+                  	
+                  }
+               	
+               	//빈 스테이지 클릭했을 때.
+               	stage.off('mousemove');
+               	temp_arrow.remove();
+               	temp_arrow_layer.draw();
+               	isRRelationClick=false;
+               	temp_arrow=null;
+               }
+           }
+            
+            
+            
+            
+        /*     //스테이지 클릭시
+            if(allNode.parent === null){
+                console.log("스테이지 선택");
+                
                 old_btn_entity_group.hide();
+                
                 old_entity.draggable(false);
                 old_container.strokeWidth(0);
                 
-                if(temp_arrow != null ){ //빈스테이지를 찍어 temp_arrow를 제거해주는 것.
-                	
-                	//객체 클릭 했을 때
-                    if(allNode.findAncestor('.entity')){
-                   	console.log('객체 선택');
-                   	
-                   	//identifying을 물어보는 창 생성
-                   	$('.identify_hs').css('display','block');
-                   	
-                   	//새로운 화살표 생성 단  relationType가 true/false인지 확인해야람 identifying인지 non-identify인지
-                   
-                   	secondEntity = allNode.findAncestor('.entity');
-                   	
-                   }
-                	
-                	//빈 스테이지 클릭했을 때.
-                	stage.off('mousemove');
-                	temp_arrow.remove();
-                	temp_arrow_layer.draw();
-                	isRRelationClick=false;
-                	temp_arrow=null;
-                }
-            }
+            } */
             
             
+            
+            //객체 선택시
             else {
                 
+                //변수에 클릭 타겟 넣기
+                entity = allNode.findAncestor('.entity');
                 
-                //삭제 
-                if(allNode.attrs.name.indexOf('btn_entity_delete') > -1){
-                    var removeTableNo=allNode.findAncestor('.entity')._id;
+ 
+                //entity 삭제버튼 이벤트 
+                if(allNode.name().indexOf('btn_entity_delete') > -1){
+                    
+                    var removeTableNo=allNode.findAncestor('.entity').id();
                     console.log('삭제할번호'+ removeTableNo);
-                    mini_stage.find('#'+removeTableNo+'').remove(); //미니맵 테이블 삭제
+                    
+                    mini_stage.find('#'+(removeTableNo+10000)+'').remove(); //미니맵 테이블 삭제
+                    
                     allNode.findAncestor('.entity').remove();
                     mini_layer.draw();
                     layer.draw();
                     return;
-               }
-               
-                
-                allNode.parent.children.each(function(f){
-                    switch(f.attrs.name){
-                        case "entity_container":
-                            entity_container = f;
-                            break;
-                        case "entity_logical":
-                            entity_logical = f;
-                            break;
-                        case "entity_phisical":
-                            entity_phisical = f;    
-                            break;
-                        case "entity_logical_txt":
-                            entity_logical_txt = f;    
-                            break;
-                        case "entity_phisical_txt":
-                            entity_phisical_txt = f;    
-                            break;
-                        case "btn_entity_group":
-                            btn_entity_group = f;
-                            
-                            
-                            f.children.each(function(g){
-                                switch(g.attrs.name){
-                                    case "btn_entity_delete":
-                                        btn_entity_delete = g;
-                                        break;
-                                    case "btn_color":
-                                        btn_color = g;
-                                        break;
-                                    case "btn_pk_add":
-                                        btn_pk_add = g;
-                                        break;
-                                    case "btn_col_add":
-                                        btn_col_add = g;
-                                        break;       
-                                }
-                                        
-                            });
-                            
-                            
-                            break;
-                            
-                            
-                        
-                   }
-
-                });
-                
-                
-                if(allNode.parent.attrs.name === "entity"){
-                    entity = allNode.parent;
                 }
+                
+                
+                //pk버튼 이벤트
+                if(allNode.name().indexOf('btn_pk_add') > -1){
+                    fn_attributeAdd("pk_group",entity);
+                    //return;
+                }
+                
+                //attr버튼 이벤트
+                if(allNode.name().indexOf('btn_col_add') > -1){
+                    fn_attributeAdd("attr_group",entity);
+                    //return;
+                }
+                
+                //fk 테스트
+                if(allNode.name().indexOf('btn_color') > -1){
+                    fn_attributeAdd("fk_group",entity);
+                    
+                    //return;
+                }
+                
+                
+                
+                
+     
+                
+                //속성 삭제 버튼 테스트
+                if(allNode.name().indexOf('attr_btn_remove') > -1){
+         
+                    allNode.findAncestor('.attribute').destroy();
+     
+                }
+                
+                
+                
+                else if(allNode.findAncestor('.entity')){
+                	
+                    	entity.on('dblclick', textClick);
+                    	
+                	  entity.on('mouseup',function(e){
+                      	 console.log('마우스업');
+                      	 var first_Entity = e.target.findAncestor('.entity'); // 첫번째 객체를 얻어옴 (내가 클릭한 객체)
+                      	 
+                      	entityMouseUp(first_Entity,true); 
+                      	relationLine_layer.draw();
+                      }); 
+                      
+                   
+                      // 엔티티를 클릭했을 경우(mousedown) 엔티티와 관계된 관계선들을 숨겨준다.
+                      
+                      entity.on('mousedown',function(e){
+                     	 console.log('마우스 다운');
+                     	
+                     	 // e.target.findAncestor('.entity');
+                     	 var arr_line_To= relationLine_layer.find('.'+e.target.findAncestor('.entity').id());
+         				 
+                     	 var arr_line_From = findLineRefPos(e.target.findAncestor('.entity').id());
+                     	 for(var i=0; i<arr_line_To.length; i++){
+                     		 arr_line_To[i].hide();
+                     	 }
+                     	 
+                     	 for(var i = 0; i<arr_line_From.length; i++){
+                     		 arr_line_From[i].hide();
+                     	 }
+                     		relationLine_layer.draw();
+                     });
+                	
+                }
+                
+                
+                
+                
+                
+                entity_container = entity.findOne('.entity_container');
+                entity_logical = entity.findOne('.entity_logical');
+                entity_phisical = entity.findOne('.entity_phisical');
+                entity_logical_txt = entity.findOne('.entity_logical_txt');
+                entity_phisical_txt = entity.findOne('.entity_phisical_txt');
+                
+                btn_entity_group = entity.findOne('.btn_entity_group');
+                
+                btn_entity_delete = btn_entity_group.findOne('.btn_entity_delete');
+                btn_entity_delete_txt = btn_entity_group.findOne('.btn_entity_delete_txt');
+                
+                btn_color = btn_entity_group.findOne('.btn_color');
+                btn_color_txt = btn_entity_group.findOne('.btn_color_txt');
+                
+                btn_pk_add = btn_entity_group.findOne('.btn_pk_add');
+                btn_pk_add_txt = btn_entity_group.findOne('.btn_pk_add_txt');
+                
+                btn_col_add = btn_entity_group.findOne('.btn_col_add');
+                btn_col_add_txt = btn_entity_group.findOne('.btn_col_add_txt');
 
+                
+                
+                //로직 시작
                 entity.moveTo(layer2);
        
                 old_btn_entity_group.hide();
@@ -628,14 +910,32 @@
                 entity_container.strokeWidth(BORDER_SIZE);
                 
                 entity.moveTo(layer);
-             
+                
+                
                 console.log('makeArrow');
                 makeArrow(e);
-                
             }
+            
+            //리사이징 시작
+            entity_resize();
+            
+            
+            
+            //미니맵에 객체 갱신
+             var mini_entity = mini_stage.find('#'+(entity.id()+10000)+'');
+             mini_entity.width(entity.children[0].width()*0.048);
+             mini_entity.height(entity.children[0].height()*0.048);
+             mini_layer.draw();
+            
+            
+            
             layer.draw();
         }
         
+    
+    
+    
+    
 //        텍스트 값 입력 메소드
         var inputss = document.createElement('input');
         
@@ -645,7 +945,7 @@
             
             textNode = e.target;
             
-            if(textNode.className != "Text" || textNode.attrs.name.indexOf('btn') > -1){
+            if(textNode.className != "Text" || textNode.name().indexOf('btn') > -1){
                 return;
             }
             
@@ -665,7 +965,7 @@
 
 			console.log((textNode.width()*stage.scale().x)+3);
             document.body.appendChild(inputss);
-
+            $(inputss).addClass('attrInput');
             inputss.value = textNode.text();
             inputss.style.position = 'absolute';
             inputss.style.top = (areaPosition.y) + 'px';	/* (areaPosition.y-(stage.scale().x+1)) + 'px'; */
@@ -701,145 +1001,150 @@
                 //텍스트 입력 값 적용
                  textNode.text(inputss.value);
                  
-                //형제들 돌려
-                 textNode.parent.children.each(function(f){
-                     
-                    if(textNode.attrs.name === f.attrs.name+"_txt"){
-                        f.width(textNode.width());
-                    }
-                     
-                     
-                    switch(f.attrs.name){
-                        case "entity_container":
-                            entity_container = f;
-                            break;
-                        case "entity_logical":
-                            entity_logical = f;
-                            break;
-                        case "entity_phisical":
-                            entity_phisical = f;    
-                            break;
-                        case "entity_logical_txt":
-                            entity_logical_txt = f;    
-                            break;
-                        case "entity_phisical_txt":
-                            entity_phisical_txt = f;    
-                            break;
-                        case "btn_entity_group":
-                            btn_entity_group = f;
-                            
-                            
-                            f.children.each(function(g){
-                                switch(g.attrs.name){
-                                    case "btn_entity_delete":
-                                        btn_entity_delete = g;
-                                        break;
-                                    case "btn_color":
-                                        btn_color = g;
-                                        break;
-                                    case "btn_pk_add":
-                                        btn_pk_add = g;
-                                        break;
-                                    case "btn_col_add":
-                                        btn_col_add = g;
-                                        break;  
-                                    case "btn_entity_delete_txt":
-                                        btn_entity_delete_txt = g;
-                                        break; 
-                                    case "btn_color_txt":
-                                        btn_color_txt = g;
-                                        break;
-                                }
-                            });
-                            break;
-      
-                   }
-                });
+  
+                 //텍스트 미입력시 최소값 설정
+                 if(textNode.width() < 40){
+                     textNode.textWidth = 30;
+                 }
+                 
+                 
+                 //플레이스홀더 설정
+                 if(textNode.findAncestor('.attr_groups') != null){
+                    if(textNode.text() === "" && textNode.findAncestor('.attr_groups').findOne('.placeHolder') != null ){
+                         textNode.findAncestor('.attr_groups').findOne('.placeHolder').visible(true);
+                     }else if(textNode.findAncestor('.attr_groups').findOne('.placeHolder') != null){
+                         textNode.findAncestor('.attr_groups').findOne('.placeHolder').visible(false);
+                     } 
+                 }
+                    
+
+                 
+                 
+
                  
                  
                  
+                //변수에 클릭 타겟 넣기
+                entity = allNode.findAncestor('.entity');
+
+                entity_container = entity.findOne('.entity_container');
+                entity_logical = entity.findOne('.entity_logical');
+                entity_phisical = entity.findOne('.entity_phisical');
+                entity_logical_txt = entity.findOne('.entity_logical_txt');
+                entity_phisical_txt = entity.findOne('.entity_phisical_txt');
+                
+                btn_entity_group = entity.findOne('.btn_entity_group');
+                
+                btn_entity_delete = btn_entity_group.findOne('.btn_entity_delete');
+                btn_entity_delete_txt = btn_entity_group.findOne('.btn_entity_delete_txt');
+                
+                btn_color = btn_entity_group.findOne('.btn_color');
+                btn_color_txt = btn_entity_group.findOne('.btn_color_txt');
+                
+                btn_pk_add = btn_entity_group.findOne('.btn_pk_add');
+                btn_pk_add_txt = btn_entity_group.findOne('.btn_pk_add_txt');
+                
+                btn_col_add = btn_entity_group.findOne('.btn_col_add');
+                btn_col_add_txt = btn_entity_group.findOne('.btn_col_add_txt');
+ 
                  
                  
-                 
-                 
-                 
-                 
-                if(allNode.parent.attrs.name === "entity"){
-                    entity = allNode.parent;
-                }
                 //리사이징 시작
-                 entity_resize();
+                entity_resize();
                  
+                 
+                //미니맵에 객체 갱신
+                 var mini_entity = mini_stage.find('#'+entity.id()+'');
+                 mini_entity.width(entity.children[0].width()*0.048);
+                 mini_entity.height(entity.children[0].height()*0.048);
+                 
+                 mini_layer.draw(); 
                 layer.draw();
+                 
                 document.body.removeChild(inputss);
                 //this.removeEventListener('keydown',arguments.callee);
-                 console.log("엔터입력 완료");
+                console.log("엔터입력 완료");
               }
         }
         
         
       
         
-        
+        var reszie_entity_container;
         
         //리사이징
         
         function entity_resize(){
+            
+//           1. entity(테이블 리사이징)
              entity_logical.width(entity_logical_txt.width());
+             
              entity_phisical.x(entity_logical.width()+BORDER_SIZE);
              entity_phisical_txt.x(entity_phisical.x());
              entity_phisical.width(entity_phisical_txt.width()); 
-             entity_container.width(entity_logical_txt.width()+entity_phisical_txt.width()+(BORDER_SIZE*2));
+             
+           
+           reszie_entity_container = entity_logical_txt.width()+entity_phisical_txt.width()+(BORDER_SIZE*2);
+            
+               
+               
+//               entity_container.width(entity_logical_txt.width()+entity_phisical_txt.width()+(BORDER_SIZE*2));
+  
+            
+//          2. attribute(속성 리사이징)
+            resize2(entity);
+            
+            
+            
+            
+//          3. entity(테이블 논리, 물리 위치)
+            entity_phisical.x(entity_container.width()-entity_phisical.width()-BORDER_SIZE);
+            entity_phisical_txt.x(entity_phisical.x());
+            
+//          4. entity 기능 버튼 위치(pk,attr, 색상변경, 삭제 버튼 등등...)
             btn_entity_delete.x(entity_container.width() -(20-(BORDER_SIZE-1)));
             btn_color.x(btn_entity_delete.x() - 21);
             btn_entity_delete_txt.x(btn_entity_delete.x()+7);
             btn_color_txt.x(btn_color.x()+7);
             
             
-            
-            
-            
+ 
         }
-        
-        
-        
-        
-        
+  
         
         
         //스크롤 확대 축소
-        var SCALE_MIN = 0.34;
+        var SCALE_MIN = 0.45;
         var SCALE_MAX = 1.8;
         var scaleBy = 1.05;
         stage.on('wheel', e => {
+                
                 e.evt.preventDefault();
                 var oldScale = stage.scaleX();
 				console.log('stage.scaleX()'+ stage.scaleX());
 				
 			
-				var plusWidth = (mini_width-(mini_width/3))/24;
-				var plusHeight= (mini_height-(mini_height/2))/24;
-				
-				console.log(plusWidth);
-				console.log(plusHeight);
-				
-				//확대할 경우에...
-			if (e.evt.deltaY > 0) {
-				if(mini_rect.width()<40){  //작은 돋보기 크기가 너무 작아지는 것을 막아줌
-					return;
-				}
-				mini_rect.width(mini_rect.width() - plusWidth);
-				mini_rect.height(mini_rect.height() - plusHeight);
-
-			}
-			//축소할 경우에...
-			else if (e.evt.deltaY < 0) {
-				if(mini_rect.width()>=184){ //작은 돋보기 크기가 너무 커지는 것을 막아줌
-					return;
-				}
-				mini_rect.width(mini_rect.width() + plusWidth);
-				mini_rect.height(mini_rect.height() + plusHeight);
-			}
+            
+            
+            
+                //미니맵 관련
+                var screenWidth = $('#container_Shin').width();
+                var screenHeight = $('#container_Shin').height();
+            
+                var plusWidth = ((screenWidth)*0.048)/(stage.scale().x);
+                var plusHeight = ((screenHeight)*0.048)/(stage.scale().y);
+            
+                mini_rect.width(plusWidth);
+                mini_rect.height(plusHeight);
+            
+                mini_rect.x((-stage.x() * 0.048)/stage.scaleX());
+		        mini_rect.y((-stage.y() * 0.048)/stage.scaleY());
+             
+                collision_check_mini();
+            
+                mini_layer.draw();//돋보기창
+                //미니맵 관련 종료
+            
 				
                 var mousePointTo = {
                   x: stage.getPointerPosition().x / oldScale - stage.x() / oldScale,
@@ -850,12 +1155,19 @@
                 //최소, 최대 스케일 추가
                 var newScale
                 if(stage.scaleX() <= SCALE_MIN){
-                newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale;
+                    
+                    newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale;
+                    
                 }else if(stage.scaleX() >= SCALE_MAX){
-                newScale = e.evt.deltaY > 0 ? oldScale : oldScale / scaleBy;
+                    
+                    newScale = e.evt.deltaY > 0 ? oldScale : oldScale / scaleBy;
+                    
                 }else{    
-                newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+                    
+                    newScale = e.evt.deltaY > 0 ? oldScale * scaleBy : oldScale / scaleBy;
+                    
                 }
+    
                     
                 stage.scale({ x: newScale, y: newScale });
 
@@ -867,18 +1179,21 @@
                     -(mousePointTo.y - stage.getPointerPosition().y / newScale) *
                     newScale
                 };
-                mini_layer.draw();//돋보기창
+            
+  
+
                 stage.position(newPos);
                 stage.batchDraw();
                 console.log(stage.scale().x);
-                    
-      });
+            
         
+      });
+    
 
         
 </script>
 
-
 </html>
+
 
 

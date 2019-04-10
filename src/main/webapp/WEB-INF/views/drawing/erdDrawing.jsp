@@ -19,6 +19,7 @@
 
 <body id='my_body'>
 
+    <div id="tmp_canvas" style="display:none;"></div>
 	<div id="drawing_container">
 		<div class="drawing_top">
 			<a id="botton0" class="buttons" href="/">홈</a>
@@ -28,6 +29,8 @@
 			<div id="button4" class="buttons">미니맵 Toggle</div>
             <div id="button5" class="buttons">1대1 연결</div>
 			<div id="button6" class="buttons">1대 다 연결</div>
+            <div id="button20" class="buttons">데이터 저장</div>
+            <div id="button21" class="buttons">데이터 불러오기</div>
 			<div id="line_background" class ="identify_hs">
 				<div id="lineInformation">
 					<div id="identifying">identifying RelationShip</div>
@@ -184,24 +187,77 @@
       	  cardinality = 'multi';
       	  isRRelationClick = true;
       });
-      
-      //identifying을 클릭했을 때
-        $("#identifying").on('click', function(){
-      	  console.log('identifyingclick')
-      	  relationType = true;
-      $('.identify_hs').css('display','none');
-      compareEntityPosition(); 
+    
+      $('#button20').on('click', function(){
+         var json = stage.toJSON();
+          console.log(json); 
       });
-      
-      //nonidentifying을 클릭했을 때
-        $("#nonidentifying").on('click', function(){
-      	  console.log('nonidentifyingclick')
-      	  relationType = false;
-      $('.identify_hs').css('display','none');
-      compareEntityPosition();
-      	  
+    
+      $('#button21').on('click', function(){
+    	  //제이슨불러오기 데이터
+         json = '{"attrs":{"width":1200,"height":498,"draggable":true},"className":"Stage","children":[{"attrs":{},"className":"Layer","children":[{"attrs":{"x":163,"y":120,"opacity":0.9,"name":"entity","id":1},"className":"Group","children":[{"attrs":{"width":283.064453125,"height":79,"fill":"#29315c","stroke":"white","strokeWidth":0,"name":"entity_container"},"className":"Rect"},{"attrs":{"text":"5","name":"giveColor","visible":false,"fill":"black"},"className":"Text"},{"attrs":{"x":3,"y":3,"width":54,"height":20,"name":"entity_logical"},"className":"Rect"},{"attrs":{"x":208.3076171875,"y":3,"width":71.7568359375,"height":20,"name":"entity_phisical"},"className":"Rect"},{"attrs":{"text":"테이블명","x":3,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_logical_txt"},"className":"Text"},{"attrs":{"text":"TableName1","x":208.3076171875,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_phisical_txt"},"className":"Text"},{"attrs":{"visible":false,"name":"btn_entity_group"},"className":"Group","children":[{"attrs":{"x":265.064453125,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_entity_delete"},"className":"Rect"},{"attrs":{"x":244.064453125,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_color"},"className":"Rect"},{"attrs":{"text":"x","x":272.064453125,"y":-18.5,"fill":"#ffffff","name":"btn_entity_delete_txt"},"className":"Text"},{"attrs":{"text":"o","x":251.064453125,"y":-18.5,"fill":"#ffffff","name":"btn_color_txt"},"className":"Text"},{"attrs":{"x":-1,"y":-22,"width":20,"height":20,"fill":"#FFD403","cornerRadius":5,"name":"btn_pk_add"},"className":"Rect"},{"attrs":{"x":20,"y":-22,"width":20,"height":20,"fill":"#0EB6FF","cornerRadius":5,"name":"btn_col_add"},"className":"Rect"},{"attrs":{"text":"+","x":3,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_pk_add_txt"},"className":"Text"},{"attrs":{"text":"+","x":24,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_col_add_txt"},"className":"Text"}]},{"attrs":{"y":26,"name":"key_group pk_group"},"className":"Group","children":[{"attrs":{"x":3,"name":"attribute"},"className":"Group","children":[{"attrs":{"width":277.064453125,"height":26,"fill":"#1a133e","name":"attr_container"},"className":"Rect"},{"attrs":{"x":3,"y":3,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":66.84228515625,"height":20,"fill":"#3e448d","name":"attr_background attr_key"},"className":"Rect"},{"attrs":{"text":"PrimaryKey","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_key_txt"},"className":"Text"}]},{"attrs":{"name":"attr_btn_group","y":3,"visible":false},"className":"Group","children":[{"attrs":{"name":"attr_btn_move","x":-23,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#0EB6FF"},"className":"Rect"},{"attrs":{"name":"attr_btn_move_t","x":-20.9,"y":2.3,"fill":"#ffffff","fontSize":18,"text":"▦"},"className":"Text"},{"attrs":{"name":"attr_btn_remove","x":30,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#4335af"},"className":"Rect"},{"attrs":{"name":"attr_btn_remove_t","x":37,"y":3.5,"fill":"#ffffff","text":"x"},"className":"Text"}]},{"attrs":{"x":72.84228515625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#3e448d","name":"attr_background attr_logical"},"className":"Rect"},{"attrs":{"text":"key_논리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key1","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_logical_txt"},"className":"Text"}]},{"attrs":{"x":131.07763671875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#3e448d","name":"attr_background attr_phisical"},"className":"Rect"},{"attrs":{"text":"key_물리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key1","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_phisical_txt"},"className":"Text"}]},{"attrs":{"x":189.31298828125,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":47.90380859375,"height":20,"fill":"#3e448d","name":"attr_background attr_domain"},"className":"Rect"},{"attrs":{"text":"Domain","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_domain_txt"},"className":"Text"}]},{"attrs":{"x":240.216796875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":33.84765625,"height":20,"fill":"#3e448d","name":"attr_background attr_type"},"className":"Rect"},{"attrs":{"text":"Type","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_type_txt"},"className":"Text"}]},{"attrs":{"x":508,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_null"},"className":"Rect"},{"attrs":{"text":"none","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"NOT NULL","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_null_txt"},"className":"Text"}]},{"attrs":{"x":609,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_default"},"className":"Rect"},{"attrs":{"text":"Default value","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_default_txt"},"className":"Text"}]},{"attrs":{"x":710,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_comment"},"className":"Rect"},{"attrs":{"text":"Comment","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_comment_txt"},"className":"Text"}]}]},{"attrs":{"x":3,"y":23,"name":"attribute"},"className":"Group","children":[{"attrs":{"width":277.064453125,"height":26,"fill":"#1a133e","name":"attr_container"},"className":"Rect"},{"attrs":{"x":3,"y":3,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":66.84228515625,"height":20,"fill":"#3e448d","name":"attr_background attr_key"},"className":"Rect"},{"attrs":{"text":"PrimaryKey","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_key_txt"},"className":"Text"}]},{"attrs":{"name":"attr_btn_group","y":3,"visible":false},"className":"Group","children":[{"attrs":{"name":"attr_btn_move","x":-23,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#0EB6FF"},"className":"Rect"},{"attrs":{"name":"attr_btn_move_t","x":-20.9,"y":2.3,"fill":"#ffffff","fontSize":18,"text":"▦"},"className":"Text"},{"attrs":{"name":"attr_btn_remove","x":30,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#4335af"},"className":"Rect"},{"attrs":{"name":"attr_btn_remove_t","x":37,"y":3.5,"fill":"#ffffff","text":"x"},"className":"Text"}]},{"attrs":{"x":72.84228515625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#3e448d","name":"attr_background attr_logical"},"className":"Rect"},{"attrs":{"text":"key_논리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key2","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_logical_txt"},"className":"Text"}]},{"attrs":{"x":131.07763671875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#3e448d","name":"attr_background attr_phisical"},"className":"Rect"},{"attrs":{"text":"key_물리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key2","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_phisical_txt"},"className":"Text"}]},{"attrs":{"x":189.31298828125,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":47.90380859375,"height":20,"fill":"#3e448d","name":"attr_background attr_domain"},"className":"Rect"},{"attrs":{"text":"Domain","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_domain_txt"},"className":"Text"}]},{"attrs":{"x":240.216796875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":33.84765625,"height":20,"fill":"#3e448d","name":"attr_background attr_type"},"className":"Rect"},{"attrs":{"text":"Type","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_type_txt"},"className":"Text"}]},{"attrs":{"x":508,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_null"},"className":"Rect"},{"attrs":{"text":"none","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"NOT NULL","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_null_txt"},"className":"Text"}]},{"attrs":{"x":609,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_default"},"className":"Rect"},{"attrs":{"text":"Default value","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_default_txt"},"className":"Text"}]},{"attrs":{"x":710,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_comment"},"className":"Rect"},{"attrs":{"text":"Comment","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_comment_txt"},"className":"Text"}]}]}]},{"attrs":{"y":72,"name":"key_group fk_group"},"className":"Group","children":[]},{"attrs":{"y":72,"name":"key_group attr_group"},"className":"Group","children":[]}]},{"attrs":{"x":736,"y":185,"opacity":0.9,"name":"entity","id":2},"className":"Group","children":[{"attrs":{"width":282.4736328125,"height":79,"fill":"#8d2d3f","stroke":"white","strokeWidth":0,"name":"entity_container"},"className":"Rect"},{"attrs":{"text":"3","name":"giveColor","visible":false,"fill":"black"},"className":"Text"},{"attrs":{"x":3,"y":3,"width":54,"height":20,"name":"entity_logical"},"className":"Rect"},{"attrs":{"x":207.716796875,"y":3,"width":71.7568359375,"height":20,"name":"entity_phisical"},"className":"Rect"},{"attrs":{"text":"테이블명","x":3,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_logical_txt"},"className":"Text"},{"attrs":{"text":"TableName2","x":207.716796875,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_phisical_txt"},"className":"Text"},{"attrs":{"visible":false,"name":"btn_entity_group"},"className":"Group","children":[{"attrs":{"x":264.4736328125,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_entity_delete"},"className":"Rect"},{"attrs":{"x":243.4736328125,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_color"},"className":"Rect"},{"attrs":{"text":"x","x":271.4736328125,"y":-18.5,"fill":"#ffffff","name":"btn_entity_delete_txt"},"className":"Text"},{"attrs":{"text":"o","x":250.4736328125,"y":-18.5,"fill":"#ffffff","name":"btn_color_txt"},"className":"Text"},{"attrs":{"x":-1,"y":-22,"width":20,"height":20,"fill":"#FFD403","cornerRadius":5,"name":"btn_pk_add"},"className":"Rect"},{"attrs":{"x":20,"y":-22,"width":20,"height":20,"fill":"#0EB6FF","cornerRadius":5,"name":"btn_col_add"},"className":"Rect"},{"attrs":{"text":"+","x":3,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_pk_add_txt"},"className":"Text"},{"attrs":{"text":"+","x":24,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_col_add_txt"},"className":"Text"}]},{"attrs":{"y":26,"name":"key_group pk_group"},"className":"Group","children":[]},{"attrs":{"y":26,"name":"key_group fk_group"},"className":"Group","children":[{"attrs":{"x":3,"name":"attribute"},"className":"Group","children":[{"attrs":{"width":276.4736328125,"height":26,"fill":"#710013","name":"attr_container"},"className":"Rect"},{"attrs":{"x":3,"y":3,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":66.25146484375,"height":20,"fill":"#9e4856","name":"attr_background attr_key"},"className":"Rect"},{"attrs":{"text":"ForeignKey","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_key_txt"},"className":"Text"}]},{"attrs":{"name":"attr_btn_group","y":3,"visible":false},"className":"Group","children":[{"attrs":{"name":"attr_btn_move","x":-23,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#0EB6FF"},"className":"Rect"},{"attrs":{"name":"attr_btn_move_t","x":-20.9,"y":2.3,"fill":"#ffffff","fontSize":18,"text":"▦"},"className":"Text"},{"attrs":{"name":"attr_btn_remove","x":30,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#4335af"},"className":"Rect"},{"attrs":{"name":"attr_btn_remove_t","x":37,"y":3.5,"fill":"#ffffff","text":"x"},"className":"Text"}]},{"attrs":{"x":72.25146484375,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#9e4856","name":"attr_background attr_logical"},"className":"Rect"},{"attrs":{"text":"key_논리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"fk이름","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_logical_txt"},"className":"Text"}]},{"attrs":{"x":130.48681640625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#9e4856","name":"attr_background attr_phisical"},"className":"Rect"},{"attrs":{"text":"key_물리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"fk이름","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_phisical_txt"},"className":"Text"}]},{"attrs":{"x":188.72216796875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":47.90380859375,"height":20,"fill":"#9e4856","name":"attr_background attr_domain"},"className":"Rect"},{"attrs":{"text":"Domain","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_domain_txt"},"className":"Text"}]},{"attrs":{"x":239.6259765625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":33.84765625,"height":20,"fill":"#9e4856","name":"attr_background attr_type"},"className":"Rect"},{"attrs":{"text":"Type","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_type_txt"},"className":"Text"}]},{"attrs":{"x":508,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_null"},"className":"Rect"},{"attrs":{"text":"none","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"NOT NULL","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_null_txt"},"className":"Text"}]},{"attrs":{"x":609,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_default"},"className":"Rect"},{"attrs":{"text":"Default value","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_default_txt"},"className":"Text"}]},{"attrs":{"x":710,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_comment"},"className":"Rect"},{"attrs":{"text":"Comment","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_comment_txt"},"className":"Text"}]}]},{"attrs":{"x":3,"y":23,"name":"attribute"},"className":"Group","children":[{"attrs":{"width":276.4736328125,"height":26,"fill":"#710013","name":"attr_container"},"className":"Rect"},{"attrs":{"x":3,"y":3,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":66.25146484375,"height":20,"fill":"#9e4856","name":"attr_background attr_key"},"className":"Rect"},{"attrs":{"text":"ForeignKey","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_key_txt"},"className":"Text"}]},{"attrs":{"name":"attr_btn_group","y":3,"visible":false},"className":"Group","children":[{"attrs":{"name":"attr_btn_move","x":-23,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#0EB6FF"},"className":"Rect"},{"attrs":{"name":"attr_btn_move_t","x":-20.9,"y":2.3,"fill":"#ffffff","fontSize":18,"text":"▦"},"className":"Text"},{"attrs":{"name":"attr_btn_remove","x":30,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#4335af"},"className":"Rect"},{"attrs":{"name":"attr_btn_remove_t","x":37,"y":3.5,"fill":"#ffffff","text":"x"},"className":"Text"}]},{"attrs":{"x":72.25146484375,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#9e4856","name":"attr_background attr_logical"},"className":"Rect"},{"attrs":{"text":"key_논리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"fk이름","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_logical_txt"},"className":"Text"}]},{"attrs":{"x":130.48681640625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#9e4856","name":"attr_background attr_phisical"},"className":"Rect"},{"attrs":{"text":"key_물리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"fk이름","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_phisical_txt"},"className":"Text"}]},{"attrs":{"x":188.72216796875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":47.90380859375,"height":20,"fill":"#9e4856","name":"attr_background attr_domain"},"className":"Rect"},{"attrs":{"text":"Domain","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_domain_txt"},"className":"Text"}]},{"attrs":{"x":239.6259765625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":33.84765625,"height":20,"fill":"#9e4856","name":"attr_background attr_type"},"className":"Rect"},{"attrs":{"text":"Type","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_type_txt"},"className":"Text"}]},{"attrs":{"x":508,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_null"},"className":"Rect"},{"attrs":{"text":"none","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"NOT NULL","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_null_txt"},"className":"Text"}]},{"attrs":{"x":609,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_default"},"className":"Rect"},{"attrs":{"text":"Default value","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_default_txt"},"className":"Text"}]},{"attrs":{"x":710,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_comment"},"className":"Rect"},{"attrs":{"text":"Comment","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_comment_txt"},"className":"Text"}]}]}]},{"attrs":{"y":72,"name":"key_group attr_group"},"className":"Group","children":[]}]}]},{"attrs":{},"className":"Layer","children":[]},{"attrs":{},"className":"Layer","children":[]},{"attrs":{},"className":"Layer","children":[{"attrs":{"lineCap":"round","linerJoin":"round","name":"1","lastPos":2,"stroke":"#86f5e5","points":[446.064453125,159.5,456.064453125,159.5,456.064453125,154.5,456.064453125,164.5,456.064453125,159.5,721,224.5,726,224.5,736,229.5,726,224.5,736,219.5,726,224.5,736,224.5],"visible":true},"className":"Line"}]}]}';
+          
+          stage2 = Konva.Node.create(json, 'tmp_canvas');
+          
+          //stage2.children.moveTo(stage);
+          //stage2.find(".entity").moveTo(layer);
+          
+          
+          
+
+          
+          stage2.children.each(function(item1,i){
+              
+              while(item1.children.length > 0){
+                    
+                  
+                  item1.children[0].moveTo(stage.children[i]);
+                  
+                  //stage.children[i].add(item1.children[0]);
+                  
+                  console.log("객체 추가");
+
+                }
+              
+          });
+       
+          
+          //stage2.children[0].children.movoTo(stage.children[0])
+          
+          
+          
+          
+          
       });
-        
+       var stage2;
+      
+       
+       //identifying을 클릭했을 때
+         $("#identifying").on('click', function(){
+       	  console.log('identifyingclick')
+       	  
+       $('.identify_hs').css('display','none');
+       if(firstEntity.findOne('.pk_group').children.length<1){
+     	 return;
+       }
+       moveColumnIdentifying();
+       relationType = true;
+       compareEntityPosition(); 
+       });
+       
+       //nonidentifying을 클릭했을 때
+         $("#nonidentifying").on('click', function(){
+       	  console.log('nonidentifyingclick')
+       	  
+       $('.identify_hs').css('display','none');
+       if(firstEntity.findOne('.pk_group').children.length<1){
+     	  return;
+       }
+       moveColumnNonIdentifying();
+     	  relationType = false;
+       compareEntityPosition();
+       	  
+       });
         
         
         
@@ -297,12 +353,20 @@
           
 		  mini_stage.add(mini_layer);
           stage.add(layer).add(layer2);
+        stage.add(temp_arrow_layer);
+        stage.add(relationLine_layer);
           
+        relationLine_layer.draw();
           mini_layer.draw();
           layer.draw();
           
+          
       }  
         
+    
+       temp_arrow_layer = new Konva.Layer();
+       relationLine_layer = new Konva.Layer();
+       var relationSwitchFlag = true;
     
       init_ERD();
  
@@ -310,7 +374,7 @@
         
 //        테이블 생성
         function entityAdd(circlePos){
-            
+
             color1_num = Math.floor(Math.random() * 6);
             //color1_num = 3;
             
@@ -318,7 +382,8 @@
                 x: circlePos.x,
                 y: circlePos.y,
                 opacity: 0.9,
-                name: 'entity'
+                name: 'entity',
+                id: newEntity_id()
             });
             
             var giveColor = new Konva.Text({
@@ -346,7 +411,7 @@
 				x: circlePos.x*0.048,
 				y: circlePos.y*0.048,
 				fill: 'black',
-				id :entity._id        //메인스테이지 테이블의 id값을 참조함 
+				id :entity.id()+10000        //메인스테이지 테이블의 id값을 참조함 
 				/* opacity: 0.3 */
 			});
 //            console.log('mini_tb 아이디 :'+mini_tb.id());
@@ -550,40 +615,18 @@
             
             
              entity.off('dblclick');
-             entity.on('dblclick', textClick);
+             //entity.on('dblclick', textClick);
             
+             entity.off('mouseup');
+             entity.off('mousedown');
             
              stage.off('click');
              stage.on('click', stageClick);
 
             //yhs================================
              // 엔티티를 클릭했을 경우(mouseup) 엔티티와 관계된 관계선들을 보여준다. 
-             entity.on('mouseup',function(e){
-             	 console.log('마우스업');
-             	 var first_Entity = e.target.findAncestor('.entity'); // 첫번째 객체를 얻어옴 (내가 클릭한 객체)
-             	 
-             	entityMouseUp(first_Entity,true); 
-             	
-             }); 
              
-          
-             // 엔티티를 클릭했을 경우(mousedown) 엔티티와 관계된 관계선들을 숨겨준다.
-             entity.on('mousedown',function(e){
-            	 console.log('마우스 다운');
-            	
-            	 // e.target.findAncestor('.entity');
-            	 var arr_line_To= relationLine_layer.find('.'+e.target.findAncestor('.entity')._id);
-				 
-            	 var arr_line_From = findLineRefPos(e.target.findAncestor('.entity')._id);
-            	 for(var i=0; i<arr_line_To.length; i++){
-            		 arr_line_To[i].hide();
-            	 }
-            	 
-            	 for(var i = 0; i<arr_line_From.length; i++){
-            		 arr_line_From[i].hide();
-            	 }
-            		relationLine_layer.draw();
-            });
+           
               
             
             
@@ -598,7 +641,8 @@
                  
                      if(allNode.hasName('entity')){
                      console.log("entity : "+allNode.x());
-                     var mini_entity = mini_stage.find('#'+evt.target._id+'');
+                     var mini_entity = mini_stage.find('#'+(evt.target.id()+10000)+'');
+                     
                      mini_entity.x(evt.target.x()*0.048);
                      mini_entity.y(evt.target.y()*0.048);
                      mini_layer.draw();
@@ -606,9 +650,7 @@
              }); // move end
         }
         //entity 생성 종료
-     temp_arrow_layer = new Konva.Layer();
-        relationLine_layer = new Konva.Layer();
-        var relationSwitchFlag = true;
+       
         
         
     
@@ -748,10 +790,10 @@
                 //entity 삭제버튼 이벤트 
                 if(allNode.name().indexOf('btn_entity_delete') > -1){
                     
-                    var removeTableNo=allNode.findAncestor('.entity')._id;
+                    var removeTableNo=allNode.findAncestor('.entity').id();
                     console.log('삭제할번호'+ removeTableNo);
                     
-                    mini_stage.find('#'+removeTableNo+'').remove(); //미니맵 테이블 삭제
+                    mini_stage.find('#'+(removeTableNo+10000)+'').remove(); //미니맵 테이블 삭제
                     
                     allNode.findAncestor('.entity').remove();
                     mini_layer.draw();
@@ -790,6 +832,43 @@
                     allNode.findAncestor('.attribute').destroy();
      
                 }
+                
+                
+                
+                else if(allNode.findAncestor('.entity')){
+                	
+                    	entity.on('dblclick', textClick);
+                    	
+                	  entity.on('mouseup',function(e){
+                      	 console.log('마우스업');
+                      	 var first_Entity = e.target.findAncestor('.entity'); // 첫번째 객체를 얻어옴 (내가 클릭한 객체)
+                      	 
+                      	entityMouseUp(first_Entity,true); 
+                      	relationLine_layer.draw();
+                      }); 
+                      
+                   
+                      // 엔티티를 클릭했을 경우(mousedown) 엔티티와 관계된 관계선들을 숨겨준다.
+                      
+                      entity.on('mousedown',function(e){
+                     	 console.log('마우스 다운');
+                     	
+                     	 // e.target.findAncestor('.entity');
+                     	 var arr_line_To= relationLine_layer.find('.'+e.target.findAncestor('.entity').id());
+         				 
+                     	 var arr_line_From = findLineRefPos(e.target.findAncestor('.entity').id());
+                     	 for(var i=0; i<arr_line_To.length; i++){
+                     		 arr_line_To[i].hide();
+                     	 }
+                     	 
+                     	 for(var i = 0; i<arr_line_From.length; i++){
+                     		 arr_line_From[i].hide();
+                     	 }
+                     		relationLine_layer.draw();
+                     });
+                	
+                }
+                
                 
                 
                 
@@ -843,7 +922,7 @@
             
             
             //미니맵에 객체 갱신
-             var mini_entity = mini_stage.find('#'+entity._id+'');
+             var mini_entity = mini_stage.find('#'+(entity.id()+10000)+'');
              mini_entity.width(entity.children[0].width()*0.048);
              mini_entity.height(entity.children[0].height()*0.048);
              mini_layer.draw();
@@ -975,7 +1054,7 @@
                  
                  
                 //미니맵에 객체 갱신
-                 var mini_entity = mini_stage.find('#'+entity._id+'');
+                 var mini_entity = mini_stage.find('#'+entity.id()+'');
                  mini_entity.width(entity.children[0].width()*0.048);
                  mini_entity.height(entity.children[0].height()*0.048);
                  
@@ -1115,5 +1194,6 @@
 </script>
 
 </html>
+
 
 

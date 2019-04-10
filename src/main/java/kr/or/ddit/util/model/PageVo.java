@@ -11,6 +11,7 @@ public class PageVo {
     private int finalPageNo; // 마지막 페이지 번호
     private int totalCount;  // 게시 글 전체 수
     private int boardNo;     // 게시판 번호 좀 편하게 하려고 넣었음 
+    private int postNo;
     private String receiverId;	 // message 페이징 작업 용
 
    public int getPageSize() {
@@ -32,6 +33,14 @@ public class PageVo {
 
 	public void setBoardNo(int boardNo) {
 		this.boardNo = boardNo;
+	}
+	
+	public int getPostNo() {
+		return postNo;
+	}
+
+	public void setPostNo(int postNo) {
+		this.postNo = postNo;
 	}
 
     public void setPageSize(int pageSize) {
@@ -103,7 +112,6 @@ public class PageVo {
         this.makePaging();
     }
     
-
 	public String getReceiverId() {
 		return receiverId;
 	}
@@ -117,7 +125,7 @@ public class PageVo {
 		return "PageVo [pageSize=" + pageSize + ", firstPageNo=" + firstPageNo + ", prevPageNo=" + prevPageNo
 				+ ", startPageNo=" + startPageNo + ", pageNo=" + pageNo + ", endPageNo=" + endPageNo + ", nextPageNo="
 				+ nextPageNo + ", finalPageNo=" + finalPageNo + ", totalCount=" + totalCount + ", boardNo=" + boardNo
-				+ "receiverId=" + receiverId + "]";
+				+ ", postNo=" + postNo + ", receiverId=" + receiverId + "]";
 	}
 
 	//페이징 생성

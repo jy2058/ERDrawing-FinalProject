@@ -528,7 +528,7 @@
            //컬러셋 초기화 
            new_color = entity.findOne('.giveColor').text();
             
-           if(old_entity._id != allNode.findAncestor('.entity')._id){
+           if(old_entity.id() != allNode.findAncestor('.entity').id()){
             
                tmp_groupColor = colorPick[old_color].groupColor;
                
@@ -614,7 +614,7 @@
         if(arr_pk_group.length > 2){
             console.log('오름차순');
             arr_pk_group.sort(function(a, b) { // 오름차순
-                return a._id - b._id;
+                return a.id() - b.id();
                 // 13, 21, 25, 44
             });
         }

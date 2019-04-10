@@ -30,11 +30,19 @@ public class ReportDaoImpl implements IReportDao {
 	}
 
 	@Override
+	public int getReportCnt(ReportVo reportVo) {
+		int reportCnt = sqlSessionTemplate.selectOne("post.getReportCnt", reportVo);
+		
+		return reportCnt;
+	}
+	
+	@Override
 	public int insertReport(ReportVo reportVo) {
 		int insertCnt = sqlSessionTemplate.insert("post.insertReport", reportVo);
 		
 		return insertCnt;
 	}
+
 
 	
 }

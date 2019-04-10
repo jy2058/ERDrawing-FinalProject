@@ -100,6 +100,10 @@
         	<put-attribute name="content" value="/WEB-INF/views/post/postReply.jsp" />
         </definition>
         
+         <definition name="ticket" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/ticket/ticketList.jsp" />
+        </definition>
+        
         
         
         

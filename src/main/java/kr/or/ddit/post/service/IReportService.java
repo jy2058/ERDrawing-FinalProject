@@ -9,6 +9,8 @@ public interface IReportService {
 	List<ReportVo> getAllReport(String toMemId);
 
 	ReportVo getReport(String toMemId);
+	
+	int getReportCnt(ReportVo reportVo); //중복신고 막으려고
 
 	int insertReport(ReportVo reportVo);
 

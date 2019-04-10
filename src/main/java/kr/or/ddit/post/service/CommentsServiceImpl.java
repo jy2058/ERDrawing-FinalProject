@@ -6,8 +6,10 @@ import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
+import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.post.dao.ICommentsDao;
 import kr.or.ddit.post.model.CommentsVo;
+import kr.or.ddit.util.model.PageVo;
 
 @Service("commentsService")
 public class CommentsServiceImpl implements ICommentsService{
@@ -23,6 +25,16 @@ public class CommentsServiceImpl implements ICommentsService{
 		List<CommentsVo> commentsList = commentsDao.getAllComments(postNo);
 		
 		return commentsList;
+	}
+	
+	@Override
+	public List<CommentsVo> getPagingAllComments(PageVo pageVo) {
+		int totalCnt = commentsDao.getCmtCnt(pageVo.getPostNo());
+		pageVo.setTotalCount(totalCnt);
+		
+		List<CommentsVo> cmtsList = commentsDao.getPagingAllComments(pageVo);
+
+		return cmtsList;
 	}
 
 	@Override
@@ -45,7 +57,6 @@ public class CommentsServiceImpl implements ICommentsService{
 		
 		return deleteCnt;
 	}
-	
 	
 
 }
