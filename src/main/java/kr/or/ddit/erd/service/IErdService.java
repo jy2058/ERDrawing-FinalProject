@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.erd.model.ErdVo;
+import kr.or.ddit.util.model.PageVo;
 
 public interface IErdService {
 	/**
@@ -57,5 +58,24 @@ public interface IErdService {
 	* Method 설명 : erd 삭제
 	*/
 	int delErd(int erdNo);
+	
+	/**
+	* Method : getMyErdTagMap
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param memId
+	* @return
+	* Method 설명 : 전체 erd리스트와 태그 리스트 가져오기
+	*/
+	Map<String, Object> getAllErdAndTagMap();
+	
+	/**
+	* Method : getAllErdListPaging
+	* 작성자 : PC08
+	* 변경이력 :
+	* @return
+	* Method 설명 : 모든 erd 페이징 리스트
+	*/
+	Map<String, Object>getAllErdListPaging(PageVo pageVo);
 
 }

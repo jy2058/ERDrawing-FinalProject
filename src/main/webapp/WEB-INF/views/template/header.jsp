@@ -60,13 +60,21 @@
 
 		<input type="hidden" id="memEmailDiv"
 			value="${SESSION_MEMBERVO.memEmailDiv}">
-	</div>
+		
+		
+		
+		<!-- <div>
+			<input type="text" id="test" value="고고고고">
+			<input type="button" id="sendBtn">
+		</div>
+		<div id="data"></div> -->
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-	<script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
+<script>
 		var abc;
 		$("#logout").click(function() {
 		if ($("#memEmailDiv").val() == "google") {
@@ -98,5 +106,37 @@
 						$("#logout").attr("href", "/logout");
 					}//기본 로그인한 경우
 				});
+		
+		
+		/* $(document).ready(function(){
+			
+			$("#sendBtn").click(function() {
+                sendMessage();
+                $('#message').val('')
+
+       		 });
+			
+			// 웹소켓
+			// 웹소켓을 지정한 url로 연결한다.
+	        let sock = new SockJS("<c:url value="/echo"/>");
+	        sock.onmessage = onMessage;
+	        sock.onclose = onClose;
+	
+	        // 메시지 전송
+	        function sendMessage() {
+	               sock.send($("#test").val());
+	        }
+	        // 서버로부터 메시지를 받았을 때
+	        function onMessage(msg) {
+	               var data = msg.data;
+	               $("#data").append(data + "<br/>");
+	        }
+	
+	        // 서버와 연결을 끊었을 때
+	        function onClose(evt) {
+	               $("#data").append("연결 끊김"); 
+	        }
+		});	 */
+
 	</script>
 </nav>

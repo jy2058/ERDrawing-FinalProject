@@ -4,7 +4,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -302,7 +302,7 @@ public class MemberController {
 		Map<String, Object> myErdTagMap = erdService.getMyErdTagMap(memId);
 		model.addAllAttributes(myErdTagMap);
 		 
-		 return "member/memberErdPage";
+		 return "memberErdPage";
 	 }
 
 	@RequestMapping("/memberModify")
