@@ -369,7 +369,7 @@
 		var src = data.memVo.memImg;
 		var black = data.memVo.memBlackFlag;
 		var cancel = data.memVo.memCancelFlag;
-		
+		   
 	
 		
 		//구글 카카오는 비밀번호 변경불가 /이미지 값
