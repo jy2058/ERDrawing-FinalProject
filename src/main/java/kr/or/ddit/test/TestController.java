@@ -18,6 +18,7 @@ import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.team.model.TeamListVo;
 import kr.or.ddit.team.model.TeamVo;
 import kr.or.ddit.team.service.ITeamService;
+import kr.or.ddit.util.model.PageVo;
 
 @Controller
 public class TestController {
@@ -40,9 +41,24 @@ public class TestController {
 	}
 	
 	
-	@RequestMapping(path="/library")
-	public String library(){
+	/*@RequestMapping(path="/library")
+	public String library(Model model){
+		Map<String, Object> allErdAndTagMap = erdService.getAllErdAndTagMap();
+		model.addAllAttributes(allErdAndTagMap);
 		return "library";
+	}*/
+	
+	@RequestMapping(path="/library")
+	public String library(Model model, @RequestParam(name = "tagContent", defaultValue = "")String tagContent/*, @RequestParam(name = "page", defaultValue = "1") int page*/){
+		/*PageVo pageVo = new PageVo();
+		pageVo.setPageNo(page);
+
+		Map<String, Object> allErdListPaging = erdService.getAllErdListPaging(pageVo);
+
+		model.addAllAttributes(allErdListPaging);
+		model.addAttribute("paging", pageVo);*/
+		model.addAttribute("tagContent", tagContent);
+		return "libraryScroll";
 	}
 	
 	
