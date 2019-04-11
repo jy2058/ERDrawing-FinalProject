@@ -170,7 +170,7 @@ public class TestController {
 			case "pwSearch":
 				page = "member/pwSearch";
 				break;
-				
+				  
 			case "IdSearch":
 				page = "member/idSearch";
 				break;
