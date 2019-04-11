@@ -20,5 +20,18 @@ public class TicketController {
 	model.addAttribute("ticketList", ticketService.getAllTicketList());
 		return "ticket";
 	}
+	
+	@RequestMapping("CallPaymentKakaoPaySuccess")
+	public String CallPaymentKakaoPaySuccess(Model model){
+	model.addAttribute("next_redirect_pc_url", "/ticket/CallPay");
+		return "jsonView";
+	}
+	
+	@RequestMapping("CallPay")
+	public String CallPay(Model model){
+		return "ticket/ticketBuy";
+	}
+	
+	
 
 }
