@@ -264,6 +264,7 @@
         $("#ul").append(html);  
 	 };
 	 
+	 // 멤버 클릭시 유저페이지로 이동
 	 $(".selectMem").on("click", function(){
 		 var memId = $(this).closest('li').data('memid');
 		 $(".selectMem").attr('href', "${cp}/member/memberErd?memId=" + memId);

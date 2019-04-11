@@ -1,6 +1,7 @@
 package kr.or.ddit.erd.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
@@ -16,7 +17,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.erd.service.IErdService;
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.message.model.MessageVo;
 import kr.or.ddit.team.service.ITeamService;
+import kr.or.ddit.util.model.PageVo;
 
 @RequestMapping("/erd")
 @Controller
@@ -61,6 +64,24 @@ public class ErdController {
 	@RequestMapping("/delErd")
 	public String delErd(@RequestParam("erdNo")int erdNo){
 		erdService.delErd(erdNo);
+		
+		return "jsonView";
+	}
+	
+	// 라이브러리 erd 페이징 ajax
+	@RequestMapping("/libErdAjax")
+	public String libErdAjax(@RequestParam(name = "page", defaultValue = "1") int page, Model model, HttpSession session) {
+		
+		PageVo pageVo = new PageVo();
+		pageVo.setPageNo(page);
+
+		Map<String, Object> allErdListPaging = erdService.getAllErdListPaging(pageVo);
+
+		model.addAllAttributes(allErdListPaging);
+		//model.addAttribute("erdPagingList", erdPagingList);
+		model.addAttribute("paging", pageVo);
+
+		logger.debug("***page : {}", page);
 		
 		return "jsonView";
 	}

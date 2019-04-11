@@ -168,7 +168,7 @@ cursor: pointer;}
 	
 	  var sel_file;
 	  
-      $(document).ready(function() {
+	  $(document).ready(function() {
           $("#input_img").on("change", handleImgFileSelect);
       }); 
 
@@ -185,10 +185,15 @@ cursor: pointer;}
 
               var reader = new FileReader();
               reader.onload = function(e) {
+<<<<<<< HEAD
             	  $("#profileImg").attr("src", e.target.result);
+=======
+                  $("#profileImg").attr("src", e.target.result);
+>>>>>>> branch 'master' of https://gitlab.com/ddit/erdrawing.git
               }
               reader.readAsDataURL(f);
           });
       }
 	</script>
+
 </div>

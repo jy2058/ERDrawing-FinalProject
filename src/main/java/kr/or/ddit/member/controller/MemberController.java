@@ -304,7 +304,7 @@ public class MemberController {
 		Map<String, Object> myErdTagMap = erdService.getMyErdTagMap(memId);
 		model.addAllAttributes(myErdTagMap);
 		 
-		 return "member/memberErdPage";
+		 return "memberErdPage";
 	 }
 
 	@RequestMapping("/memberModify")
