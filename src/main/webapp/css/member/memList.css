@@ -5,6 +5,7 @@
     margin-right: 0px;
     margin-left: -155px;
     position: absolute;
+    color: #000000;
     }
 
 
@@ -68,6 +69,7 @@ table {
 	width: 123%;
 	height: 150px;
 	font-size: 18px
+
 }
 
 thead {
@@ -93,9 +95,6 @@ thead {
     width: 150px;
 }
 
-#contents {
-    color: 000000;
-}
 
 .d1 ul ul {
 	position: absolute;

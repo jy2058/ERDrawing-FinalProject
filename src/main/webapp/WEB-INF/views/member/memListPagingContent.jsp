@@ -7,7 +7,11 @@
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <link rel="stylesheet" href="/css/boxErd.css">
 <link rel="stylesheet" href="/css/member/memList.css">
-
+<style>
+#contents{
+color: #000000;
+}
+</style>
 
 	<div class="youtube-title">
 		<h2>회원정보 리스트</h2>
