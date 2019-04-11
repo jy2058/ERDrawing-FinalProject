@@ -26,7 +26,7 @@
 </style>
 
 <div class="erd-search">
-	<input name="erd-search-txt" class="erd-search-txt" id="searchTxt" type="text" data-tagcontent="${tagContent }"/>
+	<input name="erd-search-txt" class="erd-search-txt" id="searchTxt" type="text" data-tagcontent="${tagContent }" value=""/>
 	<button class="erd-search-btn" id="searchBtn">검색</button>
 </div>
 
@@ -34,33 +34,7 @@
 	<div class="inner-container">
 		<div class="col-sm-12">
 			<ul class="erd-box-list">
-				<%-- <c:forEach var="erdList" varStatus="status" items="${allErdListPaging }">
-					<c:if test="${erdList.erdScope eq 'public' }">
-						<li class="erd-box-item "><a class="preview-box">
-								<div class="bg-box">
-									<div class="bg-img">&nbsp;Image</div>
-									<div class="table-bg-text">
-										<div class="bg-text shinys">&nbsp;${erdList.erdTitle }</div>
-									</div>
-								</div>
-						</a>
-							<div class="description-item">
-								<div style="float: left;">${erdList.erdTitle }</div>
-								<!-- erd public / private에 따라 자물쇠 이미지 변경 -->
-								<div style="float: right;">${erdList.erdScope }</div>
-								<ul class="tagList" style="clear: both;">
-									<c:forEach var="entry" items="${erdTagListMap }">
-										<c:if test="${entry.key eq myErdList.erdNo}">
-											<c:set var="value" value="${entry.value }" />
-											<c:forEach var="tagVo" items="${value}">
-												<li>${tagVo.tagContent }</li>
-											</c:forEach>
-										</c:if>
-									</c:forEach>
-								</ul>
-							</div></li>
-					</c:if>
-				</c:forEach> --%>
+				<!-------------------------- erd list --------------------->
 			</ul>
 		</div>
 	</div>
@@ -69,52 +43,73 @@
 <script>
 var page=1;
 var stat = true; 	// 페이징 사이즈 보다 작을 때 스크롤 그만 되게
+var tagContent;
+var searchFlag = false;	// 검색버튼을 눌렀는지 플래그
 $(document).ready(function(){
 	page = 0;
-	
-	var tagContent = $("#searchTxt").data("tagcontent");
+
+	tagContent = $("#searchTxt").data("tagcontent");
 	if(tagContent != ""){
-		$("#searchBtn").val(tagContent);
-	}else{
-		showErd();
+		$("#searchTxt").val(tagContent);
 	}
-});
-
-
-//$(function(){
+	showErd();
+	
+	$("#searchBtn").on("click", function(){
+		tagContent = $("#searchTxt").val();
+		searchFlag = true;
+		page = 0;
+		showErd();
+	});
+	
+	
 	var content_padding_b = parseInt($("#contents .container").css('padding-bottom'));
 	var footer = $("#footer").height();
+	var s_flag = true;
 	
     $(window).scroll(function(){
-		var window = $(this);
-		var scrollTop = $(window).scrollTop();
-		var windowHeight = $(window).height();
-		var documentHeight = $(document).height();
-		var currentScroll = scrollTop + windowHeight + footer + content_padding_b + 30;
-		
- 		console.log("documentHeight:" + documentHeight + " | scrollTop:" + currentScroll + " | windowHeight: " + windowHeight );
-		
-		if( documentHeight < currentScroll && stat == true){
-			showErd();
-		}
+    		
+   		// 스크롤이 여러번 실행 되지 않게 스위칭
+   		if(s_flag){
+   			
+   			s_flag != s_flag;
+   			
+   			var window = $(this);
+   			var scrollTop = $(window).scrollTop();
+   			var windowHeight = $(window).height();
+   			var documentHeight = $(document).height();
+   			var currentScroll = scrollTop + windowHeight + footer + content_padding_b;
+   			
+   	 		console.log("documentHeight:" + documentHeight + " | scrollTop:" + currentScroll + " | windowHeight: " + windowHeight );
+   			
+   			if( documentHeight < currentScroll && stat == true){
+   				showErd();
+   			}
+   			
+   			setTimeout(function(){
+   				s_flag != s_flag;
+   			}, 1000);
+   		}
     });
-
+});
 
 
 	function showErd(){
 		$.ajax({
 			url : "${cp}/erd/libErdAjax",
 			data : {
-				page : ++page
+				page : ++page,
+				tagContent : tagContent
 			},
+ 			async: false,
 			success : function(data) {
+				
 				var erdList = data.allErdListPaging;
 				var erdTagMap = data.erdTagListMap;
 				var erdTagMapKey = Object.keys(erdTagMap);	// 맵의 키를 따로 저장
 				var erdTagMapNew = new Map(); //erdTagMapKey를 맵타입으로 바꾸기 위해서. 
 				//스크립트에서 맵 안에 있는 맵을 배열로 인식.
 				
-				if(erdList.length < 6){
+				if(erdList.length < 12){
 					stat = false;
 				}
 				
@@ -123,40 +118,41 @@ $(document).ready(function(){
 					erdTagMapNew.set(erdTagMapKey[z], erdTagMap[erdTagMapKey[z]]);
 				}
 				
-				
 				var html ="";
 				for(var i = 0; i < erdList.length; i++){
-					if(erdList[i].erdScope == 'public'){
-						html += '<li class="erd-box-item">';
-						html += '	<a class="preview-box">';
-						html += '		<div class="bg-box">';
-						html += '			<div class="bg-img">&nbsp;Image</div>';
-						html += '			<div class="table-bg-text">';
-						html += '				<div class="bg-text shinys">&nbsp;' + erdList[i].erdTitle + '</div>';
-						html += '			</div>';
-						html += '		</div>';
-						html += '	</a>';
-						html += '	<div class="description-item">';
-						html += '		<div style="float: left;">' + erdList[i].erdTitle + '</div>';
-						html += '		<div style="float: right;">' + erdList[i].erdScope + '</div>';
-						html += '		<ul class="tagList" style="clear: both;">';
-						
-						  for(var [key, value] of erdTagMapNew){
-							  console.log(key);
-							  console.log(value);
-							 if(key == erdList[i].erdNo){
-								 for(var j = 0; j < value.length; j++){
-									 html += '<li>' + value[j].tagContent +'</li>';
-								 }
+					html += '<li class="erd-box-item">';
+					html += '	<a class="preview-box">';
+					html += '		<div class="bg-box">';
+					html += '			<div class="bg-img">&nbsp;Image</div>';
+					html += '			<div class="table-bg-text">';
+					html += '				<div class="bg-text shinys">&nbsp;' + erdList[i].erdTitle + '</div>';
+					html += '			</div>';
+					html += '		</div>';
+					html += '	</a>';
+					html += '	<div class="description-item">';
+					html += '		<div style="float: left;">' + erdList[i].erdTitle + '</div>';
+					html += '		<div style="float: right;">' + erdList[i].erdScope + '</div>';
+					html += '		<ul class="tagList" style="clear: both;">';
+					
+					  for(var [key, value] of erdTagMapNew){
+						 if(key == erdList[i].erdNo){
+							 for(var j = 0; j < value.length; j++){
+								 html += '<a href="${cp}/library?tagContent=' + value[j].tagContent + '" title="" class="tagSearch">' + value[j].tagContent + '</a>';
 							 }
-						 }  
-						html += '		</ul>';
-						html += '	</div>';
-						html += '</li>';
-					}
+						 }
+					 }  
+					html += '		</ul>';
+					html += '	</div>';
+					html += '</li>';
+				}
+				if(searchFlag){
+					$(".erd-box-list").html(html);
 				}
 				$(".erd-box-list").append(html);
+				
 			}
 		});
 	};
+	
+	
 </script>

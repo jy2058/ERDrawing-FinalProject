@@ -13,6 +13,7 @@ public class PageVo {
     private int boardNo;     // 게시판 번호 좀 편하게 하려고 넣었음 
     private int postNo;
     private String receiverId;	 // message 페이징 작업 용
+    private String search;	// 라이브러리 검색용
 
    public int getPageSize() {
         return pageSize;
@@ -119,13 +120,24 @@ public class PageVo {
 	public void setReceiverId(String receiverId) {
 		this.receiverId = receiverId;
 	}
+	
+
+	public String getSearch() {
+		return search;
+	}
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+
+	
 
 	@Override
 	public String toString() {
 		return "PageVo [pageSize=" + pageSize + ", firstPageNo=" + firstPageNo + ", prevPageNo=" + prevPageNo
 				+ ", startPageNo=" + startPageNo + ", pageNo=" + pageNo + ", endPageNo=" + endPageNo + ", nextPageNo="
 				+ nextPageNo + ", finalPageNo=" + finalPageNo + ", totalCount=" + totalCount + ", boardNo=" + boardNo
-				+ ", postNo=" + postNo + ", receiverId=" + receiverId + "]";
+				+ ", postNo=" + postNo + ", receiverId=" + receiverId + ", search=" + search + "]";
 	}
 
 	//페이징 생성

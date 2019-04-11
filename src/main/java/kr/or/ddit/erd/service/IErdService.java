@@ -77,5 +77,14 @@ public interface IErdService {
 	* Method 설명 : 모든 erd 페이징 리스트
 	*/
 	Map<String, Object>getAllErdListPaging(PageVo pageVo);
-
+	
+	/**
+	* Method : searchPagingList
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param pageVo
+	* @return
+	* Method 설명 : 라이브러리 검색된 erd 페이징 리스트
+	*/
+	Map<String, Object> searchPagingList(PageVo pageVo);
 }
