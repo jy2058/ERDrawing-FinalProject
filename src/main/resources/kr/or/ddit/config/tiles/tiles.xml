@@ -43,8 +43,11 @@
         
         
         
-        <definition name="library" extends="layout">
+        <!-- <definition name="library" extends="layout">
         	<put-attribute name="content" value="/WEB-INF/views/erd/library.jsp" />
+        </definition> -->
+        <definition name="libraryScroll" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/erd/libraryScroll.jsp" />
         </definition>
         
          <definition name="join" extends="layout">
@@ -59,7 +62,7 @@
         	<put-attribute name="content" value="/WEB-INF/views/member/mypage.jsp" />
         </definition>
         
-         <definition name="team" extends="layoutMain">
+         <definition name="team" extends="layout">
         	<put-attribute name="content" value="/WEB-INF/views/member/team.jsp" />
         </definition>
         
@@ -71,9 +74,13 @@
         <definition name="memList" extends="layout">
         	<put-attribute name="content" value="/WEB-INF/views/member/memListPagingContent.jsp" />
         </definition>
+        
+        <definition name="memberErdPage" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/member/memberErdPage.jsp" />
+        </definition>
 
 
-             <definition name="postList" extends="layoutMain">
+        <definition name="postList" extends="layoutMain">
         	<put-attribute name="content" value="/WEB-INF/views/post/postList.jsp" />
         </definition>
         
@@ -96,6 +103,8 @@
          <definition name="ticket" extends="layout">
         	<put-attribute name="content" value="/WEB-INF/views/ticket/ticketList.jsp" />
         </definition>
+        
+        
         
         
         
