@@ -7,7 +7,11 @@
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <link rel="stylesheet" href="/css/boxErd.css">
 <link rel="stylesheet" href="/css/member/memList.css">
-
+<style>
+#contents{
+color: #000000;
+}
+</style>
 
 	<div class="youtube-title">
 		<h2>회원정보 리스트</h2>
@@ -31,7 +35,7 @@
                <div class="form-group">
                   <label class="modalLabel" >회원 이미지</label> 
                   
-				  <img alt="" src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }" name="memImg" id="memImg" width="100px" height="100px">
+				  <img alt="" src="" name="memImg" id="memImg" width="100px" height="100px">
                </div>
             
             
@@ -114,7 +118,7 @@
       <div class="modal-dialog modal-80size modal-center" role="document" >
          <div class="modal-content modal-80size">
             <div class="modal-header">
-            <label>| 회원정보 수정</label>
+            <label>| 신고사유</label>
                <button type="button" class="close" data-dismiss="modal"aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                </button>
@@ -207,6 +211,7 @@
 		$("#memListTbody").on("click", ".delImg", function() {
 			if (confirm("정말 삭제하시겠습니까??") == true) {
 				memId = $(this).data("memid");
+			
 				getMemListPageListHtmlDel(1, memId);
 			} else { //취소
 				return false;
@@ -256,14 +261,32 @@
 				}
 				
 				
-				if($("#reMemPass").disabled == false){
+				
+				
+				
+				if($("#memPass").is(":disabled") == false){
+					if($("#memPass").val().trim()=="")
+					 { 
+					  alert("비밀번호를 입력해주세요"); 
+					  return false;
+					 }
+					}
+				if($("#reMemPass").is(":disabled") == false){
+					if($("#reMemPass").val().trim()=="")
+					 { 
+					  alert("비밀번호를 입력해주세요"); 
+					  return false;
+					 }
+					}
+				
+				if($("#reMemPass").is(":disabled") == false){
 				if(!/^[a-zA-Z0-9!@#$%^&*()?_~]{6,15}$/.test($("#reMemPass").val()))
 				 { 
 				  alert("비밀번호는 숫자, 영문, 특수문자 조합으로 6~15자리를 사용해야 합니다."); 
 				  return false;
 				 }
 				}
-				
+			
 				
 				
 				if($("#chMemBlackFlag").is(':checked')){
@@ -293,14 +316,14 @@
 		//신고사유 클릭시
 		$("#memListTbody").on('click', "#liReport", function() {
 			memId = $(this).data("memid");
-			getMemberReportList(memId);
+			getMemberReportList($(this).data("memid"));
 		});
 		
 	});
 
 	//삭제후 Ajax처리
 	function getMemListPageListHtmlDel(page, memId) {
-		$.ajax({ 
+		$.ajax({
 				url : "${cp}/member/memberDel",
 				data : {
 					memId : memId,
@@ -351,17 +374,25 @@
 		var black = data.memVo.memBlackFlag;
 		var cancel = data.memVo.memCancelFlag;
 		
-		//이미지
-		$("#memImg").attr("src", "${cp }/member/memberImg?memId="+data.memVo.memId);
 	
 		
-		//구글 카카오는 비밀번호 변경불가 
+		//구글 카카오는 비밀번호 변경불가 /이미지 값
 		if (data.memVo.memEmailDiv != "basic") {
 			$("#memPass").attr("disabled", true);
 			$("#reMemPass").attr("disabled", true);
+			
+			//이미지
+			if(data.memVo.memImg==null){
+				$("#memImg").attr("src", "${cp }/member/memberImg?memId="+data.memVo.memId);
+			}else{
+			$("#memImg").attr("src",data.memVo.memImg);
+			}
 		}else{
 			$("#memPass").attr("disabled", false);
 			$("#reMemPass").attr("disabled", false);
+			
+			//이미지
+			$("#memImg").attr("src", "${cp }/member/memberImg?memId="+data.memVo.memId);
 		}
 
 		if(black=='T'){
@@ -408,8 +439,11 @@
 
 	}
 	
-	var appends = 0;
 	function getMemberReportList(memId) {
+
+		$("#modalTd").html("");
+		$("#cnt").val("");
+		
 		$.ajax({
 				url : "${cp}/member/memRepotList",
 				data : {
@@ -426,12 +460,11 @@
 						"<td>"+data.inDate[i]+"</td></tr>"
 					}
 					
-					if(appends==0)
 					$("#modalTd").append(str);
-					
-					appends++;
-					}
 					$("#cnt").val(data.reportList[0].cnt);
+					}
+					
+					
 				}
 			});
 		}
