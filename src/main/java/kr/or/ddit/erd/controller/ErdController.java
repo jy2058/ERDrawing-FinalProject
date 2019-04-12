@@ -70,15 +70,20 @@ public class ErdController {
 	
 	// 라이브러리 erd 페이징 ajax
 	@RequestMapping("/libErdAjax")
-	public String libErdAjax(@RequestParam(name = "page", defaultValue = "1") int page, Model model, HttpSession session) {
+	public String libErdAjax(@RequestParam(name = "page", defaultValue = "1")int page, @RequestParam(name = "tagContent", required = false)String tagContent, Model model, HttpSession session) {
 		
 		PageVo pageVo = new PageVo();
 		pageVo.setPageNo(page);
-
-		Map<String, Object> allErdListPaging = erdService.getAllErdListPaging(pageVo);
-
+		Map<String, Object> allErdListPaging;
+		
+		// 검색일 때 페이징
+		if(!tagContent.isEmpty()){
+			pageVo.setSearch(tagContent);
+			allErdListPaging = erdService.searchPagingList(pageVo);
+		}else{ // 모든 erd paging
+			allErdListPaging = erdService.getAllErdListPaging(pageVo);
+		}
 		model.addAllAttributes(allErdListPaging);
-		//model.addAttribute("erdPagingList", erdPagingList);
 		model.addAttribute("paging", pageVo);
 
 		logger.debug("***page : {}", page);

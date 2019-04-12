@@ -131,10 +131,33 @@ public class ErdServiceImpl implements IErdService{
 	@Override
 	public Map<String, Object> getAllErdListPaging(PageVo pageVo) {
 		int allErdCnt = erdDao.getAllErdCnt();
-		pageVo.setPageSize(6);
+		pageVo.setPageSize(12);
 		pageVo.setTotalCount(allErdCnt);
 		
 		List<ErdVo> allErdListPaging = erdDao.getAllErdListPaging(pageVo);
+		
+		Map<Integer, List<TagVo>> erdTagListMap = new HashMap<>();
+		for(ErdVo erdVo : allErdListPaging){
+			int erdNo = erdVo.getErdNo();
+			List<TagVo> erdTagList = teamDao.getErdTag(erdNo);	// tagList
+			if(!erdTagList.isEmpty()){
+				erdTagListMap.put(erdNo, erdTagList);	// tagList가 있을 때 erdNo를 key, tagList를 value로 설정
+			}
+		}
+		Map<String, Object> erdTagMap = new HashMap<>();	// 리턴 값 2개 처리하기 위해 erdList와 erdTagListMap을 Map에 넣어 리턴 
+		erdTagMap.put("allErdListPaging", allErdListPaging);
+		erdTagMap.put("erdTagListMap", erdTagListMap);
+		
+		return erdTagMap;
+	}
+
+	@Override
+	public Map<String, Object> searchPagingList(PageVo pageVo) {
+		List<ErdVo> searchList = erdDao.searchList(pageVo.getSearch());
+		pageVo.setPageSize(searchList.size());
+		pageVo.setTotalCount(12);
+		
+		List<ErdVo> allErdListPaging = erdDao.searchPagingList(pageVo);
 		
 		Map<Integer, List<TagVo>> erdTagListMap = new HashMap<>();
 		for(ErdVo erdVo : allErdListPaging){

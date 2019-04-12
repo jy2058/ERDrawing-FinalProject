@@ -61,4 +61,16 @@ public interface IErdDao {
 	* Method 설명 : 모든 ERD 개수
 	*/
 	int getAllErdCnt();
+	
+	/**
+	* Method : searchPagingList
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param pageVo
+	* @return
+	* Method 설명 : 검색 ERD 페이징 리스트
+	*/
+	List<ErdVo>searchPagingList(PageVo pageVo);
+	
+	List<ErdVo>searchList(String search);
 }

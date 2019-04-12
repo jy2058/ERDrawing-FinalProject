@@ -139,7 +139,7 @@
 								  			<c:if test="${entry.key eq teamErdList.erdNo}">
 								  				<c:set var="value" value="${entry.value }"/>
 								  				<c:forEach var="tagVo" items="${value}">
-								  				<li>${tagVo.tagContent }</li>
+								  				<a href="${cp}/library?tagContent=${tagVo.tagContent }" title="" class="tagSearch">${tagVo.tagContent }</a>
 								  					
 								  				</c:forEach>
 								  					

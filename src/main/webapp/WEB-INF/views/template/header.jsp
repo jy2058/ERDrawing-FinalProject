@@ -54,7 +54,7 @@
 					</c:otherwise>
 				</c:choose>
 
-				<li><a href="">검색</a></li>
+				<li><a id="searchModal">검색</a></li>
 
 			</ul>
 		</div>

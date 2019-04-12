@@ -46,4 +46,14 @@ public class ErdDaoImpl implements IErdDao{
 		return sqlSession.selectOne("erd.getAllErdCnt");
 	}
 
+	@Override
+	public List<ErdVo> searchPagingList(PageVo pageVo) {
+		return sqlSession.selectList("erd.searchPagingList", pageVo);
+	}
+
+	@Override
+	public List<ErdVo> searchList(String search) {
+		return sqlSession.selectList("erd.searchList", search);
+	}
+
 }

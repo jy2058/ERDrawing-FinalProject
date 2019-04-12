@@ -180,6 +180,9 @@ public class TestController {
 			case "teamModify":
 				page = "erd/teamModify";
 				break;
+			case "searchModal":
+				page = "erd/search";
+				break;
 		}
 		
 		return page;

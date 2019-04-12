@@ -43,7 +43,7 @@
 		order by erdudt desc
 	</select>
 	
-	<!-- 모든 ERD 페이징 리스트 -->
+	<!-- 모든 public ERD 페이징 리스트 -->
 	<select id="getAllErdListPaging" parameterType="pageVo" resultType="erdVo">
 		select *
 		from
@@ -51,6 +51,7 @@
 		      from
 		        (select erd.*
 		         from erd
+		         where erdscope = 'public'
 		         order by erdudt desc
 		        ) a
 		    )
@@ -63,4 +64,44 @@
 		from erd
 	</select>
 	
+	<!-- 검색용 public ERD 페이징 리스트 -->
+	<select id="searchPagingList" parameterType="pageVo" resultType="erdVo">
+		select e.*           
+		from (select d.*, rownum rn                
+		      from (select c.*        
+		            from(select a.*
+		                 from erd a 
+		                 where 
+		                    erdtitle like '%'||#{search}||'%'
+		                    and a.erdscope = 'public' <!--  erdtitle에 1이 들어있는 애들 -->   
+		            union 
+		                select a.*
+		                from erd a, tag b ,tag_hist c
+		                where a.erdno = c.erdno
+		                    and b.tagno = c.tagno
+		                    and b.tagcontent like '%'||#{search}||'%' <!-- tag에  1이 들어있는애들 -->
+		                    and a.erdscope = 'public') c
+		      order by c.erdudt desc) d
+		      ) e
+		where rn between ((#{pageNo}-1)*#{pageSize})+1 and (#{pageNo})*#{pageSize}
+	
+	</select>
+	<!-- 검색용 public erd 리스트-->
+	<select id="searchList" parameterType="String" resultType="erdVo">
+		select d.*, rownum rn                
+		      from (select c.*        
+		            from(select a.*
+		                 from erd a 
+		                 where 
+		                    erdtitle like '%'||#{search}||'%'
+		                    and a.erdscope = 'public' <!--  erdtitle에 1이 들어있는 애들 -->   
+		            union 
+		                select a.*
+		                from erd a, tag b ,tag_hist c
+		                where a.erdno = c.erdno
+		                    and b.tagno = c.tagno
+		                    and b.tagcontent like '%'||#{search}||'%' <!-- tag에  1이 들어있는애들 -->
+		                    and a.erdscope = 'public') c
+		      order by c.erdudt desc) d
+	</select>
 </mapper>
