@@ -278,6 +278,7 @@ public class MemberController {
 			memVo.setMemPass(vo.getMemPass());
 			 memberService.updateMemberInfo(memVo);
 		 }else{
+		 memVo.setMemPass(KISA_SHA256.encrypt(memVo.getMemPass()));
 		 memberService.updateMemberInfo(memVo);
 		 }
 		 PageVo paging = new PageVo(); // 페이징 처리를 위해 페이징 객체 생성 Paging 이라는 VO가 존재함

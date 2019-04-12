@@ -22,8 +22,13 @@
 				</li>
 				<li class="navbar-brand"><a href="/er">ErdTest</a></li>
 				<li class="navbar-brand"><a href="/ticket/ticketList">Ticket</a></li>
+				
 				<c:if test="${SESSION_MEMBERVO.memAuth == 'T' }">
-					<li class="navbar-brand"><a href="${cp }/member/memberList">MemberList</a></li>
+				<li class="navbar-brand communityHover"><a href="/">Admin</a>
+					<%@ include file="/WEB-INF/views/template/module/adminMenu.jsp"%>
+					<%-- <li class="navbar-brand"><a href="${cp }/member/memberList">MemberList</a></li>
+					<li class="navbar-brand"><a href="${cp }/member/memberList">TicketChart</a></li> --%>
+					</li>
 				</c:if>
 				
 			</ul>
