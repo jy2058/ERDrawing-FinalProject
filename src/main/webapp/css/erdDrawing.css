@@ -1,6 +1,7 @@
 body {
 
 	margin:0;
+    overflow:hidden;
 }
 
 a:link { color: inherit; text-decoration: none;}
@@ -32,12 +33,26 @@ a:hover { color: inherit; text-decoration: none;}
 	color: #ffffff;
 }
 
+
+.drawing_bottom {
+    display: table-cell;
+	vertical-align: middle;
+	height: 40px;
+	left: 41px;
+	right: 41px;
+	bottom: 0;
+    z-index: 100;
+}
+
+
 .drawing_left {
 	top: 40px;
 	bottom: 0;
 	width: 40px;
 	text-align: center;
 }
+
+
 
 .drawing_right {
 	top: 40px;
@@ -47,15 +62,10 @@ a:hover { color: inherit; text-decoration: none;}
 	text-align: center;
 }
 
-.drawing_bottom {
-	height: 40px;
-	left: 41px;
-	right: 41px;
-	bottom: 0;
-}
+
 
 .drawing_content {
-	background: #666666;
+	background: #5D5F60;
 	top: 0;
 	left: 0;
 	right: 0;
@@ -83,7 +93,7 @@ a:hover { color: inherit; text-decoration: none;}
 /*identifying Non-identifying div 추가  */
 #line_background{
 	position:absolute;
-	background:rgba(255, 255, 255, 0.15);
+	background:rgba(255, 255, 255, 0.3);
 	left:0;
 	right:0;
 	width:100%;
@@ -110,9 +120,8 @@ a:hover { color: inherit; text-decoration: none;}
 	height:300px;
 	margin:0 auto;
 	display:table-cell;
-	background-color: black;
 	border-radius:  15px;
-	opacity:0.8;
+    background:#333333;
 }
 
 
@@ -130,7 +139,7 @@ a:hover { color: inherit; text-decoration: none;}
 	display:none;
 }
 #lineInformation div:hover {
-	 opacity: 1 !important; 
+	 background:#000000;
 }
 
 
@@ -170,10 +179,377 @@ a:hover { color: inherit; text-decoration: none;}
 	background:#555;
 }
 
-input:focus {
+input:focus, textarea:focus {
   outline: none;
+    
 }
 
 
 
 .drawing_bottom label{line-height:40px; padding-left:8px; cursor:pointer;} 
+
+
+
+
+
+
+/*도메인 컨테이너 디자인*/
+
+                    .ani_sys{
+                        -webkit-transition: all 0.5s ease;
+                        -khtml-transition: all 0.5s ease;
+                        -moz-transition: all 0.5s ease;
+                        -ms-transition: all 0.5s ease;
+                        -o-transition: all 0.5s ease;
+                        transition: all 0.5s ease;
+    
+                    }     
+
+
+                    .bottom_left{
+                        float:left;
+                    }
+                    
+                    .bottom_right{
+                        float:right;
+                    }
+                    
+                    /*도메인*/
+                    #button30{
+                        height:40px;
+                        line-height:40px;
+                        padding: 0 10px;
+                        margin:0;
+                    }
+
+                    /*가져오기*/
+                    #button31{
+                        height:40px;
+                        line-height:40px;
+                        padding: 0 10px;
+                        margin:0;
+                    }
+
+                    /*내보내기*/
+                    #button32{
+                        height:40px;
+                        line-height:40px;
+                        padding: 0 10px;
+                        margin:0;
+                    }
+
+                    
+                    #container_domain{
+                        position:absolute;
+                        display:block;
+                        left:41px;
+                        bottom:-200px;
+                        width:421px;
+                        height:200px;
+                        background:#000000;
+                        color:#fff;
+                        padding:0 3px 4px 4px;
+                        z-index:20;
+
+                    }
+                    
+                    #container_domain.active{
+                        bottom:40px;
+                    }
+                    
+                    
+                    #container_domain .under_top{
+                        display: table;
+                        width:100%;
+                        height:40px;
+                        vertical-align:middle;
+
+                    }
+                    
+                    #container_domain .under_top .under_top_left {
+                        display: table-cell;
+                        vertical-align:middle;
+                        width:40%;
+
+                        
+                    }
+                    
+                    #container_domain .under_top .under_top_right {
+                        display: table-cell;
+                        vertical-align:middle;
+                        text-align:right;
+                        width:60%;
+                    }
+                    
+                    .title_name{padding:0 5px 0 10px; font-size:16px;}
+
+                    .btn_domain{
+                        
+                        color:#ffffff;
+                        display:inline-block;
+                        width:15px;
+                        height:15px;
+                        font-size:15px;
+                        text-align: center;
+                        font-weight: 700;
+                        cursor:pointer;
+                        border-radius: 5px;
+                        padding:7px;
+                    }
+
+                    .btn_domain:hover{
+                        background: #333333;
+                    }
+
+                    
+                    .btn_close_under{
+                        display:inline-block;
+                        width:20px;
+                        height:20px;
+                        font-size:18px;
+                        text-align: center;
+                        cursor:pointer;
+                        vertical-align:middle;
+                        border-radius:5px;
+                        padding:4px;
+                        margin:0 2px;
+                    }
+
+                    .btn_close_under:hover{
+                        background:#333;
+                    }
+
+
+                    .btn_search{
+                        position:relative;
+                        left:130px;
+                        top:0.2px;
+                        background:#000000;
+                        padding:3px 4px;
+                        font-size:12px;
+                        border-radius: 5px;
+                        cursor:pointer;
+                    }
+
+                    .btn_search:hover{background:#333333;}
+                    
+                    .box_search{
+                        height:20px;
+                        border-radius: 5px;
+                        padding-left:10px;
+                    }
+                    
+                    
+                    #container_domain .under_list_box{
+                        background: #484848;
+                        width:411px;
+                        height:160px;
+                       
+                    }
+                    
+                    #container_domain .under_list_box table{
+                        border-collapse:collapse;
+                        font-size:12px;
+                        
+                    }
+                    
+                    #container_domain .under_list_box table th{
+                        border:2px solid #484848;
+                        background:#333333;
+                        height:28px;
+                        
+                    }
+                    
+                    #container_domain .under_list_box table td{
+                        border:2px solid #484848;
+                        background:#666666;
+                        height:28px;
+                        
+                    }
+                    
+                    
+                    #container_domain .under_list_box .input_box{
+                        width:90px;
+                        height:100%;
+                        background:#666666;
+                        border:0;
+                        padding:0;
+                        padding-left:10px;
+                        color:#fff;
+                    }
+                    #container_domain .under_list_box .input_box:hover{
+                        background:#555555;
+                    }
+                    
+                    #container_domain .container_inner{
+                        background:#333; overflow-x: hidden; overflow-y: auto;
+                    }
+                    
+                    .btn_d_update, .btn_d_delete{
+                        text-align: center;
+                        cursor:pointer;
+                    }
+                    
+                    .btn_d_update:hover, .btn_d_delete:hover{
+                        background:#555555!important;
+                    }
+
+
+
+
+
+                    /*공통 하단메뉴*/
+                    .under-bottom{
+                        position:relative;
+                        display:table-cell;
+                        vertical-align: middle;
+                        text-align: right;
+                        height:40px;
+                        width:645px;
+                        right:0;
+                    }
+
+                    .under-bottom span{
+                        font-size:13px;
+                        background:#c44141;
+                        display:inline-block;
+                        padding:7px 10px;
+                        border-radius:5px;
+                    }
+
+                    .under-bottom span:hover{
+                        
+                        background:#e24d4d;
+
+                    }
+
+
+
+                    /* 가져오기 */
+                    #container_import{
+                        position:absolute;
+                        display:block;
+                        left:41px;
+                        bottom:-297px;
+                        width:650px;
+                        height:297px;
+                        background:#000000;
+                        color:#fff;
+                        padding:0 3px 4px 4px;
+                        z-index:20;
+
+                    }
+                    
+                    #container_import.active{
+                        bottom:40px;
+                    }
+                    
+
+                    #container_import .container_inner{
+                        background:#333; overflow: hidden;
+                        height: 220px;
+                    }
+                    
+                    #container_import .under_top{
+                        display: table;
+                        width:100%;
+                        height:40px;
+                        vertical-align:middle;
+
+                    }
+                    
+                    #container_import .under_top .under_top_left {
+                        display: table-cell;
+                        vertical-align:middle;
+                        width:40%;
+
+                        
+                    }
+                    
+                    #container_import .under_top .under_top_right {
+                        display: table-cell;
+                        vertical-align:middle;
+                        text-align:right;
+                        width:60%;
+                    }
+                    
+ 
+                    #container_import textarea, #container_export textarea{
+                        width:100%;
+                        height:100%;
+                        background:#484848;
+                        color:#fff;
+                        border:0;
+                        padding:0;
+                        resize: none; 
+                    }
+            
+                    
+
+
+
+
+                    /* 내보내기 */
+                    #container_export{
+                        position:absolute;
+                        display:block;
+                        left:41px;
+                        bottom:-327px;
+                        width:650px;
+                        height:327px;
+                        background:#000000;
+                        color:#fff;
+                        padding:0 3px 4px 4px;
+                        z-index:20;
+                    }
+                    
+                    #container_export.active{
+                        bottom:40px;
+                    }
+                    
+                    
+                    #container_export .container_inner{
+                        background:#333; overflow: hidden;
+                        height:220px;
+                    }
+                    
+
+                    #container_export .under_top{
+                        display: table;
+                        width:100%;
+                        height:40px;
+                        vertical-align:middle;
+
+                    }
+                    
+                    #container_export .under_top .under_top_left {
+                        display: table-cell;
+                        vertical-align:middle;
+                        width:40%;
+
+                        
+                    }
+                    
+                    #container_export .under_top .under_top_right {
+                        display: table-cell;
+                        vertical-align:middle;
+                        text-align:right;
+                        width:60%;
+                    }
+                    
+       
+                    #container_export .under_top2 label{
+                            display:inline-block;
+                            padding-bottom:10px;
+                            padding-left:10px;
+                            font-size:11px;
+                            
+                    }
+
+
+
+
+
+
+
+
