@@ -7,10 +7,13 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Insert title here</title>
+
 <link rel="stylesheet" href="/css/erdDrawing.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script src="https://unpkg.com/konva@3.2.0/konva.min.js"></script>
+<script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
+    
 <script src="/js/drawing/minimap.js"></script>
 <script src="/js/drawing/attribute.js"></script>
 <script src="/js/drawing/style.js"></script>
@@ -52,19 +55,143 @@
 
             <session class="drawing_bottom drawing_pannel">
                 
-                <label><input type="checkbox" value="attr_logical" class="test_check" checked> 논리 켜기/끄기</label>
-                 <label><input type="checkbox" value="attr_phisical" class="test_check" checked> 물리 켜기/끄기</label>
+                <div class="bottom_left">
+                     <div id="button30" class="buttons"><i class="fas fa-paste" style="margin-right:5px;"></i>도메인</div>
+                     <div id="button31" class="buttons"><i class="fas fa-download" style="margin-right:5px;"></i>가져오기</div>
+                     <div id="button32" class="buttons"><i class="fas fa-upload" style="margin-right:5px;"></i>내보내기</div>
+                </div>
                 
-                <label><input type="checkbox" value="attr_domain" class="test_check" checked> DOMAIN</label>
-                 <label><input type="checkbox" value="attr_type" class="test_check" checked> TYPE</label>
                 
-                
-                <label><input type="checkbox" value="attr_null" class="test_check" checked> NULL</label>
-                <label><input type="checkbox" value="attr_default" class="test_check" checked> DEFAULT</label>
-                <label><input type="checkbox" value="attr_comment" class="test_check" checked> COMMENT</label>
-                 
-            </session>
+                <div class="bottom_right">
+                     <label><input type="checkbox" value="attr_logical" class="test_check" checked> 논리 켜기/끄기</label>
+                     <label><input type="checkbox" value="attr_phisical" class="test_check" checked> 물리 켜기/끄기</label>
 
+                    <label><input type="checkbox" value="attr_domain" class="test_check" checked> DOMAIN</label>
+                     <label><input type="checkbox" value="attr_type" class="test_check" checked> TYPE</label>
+
+
+                    <label><input type="checkbox" value="attr_null" class="test_check" checked> NULL</label>
+                    <label><input type="checkbox" value="attr_default" class="test_check" checked> DEFAULT</label>
+                    <label><input type="checkbox" value="attr_comment" class="test_check" checked> COMMENT</label>
+
+                </div>
+                
+            </session>
+               
+                
+                <!-- 도메인 컨테이너 -->
+                <div id="container_domain" class="ani_sys">
+                    <div class="under_top">
+                        <div class="under_top_left">
+                            <span class="title_name">DOMAIN</span>
+                            <span class="btn_domain"><i class="fas fa-plus-square"></i></span>
+                        </div>
+                        <div class="under_top_right">
+                            <span class="btn_search"><i class="fas fa-search"></i></span>
+                            <input class="box_search" type="text" placeholder="Search domain" />
+                            <span class="btn_close_under"><i class="fas fa-times"></i></span>
+                            
+                        </div>
+                    </div>
+                    
+                    
+                    <div class="container_inner">
+                        <div class="under_list_box">
+                        
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th style="width:30%">DOMAIN NAME</th>
+                                        <th style="width:30%">TYPE</th>
+                                        <th style="width:30%">DEFAULT VALUE</th>
+                                        <th style="padding:0 5px;">update</th>
+                                        <th style="padding:0 5px;">delete</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input class="input_box" type="text"/></td>
+                                        <td><input class="input_box" type="text"/></td>
+                                        <td><input class="input_box" type="text"/></td>
+                                        <td class="btn_d_update"><i class="fas fa-sync-alt"></i></td>
+                                        <td class="btn_d_delete"><i class="fas fa-trash"></i></td>
+                                    </tr>
+                                    <tr>
+                                        <td><input class="input_box" type="text"/></td>
+                                        <td><input class="input_box" type="text"/></td>
+                                        <td><input class="input_box" type="text"/></td>
+                                        <td class="btn_d_update"><i class="fas fa-sync-alt"></i></td>
+                                        <td class="btn_d_delete"><i class="fas fa-trash"></i></td>
+                                    </tr>
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                    </div>
+                </div>
+            
+            
+                <!-- 가져오기 컨테이너 -->
+                <div id="container_import" class="ani_sys">
+                    <div class="under_top">
+                        <div class="under_top_left">
+                            <span class="title_name">가져오기</span>
+                        </div>
+                        <div class="under_top_right">
+                            <span class="btn_close_under"><i class="fas fa-times"></i></span>
+                        </div>
+                    </div>
+                    <div class="container_inner">
+                        <textarea>입력 하면 erd 드로잉</textarea>
+                    </div>
+                    <div class="under-bottom">
+                        <span>Import</span>
+                    </div>
+                </div>
+            
+            
+                <!-- 내보내기 컨테이너 -->
+                <div id="container_export" class="ani_sys">
+                    <div class="under_top">
+                        <div class="under_top_left">
+                            <span class="title_name">내보내기</span>
+                        </div>
+                        <div class="under_top_right">
+                            <span class="btn_close_under"><i class="fas fa-times"></i></span>
+                        </div>
+                    </div>
+
+                    <div class="under_top2">
+                        <label>
+                            <input type="checkbox" value="add_pk" checked> ADD PK CONSTRAINT
+                        </label>
+                        <label>
+                            <input type="checkbox" value="add_fk" checked> ADD FK CONSTRAINT
+                        </label>
+                        <label>
+                            <input type="checkbox" value="add_non" > ADD NON IDENTIFYING RELATIONSHIP CONSTRAINT
+                        </label>
+                        <label>
+                            <input type="checkbox" value="add_drop" > ADD DROP
+                        </label>
+                        
+                    </div>
+                    
+                    
+                    <div class="container_inner">
+                        <textarea>CREATE TABLE `Untitled` (
+	`Key`	VARCHAR(255)	NOT NULL,
+	`Key4`	VARCHAR(255)	NOT NULL )</textarea>
+                    </div>
+                    
+                    <div class="under-bottom">
+                        <span>SQL Oracle Preview</span>
+                        <span>Download PNG</span>
+                    </div>
+                </div>
+            
+            
             <session class="drawing_content drawing_pannel">
                 <div id="container_Shin"></div>
             </session>
@@ -188,11 +315,61 @@
       	  isRRelationClick = true;
       });
     
+    
+    
+      //도메인 닫기 버튼
+      $('#container_domain .btn_close_under').on('click', function(){
+          
+          $('#container_domain').removeClass('active');
+      });
+    
+      //가져오기 닫기 버튼
+      $('#container_import .btn_close_under').on('click', function(){
+          
+          $('#container_import').removeClass('active');
+      });
+    
+      //내보내기 닫기 버튼
+      $('#container_export .btn_close_under').on('click', function(){
+          
+          $('#container_export').removeClass('active');
+      });
+    
+    
+      //도메인 활성화 버튼
+      $('#button30').on('click', function(){
+
+          $('#container_import').removeClass('active');
+          $('#container_export').removeClass('active');
+          $('#container_domain').addClass('active');
+        
+      });
+      
+      //가져오기 활성화 버튼
+      $('#button31').on('click', function(){
+
+          $('#container_domain').removeClass('active');
+          $('#container_export').removeClass('active');
+          $('#container_import').addClass('active');
+        
+      });
+    
+      //내보내기 활성화 버튼
+      $('#button32').on('click', function(){
+
+          $('#container_domain').removeClass('active');
+          $('#container_import').removeClass('active');
+          $('#container_export').addClass('active');
+        
+      });
+    
+      //데이터 저장
       $('#button20').on('click', function(){
          var json = stage.toJSON();
           console.log(json); 
       });
     
+      //데이터 불러오기
       $('#button21').on('click', function(){
     	  //제이슨불러오기 데이터
          json = '{"attrs":{"width":1200,"height":498,"draggable":true},"className":"Stage","children":[{"attrs":{},"className":"Layer","children":[{"attrs":{"x":163,"y":120,"opacity":0.9,"name":"entity","id":1},"className":"Group","children":[{"attrs":{"width":283.064453125,"height":79,"fill":"#29315c","stroke":"white","strokeWidth":0,"name":"entity_container"},"className":"Rect"},{"attrs":{"text":"5","name":"giveColor","visible":false,"fill":"black"},"className":"Text"},{"attrs":{"x":3,"y":3,"width":54,"height":20,"name":"entity_logical"},"className":"Rect"},{"attrs":{"x":208.3076171875,"y":3,"width":71.7568359375,"height":20,"name":"entity_phisical"},"className":"Rect"},{"attrs":{"text":"테이블명","x":3,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_logical_txt"},"className":"Text"},{"attrs":{"text":"TableName1","x":208.3076171875,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_phisical_txt"},"className":"Text"},{"attrs":{"visible":false,"name":"btn_entity_group"},"className":"Group","children":[{"attrs":{"x":265.064453125,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_entity_delete"},"className":"Rect"},{"attrs":{"x":244.064453125,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_color"},"className":"Rect"},{"attrs":{"text":"x","x":272.064453125,"y":-18.5,"fill":"#ffffff","name":"btn_entity_delete_txt"},"className":"Text"},{"attrs":{"text":"o","x":251.064453125,"y":-18.5,"fill":"#ffffff","name":"btn_color_txt"},"className":"Text"},{"attrs":{"x":-1,"y":-22,"width":20,"height":20,"fill":"#FFD403","cornerRadius":5,"name":"btn_pk_add"},"className":"Rect"},{"attrs":{"x":20,"y":-22,"width":20,"height":20,"fill":"#0EB6FF","cornerRadius":5,"name":"btn_col_add"},"className":"Rect"},{"attrs":{"text":"+","x":3,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_pk_add_txt"},"className":"Text"},{"attrs":{"text":"+","x":24,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_col_add_txt"},"className":"Text"}]},{"attrs":{"y":26,"name":"key_group pk_group"},"className":"Group","children":[{"attrs":{"x":3,"name":"attribute"},"className":"Group","children":[{"attrs":{"width":277.064453125,"height":26,"fill":"#1a133e","name":"attr_container"},"className":"Rect"},{"attrs":{"x":3,"y":3,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":66.84228515625,"height":20,"fill":"#3e448d","name":"attr_background attr_key"},"className":"Rect"},{"attrs":{"text":"PrimaryKey","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_key_txt"},"className":"Text"}]},{"attrs":{"name":"attr_btn_group","y":3,"visible":false},"className":"Group","children":[{"attrs":{"name":"attr_btn_move","x":-23,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#0EB6FF"},"className":"Rect"},{"attrs":{"name":"attr_btn_move_t","x":-20.9,"y":2.3,"fill":"#ffffff","fontSize":18,"text":"▦"},"className":"Text"},{"attrs":{"name":"attr_btn_remove","x":30,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#4335af"},"className":"Rect"},{"attrs":{"name":"attr_btn_remove_t","x":37,"y":3.5,"fill":"#ffffff","text":"x"},"className":"Text"}]},{"attrs":{"x":72.84228515625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#3e448d","name":"attr_background attr_logical"},"className":"Rect"},{"attrs":{"text":"key_논리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key1","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_logical_txt"},"className":"Text"}]},{"attrs":{"x":131.07763671875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#3e448d","name":"attr_background attr_phisical"},"className":"Rect"},{"attrs":{"text":"key_물리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key1","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_phisical_txt"},"className":"Text"}]},{"attrs":{"x":189.31298828125,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":47.90380859375,"height":20,"fill":"#3e448d","name":"attr_background attr_domain"},"className":"Rect"},{"attrs":{"text":"Domain","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_domain_txt"},"className":"Text"}]},{"attrs":{"x":240.216796875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":33.84765625,"height":20,"fill":"#3e448d","name":"attr_background attr_type"},"className":"Rect"},{"attrs":{"text":"Type","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_type_txt"},"className":"Text"}]},{"attrs":{"x":508,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_null"},"className":"Rect"},{"attrs":{"text":"none","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"NOT NULL","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_null_txt"},"className":"Text"}]},{"attrs":{"x":609,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_default"},"className":"Rect"},{"attrs":{"text":"Default value","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_default_txt"},"className":"Text"}]},{"attrs":{"x":710,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_comment"},"className":"Rect"},{"attrs":{"text":"Comment","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_comment_txt"},"className":"Text"}]}]},{"attrs":{"x":3,"y":23,"name":"attribute"},"className":"Group","children":[{"attrs":{"width":277.064453125,"height":26,"fill":"#1a133e","name":"attr_container"},"className":"Rect"},{"attrs":{"x":3,"y":3,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":66.84228515625,"height":20,"fill":"#3e448d","name":"attr_background attr_key"},"className":"Rect"},{"attrs":{"text":"PrimaryKey","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_key_txt"},"className":"Text"}]},{"attrs":{"name":"attr_btn_group","y":3,"visible":false},"className":"Group","children":[{"attrs":{"name":"attr_btn_move","x":-23,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#0EB6FF"},"className":"Rect"},{"attrs":{"name":"attr_btn_move_t","x":-20.9,"y":2.3,"fill":"#ffffff","fontSize":18,"text":"▦"},"className":"Text"},{"attrs":{"name":"attr_btn_remove","x":30,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#4335af"},"className":"Rect"},{"attrs":{"name":"attr_btn_remove_t","x":37,"y":3.5,"fill":"#ffffff","text":"x"},"className":"Text"}]},{"attrs":{"x":72.84228515625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#3e448d","name":"attr_background attr_logical"},"className":"Rect"},{"attrs":{"text":"key_논리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key2","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_logical_txt"},"className":"Text"}]},{"attrs":{"x":131.07763671875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#3e448d","name":"attr_background attr_phisical"},"className":"Rect"},{"attrs":{"text":"key_물리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key2","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_phisical_txt"},"className":"Text"}]},{"attrs":{"x":189.31298828125,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":47.90380859375,"height":20,"fill":"#3e448d","name":"attr_background attr_domain"},"className":"Rect"},{"attrs":{"text":"Domain","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_domain_txt"},"className":"Text"}]},{"attrs":{"x":240.216796875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":33.84765625,"height":20,"fill":"#3e448d","name":"attr_background attr_type"},"className":"Rect"},{"attrs":{"text":"Type","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_type_txt"},"className":"Text"}]},{"attrs":{"x":508,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_null"},"className":"Rect"},{"attrs":{"text":"none","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"NOT NULL","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_null_txt"},"className":"Text"}]},{"attrs":{"x":609,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_default"},"className":"Rect"},{"attrs":{"text":"Default value","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_default_txt"},"className":"Text"}]},{"attrs":{"x":710,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#3e448d","name":"attr_background attr_comment"},"className":"Rect"},{"attrs":{"text":"Comment","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_comment_txt"},"className":"Text"}]}]}]},{"attrs":{"y":72,"name":"key_group fk_group"},"className":"Group","children":[]},{"attrs":{"y":72,"name":"key_group attr_group"},"className":"Group","children":[]}]},{"attrs":{"x":736,"y":185,"opacity":0.9,"name":"entity","id":2},"className":"Group","children":[{"attrs":{"width":282.4736328125,"height":79,"fill":"#8d2d3f","stroke":"white","strokeWidth":0,"name":"entity_container"},"className":"Rect"},{"attrs":{"text":"3","name":"giveColor","visible":false,"fill":"black"},"className":"Text"},{"attrs":{"x":3,"y":3,"width":54,"height":20,"name":"entity_logical"},"className":"Rect"},{"attrs":{"x":207.716796875,"y":3,"width":71.7568359375,"height":20,"name":"entity_phisical"},"className":"Rect"},{"attrs":{"text":"테이블명","x":3,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_logical_txt"},"className":"Text"},{"attrs":{"text":"TableName2","x":207.716796875,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_phisical_txt"},"className":"Text"},{"attrs":{"visible":false,"name":"btn_entity_group"},"className":"Group","children":[{"attrs":{"x":264.4736328125,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_entity_delete"},"className":"Rect"},{"attrs":{"x":243.4736328125,"y":-22,"width":20,"height":20,"fill":"#333333","cornerRadius":5,"name":"btn_color"},"className":"Rect"},{"attrs":{"text":"x","x":271.4736328125,"y":-18.5,"fill":"#ffffff","name":"btn_entity_delete_txt"},"className":"Text"},{"attrs":{"text":"o","x":250.4736328125,"y":-18.5,"fill":"#ffffff","name":"btn_color_txt"},"className":"Text"},{"attrs":{"x":-1,"y":-22,"width":20,"height":20,"fill":"#FFD403","cornerRadius":5,"name":"btn_pk_add"},"className":"Rect"},{"attrs":{"x":20,"y":-22,"width":20,"height":20,"fill":"#0EB6FF","cornerRadius":5,"name":"btn_col_add"},"className":"Rect"},{"attrs":{"text":"+","x":3,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_pk_add_txt"},"className":"Text"},{"attrs":{"text":"+","x":24,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_col_add_txt"},"className":"Text"}]},{"attrs":{"y":26,"name":"key_group pk_group"},"className":"Group","children":[]},{"attrs":{"y":26,"name":"key_group fk_group"},"className":"Group","children":[{"attrs":{"x":3,"name":"attribute"},"className":"Group","children":[{"attrs":{"width":276.4736328125,"height":26,"fill":"#710013","name":"attr_container"},"className":"Rect"},{"attrs":{"x":3,"y":3,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":66.25146484375,"height":20,"fill":"#9e4856","name":"attr_background attr_key"},"className":"Rect"},{"attrs":{"text":"ForeignKey","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_key_txt"},"className":"Text"}]},{"attrs":{"name":"attr_btn_group","y":3,"visible":false},"className":"Group","children":[{"attrs":{"name":"attr_btn_move","x":-23,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#0EB6FF"},"className":"Rect"},{"attrs":{"name":"attr_btn_move_t","x":-20.9,"y":2.3,"fill":"#ffffff","fontSize":18,"text":"▦"},"className":"Text"},{"attrs":{"name":"attr_btn_remove","x":30,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#4335af"},"className":"Rect"},{"attrs":{"name":"attr_btn_remove_t","x":37,"y":3.5,"fill":"#ffffff","text":"x"},"className":"Text"}]},{"attrs":{"x":72.25146484375,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#9e4856","name":"attr_background attr_logical"},"className":"Rect"},{"attrs":{"text":"key_논리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"fk이름","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_logical_txt"},"className":"Text"}]},{"attrs":{"x":130.48681640625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#9e4856","name":"attr_background attr_phisical"},"className":"Rect"},{"attrs":{"text":"key_물리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"fk이름","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_phisical_txt"},"className":"Text"}]},{"attrs":{"x":188.72216796875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":47.90380859375,"height":20,"fill":"#9e4856","name":"attr_background attr_domain"},"className":"Rect"},{"attrs":{"text":"Domain","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_domain_txt"},"className":"Text"}]},{"attrs":{"x":239.6259765625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":33.84765625,"height":20,"fill":"#9e4856","name":"attr_background attr_type"},"className":"Rect"},{"attrs":{"text":"Type","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_type_txt"},"className":"Text"}]},{"attrs":{"x":508,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_null"},"className":"Rect"},{"attrs":{"text":"none","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"NOT NULL","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_null_txt"},"className":"Text"}]},{"attrs":{"x":609,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_default"},"className":"Rect"},{"attrs":{"text":"Default value","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_default_txt"},"className":"Text"}]},{"attrs":{"x":710,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_comment"},"className":"Rect"},{"attrs":{"text":"Comment","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_comment_txt"},"className":"Text"}]}]},{"attrs":{"x":3,"y":23,"name":"attribute"},"className":"Group","children":[{"attrs":{"width":276.4736328125,"height":26,"fill":"#710013","name":"attr_container"},"className":"Rect"},{"attrs":{"x":3,"y":3,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":66.25146484375,"height":20,"fill":"#9e4856","name":"attr_background attr_key"},"className":"Rect"},{"attrs":{"text":"ForeignKey","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_key_txt"},"className":"Text"}]},{"attrs":{"name":"attr_btn_group","y":3,"visible":false},"className":"Group","children":[{"attrs":{"name":"attr_btn_move","x":-23,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#0EB6FF"},"className":"Rect"},{"attrs":{"name":"attr_btn_move_t","x":-20.9,"y":2.3,"fill":"#ffffff","fontSize":18,"text":"▦"},"className":"Text"},{"attrs":{"name":"attr_btn_remove","x":30,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#4335af"},"className":"Rect"},{"attrs":{"name":"attr_btn_remove_t","x":37,"y":3.5,"fill":"#ffffff","text":"x"},"className":"Text"}]},{"attrs":{"x":72.25146484375,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#9e4856","name":"attr_background attr_logical"},"className":"Rect"},{"attrs":{"text":"key_논리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"fk이름","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_logical_txt"},"className":"Text"}]},{"attrs":{"x":130.48681640625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#9e4856","name":"attr_background attr_phisical"},"className":"Rect"},{"attrs":{"text":"key_물리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"fk이름","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_phisical_txt"},"className":"Text"}]},{"attrs":{"x":188.72216796875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":47.90380859375,"height":20,"fill":"#9e4856","name":"attr_background attr_domain"},"className":"Rect"},{"attrs":{"text":"Domain","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_domain_txt"},"className":"Text"}]},{"attrs":{"x":239.6259765625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":33.84765625,"height":20,"fill":"#9e4856","name":"attr_background attr_type"},"className":"Rect"},{"attrs":{"text":"Type","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_type_txt"},"className":"Text"}]},{"attrs":{"x":508,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_null"},"className":"Rect"},{"attrs":{"text":"none","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"NOT NULL","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_null_txt"},"className":"Text"}]},{"attrs":{"x":609,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_default"},"className":"Rect"},{"attrs":{"text":"Default value","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_default_txt"},"className":"Text"}]},{"attrs":{"x":710,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_comment"},"className":"Rect"},{"attrs":{"text":"Comment","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_comment_txt"},"className":"Text"}]}]}]},{"attrs":{"y":72,"name":"key_group attr_group"},"className":"Group","children":[]}]}]},{"attrs":{},"className":"Layer","children":[]},{"attrs":{},"className":"Layer","children":[]},{"attrs":{},"className":"Layer","children":[{"attrs":{"lineCap":"round","linerJoin":"round","name":"1","lastPos":2,"stroke":"#86f5e5","points":[446.064453125,159.5,456.064453125,159.5,456.064453125,154.5,456.064453125,164.5,456.064453125,159.5,721,224.5,726,224.5,736,229.5,726,224.5,736,219.5,726,224.5,736,224.5],"visible":true},"className":"Line"}]}]}';
@@ -479,7 +656,7 @@
                 y: -(20+(BORDER_SIZE-1)),
                 width: 20,
                 height: 20,
-                fill: '#333333',
+                fill: '#262629',
                 //stroke: 'red',
                 cornerRadius: 5,
                 name: 'btn_entity_delete'
@@ -502,7 +679,7 @@
                 y: btn_entity_delete.y(),
                 width: 20,
                 height: 20,
-                fill: '#333333',
+                fill: '#262629',
                 //stroke: 'red',
                 cornerRadius: 5,
                 name: 'btn_color'
@@ -1194,6 +1371,10 @@
 </script>
 
 </html>
+
+
+
+
 
 
 
