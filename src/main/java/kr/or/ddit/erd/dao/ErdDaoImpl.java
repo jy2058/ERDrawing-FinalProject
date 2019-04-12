@@ -56,4 +56,9 @@ public class ErdDaoImpl implements IErdDao{
 		return sqlSession.selectList("erd.searchList", search);
 	}
 
+	@Override
+	public ErdVo getErdInfo(int erdNo) {
+		return sqlSession.selectOne("erd.getErdInfo", erdNo);
+	}
+
 }

@@ -110,10 +110,10 @@ display: block;
 				gogogo1(page);
 			});
 			
-			$("#searchModal").on("click", function(){
+			 $("#searchModal").on("click", function(){
 				page = "searchModal";
-				gogogo1(page);
-			});
+				//gogogo1(page);
+			}); 
 			
 			function gogogo1(page){
 				 $.ajax({

@@ -87,4 +87,24 @@ public interface IErdService {
 	* Method 설명 : 라이브러리 검색된 erd 페이징 리스트
 	*/
 	Map<String, Object> searchPagingList(PageVo pageVo);
+	
+	/**
+	* Method : searchList
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param searchTxt
+	* @return
+	* Method 설명 : 검색 된 erd 리스트
+	*/
+	List<ErdVo>searchList(String searchTxt);
+	
+	/**
+	* Method : getErdInfo
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdNo
+	* @return
+	* Method 설명 : erd정보 조회
+	*/
+	ErdVo getErdInfo(int erdNo);
 }

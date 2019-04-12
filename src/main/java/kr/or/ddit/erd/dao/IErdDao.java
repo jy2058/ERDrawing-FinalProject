@@ -72,5 +72,23 @@ public interface IErdDao {
 	*/
 	List<ErdVo>searchPagingList(PageVo pageVo);
 	
+	/**
+	* Method : searchList
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param search
+	* @return
+	* Method 설명 : 검색 ERD 리스트
+	*/
 	List<ErdVo>searchList(String search);
+	
+	/**
+	* Method : getErdInfo
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdNo
+	* @return
+	* Method 설명 : erd정보 조회
+	*/
+	ErdVo getErdInfo(int erdNo);
 }
