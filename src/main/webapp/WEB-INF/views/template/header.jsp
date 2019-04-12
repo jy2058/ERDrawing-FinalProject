@@ -54,22 +54,17 @@
 					</c:otherwise>
 				</c:choose>
 
-				<li><a id="searchModal">검색</a></li>
-
+				<li><a id="searchModal" data-toggle="modal" data-target="#modalEvnTest">검색</a></li>
 			</ul>
-		</div>
+		</div>	
 		<!--/.nav-collapse -->
+		
+		<div id="modals">
+			<%@ include file="/WEB-INF/views/erd/search.jsp"%>
+		</div>
 
 		<input type="hidden" id="memEmailDiv"
 			value="${SESSION_MEMBERVO.memEmailDiv}">
-		
-		
-		
-		<!-- <div>
-			<input type="text" id="test" value="고고고고">
-			<input type="button" id="sendBtn">
-		</div>
-		<div id="data"></div> -->
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -139,6 +134,21 @@
 	               $("#data").append("연결 끊김"); 
 	        }
 		});	 */
+		
+			
+		// 검색모달용 ajax
+		
 
+// 		 		$.ajax({
+// 					type : "get",
+// 					url : "/pageViewAjax",
+// 					data: { value :"searchModal" },
+// 					success : function(data){
+// 						$("#modals").html(data);
+// 					}
+// 				});
+
+		
+ 
 	</script>
 </nav>

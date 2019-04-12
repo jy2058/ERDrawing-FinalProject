@@ -174,4 +174,15 @@ public class ErdServiceImpl implements IErdService{
 		return erdTagMap;
 	}
 
+	@Override
+	public List<ErdVo> searchList(String searchTxt) {
+		List<ErdVo> searchList = erdDao.searchList(searchTxt);
+		return searchList;
+	}
+
+	@Override
+	public ErdVo getErdInfo(int erdNo) {
+		return erdDao.getErdInfo(erdNo);
+	}
+
 }

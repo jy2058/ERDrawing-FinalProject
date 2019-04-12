@@ -1,9 +1,17 @@
 package kr.or.ddit.erd.controller;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -18,6 +26,7 @@ import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.erd.service.IErdService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.message.model.MessageVo;
+import kr.or.ddit.team.model.TeamVo;
 import kr.or.ddit.team.service.ITeamService;
 import kr.or.ddit.util.model.PageVo;
 
@@ -85,9 +94,50 @@ public class ErdController {
 		}
 		model.addAllAttributes(allErdListPaging);
 		model.addAttribute("paging", pageVo);
-
-		logger.debug("***page : {}", page);
 		
 		return "jsonView";
+	}
+	
+	// erd 검색
+	@RequestMapping("/erdSearch")
+	public String erdSearch(@RequestParam("searchTxt_modal")String searchTxt, Model model){
+		List<ErdVo> searchList = erdService.searchList(searchTxt);
+		model.addAttribute(searchList);
+		
+		return "jsonView";
+	}
+	
+	// erd 이미지 조회
+	@RequestMapping("/erdImg")
+	public void erdImg(HttpServletRequest req, HttpServletResponse resp, @RequestParam("erdNo") int erdNo) throws IOException{
+
+		logger.debug("***erdNo {}", erdNo);
+		
+		// 2. 해당 사용자 아이디로 사용자 정보 조회(realFilename)
+		ErdVo erdInfo = erdService.getErdInfo(erdNo);
+
+		// 3-1. memImg 존재 할 경우
+		// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다.
+		FileInputStream fis;
+		if (erdInfo != null && erdInfo.getErdImg() != null) {
+			fis = new FileInputStream(new File(erdInfo.getErdImg()));
+		}
+		// 3-2. memImg 존재하지 않을 경우
+		// 3-2-1. /image/noImg.png(application.getRealPath())
+		else {
+			ServletContext application = req.getServletContext();
+			String noimgPath = application.getRealPath("/image/noImg.png");
+			fis = new FileInputStream(new File(noimgPath));
+		}
+		// 4. FileInputStream을 response객체의 outputStream 객체에 write
+		ServletOutputStream sos = resp.getOutputStream();
+
+		byte[] buff = new byte[512];
+		int len = 0;
+		while ((len = fis.read(buff)) > -1) {
+			sos.write(buff);
+		}
+		sos.close();
+		fis.close();
 	}
 }

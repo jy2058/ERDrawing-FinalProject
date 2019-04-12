@@ -123,7 +123,7 @@ $(document).ready(function(){
 					html += '<li class="erd-box-item">';
 					html += '	<a class="preview-box">';
 					html += '		<div class="bg-box">';
-					html += '			<div class="bg-img">&nbsp;Image</div>';
+					html += '			<img src="${cp }/erd/erdImg?erdNo=' + erdList[i].erdNo + '">';
 					html += '			<div class="table-bg-text">';
 					html += '				<div class="bg-text shinys">&nbsp;' + erdList[i].erdTitle + '</div>';
 					html += '			</div>';

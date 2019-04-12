@@ -104,4 +104,11 @@
 		                    and a.erdscope = 'public') c
 		      order by c.erdudt desc) d
 	</select>
+	
+	<!-- erd Id로 erd 정보 조회 -->
+	<select id="getErdInfo" parameterType="int" resultType="erdVo">
+		select *
+		from erd
+		where erdno = #{erdNo}
+	</select>
 </mapper>
