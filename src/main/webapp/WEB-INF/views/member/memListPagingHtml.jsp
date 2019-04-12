@@ -8,16 +8,28 @@
 				<tr>
 					<td>--</td>
 					<td>
+					
 						<c:choose>
-							<c:when test="${mem.memImg ==null}">
-								<a href="#"><img src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }" class="avatar"
-									alt="Avatar" width="35" height="30">${mem.memNm } </a>
+							<c:when test="${mem.memEmailDiv =='basic'}}">
+								<a href="#"><img src="${cp }/member/memberImg?memId=${mem.memId }" class="avatar"
+									alt="Avatar" width="35" height="30">$s{mem.memNm } </a>
 							</c:when>
 							<c:otherwise>
-								<a href="#"><img src="${cp }/member/memberImg?memId=${mem.memId }" class="avatar"
+							
+								<c:choose>
+									<c:when test="${ mem.memImg==null}">
+										<a href="#"><img src="${cp }/member/memberImg?memId=${mem.memId }" class="avatar"
 									alt="Avatar" width="35" height="30">${mem.memNm } </a>
+									</c:when>
+									<c:otherwise>
+										<a href="#"><img src="${mem.memImg}" class="avatar"
+									alt="Avatar" width="35" height="30">${mem.memNm } </a>
+									</c:otherwise>
+								</c:choose>
+								
 							</c:otherwise>
 						</c:choose>
+						
 					</td>
 					<td>${mem.memId }</td>
 					<td><fmt:formatDate value="${mem.memInDt }" pattern="yyyy/MM/dd" /></td>

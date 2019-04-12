@@ -20,4 +20,24 @@ public class TicketServiceImpl implements ITicketService{
 		return ticketDao.getAllTicketList();
 	}
 
+	@Override
+	public TicketVo selectTicket(String ticketNo) {
+		return ticketDao.selectTicket(ticketNo);
+	}
+
+	@Override
+	public int insertTicket(TicketVo ticketVo) {
+		return ticketDao.insertTicket(ticketVo);
+	}
+
+	@Override
+	public int updateTicket(TicketVo ticketVo) {
+		return ticketDao.updateTicket(ticketVo);
+	}
+
+	@Override
+	public int deleteTicket(String ticketNo) {
+		return ticketDao.deleteTicket(ticketNo);
+	}
+
 }

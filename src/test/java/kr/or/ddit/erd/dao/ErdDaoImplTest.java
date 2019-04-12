@@ -8,12 +8,14 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.junit.Test;
+import org.slf4j.LoggerFactory;
 
+import ch.qos.logback.classic.Logger;
 import kr.or.ddit.erd.model.ErdVo;
-import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.test.logicTestConfig;
 
 public class ErdDaoImplTest extends logicTestConfig{
+	private Logger logger = (Logger) LoggerFactory.getLogger(ErdDaoImplTest.class);
 	
 	@Resource(name="erdDao")
 	private IErdDao erdDao;
@@ -75,6 +77,23 @@ public class ErdDaoImplTest extends logicTestConfig{
 		assertNotNull(delErd);
 	}
 	
+	/**
+	* Method : testSearchList
+	* 작성자 : PC08
+	* 변경이력 :
+	* Method 설명 : 검색된 public 리스트
+	*/
+	@Test
+	public void testSearchList(){
+		/***Given***/
+		String search = "1";
+		/***When***/
+		List<ErdVo> searchList = erdDao.searchList(search);
+		/***Then***/
+		assertNotNull(searchList);
+		logger.debug("***serachList : {}", searchList);
+
+	}
 	
 
 }

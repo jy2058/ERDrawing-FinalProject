@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.erd.model.ErdVo;
+import kr.or.ddit.util.model.PageVo;
 
 @Repository("erdDao")
 public class ErdDaoImpl implements IErdDao{
@@ -28,6 +29,36 @@ public class ErdDaoImpl implements IErdDao{
 	@Override
 	public int delErd(int erdNo) {
 		return sqlSession.delete("erd.delErd", erdNo);
+	}
+
+	@Override
+	public List<ErdVo> getAllErdList() {
+		return sqlSession.selectList("erd.getAllErdList");
+	}
+
+	@Override
+	public List<ErdVo> getAllErdListPaging(PageVo pageVo) {
+		return sqlSession.selectList("erd.getAllErdListPaging", pageVo);
+	}
+
+	@Override
+	public int getAllErdCnt() {
+		return sqlSession.selectOne("erd.getAllErdCnt");
+	}
+
+	@Override
+	public List<ErdVo> searchPagingList(PageVo pageVo) {
+		return sqlSession.selectList("erd.searchPagingList", pageVo);
+	}
+
+	@Override
+	public List<ErdVo> searchList(String search) {
+		return sqlSession.selectList("erd.searchList", search);
+	}
+
+	@Override
+	public ErdVo getErdInfo(int erdNo) {
+		return sqlSession.selectOne("erd.getErdInfo", erdNo);
 	}
 
 }

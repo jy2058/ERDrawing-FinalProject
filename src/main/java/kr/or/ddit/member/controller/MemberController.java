@@ -100,6 +100,7 @@ public class MemberController {
 			// 2. 해당 사용자 아이디로 사용자 정보 조회(realFilename)
 		 	MemberVo memberVo = memberService.selectMember(memId);
 		 	
+		 	
 			// 3-1. memImg 존재 할 경우
 			// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다.
 			FileInputStream fis;
@@ -124,6 +125,7 @@ public class MemberController {
 
 			sos.close();
 			fis.close();
+		 	
 	 }
 	 
 
@@ -302,7 +304,7 @@ public class MemberController {
 		Map<String, Object> myErdTagMap = erdService.getMyErdTagMap(memId);
 		model.addAllAttributes(myErdTagMap);
 		 
-		 return "member/memberErdPage";
+		 return "memberErdPage";
 	 }
 
 	@RequestMapping("/memberModify")

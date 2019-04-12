@@ -215,8 +215,7 @@ public class TeamController {
 		
 		return "jsonView";
 	}
-	
-	// 아직 테스트 안 돌림 / 복붙만 함
+	// 팀 수정
 	@RequestMapping(path = "/teamModify", method = RequestMethod.POST)
 	public String teamModifyPost(TeamVo teamVo, @RequestParam("addMember")List<String> addMember, @RequestParam("delMember")List<String> delMember, HttpServletRequest req,
 			@RequestPart("profileImg") MultipartFile multipartFile) throws Exception, IOException {
@@ -244,8 +243,6 @@ public class TeamController {
 
 			teamVo.setTeamImg(path + "\\" + filename);
 		}
-		logger.debug("---addList : {}", addMember);
-		logger.debug("---delMember : {}", delMember);
 		 
 		teamService.teamMofify(teamVo, addMember, delMember);
 		

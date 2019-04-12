@@ -42,9 +42,12 @@
 	<!-- 게시글 페이징 조회 -->
 	<select id="selectPostPagingList" parameterType="pageVo" resultType="postVo">
 		select *
-		from (select a.*, rownum rn from (select POSTNO, POSTTITLE, POSTGN,
-		BOARDNO, WRITERID,trim(POSTDELFLAG) as
-		POSTDELFLAG, POSTREGDT, level
+			from 
+				(select a.*, rownum rn 
+				 from 
+				 	(select POSTNO, POSTTITLE, POSTGN,
+			  		 BOARDNO, WRITERID,trim(POSTDELFLAG) as
+		             POSTDELFLAG, POSTREGDT, level
 		FROM post where BOARDNO = #{boardNo}
 		START WITH parentPostNo IS NULL
 		CONNECT BY parentPostNo = prior

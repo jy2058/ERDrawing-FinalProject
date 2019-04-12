@@ -20,4 +20,24 @@ public class TicketDaoImpl implements ITicketDao{
 		return sqlSession.selectList("ticket.getAllTicketList");
 	}
 
+	@Override
+	public TicketVo selectTicket(String ticketNo) {
+		return sqlSession.selectOne("ticket.selectTicket",ticketNo);
+	}
+
+	@Override
+	public int insertTicket(TicketVo ticketVo) {
+		return sqlSession.insert("ticket.insertTicket",ticketVo);
+	}
+
+	@Override
+	public int updateTicket(TicketVo ticketVo) {
+		return sqlSession.update("ticket.updateTicket",ticketVo);
+	}
+
+	@Override
+	public int deleteTicket(String ticketNo) {
+		return sqlSession.delete("ticket.deleteTicket",ticketNo);
+	}
+
 }

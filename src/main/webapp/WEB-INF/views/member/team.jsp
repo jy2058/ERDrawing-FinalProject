@@ -139,7 +139,7 @@
 								  			<c:if test="${entry.key eq teamErdList.erdNo}">
 								  				<c:set var="value" value="${entry.value }"/>
 								  				<c:forEach var="tagVo" items="${value}">
-								  				<li>${tagVo.tagContent }</li>
+								  				<a href="${cp}/library?tagContent=${tagVo.tagContent }" title="" class="tagSearch">${tagVo.tagContent }</a>
 								  					
 								  				</c:forEach>
 								  					
@@ -264,6 +264,7 @@
         $("#ul").append(html);  
 	 };
 	 
+	 // 멤버 클릭시 유저페이지로 이동
 	 $(".selectMem").on("click", function(){
 		 var memId = $(this).closest('li').data('memid');
 		 $(".selectMem").attr('href', "${cp}/member/memberErd?memId=" + memId);

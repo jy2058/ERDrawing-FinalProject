@@ -9,4 +9,43 @@
 	select * 
 	 from ticket
 	</select>
+	
+	<!-- 특정 티켓 검색 -->
+	<select id="selectTicket" resultType="ticketVo" parameterType="String">
+		select * 
+	 		from ticket
+		  where ticketNo=#{ticketNo}
+	 </select>
+	 
+	 <!-- 티켓정보 수정 -->
+	 <update id="updateTicket" parameterType="ticketVo">
+	 	update ticket
+	 		set ticketPrice =#{ticketPrice, jdbcType=VARCHAR},
+	 			ticketImg =#{ticketImg, jdbcType=VARCHAR},
+	 			ticketContent=#{ticketContent, jdbcType=VARCHAR}
+	 	where ticketNo=#{ticketNo}
+	 </update>
+	 
+	 <!-- 티켓 삭제  -->
+	 <delete id="deleteTicket" parameterType="String">
+	 	delete ticket 
+	 	where ticketNo=#{ticketNo}
+	 </delete>
+	 
+	 <!-- 티켓 추가  -->
+	 <insert id="insertTicket" parameterType="ticketVo">
+	 	insert into 
+	 	ticket ( ticketno,
+			     ticketprice,
+				 ticketimg,
+				 ticketcontent,
+				 ticketindt
+	 	) 
+	 	values(seq_ticketno.nextval,
+	 		   nvl(#{ticketPrice,jdbcType=VARCHAR}, '0'),
+	 		   #{ticketImg,jdbcType=VARCHAR},
+	 		   #{ticketContent,jdbcType=VARCHAR}, 
+	 		   sysdate) 
+	 		   
+	 </insert>
 </mapper>

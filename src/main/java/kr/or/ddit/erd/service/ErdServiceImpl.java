@@ -16,6 +16,7 @@ import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.team.dao.ITeamDao;
 import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
+import kr.or.ddit.util.model.PageVo;
 
 @Service("erdService")
 public class ErdServiceImpl implements IErdService{
@@ -48,7 +49,6 @@ public class ErdServiceImpl implements IErdService{
 				cnt++;
 				// (,)만 넣은 값 판별
 				if(!tagFinal.equals("")){
-
 					TagVo tagVo = new TagVo();
 					tagVo.setTagContent(tagFinal);
 					tagVo.setTagMaker(memId);
@@ -108,6 +108,81 @@ public class ErdServiceImpl implements IErdService{
 	@Override
 	public int delErd(int erdNo) {
 		return erdDao.delErd(erdNo);
+	}
+
+	@Override
+	public Map<String, Object> getAllErdAndTagMap() {
+		List<ErdVo> erdList = erdDao.getAllErdList();	// erdList
+		Map<Integer, List<TagVo>> erdTagListMap = new HashMap<>();
+		for(ErdVo erdVo : erdList){
+			int erdNo = erdVo.getErdNo();
+			List<TagVo> erdTagList = teamDao.getErdTag(erdNo);	// tagList
+			if(!erdTagList.isEmpty()){
+				erdTagListMap.put(erdNo, erdTagList);	// tagList가 있을 때 erdNo를 key, tagList를 value로 설정
+			}
+		}
+		Map<String, Object> erdTagMap = new HashMap<>();	// 리턴 값 2개 처리하기 위해 erdList와 erdTagListMap을 Map에 넣어 리턴 
+		erdTagMap.put("erdList", erdList);
+		erdTagMap.put("erdTagListMap", erdTagListMap);
+		
+		return erdTagMap;
+	}
+
+	@Override
+	public Map<String, Object> getAllErdListPaging(PageVo pageVo) {
+		int allErdCnt = erdDao.getAllErdCnt();
+		pageVo.setPageSize(12);
+		pageVo.setTotalCount(allErdCnt);
+		
+		List<ErdVo> allErdListPaging = erdDao.getAllErdListPaging(pageVo);
+		
+		Map<Integer, List<TagVo>> erdTagListMap = new HashMap<>();
+		for(ErdVo erdVo : allErdListPaging){
+			int erdNo = erdVo.getErdNo();
+			List<TagVo> erdTagList = teamDao.getErdTag(erdNo);	// tagList
+			if(!erdTagList.isEmpty()){
+				erdTagListMap.put(erdNo, erdTagList);	// tagList가 있을 때 erdNo를 key, tagList를 value로 설정
+			}
+		}
+		Map<String, Object> erdTagMap = new HashMap<>();	// 리턴 값 2개 처리하기 위해 erdList와 erdTagListMap을 Map에 넣어 리턴 
+		erdTagMap.put("allErdListPaging", allErdListPaging);
+		erdTagMap.put("erdTagListMap", erdTagListMap);
+		
+		return erdTagMap;
+	}
+
+	@Override
+	public Map<String, Object> searchPagingList(PageVo pageVo) {
+		List<ErdVo> searchList = erdDao.searchList(pageVo.getSearch());
+		pageVo.setPageSize(searchList.size());
+		pageVo.setTotalCount(12);
+		
+		List<ErdVo> allErdListPaging = erdDao.searchPagingList(pageVo);
+		
+		Map<Integer, List<TagVo>> erdTagListMap = new HashMap<>();
+		for(ErdVo erdVo : allErdListPaging){
+			int erdNo = erdVo.getErdNo();
+			List<TagVo> erdTagList = teamDao.getErdTag(erdNo);	// tagList
+			if(!erdTagList.isEmpty()){
+				erdTagListMap.put(erdNo, erdTagList);	// tagList가 있을 때 erdNo를 key, tagList를 value로 설정
+			}
+		}
+		Map<String, Object> erdTagMap = new HashMap<>();	// 리턴 값 2개 처리하기 위해 erdList와 erdTagListMap을 Map에 넣어 리턴 
+		erdTagMap.put("allErdListPaging", allErdListPaging);
+		erdTagMap.put("erdTagListMap", erdTagListMap);
+		
+		return erdTagMap;
+	}
+
+	@Override
+	public List<ErdVo> searchList(String searchTxt) {
+		List<ErdVo> searchList = erdDao.searchList(searchTxt);
+		return searchList;
+	}
+
+	@Override
+	public ErdVo getErdInfo(int erdNo) {
+		return erdDao.getErdInfo(erdNo);
 	}
 
 }

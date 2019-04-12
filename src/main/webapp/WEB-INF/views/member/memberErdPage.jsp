@@ -13,7 +13,6 @@
 			<div class="profile-info">
 				<div class="memberId">${memberVo.memId }</div>
 				<div class="memberEmail">${memberVo.memMail }</div>
-				<div><div class="sampleImg"><div class="exText">${memberVo.memImg }Profile Image</div></div></div>
 				<div><div class="sampleImg"><div class="exText"><img src="${cp }/member/memberImg?memId=${memberVo.memId }"></div></div></div>
 			</div>
 		</div>
@@ -29,6 +28,7 @@
 						<div class="col-sm-12">
 							 <ul class="erd-box-list">
 							 	<c:forEach var="myErdList" varStatus="status" items="${myErdList }">
+							 	<c:if test="${myErdList.erdScope eq 'public' }">
 							  	<li class="erd-box-item">
 						  			<c:if test="${SESSION_MEMBERVO.memId eq memberVo.memId }">
 							  			<button type="button" class="btn btn-default delBtn" aria-label="trash" value="${myErdList.erdNo }">
@@ -70,7 +70,7 @@
 							  	</li>
 							  	
 							  	
-							  	
+							  	</c:if>
 								</c:forEach>
 				
 						  	</ul>

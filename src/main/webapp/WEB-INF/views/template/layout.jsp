@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles" %>
+<!DOCTYPE html>
+
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
@@ -22,20 +24,20 @@
 <link rel="stylesheet" href="/css/bootstrap.css">
 <link rel="stylesheet" href="/css/style.css">
     
-    
-    
 <title>테스트 레이아웃</title>
 </head>
 <body>
 
 <tiles:insertAttribute name="header"/>
 <div id="contents">
-	<div class="container">
+	<div class="container" >
 		<tiles:insertAttribute name="content"/>
 	</div>
 </div>
 <tiles:insertAttribute name="footer"/>
 <tiles:insertAttribute name="module"/>
+
+
 
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
