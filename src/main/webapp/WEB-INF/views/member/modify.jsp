@@ -53,7 +53,27 @@ cursor: pointer;}
 
 				<div class="sampleImg">
 					<div class="exText">
+								
+								
+								<c:choose>
+							<c:when test="${SESSION_MEMBERVO.memEmailDiv =='basic'} ">
 								<img  id="profileImg" src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }" width="340" height="320"/>
+							</c:when>
+							<c:otherwise>
+							
+								<c:choose>
+									<c:when test="${ SESSION_MEMBERVO.memImg==null}">
+									<img  id="profileImg" src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }" width="340" height="320"/>
+									</c:when>
+									<c:otherwise>
+									<img  id="profileImg" src="${SESSION_MEMBERVO.memImg }" width="340" height="320"/>
+									</c:otherwise>
+								</c:choose>
+								
+							</c:otherwise>
+						</c:choose>
+								
+								
 					</div>
 				</div>
 				<div class="filebox img-btn btn-style1">
