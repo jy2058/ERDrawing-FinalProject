@@ -19,6 +19,13 @@
 	right:0;
 }
 
+	.tag-a{
+	    margin: 3px;
+	    padding: 3px;
+	    background-color: #444444;
+	    font-size: 11px;
+	}
+
 .my-bg::before{
 	position:absolute;
 	content:"";

@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 
+
 		<h1 class="erd-add h1">Create team</h1>
 		<form action="/team/teamCreate" id="teamCreateFrm" method="post" enctype="multipart/form-data">
 			<div class="input-box">

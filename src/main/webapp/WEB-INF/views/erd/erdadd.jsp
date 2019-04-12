@@ -1,6 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-   
+
+<style>
+	select{
+		color: black;
+	}
+</style>   
 
 		<h1 class="erd-add h1">Create ERD</h1>
 		<form action="/erd/erdAdd" id="erdAddFrm" method="post">
@@ -32,7 +37,7 @@
 			</div>
 			
 			<!-- 팀 라디오 버튼 선택 시 나타나야 함 -->
-			<div class="input-box">
+			<div class="input-box" id="selTeam">
 				<label>팀</label>
 				<select name="teamNo">
 					<c:forEach var="teamInfoList" items="${teamInfoList}">
@@ -43,13 +48,19 @@
 		</form>
 		<div class="cancle-btn99 btn-style1">취소</div>
 		<div class="submit-btn99 btn-style1" id="erdAdd">만들기</div>
-		<a href="javascript:location.href='http://naver.com'" style="color:#fff;"> 테스트 버튼 </a>
 		
 		<script>
+			$("#selTeam").hide();
 		
 			$("#erdAdd").on("click", function(){
  				$("#erdAddFrm").submit();
  			});
+			
+			$('input[type=radio][name=erdScope]').change(function() {
+			    if (this.value == 'team') {
+			    	$("#selTeam").show();
+			    }
+			});
 
 		</script>
 		

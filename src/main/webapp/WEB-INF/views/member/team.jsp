@@ -14,11 +14,49 @@
 .memberId{
 	margin-bottom:10px;
 }
+.member-li{
+	display: inline-flex;
+}
+.selectMem{
+	display:inline-block;
+}
+.member input{
+	margin-left: 10px;
+}
+.remove-btn{
+	color: white;
+    background: unset;
+    border: unset;
+    height: 0px;
+    margin-top: -5px;
+}
+img{
+	margin: 0px auto;
+    vertical-align: middle;
+    display: block;
+    margin-top: 15%;
+}
 
+.tag-a{
+    margin: 3px;
+    padding: 3px;
+    background-color: #444444;
+    font-size: 11px;
+}
+.team-li{
+	text-align: center;
+    margin: 5px;
+    font-size: 22px;
+}
+.team-li a{
+	background-color: #686868;
+}
+.team-li span{
+    font-size: 13px;
+}
 </style>
 
 <div id="contents">
-	
 	<div class="my-bg">
 		<div class="container">
 			<c:if test="${teamInfo.makerId eq loginId }">
@@ -45,9 +83,9 @@
 			
 			<div class="row">
 				<div style="background:#232323; color:#fff; height:100px; line-height:100px; padding-left:20px; font-size:20px; font-weight:600;">
-					<ul style=" min-height:72px; line-height: 1.5">
+					<ul style=" min-height:72px; line-height: 2.2">
 					<c:forEach var="teamList" items="${teamInfoList }" >
-						<li><a href="/team?teamNo=${teamList.teamNo }">
+						<li class="team-li"><a href="/team?teamNo=${teamList.teamNo }">
 						${fn:toUpperCase(fn:substring(teamList.teamNm,0,1 ))}
 							<span>${teamList.teamNm }</span>
 							</a>
@@ -66,12 +104,12 @@
 				<div style="background:#232323; color:#fff; height:100px; line-height:100px; padding-left:20px; font-size:20px; font-weight:600;">
 					<ul style=" min-height:72px; line-height: 1.5">
 						<c:forEach var="teamMemberGet" items="${teamMember }" varStatus="status">
-							<li data-memid="${teamMemberGet.memId }" data-teamno="${teamList[status.index].teamNo }" data-teamnm="${teamInfo.teamNm }" data-makerid="${teamInfo.makerId }"> <!-- ajax를 위한 커스텀 데이터 생성 -->
-								<a class="selectMem" href="">
-									<div>
+							<li class="member-li" data-memid="${teamMemberGet.memId }" data-teamno="${teamList[status.index].teamNo }" data-teamnm="${teamInfo.teamNm }" data-makerid="${teamInfo.makerId }"> <!-- ajax를 위한 커스텀 데이터 생성 -->
+								<a class="" href="">
+									<div class="selectMem">
 										<img alt="" src="/member/memberImg?memId=${teamMemberGet.memId }">
 									</div>
-									<div>
+									<div class="selectMem">
 										<strong>${teamMemberGet.memId }</strong>
 										<span>${teamMemberGet.memMail }</span>
 									</div>
@@ -87,11 +125,11 @@
 										checked
 									</c:if>
 									>
-									<button type="button" class="close delBtn" style="color: white">x</button>
+									<button type="button" class="glyphicon glyphicon-remove remove-btn"></button>
 								</c:if>
 								
 								<c:if test="${teamMemberGet.memId eq loginId and teamInfo.makerId ne loginId}"> <!-- 본인일 경우 삭제버튼 활성화(생성자는 삭제 X) -->
-									<button type="button" class="close delBtn" style="color: white">x</button>
+									<button type="button" class="glyphicon glyphicon-remove remove-btn" ></button>
 									
 								</c:if>
 
@@ -139,7 +177,7 @@
 								  			<c:if test="${entry.key eq teamErdList.erdNo}">
 								  				<c:set var="value" value="${entry.value }"/>
 								  				<c:forEach var="tagVo" items="${value}">
-								  				<a href="${cp}/library?tagContent=${tagVo.tagContent }" title="" class="tagSearch">${tagVo.tagContent }</a>
+								  				<a class="tag-a" href="${cp}/library?tagContent=${tagVo.tagContent }" title="" class="tagSearch">${tagVo.tagContent }</a>
 								  					
 								  				</c:forEach>
 								  					

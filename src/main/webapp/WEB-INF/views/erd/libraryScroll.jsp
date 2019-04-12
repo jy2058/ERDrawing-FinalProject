@@ -23,6 +23,13 @@
 	background: #fff;
 	color: #000;
 }
+
+.tag-a{
+    margin: 3px;
+    padding: 3px;
+    background-color: #444444;
+    font-size: 11px;
+}
 </style>
 
 <div class="erd-search">
@@ -137,7 +144,7 @@ $(document).ready(function(){
 					  for(var [key, value] of erdTagMapNew){
 						 if(key == erdList[i].erdNo){
 							 for(var j = 0; j < value.length; j++){
-								 html += '<a href="${cp}/library?tagContent=' + value[j].tagContent + '" title="" class="tagSearch">' + value[j].tagContent + '</a>';
+								 html += '<a class="tag-a" href="${cp}/library?tagContent=' + value[j].tagContent + '" title="" class="tagSearch">' + value[j].tagContent + '</a>';
 							 }
 						 }
 					 }  
@@ -148,7 +155,9 @@ $(document).ready(function(){
 				if(searchFlag){
 					$(".erd-box-list").html(html);
 				}
-				$(".erd-box-list").append(html);
+				else {
+					$(".erd-box-list").append(html);
+				}
 				
 			}
 		});
