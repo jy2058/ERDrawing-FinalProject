@@ -81,19 +81,26 @@ public class TicketController {
 	
 	
 	//티켓추가
-		@RequestMapping("insertTicket")
-		public String insertTicket(Model model,TicketVo ticketVo,RedirectAttributes ra,HttpServletRequest req){
-			logger.debug("======insertTicket{}",ticketVo);
-			int inCnt = ticketService.insertTicket(ticketVo);
-			
-			if(inCnt >0){
-				ra.addFlashAttribute("msg", "추가 되었습니다.");
-			}else{
-				ra.addFlashAttribute("msg", "실패 하였습니다.");
-			}
-			
-			model.addAttribute("ticketList", ticketService.getAllTicketList());
-			return "redirect:" + req.getContextPath() +"/ticket/ticketList";
+	@RequestMapping("insertTicket")
+	public String insertTicket(Model model,TicketVo ticketVo,RedirectAttributes ra,HttpServletRequest req){
+		logger.debug("======insertTicket{}",ticketVo);
+		int inCnt = ticketService.insertTicket(ticketVo);
+		
+		if(inCnt >0){
+			ra.addFlashAttribute("msg", "추가 되었습니다.");
+		}else{
+			ra.addFlashAttribute("msg", "실패 하였습니다.");
+		}
+		
+		model.addAttribute("ticketList", ticketService.getAllTicketList());
+		return "redirect:" + req.getContextPath() +"/ticket/ticketList";
+	}
+		
+		//티켓차트 페이지
+		@RequestMapping("ticketChart")
+		public String ticketChart(Model model,TicketVo ticketVo,RedirectAttributes ra,HttpServletRequest req){
+			logger.debug("sdf");
+			return "ticketChart";
 		}
 
 }
