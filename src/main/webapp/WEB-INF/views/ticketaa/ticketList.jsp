@@ -261,6 +261,7 @@ alert(agent)
 
         request.done(function( data ) {
 console.log(data)
+alert("dd");
             if(agent === 'web'){
                 //windowReference.location = data.next_redirect_pc_url;
                 location.href = data.next_redirect_pc_url;

@@ -107,7 +107,6 @@
 					        Kakao.API.request({
 					            url: '/v1/user/me',
 					            success: function (res) {
-					                alert(JSON.stringify(res));
 						$("#apiFrm").attr("action","${cp}/kakaoLogin");	
 			            $("#info").val(JSON.stringify(res));
 			            $("#apiFrm").submit();	

@@ -10,7 +10,7 @@
 					<td>
 					
 						<c:choose>
-							<c:when test="${mem.memEmailDiv =='basic'}  && ${mem.memEmailDiv =='kakao'}">
+							<c:when test="${mem.memEmailDiv =='basic'}}">
 								<a href="#"><img src="${cp }/member/memberImg?memId=${mem.memId }" class="avatar"
 									alt="Avatar" width="35" height="30">$s{mem.memNm } </a>
 							</c:when>

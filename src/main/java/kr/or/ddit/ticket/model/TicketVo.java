@@ -3,8 +3,8 @@ package kr.or.ddit.ticket.model;
 import java.util.Date;
 
 public class TicketVo {
-	private int ticketNo;			  //이용권번호
-	private int ticketPrice;          //이용권금액
+	private Integer ticketNo;			  //이용권번호
+	private Integer ticketPrice;          //이용권금액
 	private String ticketImg;         //이용권 이미지 경로
 	private String ticketContent;     //이용권 내용
 	private Date ticketInDt;          //이용권 등록일
@@ -13,19 +13,19 @@ public class TicketVo {
 		
 	}
 
-	public int getTicketNo() {
+	public Integer getTicketNo() {
 		return ticketNo;
 	}
 
-	public void setTicketNo(int ticketNo) {
+	public void setTicketNo(Integer ticketNo) {
 		this.ticketNo = ticketNo;
 	}
 
-	public int getTicketPrice() {
+	public Integer getTicketPrice() {
 		return ticketPrice;
 	}
 
-	public void setTicketPrice(int ticketPrice) {
+	public void setTicketPrice(Integer ticketPrice) {
 		this.ticketPrice = ticketPrice;
 	}
 
