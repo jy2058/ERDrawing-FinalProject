@@ -88,6 +88,30 @@ public class PostController {
 		return "postList";
 	}
 	
+	// 게시판 페이징 리스트 Html
+	@RequestMapping(path = "/postListHtml")
+	public String postLists(@RequestParam(name="boardNo") int boardNo,
+			                @RequestParam(name="page", defaultValue="1") int page, Model model) {
+
+		String boardNm = postService.getSelectBoardNm(boardNo+"");
+
+		PageVo paging = new PageVo(); // 페이징 처리를 위해 페이징 객체 생성 Paging 이라는 VO가 존재함
+		paging.setPageNo(page);
+		paging.setPageSize(10);
+
+		paging.setBoardNo(boardNo); // 파라미터로 받은 게시판 번호를 넘김
+		List<PostVo> postList = postService.selectPostPagingList(paging);
+
+		model.addAttribute("postList", postList);
+		model.addAttribute("boardNm", boardNm);
+		model.addAttribute("boardNo", boardNo);
+		model.addAttribute("paging", paging);
+
+		return "post/postListHtml";
+	}
+	
+	
+	
 	// 게시글 등록 화면
 	@RequestMapping(path = "/postInsert", method = RequestMethod.GET)
 	public String postInsertForm(HttpSession session, Model model, String boardNo) {
@@ -172,6 +196,29 @@ public class PostController {
 
 		return "postDetail";
 	}
+	
+	// 게시글 상세 화면 Html
+		/*@RequestMapping(path = "/postDetail", method = RequestMethod.GET)
+		public String postDetailFormHtml(Model model, String postNo, String boardNo) {
+			model.addAttribute("postNo", postNo);
+			model.addAttribute("boardNo", boardNo);
+			
+			// 업로드 파일 조회
+			List<UploadFileVo> fileList = uploadFileService.getAllFile(postNo);
+			model.addAttribute("fileList", fileList);
+		
+			
+			if(commentLikeVo.getMemId() != null){
+				// 댓글 좋아요 조회
+				List<CommentLikeVo> cmtLikeList = commentLikeService.getSelectCmtLike(commentLikeVo);
+				model.addAttribute("cmtLikeList", cmtLikeList);
+			}
+			
+			PostVo postList = postService.getSelectPost(postNo);
+			model.addAttribute("postList", postList);
+
+			return "post/postListHtml";
+		}*/
 	
 	// 게시글 수정 화면
 	@RequestMapping(path = "/postUpdate", method = RequestMethod.GET)
@@ -303,7 +350,7 @@ public class PostController {
 		return "redirect:/post/postDetail";
 	}
 	
-	// 댓글 조회 (ajax)
+	// 댓글 조회 페이징(ajax)
 	@RequestMapping(path = "/listCmt", method = RequestMethod.GET)
 	public String listCmt(@RequestParam(name = "page", defaultValue = "1") int page, Model model, String postNo) {
 		model.addAttribute("postNo", postNo);
@@ -322,16 +369,16 @@ public class PostController {
 		return "post/postDetailHtml";
 	}
 	
-	// 댓글 등록
+	// 댓글 등록 후 페이징(ajax)
 	@RequestMapping(path = "/insertCmt", method = RequestMethod.GET)
-	public String insertCmt( Model model, String memId, String postNo, String cmtContent) {
+	public String insertCmt(@RequestParam(name = "page", defaultValue = "1") int page, Model model, 
+			                String memId, String postNo, String cmtContent) {
 		model.addAttribute("postNo", postNo);
 		model.addAttribute("memId", memId);
 		model.addAttribute("cmtContent", cmtContent);
 			
 		int intPostNo = Integer.parseInt(postNo);
 		
-		//(seq_cmtNo.nextval, #{cmtContent}, sysdate, 'T', #{memId}, #{postNo})
 		CommentsVo commentsVo = new CommentsVo();
 		commentsVo.setCmtContent(cmtContent);
 		commentsVo.setMemId(memId);
@@ -339,30 +386,45 @@ public class PostController {
 		
 		int insertCnt = commentsService.insertComments(commentsVo);
 		
-		List<CommentsVo> cmtList = commentsService.getAllComments(postNo);
+		PageVo paging = new PageVo(); // 페이징 처리를 위해 페이징 객체 생성 Paging이라는 VO가 존재함
+		paging.setPageNo(page);
+		paging.setPageSize(10);
+		paging.setPostNo(intPostNo);
+		
+		List<CommentsVo> cmtList = commentsService.getPagingAllComments(paging);
 		model.addAttribute("cmtList", cmtList);
+		model.addAttribute("paging", paging);
 
 		return "post/postDetailHtml";
 	}
 		
-	// 댓글 삭제 (ajax)
+	// 댓글 삭제 후 페이징(ajax)
 	@RequestMapping(path = "/deleteCmt", method = RequestMethod.GET)
-	public String deleteCmt(Model model, String postNo, String cmtNo) {
+	public String deleteCmt(@RequestParam(name = "page", defaultValue = "1") int page, Model model, 
+			                String postNo, String cmtNo) {
 		model.addAttribute("postNo", postNo);
 		model.addAttribute("cmtNo", cmtNo);
 		
+		int intPostNo = Integer.parseInt(postNo);
+		
 		int deleteCnt = commentsService.deleteComments(cmtNo);
 		
-		List<CommentsVo> cmtList = commentsService.getAllComments(postNo);
+		PageVo paging = new PageVo(); // 페이징 처리를 위해 페이징 객체 생성 Paging이라는 VO가 존재함
+		paging.setPageNo(page);
+		paging.setPageSize(10);
+		paging.setPostNo(intPostNo);
+		
+		List<CommentsVo> cmtList = commentsService.getPagingAllComments(paging);
 		model.addAttribute("cmtList", cmtList);
+		model.addAttribute("paging", paging);
 
 		return "post/postDetailHtml";
 	}
 	
-	// 댓글 좋아요 (ajax)
+	// 댓글 좋아요 후 페이징 (ajax)
 	@RequestMapping(path = "/likeCmt", method = RequestMethod.GET)
-	public String likeCmt(int cmtNo, String memId, String postNo, Model model, RedirectAttributes ra) {
-		
+	public String likeCmt(@RequestParam(name = "page", defaultValue = "1") int page, Model model,
+			              int cmtNo, String memId, String postNo) {
 		model.addAttribute("cmtNo", cmtNo);
 		model.addAttribute("memId", memId);
 		model.addAttribute("postNo", postNo);
@@ -380,10 +442,21 @@ public class PostController {
 			cmtLikeCnt = commentLikeService.deleteCmtLike(commentLikeVo);
 		}
 		
-		List<CommentsVo> cmtList = commentsService.getAllComments(postNo);
-		model.addAttribute("cmtList", cmtList);
+		//logger.debug("cmtLikeList{}", cmtLikeList);
 		
-		ra.addAttribute("postNo", postNo);
+		int intPostNo = Integer.parseInt(postNo);
+		
+		PageVo paging = new PageVo(); // 페이징 처리를 위해 페이징 객체 생성 Paging이라는 VO가 존재함
+		paging.setPageNo(page);
+		paging.setPageSize(10);
+		paging.setPostNo(intPostNo);
+		
+		//List<CommentsVo> cmtList = commentsService.getAllComments(postNo);
+		List<CommentsVo> cmtList = commentsService.getPagingAllComments(paging);
+		model.addAttribute("cmtList", cmtList);
+		model.addAttribute("paging", paging);
+		
+		model.addAttribute("postNo", postNo);
 		return "post/postDetailHtml";
 	}
 	

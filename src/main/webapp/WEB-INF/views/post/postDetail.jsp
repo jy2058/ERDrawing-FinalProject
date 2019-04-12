@@ -37,7 +37,23 @@
    #layer_popup .popupContent {margin:0;padding:0;text-align:center;border:0;width:650px;height:200px;}
    #layer_popup .popupContent iframe {border:0;padding:0px;margin:0;z-index:10;}
 </style>
-<input type="button" id="report" onclick="layer_open()" value="신고">
+
+	<c:choose>
+		<c:when test="${boardNo == '1'}">
+			<c:if test="${SESSION_MEMBERVO.memAuth == 'T'}">
+				<input type = "hidden" name="boardNo" value="${boardNo}"> 
+	   			<input type="button" id="report" onclick="layer_open()" value="신고">
+			</c:if>
+		</c:when>
+		
+		<c:otherwise>
+			<input type = "hidden" name="boardNo" value="${boardNo}"> 
+	   		<input type="button" id="report" onclick="layer_open()" value="신고">
+		</c:otherwise>
+	</c:choose>
+
+
+<!-- <input type="button" id="report" onclick="layer_open()" value="신고"> -->
 <!-- <input type="button" value="레이어팝업 열기" onclick="layer_open();"  style="cursor:pointer; background-color:#663333; color:#FFF;" /> -->
 <!-- 팝업 -->
 <div id="layer_popup" style="display:none; ">
@@ -143,7 +159,21 @@
                <c:if test="${SESSION_MEMBERVO.memId == postList.writerId}">
                   <input type="button" id="delBtn" value="삭제" class="btn btn-default" />
                </c:if>
-               <input type="button" id="replyBtn" value="답글" class="btn btn-default" />
+               
+               <c:choose>
+				<c:when test="${boardNo == '1'}">
+					<c:if test="${SESSION_MEMBERVO.memAuth == 'T'}">
+						<input type = "hidden" name="boardNo" value="${boardNo}"> 
+			   			<button type="button" id="replyBtn" class="btn btn-default">답글</button> 
+					</c:if>
+				</c:when>
+				
+				<c:otherwise>
+					<input type = "hidden" name="boardNo" value="${boardNo}"> 
+			   		<button type="button" id="replyBtn" class="btn btn-default">답글</button>
+				</c:otherwise>
+			</c:choose>
+           
             </div>
          </div>   
          </div>
@@ -240,7 +270,6 @@
    </script>  
    
    <script type="text/javascript">
-  
       $(document).ready(function() {
 			
        //댓글 페이지 처리  
@@ -284,8 +313,6 @@
      		});
       } */
         	 
-         
-         
          //신고확인버튼 클릭이벤트
          $("#reportBtn").click(function() {
             var reportReason = $("#reasonTxt").val();
@@ -305,30 +332,31 @@
             $("#replyFrm").submit();
          });
          
-         //댓글등록버튼 클릭이벤트
+         //댓글등록버튼 클릭이벤트(ajax)
          $("#cmtBtn").click(function() {
             cmtText = $("#cmtText").val();
             alert("댓글을 등록 하시겠습니까?");
-            cmtInsert("${postNo}", cmtText, "${SESSION_MEMBERVO.memId}");
+            cmtInsert(1, "${postNo}", cmtText, "${SESSION_MEMBERVO.memId}");
+            $("#cmtText").val("");
          });
          
          //댓글삭제버튼 클릭이벤트(ajax)
          $("#cmtTbody").on("click", ".btnDel", function() {
            cmtNo = $(this).data("cmtnum");
            alert("댓글을 삭제 하시겠습니까?");
-           cmtDelete("${postNo}", cmtNo);
+           cmtDelete(1, "${postNo}", cmtNo);
          });
          
          //댓글좋아요버튼 클릭이벤트(ajax)
          $("#cmtTbody").on("click", ".btnLike", function() {
             //클릭한 cmtTr의 cmtNo값을 출력
             var cmtNo = $(this).data("cmtnum");
-            cmtLike("${postNo}", cmtNo, "${SESSION_MEMBERVO.memId}");
+            cmtLike(1, "${postNo}", cmtNo, "${SESSION_MEMBERVO.memId}");
          });
          
       });
       
-      //댓글 리스트 ajax
+      //댓글 리스트 페이징 ajax
       function cmtPage(page) {
 	  	$.ajax({
 				url : "${cp}/post/listCmt",
@@ -344,49 +372,56 @@
 	  	}); 
       }
       
-      //댓글 등록 ajax
-      function cmtInsert(postNo, cmtContent, memId) {
+      //댓글 등록 후 페이징 ajax
+      function cmtInsert(page, postNo, cmtContent, memId) {
     	  $.ajax({
 				url : "${cp}/post/insertCmt",
 				data : {
+					page : page,
 					postNo : postNo,
 					cmtContent : cmtContent,
 					memId : memId
 				},
 				success : function(data) {
-					console.log(data);
-					$("#cmtTbody").html(data);
+					var htmlArr = data.split("======================seperator======================");
+					$("#cmtTbody").html(htmlArr[0]);
+					$("#pagination").html(htmlArr[1]);
 				}
 	  	   }); 
 	  }
 	  
-	  //댓글 삭제 ajax
-      function cmtDelete(postNo, cmtNo) {
+	  //댓글 삭제 후 페이징 ajax
+      function cmtDelete(page, postNo, cmtNo) {
 		  $.ajax({
 					url : "${cp}/post/deleteCmt",
 					data : {
+						page : page,
 						postNo : postNo,
 						cmtNo : cmtNo
 					},
 					success : function(data) {
-						console.log(data);
-						$("#cmtTbody").html(data);
+						var htmlArr = data.split("======================seperator======================");
+						$("#cmtTbody").html(htmlArr[0]);
+						$("#pagination").html(htmlArr[1]);
 					}
 		  }); 
 	  }
 	  
-      //댓글 좋아요 ajax
-      function cmtLike(postNo, cmtNo, memId) {
+      //댓글 좋아요 후 페이징 ajax
+      function cmtLike(page, postNo, cmtNo, memId) {
+    	  alert("ddddddddd");
 		  $.ajax({
 					url : "${cp}/post/likeCmt",
 					data : {
+						page : page,
 						postNo : postNo,
 						cmtNo : cmtNo,
 						memId : memId
 					},
 					success : function(data) {
-						console.log(data);
-						$("#cmtTbody").html(data);
+						var htmlArr = data.split("======================seperator======================");
+						$("#cmtTbody").html(htmlArr[0]);
+						$("#pagination").html(htmlArr[1]);
 					}
 		  }); 
 	  }

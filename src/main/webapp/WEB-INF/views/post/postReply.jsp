@@ -69,15 +69,19 @@
 					<div class="form-group">
 						<div class="col-sm-offset-5 col-sm-10">
 							<input type="hidden" id="boardNo" name="boardNo" />
+							<button id="cancelBtn" type="button" class="btn btn-default">취소</button>
 							<button id="insBtn" type="button" class="btn btn-default">저장</button>
 						</div>
 					</div>
-					
 					<input type="hidden" name="postNo" value="${postVo.postNo}" />
 				</form>
 			</div>
 		</div>
 	</div>
+	
+	<form id="cancelFrm" action="${cp}/post/postDetail" method="get">
+		<input type="hidden" id="postNo" name="postNo" value="${postVo.postNo}">
+	</form>
 
 	<!-- Bootstrap core JavaScript
     ================================================== -->
@@ -118,6 +122,11 @@
 					}
 				}
 			});
+		});
+		
+		// 취소버튼 클릭이벤트
+		$("#cancelBtn").click(function() {
+			$("#cancelFrm").submit();
 		});
 		
 		// 필수값 Check
