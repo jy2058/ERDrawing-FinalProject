@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.ddit.erd.service.IErdService;
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.team.model.TeamListVo;
 import kr.or.ddit.team.model.TeamVo;
 import kr.or.ddit.team.service.ITeamService;
@@ -29,6 +30,9 @@ public class TestController {
 	
 	@Resource(name="erdService")
 	private IErdService erdService;
+	
+	@Resource(name="memberService")
+	private IMemberService memberService;
 	
 	@RequestMapping(path="/")
 	public String test1(){
@@ -95,7 +99,8 @@ public class TestController {
 	
 	
 	@RequestMapping(path="/modify")
-	public String modify(){
+	public String modify(String memId,HttpSession session){
+		session.setAttribute("SESSION_MEMBERVO", memberService.selectMember(memId));
 		return "modify";
 	}
 	

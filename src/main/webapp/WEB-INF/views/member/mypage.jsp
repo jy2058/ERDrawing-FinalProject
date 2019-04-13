@@ -31,7 +31,7 @@
 	<div class="my-bg">
 		<div class="container">
 			<div class="inner-container">
-				<a href="/modify" class="btn-style2">프로필 수정</a>
+				<a href="/modify?memId=${SESSION_MEMBERVO.memId  }" class="btn-style2">프로필 수정</a>
 			</div>
 
 
@@ -42,8 +42,30 @@
 				<div>
 					<div class="sampleImg">
 						<div class="exText">
-							<img
-								src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }">
+								<c:choose>
+									<c:when test="${SESSION_MEMBERVO.memEmailDiv =='basic'}">
+										<img alt=""
+											src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }"
+											 width="95" height="95">
+									</c:when>
+									<c:otherwise>
+
+										<c:choose>
+											<c:when
+												test="${ fn:indexOf(SESSION_MEMBERVO.memImg,'http') > -1}">
+												<img alt="" src="${SESSION_MEMBERVO.memImg }"  width="95" height="95">
+
+											</c:when>
+											<c:otherwise>
+
+												<img alt=""
+													src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }"  width="95" height="95">
+
+											</c:otherwise>
+										</c:choose>
+
+									</c:otherwise>
+								</c:choose>
 						</div>
 					</div>
 				</div>

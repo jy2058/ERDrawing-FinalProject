@@ -18,12 +18,33 @@ background:#4B4B4B;
 	margin-left:5px;
 	margin-right:5px;
 }
+
+.btn-style1 {
+    opacity: 0.8;
+    display: block;
+    width: 200px;
+    text-align: center;
+    margin: 0 auto;
+    background: #ef1c7b;
+    padding: 10px;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: 600;
+    border: 1px solid #000;
+    cursor: pointer;
+    margin-top: 13%;
+}
+
+#sh{
+margin-top: 0%;
+}
+
 </style>
  <div class="member">
  
  <div class="row">
 	<div class="join-title col-sm-4 col-sm-offset-1">
-		<h1>비밀번호 찾기</h1>
+		<h1>아이디 찾기</h1>
 	</div>
 </div>
 
@@ -38,8 +59,8 @@ background:#4B4B4B;
 		
 		</form>
 		
-<div class="cancle-btn99 btn-style1">취소</div>
-<div class="searchBtn btn-style1">찾기</div>
+<div  class="searchBtn btn-style1">찾기</div>
+<div id="sh" class="cancle-btn99 btn-style1">취소</div>
 
 <script >
 

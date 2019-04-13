@@ -272,12 +272,13 @@ public class MemberController {
 	 @RequestMapping("/memModalModify")
 	    public String memModalModify(@RequestParam(name = "page", defaultValue = "1") int page, Model model,MemberVo memVo) {
 		 logger.debug("====ssss{}",memVo);
-		 
+		 MemberVo vo =memberService.selectMember(memVo.getMemId());
 		 if(memVo.getMemPass()==null){
-			MemberVo vo =memberService.selectMember(memVo.getMemId());
+			memVo.setMemImg(vo.getMemImg());
 			memVo.setMemPass(vo.getMemPass());
 			 memberService.updateMemberInfo(memVo);
 		 }else{
+		 memVo.setMemImg(vo.getMemImg());
 		 memVo.setMemPass(KISA_SHA256.encrypt(memVo.getMemPass()));
 		 memberService.updateMemberInfo(memVo);
 		 }
@@ -325,7 +326,10 @@ public class MemberController {
 		}
 		vo.setMemImg(realFilename);
 		vo.setMemNm(memVo.getMemNm());
-		vo.setMemPass(KISA_SHA256.encrypt(memVo.getMemPass()));
+		
+		if(memVo.getMemPass()!=null){
+		vo.setMemPass(KISA_SHA256.encrypt(memVo.getMemPass()));}
+		vo.setMemIntro(memVo.getMemIntro());
 		vo.setMemMail(memVo.getMemMail());
 		memberService.updateMemberInfo(vo);
 		return "redirect:" + req.getContextPath() + "/";

@@ -200,12 +200,11 @@ public class LoginController {
 				session.setAttribute("SESSION_MEMBERVO", vo);
 			}
 			else{
-				
 				if( memId.getMemCancelFlag().equals("T")){
 					ra.addFlashAttribute("msg", "이 계정은 탈퇴한 계정입니다.");
 					return "redirect:" + req.getContextPath()+"/" ;
 				}
-				session.setAttribute("SESSION_MEMBERVO", vo);
+				session.setAttribute("SESSION_MEMBERVO", memId);
 			}
 		}
 

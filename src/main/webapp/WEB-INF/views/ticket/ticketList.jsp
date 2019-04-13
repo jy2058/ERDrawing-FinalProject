@@ -9,9 +9,9 @@
 <style>
 .modal{
  color: #000;
- 
+     height: 59%;
 }
-.modalLabel{
+.modalLabels{
 width: 100px;
 }
 
@@ -41,7 +41,7 @@ width: 100px;
 
 <c:if test="${SESSION_MEMBERVO.memAuth == 'T' }">
 
-		<div style="" id="add" class="modifyModal" data-toggle="modal" data-ticketno="insert" data-target="#modalEvnTest" data-ticketno="insert" >티켓 추가</div>
+		<div style="" id="add" class="modifyModal" data-toggle="modal" data-ticketno="insert" data-target="#ticketModalEvnTest" data-ticketno="insert" >티켓 추가</div>
 	
 </c:if>
 
@@ -65,7 +65,7 @@ width: 100px;
 						
 						<div class="description-item">
 							<c:if test="${SESSION_MEMBERVO.memAuth == 'T' }">
-								<div  class="modifyModal" style="float: right; cursor: pointer;" data-toggle="modal" data-target="#modalEvnTest" data-ticketno="${ticket.ticketNo }">수정</div>
+								<div  class="modifyModal" style="float: right; cursor: pointer;" data-toggle="modal" data-target="#ticketModalEvnTest" data-ticketno="${ticket.ticketNo }">수정</div>
 							</c:if>
 
 							<div style="float: left;">${ticket.ticketContent }</div>
@@ -84,11 +84,11 @@ width: 100px;
 	
 <!-- 티켓 수정.삭제 하는 모달창 띄우기 -->	
 	<form id="frm" action="/ticket" method="post">
-      <div class="modal modal-center fade" id="modalEvnTest" tabindex="1" role="dialog" aria-labelledby="my80sizeCenterModalLabel" >
+      <div class="modal modal-center fade" id="ticketModalEvnTest" tabindex="1" role="dialog" aria-labelledby="my80sizeCenterModalLabel" >
       <div class="modal-dialog modal-80size modal-center" role="document" >
          <div class="modal-content modal-80size">
             <div class="modal-header">
-            <label>| 회원정보 수정</label>
+            <label>| Ticket</label>
                <button type="button" class="close" data-dismiss="modal"aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                </button>
@@ -96,23 +96,23 @@ width: 100px;
             <div class="modal-body">
             
                <div class="form-group">
-                  <label class="modalLabel">Ticket No</label>  
+                  <label class="modalLabels">Ticket No</label>  
                    <input   type="hidden" class="ticketContent" id="ticketNo"  name="ticketNo"/>
                   <div id="dupleCode"></div>
                </div>
                
                 <div class="form-group">
-                  <label class="modalLabel">TicketPrice</label> 
+                  <label class="modalLabels">TicketPrice</label> 
                   <input type="text" name="ticketPrice" id="ticketPrice" >    
                </div>   
         
             <div class="pass form-group">
-                  <label class="modalLabel"  >ticketContent</label> 
+                  <label class="modalLabels"  >ticketContent</label> 
                      <input   type="text" class="ticketContent" id="ticketContent" name="ticketContent"  />
                </div>
                
                 <div class="pass form-group">
-                  <label class="modalLabel"  >ticketImg</label> 
+                  <label class="modalLabels"  >ticketImg</label> 
                      <input   type="text" class="ticketImg" id="ticketImg" name="ticketImg" />
                </div>
                

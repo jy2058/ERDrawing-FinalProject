@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <nav id="header" class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container">
 
@@ -48,12 +49,34 @@
 					</c:when>
 					<c:otherwise>
 						<li><a href="${cp }/mypage">
-					<img alt="" src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }" width="35" height="30"> 
-							
-						
-						
+					 	<c:choose>
+									<c:when test="${SESSION_MEMBERVO.memEmailDiv =='basic'}">
+										<img alt=""
+											src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }"
+											width="35" height="30">
+									</c:when>
+									<c:otherwise>
+
+										<c:choose>
+											<c:when
+												test="${ fn:indexOf(SESSION_MEMBERVO.memImg,'http') > -1}">
+												<img alt="" src="${SESSION_MEMBERVO.memImg }" width="35"
+													height="30">
+
+											</c:when>
+											<c:otherwise>
+
+												<img alt=""
+													src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }"
+													width="35" height="30">
+
+											</c:otherwise>
+										</c:choose>
+
+									</c:otherwise>
+								</c:choose>
 						</a></li>
-<%-- 						<li><a href="${cp }/message/messageView">메세지</a></li> --%>
+						<%-- 						<li><a href="${cp }/message/messageView">메세지</a></li> --%>
 						<li><a id="message">메세지</a></li>
 						<li><a id="logout" href="#" hidden="">로그아웃</a></li>
 					</c:otherwise>

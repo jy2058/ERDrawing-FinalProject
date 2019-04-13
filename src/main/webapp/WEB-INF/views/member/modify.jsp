@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <link rel="stylesheet" href="/css/member/modify.css">
 
 
@@ -53,27 +54,35 @@ cursor: pointer;}
 
 				<div class="sampleImg">
 					<div class="exText">
-								
-								
-								<c:choose>
-							<c:when test="${SESSION_MEMBERVO.memEmailDiv =='basic'} ">
-								<img  id="profileImg" src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }" width="340" height="320"/>
+
+
+						<c:choose>
+							<c:when test="${SESSION_MEMBERVO.memEmailDiv =='basic'}">
+								<img id="profileImg"
+									src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }"
+									width="340" height="320" />
 							</c:when>
 							<c:otherwise>
-							
+
 								<c:choose>
-									<c:when test="${ SESSION_MEMBERVO.memImg==null}">
-									<img  id="profileImg" src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }" width="340" height="320"/>
+									<c:when
+										test="${ fn:indexOf(SESSION_MEMBERVO.memImg,'http') > -1}">
+										<img id="profileImg" src="${SESSION_MEMBERVO.memImg }"
+											width="340" height="320" />
 									</c:when>
 									<c:otherwise>
-									<img  id="profileImg" src="${SESSION_MEMBERVO.memImg }" width="340" height="320"/>
+
+										<img id="profileImg"
+											src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }"
+											width="340" height="320" />
+
 									</c:otherwise>
 								</c:choose>
-								
+
 							</c:otherwise>
 						</c:choose>
-								
-								
+
+
 					</div>
 				</div>
 				<div class="filebox img-btn btn-style1">
@@ -93,10 +102,24 @@ cursor: pointer;}
 				<input type="text" id="memMail" name="memMail"/>
 				<span>자기소개</span>
 				<input type="text" id="memIntro" name="memIntro"/>
-				<span>비밀번호</span>
+				
+				<c:choose>
+					<c:when test="${SESSION_MEMBERVO.memEmailDiv=='basic'}">
+					<span>비밀번호</span>
 				<input type="password" class="memPass" id="memPass" oninput="checkPwd()" />
 				<span>비밀번호 확인</span>
 				<input type="password" class="memPass" id="reMemPass" name="memPass" oninput="checkPwd()"/>
+					</c:when>
+					
+					<c:otherwise>
+					<span>비밀번호</span>
+				<input type="password" disabled class="memPass" id="memPass" oninput="checkPwd()" />
+				<span>비밀번호 확인</span>
+				<input type="password" disabled class="memPass" id="reMemPass" name="memPass" oninput="checkPwd()"/>
+					</c:otherwise>
+				</c:choose>
+				
+				
 			
 			<div class="label-memberDel" id="delBtn">
 				<span>계정삭제</span>
@@ -132,6 +155,8 @@ cursor: pointer;}
 			return;
 		}
 		
+		if("${SESSION_MEMBERVO.memEmailDiv}"=='basic'){
+		
 		if($("#memPass").val().trim()==""){
 			//$("#memId").val().trim()
 			alert("비밀번호를 입력해 주세요");
@@ -151,6 +176,7 @@ cursor: pointer;}
 		  alert("비밀번호는 숫자, 영문, 특수문자 조합으로 6~15자리를 사용해야 합니다."); 
 		  return false;
 		 }
+		}
 		
 		$("#frm").submit();
 		
