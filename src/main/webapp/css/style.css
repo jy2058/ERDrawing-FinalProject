@@ -3,6 +3,7 @@ body {
 	background: #232323;
 	font-weight: 300;
 	overflow: auto;
+	font-family: 'Nanum Gothic', sans-serif;
 }
 
 a:link { color: inherit; text-decoration: none;}

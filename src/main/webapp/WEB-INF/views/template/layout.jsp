@@ -23,7 +23,9 @@
 <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
 <link rel="stylesheet" href="/css/bootstrap.css">
 <link rel="stylesheet" href="/css/style.css">
-    
+
+<tiles:insertAttribute name="head"/>
+
 <title>테스트 레이아웃</title>
 </head>
 <body>
