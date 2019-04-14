@@ -13,6 +13,7 @@ a:hover { color: inherit; text-decoration: none;}
 #drawing_container {
 	width: 100%;
 	display: table;
+    font-size:12px;
 }
 
 .drawing_box {
@@ -26,13 +27,13 @@ a:hover { color: inherit; text-decoration: none;}
 }
 
 .drawing_top {
-	display: table-cell;
 	vertical-align: middle;
 	width: 100%;
 	height: 39px;
 	background: #3b3b3b;
 	color: #ffffff;
 }
+
 
 
 .drawing_bottom {
@@ -45,6 +46,9 @@ a:hover { color: inherit; text-decoration: none;}
     z-index: 100;
 }
 
+.drawing_bottom .buttons{
+    border-radius: 0;
+}
 
 .drawing_left {
 	top: 40px;
@@ -97,6 +101,7 @@ a:hover { color: inherit; text-decoration: none;}
 #line_background{
 	position:absolute;
 	background:rgba(255, 255, 255, 0.3);
+    color:#ffffff;
 	left:0;
 	right:0;
 	width:100%;
@@ -109,7 +114,7 @@ a:hover { color: inherit; text-decoration: none;}
 	height:300px;
 	left:50%;
     top:50%;
-    margin-top:-200px;
+    margin-top:-220px;
 	margin-left:-330px;
 	border-spacing: 20px;
 }
@@ -163,16 +168,17 @@ a:hover { color: inherit; text-decoration: none;}
 	opacity:0.8;
 	color: #fff;
 	min-width:33px;
-	height:25px;
-	line-height:25px;
-	vertical-align:middle;
+	height:29px;
+	line-height:29px;
 	text-align:center;
 	cursor: pointer;
 	margin-right:10px;
 	padding:0 10px;
+    border-radius: 5px;
 }
 
 .buttons:nth-child(1){
+    min-width:30px;
 	padding:0;
 	margin-left:5px;
 }
@@ -184,8 +190,10 @@ a:hover { color: inherit; text-decoration: none;}
 
 input:focus, textarea:focus {
   outline: none;
-    
+  
 }
+
+
 
 
 
@@ -211,12 +219,23 @@ input:focus, textarea:focus {
 
                     .bottom_left{
                         float:left;
+                        display: block;
+                        line-height:40px;
+                        height:100%;
+                        vertical-align: middle;
                     }
                     
                     .bottom_right{
                         float:right;
+                        margin-right:20px;
                     }
-                    
+
+input[type=checkbox]{
+position: relative;
+        top: 3.2px;
+}
+
+               
                     /*도메인*/
                     #button30{
                         height:40px;
@@ -334,6 +353,9 @@ input:focus, textarea:focus {
                         cursor:pointer;
                     }
 
+.btn_search .fa-search{
+    font-size:12px;
+}
                     .btn_search:hover{background:#333333;}
                     
                     .box_search{
@@ -560,6 +582,107 @@ input:focus, textarea:focus {
 
 
 
+/* 왼쪽 메뉴 */
+
+.drawing_left input[type=radio]{
+    display:none;
+}
 
 
+
+/*오른쪽 메뉴 */
+
+.right_bottom{
+    width:100%;
+    position: absolute;
+    bottom:0;    
+}
+
+.buttons_right{
+    display: inline-block;
+    text-align: center;
+    padding:5px;
+    cursor: pointer;
+    margin-top:5px;
+    margin-bottom:5px;
+    border-radius: 5px;
+}
+
+
+.buttons_right i{
+    font-size:20px;
+}
+
+.fa-comment, .fa-list-alt, .fa-film, .fa-history{
+    font-size: 20px;
+}
+
+
+
+.buttons_right img{
+    width:19px;
+}
+
+.buttons_right:first-child img{
+    width:23px;
+}
+
+.buttons_right:hover, .buttons_right.active{
+	
+	background:#555;
+}
+
+
+
+/* 탑 메뉴 */
+
+.top_left{
+    float:left;
+    display: block;
+    line-height:39px;
+    height:100%;
+    vertical-align: middle;
+}
+
+.top_right{
+    float:right;
+    display: block;
+    line-height:39px;
+    height:100%;
+    vertical-align: middle;
+    
+    padding-right:0px;
+}
+
+.buttons_top{
+    display:inline-block;
+    margin-top:5px;
+    margin-left:5px;
+    margin-right:5px;
+    padding:5px;
+	cursor: pointer;
+    border-radius: 5px;
+
+}
+
+.buttons_top:hover{
+    background:#555;
+}
+
+.fa-cog, .fa-bell, .fa-sign-out-alt, .fa-search{
+    font-size:20px;
+}
+
+
+
+#erdName{
+    min-width:50px;
+    width:60px;
+    height:25px;
+    background:#3b3b3b;
+    color:#fff;
+    border:0;
+    margin-left:10px;
+    
+}
 
