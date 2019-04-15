@@ -9,7 +9,10 @@
 <style>
 .modal{
  color: #000;
-     height: 59%;
+
+}
+.modal-dialog, .modal-content {
+    height: 63%;
 }
 .modalLabels{
 width: 100px;
@@ -29,6 +32,14 @@ width: 100px;
     opacity: 0.8;
     cursor: pointer;
 }
+.modal-backdrop {
+    position: absolute;
+    height: 500%;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: #000;
+}
 
 #add:hover {
     opacity: 1;
@@ -42,6 +53,7 @@ width: 100px;
 <c:if test="${SESSION_MEMBERVO.memAuth == 'T' }">
 
 		<div style="" id="add" class="modifyModal" data-toggle="modal" data-ticketno="insert" data-target="#ticketModalEvnTest" data-ticketno="insert" >티켓 추가</div>
+		<br/>	<br/>
 	
 </c:if>
 

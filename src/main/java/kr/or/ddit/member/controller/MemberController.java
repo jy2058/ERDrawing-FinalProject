@@ -1,5 +1,7 @@
 package kr.or.ddit.member.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -310,7 +312,7 @@ public class MemberController {
 	 }
 
 	@RequestMapping("/memberModify")
-	public String memberModify(MultipartFile profileImg, HttpSession session, Model model, MemberVo memVo,
+	public String memberModify(MultipartFile profileImg, HttpSession session, Model model, MemberVo memVo, String imgDelCk,
 			HttpServletRequest req) throws IllegalStateException, IOException {
 		logger.debug("====ssss{}", memVo);
 		logger.debug("====ssss{}", profileImg);
@@ -324,7 +326,15 @@ public class MemberController {
 
 			profileImg.transferTo(new File(realFilename));
 		}
-		vo.setMemImg(realFilename);
+		
+		logger.debug("imgDelck===={}",imgDelCk);
+		if(imgDelCk.equals("imgno")){
+			vo.setMemImg(null);
+		}else{
+			vo.setMemImg(realFilename);	
+		}
+		
+		
 		vo.setMemNm(memVo.getMemNm());
 		
 		if(memVo.getMemPass()!=null){

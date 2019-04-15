@@ -127,7 +127,7 @@ public class LoginController {
 			session.setAttribute("SESSION_MEMBERVO", vo);
 		}
 		else{
-			
+			vo.setMemImg(memId.getMemImg());
 			session.setAttribute("SESSION_MEMBERVO", vo);
 		}
 		return "redirect:" + req.getContextPath()+"/" ;
