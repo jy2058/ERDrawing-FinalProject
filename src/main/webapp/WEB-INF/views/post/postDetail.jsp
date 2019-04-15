@@ -144,14 +144,14 @@
             </div>
          </div>
 
-         <div class="table-responsive" style="margin-right: 20px; width: 71%;" >
+         <div class="table-responsive" style="margin-right: 20px; width: 70%;" >
             <table class="table table-striped" style="width: 100%;">
                <thead>
                   <tr style="height: 50px;">
                      <th style="text-align: center; border-right: 2px solid #fff;">댓글번호</th>
                      <th style="text-align: center; border-right: 2px solid #fff;">작성자</th>
                      <th style="text-align: center; border-right: 2px solid #fff;">댓글내용</th>
-                     <th style="text-align: center; border-right: 2px solid #fff;"></th>
+                     <th style="text-align: center;">좋아요</th>
                   </tr>
                </thead>
                
