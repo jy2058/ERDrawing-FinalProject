@@ -291,11 +291,7 @@ img{
 		 $("#title").val(teamInfo.teamNm);
 		 $("#teamIntro").val(teamInfo.teamIntro);
 		 $("#makerId").val(teamInfo.makerId);
-		 
-		  /* if(!teamInfo.teamImg){
-			$("#image").attr("src", '${cp}/image/no_img.jpg');
-		 } 
-		 $("#image").attr("src", teamInfo.teamImg); */
+		 $("#teamImg").attr("src","${cp }/team/teamImg?teamNo=${teamInfo.teamNo}");
 		 
 		 $("#teamNo").val(teamInfo.teamNo);
 		 console.log(teamInfo.teamNo);
