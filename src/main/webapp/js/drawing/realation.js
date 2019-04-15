@@ -152,7 +152,18 @@ function makeArrow(e) {
 
 		function adjustPoint(e) {
 			console.log('adjustPoint 호출됨');
-			pos = stage.getPointerPosition();
+			
+			
+				//가이드선 절대경로 만들기
+	            var transform = layer.getAbsoluteTransform().copy();
+	
+	            transform.invert();
+
+	            var circlePos = stage.getPointerPosition();
+		        pos = transform.point(circlePos);
+	          
+	         // pos = stage.getPointerPosition();
+
 
 			// 원래 temp_arrow의 x,y 값을 가져옴
 			var x = temp_arrow.attrs.points[0];
