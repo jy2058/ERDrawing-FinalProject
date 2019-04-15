@@ -9,16 +9,19 @@
 				<td style="text-align: center; border-right: 2px solid #fff;">${post.postNo}</td>
 				<c:choose>
 					<c:when test="${post.level gt 1}"> <!--레벨에 따른 공백주기  -->
+					<a href="javascript:void(0);" onclick="fnTrClick('${post.postNo}', '${post.postGn}', '${post.postDelFlag}');"> ${post.postTitle}</a>
+					
 					<td>
 						<c:forEach begin="1" end="${post.level-1}">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						</c:forEach>
-					 <span style="color: red">└[RE]: </span>
+					 	<span style="color: red">└[RE]: </span>
 						<c:choose>
 							<c:when test="${post.postDelFlag eq 'T'}">
-							 <a href="javascript:void(0);" onclick="fnTrClick('${post.postNo}');">${post.postTitle}</a>
+							<a href="javascript:void(0);" onclick="fnTrClick('${post.postNo}', '${post.postGn}', '${post.postDelFlag}');"> ${post.postTitle}</a>
 							</c:when>
 							<c:otherwise>
+							 <a href="javascript:void(0);" onclick="fnTrClick('${post.postNo}', '${post.postGn}', '${post.postDelFlag}');"> ${post.postTitle}</a>
 							<span style="color: red;">삭제된 답글입니다.</span>
 							</c:otherwise>								
 						</c:choose>
