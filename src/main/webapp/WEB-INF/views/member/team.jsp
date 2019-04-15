@@ -236,7 +236,7 @@ img{
 	});
 	
 	// 팀 멤버 삭제
-	$(".delBtn").on("click", function(e){
+	$(".remove-btn").on("click", function(e){
 		var memId = $(e.target).closest('li').data("memid");
 		var teamNo = $(e.target).closest('li').data("teamno");		
 		var teamNm = $(e.target).closest('li').data("teamnm");		

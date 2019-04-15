@@ -195,51 +195,62 @@ public class TeamServiceImpl implements ITeamService{
 		int teamNo = teamVo.getTeamNo();
 		
 		List<MessageVo> memList = new ArrayList<MessageVo>();
-		Map<String, Object> memMap = new HashMap<>();		
+		Map<String, Object> memMap = new HashMap<>();
+		
+		logger.debug("***addMemberSize : {}", addMember.size());
+		logger.debug("***delMemberSize : {}", delMember.size());
 
-		for(String memId : addMember){
-			TeamListVo vo = new TeamListVo();
-			vo.setMemId(memId);
-			vo.setTeamNo(teamNo);
-			
-			teamDao.insertTeamMember(vo);
-			
-			// 알림 전송
-			msgContent = makerId + " 님이 " + teamNm + " 팀에 " + memId + " 님을 초대 하였습니다. 팀에 가입하시겠습니까?";
-			MessageVo msgVo = new MessageVo();
-			msgVo.setReceiverId(memId);
-			msgVo.setMsgContent(msgContent);
-			msgVo.setMsgType("y");
-			msgVo.setTeamNo(teamNo);
-			msgVo.setSenderId(makerId);
-
-			memList.add(msgVo);
+		if(addMember.size() > 0){
+			for(String memId : addMember){
+				TeamListVo vo = new TeamListVo();
+				vo.setMemId(memId);
+				vo.setTeamNo(teamNo);
+				
+				teamDao.insertTeamMember(vo);
+				
+				// 알림 전송
+				msgContent = makerId + " 님이 " + teamNm + " 팀에 " + memId + " 님을 초대 하였습니다. 팀에 가입하시겠습니까?";
+				MessageVo msgVo = new MessageVo();
+				msgVo.setReceiverId(memId);
+				msgVo.setMsgContent(msgContent);
+				msgVo.setMsgType("y");
+				msgVo.setTeamNo(teamNo);
+				msgVo.setSenderId(makerId);
+	
+				memList.add(msgVo);
+			}
 		}
 		
-		for(String memId : delMember){
-			TeamListVo vo = new TeamListVo();
-			vo.setMemId(memId);
-			vo.setTeamNo(teamVo.getTeamNo());
-			
-			teamDao.delMember(vo);
-			
-			// 알림 전송
-			msgContent = makerId + " 님이 " + teamNm + " 팀에 " + memId + " 님을 제외 하였습니다. ";
-			MessageVo msgVo = new MessageVo();
-			msgVo.setReceiverId(memId);
-			msgVo.setMsgContent(msgContent);
-			msgVo.setMsgType("n");
-			msgVo.setTeamNo(teamNo);
-			msgVo.setSenderId(makerId);
-
-			memList.add(msgVo);
+		if(delMember.size() > 0){
+			for(String memId : delMember){
+				TeamListVo vo = new TeamListVo();
+				vo.setMemId(memId);
+				vo.setTeamNo(teamVo.getTeamNo());
+				
+				teamDao.delMember(vo);
+				
+				// 알림 전송
+				msgContent = makerId + " 님이 " + teamNm + " 팀에 " + memId + " 님을 제외 하였습니다. ";
+				MessageVo msgVo = new MessageVo();
+				msgVo.setReceiverId(memId);
+				msgVo.setMsgContent(msgContent);
+				msgVo.setMsgType("n");
+				msgVo.setTeamNo(teamNo);
+				msgVo.setSenderId(makerId);
+	
+				memList.add(msgVo);
+			}
 		}
 		
-		memMap.put("memList", memList);
-		messageDao.insertMsg(memMap);
+		if(memList.size() > 0){
+			memMap.put("memList", memList);
+			messageDao.insertMsg(memMap);
+		}
 		
+		logger.debug("***memMapSize : {}", memMap.size());
+//		if(memMap.size() > 0){
+//		}
 		return teamModify;
 	}
-
 
 }

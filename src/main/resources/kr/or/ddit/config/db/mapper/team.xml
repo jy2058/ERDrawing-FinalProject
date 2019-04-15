@@ -68,12 +68,16 @@
 	
 	<!-- teamMember 추가 -->
 	<insert id="insertTeamMember" parameterType="teamListVo">
-		insert into team_list
-		(memid, teamno, teamauth, teamagreeflag)
-		values
-		(#{memId}, #{teamNo}, nvl(#{teamAuth,jdbcType=VARCHAR}, 'user'), nvl(#{teamAgreeFlag,jdbcType=VARCHAR},'n'))
+		merge into team_list
+		using dual
+		on (memid = #{memId} and teamno = #{teamNo})
+		when not matched then
+			insert
+			(memid, teamno, teamauth, teamagreeflag)
+			values
+			(#{memId}, #{teamNo}, nvl(#{teamAuth,jdbcType=VARCHAR}, 'user'), nvl(#{teamAgreeFlag,jdbcType=VARCHAR},'n'))
 	</insert>
-
+	
 	<!-- 팀 내역 가져오기 (팀번호로) -->
 	<select id="getTeamAllListTeamNo" parameterType="int" resultType="teamListVo">
 		select *
