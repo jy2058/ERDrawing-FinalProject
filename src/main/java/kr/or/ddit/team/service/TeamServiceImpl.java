@@ -119,8 +119,10 @@ public class TeamServiceImpl implements ITeamService{
 				memList.add(msgVo);
 			}
 		}
-		memMap.put("memList", memList);
-		messageDao.insertMsg(memMap);
+		if(memList.size() > 0){
+			memMap.put("memList", memList);
+			messageDao.insertMsg(memMap);
+		}
 		
 		return insertTeam;
 	}
