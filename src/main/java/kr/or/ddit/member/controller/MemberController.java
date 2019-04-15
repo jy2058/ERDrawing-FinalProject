@@ -361,6 +361,19 @@ public class MemberController {
 		model.addAttribute("inDate", inDate);
 		return "jsonView";
 	}
+	
+	@RequestMapping("/memberDelete")
+	public String memberDelete(HttpSession session, Model model, MemberVo memVo, HttpServletRequest req,
+			RedirectAttributes ra) {
+		logger.debug("====ssss{}", memVo);
+		memVo.setMemCancelFlag("T");
+		memberService.updateMemberDel(memVo);
+		ra.addFlashAttribute("msg", "계정 탈퇴가 완료되었습니다.        "
+									+ "ERDrawing을 이용해주셔서 감사합니다.  "
+				+"더욱 발전하는 ERDrawing가 되겠습니다");
+		session.removeAttribute("SESSION_MEMBERVO");
+		return "redirect:" + req.getContextPath() +"/";
+	}
 
 }
 
