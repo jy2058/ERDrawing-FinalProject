@@ -28,9 +28,8 @@
 			</div>
 			<div class="input-box">
 				<label>썸네일 이미지</label>
-				<img alt="" src="${cp }/image/no_img.jpg" id="image">
-<%-- 				<img src="${cp }/team/teamImg?teamNo=${teamInfo.teamNo}" id="image"> --%>
-				<input type="file" name="profileImg" onchange="loadImg(this)" style="width: 300px"> 
+			<img alt="" src="" id="teamImg"> 
+			<input type="file" name="profileImg" onchange="loadImg(this)" style="width: 300px"> 
 			</div>
 			<input type="hidden" id="teamNo" name="teamNo" value="">
 		</form>
@@ -119,7 +118,7 @@ function loadImg(value){
 	if(value.files && value.files[0]){
 		var reader = new FileReader();
 		reader.onload = function(e){
-			$("#image").attr('src', e.target.result);
+			$("#teamImg").attr('src', e.target.result);
 		}
 		reader.readAsDataURL(value.files[0]);
 	}
