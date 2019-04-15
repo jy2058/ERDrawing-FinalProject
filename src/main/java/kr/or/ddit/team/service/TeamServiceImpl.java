@@ -114,13 +114,16 @@ public class TeamServiceImpl implements ITeamService{
 				msgVo.setReceiverId(memId);
 				msgVo.setSenderId(makerId);
 				msgVo.setMsgContent(msgContent);
+				
 				msgVo.setMsgType("y");
 				msgVo.setTeamNo(teamNo);
 				memList.add(msgVo);
 			}
 		}
-		memMap.put("memList", memList);
-		messageDao.insertMsg(memMap);
+		if(memList.size() > 0){
+			memMap.put("memList", memList);
+			messageDao.insertMsg(memMap);
+		}
 		
 		return insertTeam;
 	}

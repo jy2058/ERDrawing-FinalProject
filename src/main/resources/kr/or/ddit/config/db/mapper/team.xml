@@ -93,6 +93,12 @@
 		where a.memid = b.memid
 		    and a.teamno = #{teamNo}
 		    and a.teamagreeflag='y'
+		order by 
+		case 
+			when teamauth = 'creator' then 1 
+			when teamauth = 'admin' then 2
+			else 3 
+		end    
 	</select>
 	
 	<!-- 팀 멤버 권한 수정하기 -->
