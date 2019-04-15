@@ -9,14 +9,20 @@
 <style>
 .team-li{
 	text-align: center;
-    margin: 5px;
-    font-size: 22px;
+    margin: 10px;
+    padding-top: 12px;
 }
-.team-li a{
+.team-li > a > div{
 	background-color: #686868;
+	font-size: 20px;
+	line-height:35px;
+	width:35px;
+	height:35px;
+	margin:0 auto;
+	border-radius:5px;
 }
 .team-li span{
-    font-size: 13px;
+    font-size: 12px;
 }
 .tag-a{
     margin: 3px;
@@ -90,8 +96,10 @@
 					style="background: #232323; color: #fff; height: 100px; line-height: 100px; padding-left: 20px; font-size: 20px; font-weight: 600;">
 					<ul style="min-height: 72px; line-height: 2.2">
 						<c:forEach var="teamList" items="${teamInfoList }">
-							<li class="team-li"><a href="/team?teamNo=${teamList.teamNo }">
-									${fn:toUpperCase(fn:substring(teamList.teamNm,0,1 ))} <span>${teamList.teamNm }</span>
+							<li class="team-li">
+							<a href="/team?teamNo=${teamList.teamNo }">
+								<div>${fn:toUpperCase(fn:substring(teamList.teamNm,0,1 ))}</div>
+								<span>${teamList.teamNm }</span>
 							</a></li>
 						</c:forEach>
 					</ul>

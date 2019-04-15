@@ -152,8 +152,12 @@ $(document).ready(function(){
 					html += '	</div>';
 					html += '</li>';
 				}
-				if(searchFlag){
-					$(".erd-box-list").html(html);
+				if(searchFlag){	// 검색일 경우
+					if(page == 1){
+						$(".erd-box-list").html(html);
+					}else{
+						$(".erd-box-list").append(html);
+					}
 				}
 				else {
 					$(".erd-box-list").append(html);
