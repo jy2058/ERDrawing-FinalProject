@@ -28,7 +28,7 @@
 			</div>
 			<div class="input-box">
 				<label>썸네일 이미지</label>
-			<img alt="" src="" id="teamImg"> 
+			<img alt="" src="" id="teamImg" width="200px"> 
 			<input type="file" name="profileImg" onchange="loadImg(this)" style="width: 300px"> 
 			</div>
 			<input type="hidden" id="teamNo" name="teamNo" value="">

@@ -88,7 +88,7 @@
 
 			<div class="line-title">
 				<h2 class="page-title">TEAM</h2>
-				<a class="add-btn1" id="teamAdd">+</a>
+				<a class="add-btn1" id="teamAdd"><i class="fas fa-plus-square"></i></a>
 			</div>
 
 			<div class="row">
@@ -110,7 +110,7 @@
 
 			<div class="line-title">
 				<h2 class="page-title">MY-ERD</h2>
-				<a class="add-btn1" id="myAdd">+</a>
+				<a class="add-btn1" id="myAdd"><i class="fas fa-plus-square"></i></a>
 			</div>
 
 			<div class="row">

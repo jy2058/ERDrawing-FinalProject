@@ -148,7 +148,9 @@ input{
 
 
 
-.add-btn1{display:inline-block; margin:23px 0 0 10px; width:25px; height:25px; line-height:17px; font-size:25px; background:#232323; color:#fff; text-align:center;  font-weight:900; border:1px solid #fff;
+.add-btn1{display:inline-block; margin:23px 0 0 10px; width:25px; height:25px; line-height:17px; font-size:25px;  color:#fff; text-align:center;  font-weight:900; 
+/* border:1px solid #fff; */
+/* background:#232323; */
 	opacity:0.8;
 	cursor:pointer;
 }
