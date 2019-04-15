@@ -99,7 +99,7 @@ public class TicketController {
 		//티켓차트 페이지
 		@RequestMapping("ticketChart")
 		public String ticketChart(Model model,TicketVo ticketVo,RedirectAttributes ra,HttpServletRequest req){
-			logger.debug("sdf");
+			
 			return "ticketChart";
 		}
 

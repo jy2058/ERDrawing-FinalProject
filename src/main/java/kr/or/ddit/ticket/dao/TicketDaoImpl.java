@@ -40,4 +40,9 @@ public class TicketDaoImpl implements ITicketDao{
 		return sqlSession.delete("ticket.deleteTicket",ticketNo);
 	}
 
+	@Override
+	public List<TicketVo> selectTicketHist(String ticketNo) {
+		return sqlSession.selectList("ticket.selectTicketHist",ticketNo);
+	}
+
 }

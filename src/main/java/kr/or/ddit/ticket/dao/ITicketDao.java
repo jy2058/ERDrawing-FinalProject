@@ -54,4 +54,14 @@ public interface ITicketDao {
 	 * Method 설명 : 티켓 삭제 
 	 */
 	int deleteTicket(String ticketNo);
+	
+	/**
+	 * Method : selectTicketHist
+	 * 작성자 : PC02
+	 * 변경이력 :
+	 * @param ticketNo
+	 * @return
+	 * Method 설명 : 티켓 
+	 */
+	List<TicketVo> selectTicketHist(String ticketNo);
 }

@@ -48,4 +48,10 @@
 	 		   sysdate) 
 	 		   
 	 </insert>
+	 
+	 <select id="selectTicketHist" resultType="ticketVo" parameterType="String">
+		select *
+			from ticket_buy_Hist
+		where ticketno= #{ticketno}
+	 </select>
 </mapper>
