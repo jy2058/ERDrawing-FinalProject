@@ -87,7 +87,7 @@ $("#searchBtn_modal").on("click", function(){
 				html += '<li class="list-group-item">';
 				html += '	<a class="">';
 				html += '		<div class="list-contents">';
-				html += '			<img src="${cp }/erd/erdImg?erdNo=' + erdVoList[i].erdNo + '">';
+				html += '			<div class="modal_search"><img src="${cp }/erd/erdImg?erdNo=' + erdVoList[i].erdNo + '"></div>';
 				html += '			<div class="erd-title">' + erdVoList[i].erdTitle + '</div>';
 				html += '		</div>';
 				html += '	</a>';
@@ -98,6 +98,18 @@ $("#searchBtn_modal").on("click", function(){
 	});
 });
 </script>
+
+<style>
+.modal_search{
+background:#3b3b3b;
+border-radius:5px;
+overflow:hidden;
+}
+.modal_search img{
+width:110px;
+height:62px;
+}
+</style>
 
       
 

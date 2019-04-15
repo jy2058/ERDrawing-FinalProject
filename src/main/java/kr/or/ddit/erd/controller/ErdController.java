@@ -126,7 +126,7 @@ public class ErdController {
 		// 3-2-1. /image/noImg.png(application.getRealPath())
 		else {
 			ServletContext application = req.getServletContext();
-			String noimgPath = application.getRealPath("/image/noImg.png");
+			String noimgPath = application.getRealPath("/image/noimg1.png");
 			fis = new FileInputStream(new File(noimgPath));
 		}
 		// 4. FileInputStream을 response객체의 outputStream 객체에 write

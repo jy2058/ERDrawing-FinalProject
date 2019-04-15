@@ -160,14 +160,17 @@ img{
 							 	<c:forEach var="teamErdList" varStatus="status" items="${teamErdList }">
 							  	<li class="erd-box-item">
 							  		<c:if test="${myTeam.teamAuth ne 'user'}"> <!-- 권한이 유저가 아닐 때 erd 삭제 가능 -->
+							  		<div style="position:absolute; z-index:30;">
 								  		<button type="button" class="btn btn-default delBtn" aria-label="trash" value="${myErdList.erdNo }">
 										  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 										</button>
+									</div>
 									</c:if>
 								  		<a class="preview-box">
 								  			<div class="bg-box">
 								  				<div class="bg-img">
-									  				&nbsp;Image
+								  					<!--이미지 경로 맞춰요~ -->
+								  					<img src="${cp }/erd/erdImg?erdNo=${teamErdList.erdNo}">
 									  			</div>
 								  				<div class="table-bg-text">
 								  					<div class="bg-text shinys">

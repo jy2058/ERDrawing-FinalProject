@@ -69,9 +69,19 @@ a.preview-box {
 	right: 0;
 }
 
+
+.bg-box{
+	
+	
+	
+}
+
+
+
 .bg-box {
 	position: absolute;
-	background: #fff;
+	display:block;
+	background:#3b3b3b;
 	top: 0;
 	left: 0;
 	right: 0;
@@ -79,8 +89,12 @@ a.preview-box {
 	width: 100%;
 	height: 100%;
 	display: table;
+	overflow:hidden;
 }
 
+.bg-box img{
+	width:100%;
+}
 .bg-box .bg-img {
 	color: #000;
 	font-size: 30px;
@@ -88,6 +102,7 @@ a.preview-box {
 	display: table-cell;
 	text-align: center;
 	vertical-align: middle;
+	
 }
 
 .bg-box .bg-text {

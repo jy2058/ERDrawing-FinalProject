@@ -122,19 +122,23 @@
 						<c:forEach var="myErdList" varStatus="status"
 							items="${myErdList }">
 							<li class="erd-box-item">
-
-								<button type="button" class="btn btn-default delBtn"
-									aria-label="trash" value="${myErdList.erdNo }">
-									<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-								</button> <a class="preview-box">
+							
+								<div style="position:absolute; z-index:30;">
+									<button type="button" class="btn btn-default delBtn"
+										aria-label="trash" value="${myErdList.erdNo }">
+										<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+									</button> 
+								</div>
+								
+								<a class="preview-box">
 									<div class="bg-box">
-										<div class="bg-img">&nbsp;Image</div>
+										<img src="${cp }/erd/erdImg?erdNo=${myErdList.erdNo}">
 										<div class="table-bg-text">
 											<div class="bg-text shinys">&nbsp;${myErdList.erdTitle }
 											</div>
 										</div>
 									</div>
-							</a>
+								</a>
 								<div class="description-item">
 									<div style="float: left;">${myErdList.erdTitle }</div>
 									<!-- erd public / private에 따라 자물쇠 이미지 변경 -->

@@ -29,13 +29,14 @@
 				<div class="col-sm-12">
 					 <ul class="erd-box-list">
 					 
-					 	<c:forEach begin="0" end="11" var="idx" varStatus="status">
+					 	<c:forEach begin="0" end="5" var="idx" varStatus="status">
 					  	<li class="erd-box-item">
 		
 					  		<a class="preview-box">
 					  			<div class="bg-box">
 					  				<div class="bg-img">
-						  				&nbsp;Image${idx }
+					  					<img src="${cp }/erd/erdImg?erdNo=9999999">
+						  				<%-- &nbsp;Image${idx } --%>
 						  			</div>
 					  				<div class="table-bg-text">
 					  					<div class="bg-text shinys">
