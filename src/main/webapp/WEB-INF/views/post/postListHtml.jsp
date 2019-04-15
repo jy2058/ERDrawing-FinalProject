@@ -5,8 +5,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 		<c:forEach items="${postList}" var="post">
-			<tr class='postTr' data-postno="${post.postNo}" data-postgn="${post.postGn}" data-flag="${post.postDelFlag}">
-				<td>${post.postNo}</td>
+			<tr class='postTr' data-postno="${post.postNo}" data-postgn="${post.postGn}" data-flag="${post.postDelFlag}" style="background-color: #f9f9f9;">
+				<td style="text-align: center; border-right: 2px solid #fff;">${post.postNo}</td>
 				<c:choose>
 					<c:when test="${post.level gt 1}"> <!--레벨에 따른 공백주기  -->
 					<td>
@@ -16,7 +16,7 @@
 					 <span style="color: red">└[RE]: </span>
 						<c:choose>
 							<c:when test="${post.postDelFlag eq 'T'}">
-							 ${post.postTitle}
+							 <a href="javascript:void(0);" onclick="fnTrClick('${post.postNo}');">${post.postTitle}</a>
 							</c:when>
 							<c:otherwise>
 							<span style="color: red;">삭제된 답글입니다.</span>
@@ -26,10 +26,10 @@
 					</c:when>
 					
 					<c:otherwise>
-					<td>
+					<td  style="padding-left: 15px; border-right: 2px solid #fff;">
 					<c:choose>
 							<c:when test="${post.postDelFlag eq 'T'}">
-							 ${post.postTitle}
+							<a href="javascript:void(0);" onclick="fnTrClick('${post.postNo}', '${post.postGn}', '${post.postDelFlag}');"> ${post.postTitle}</a>
 							</c:when>
 							<c:otherwise>
 							<span style="color: red;">삭제된 게시글입니다.</span>
@@ -38,8 +38,8 @@
 					</td>
 					</c:otherwise>
 				</c:choose>			
-					<td>${post.writerId}</td>
-					<td><fmt:formatDate value="${post.postRegDt}" pattern="yyyy-MM-dd" /></td>
+					<td style="text-align: center; border-right: 2px solid #fff;">${post.writerId}</td>
+					<td style="text-align: center;"><fmt:formatDate value="${post.postRegDt}" pattern="yyyy-MM-dd" /></td>
 				</tr>
 			</c:forEach>
 			

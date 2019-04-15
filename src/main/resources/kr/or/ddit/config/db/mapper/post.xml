@@ -31,6 +31,7 @@
 		where boardNo = #{boardNo}
 		ORDER BY postRegDt DESC
 	</select>
+	
 
 	<!-- 특정 게시글 조회 -->
 	<select id="getSelectPost" resultType="postVo" parameterType="String">
@@ -42,13 +43,42 @@
 	<!-- 게시글 페이징 조회 -->
 	<select id="selectPostPagingList" parameterType="pageVo" resultType="postVo">
 		select *
+		    from 
+		        (select a.POSTNO,
+		                a.POSTREGDT,
+		                a.POSTGN,
+		                a.POSTDELFLAG,
+		                a.BOARDNO,
+		                a.WRITERID,
+		                DECODE( a.COMMENTS_CNT, 0, a.POSTTITLE, a.POSTTITLE || ' (' || a.COMMENTS_CNT || ')' ) AS POSTTITLE, rownum rn 
+		         from 
+		            (select POSTNO, POSTTITLE, POSTGN,
+		             BOARDNO, WRITERID,trim(POSTDELFLAG) as
+		             POSTDELFLAG, POSTREGDT, ( SELECT COUNT(*) FROM COMMENTS WHERE POSTNO = P.POSTNO ) AS COMMENTS_CNT, level
+		FROM post P where BOARDNO = #{boardNo}
+		START WITH parentPostNo IS NULL
+		CONNECT BY parentPostNo = prior
+		POSTNO order SIBLINGS By POSTGN desc,
+		POSTNO) a) a where rn between
+		((#{pageNo}-1)*10)+1 and (#{pageNo})*10
+	</select>
+	<!-- 게시글 페이징 조회 -->
+	<select id="selectNoticePagingList" parameterType="pageVo" resultType="postVo">
+		select *
 			from 
-				(select a.*, rownum rn 
+				(select a.POSTNO,
+		                a.POSTREGDT,
+		                a.POSTGN,
+		                a.POSTDELFLAG,
+		                a.BOARDNO,
+		                a.WRITERID,
+		                DECODE( a.COMMENTS_CNT, 0, a.POSTTITLE, a.POSTTITLE || ' (' || a.COMMENTS_CNT || ')' ) AS POSTTITLE, rownum rn
 				 from 
 				 	(select POSTNO, POSTTITLE, POSTGN,
 			  		 BOARDNO, WRITERID,trim(POSTDELFLAG) as
-		             POSTDELFLAG, POSTREGDT, level
-		FROM post where BOARDNO = #{boardNo}
+		             POSTDELFLAG, POSTREGDT,( SELECT COUNT(*) FROM COMMENTS WHERE POSTNO = P.POSTNO ) AS COMMENTS_CNT,  level
+		FROM post P where BOARDNO = #{boardNo} 
+				    and postDelFlag = 'T'
 		START WITH parentPostNo IS NULL
 		CONNECT BY parentPostNo = prior
 		POSTNO order SIBLINGS By POSTGN desc,
@@ -62,6 +92,7 @@
 		from post
 		where boardNo = #{boardNo}
 	</select>
+
 
 	<!-- 게시글 생성 -->
 	<insert parameterType="postVo" id="insertPost">
@@ -115,7 +146,7 @@
 	<insert parameterType="uploadfileVo" id="insertFile">
 		insert into UPLOADFILE (uploadFileNo, uploadFileNm, uploadRealFilePath,
 		postNo)
-		values(SEQ_UPLOADFILENO.NEXTVAL, #{uploadFileNm}, #{uploadRealFilePath}, SEQ_POSTNO.CURRVAL)
+		values(SEQ_UPLOADFILENO.NEXTVAL, #{uploadFileNm}, #{uploadRealFilePath}, #{postNo})
 	</insert>
 
 	<!-- 첨부파일 삭제 -->
@@ -147,6 +178,7 @@
 				(select a.*, rownum rn
 				from
 					(select COMMENTS.*
+						,(SELECT COUNT(*) AS CNT FROM COMMENT_LIKE WHERE CMTNO = COMMENTS.CMTNO) AS CNT
 						from COMMENTS
 						order by cmtRegDt desc 
 						) a where postNo = #{postNo})

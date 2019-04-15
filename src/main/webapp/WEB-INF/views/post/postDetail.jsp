@@ -113,9 +113,21 @@
          <div class="form-group">
             <label for="content" class="col-sm-2 control-label">첨부파일</label>
             <div class="col-sm-7">
+               
+               <c:choose>
+               		<c:when test="${fileList.size() =='0'}">
+              		 	없음
+               		</c:when>
+               		
+               		<c:otherwise>
                <c:forEach items="${fileList}" var="file">
-                  <a href="${cp}/post/fileDownload?uploadFileNo=${file.uploadFileNo}">${file.uploadFileNm}</a>
+               		 		<a href="${cp}/post/fileDownload?uploadFileNo=${file.uploadFileNo}">${file.uploadFileNm}</a>
                </c:forEach>
+               		</c:otherwise>
+
+                  </c:choose>
+            
+               
             </div>
          </div>
 
@@ -409,7 +421,7 @@
 	  
       //댓글 좋아요 후 페이징 ajax
       function cmtLike(page, postNo, cmtNo, memId) {
-    	  alert("ddddddddd");
+    	  
 		  $.ajax({
 					url : "${cp}/post/likeCmt",
 					data : {
@@ -422,6 +434,8 @@
 						var htmlArr = data.split("======================seperator======================");
 						$("#cmtTbody").html(htmlArr[0]);
 						$("#pagination").html(htmlArr[1]);
+						cmtPage(1);
+						
 					}
 		  }); 
 	  }

@@ -1,5 +1,6 @@
 package kr.or.ddit.post.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -33,8 +34,14 @@ public class PostDaoImpl implements IPostDao {
 
 	@Override
 	public List<PostVo> selectPostPagingList(PageVo pageVo) {
-		List<PostVo> postList = sqlSessionTemplate.selectList("post.selectPostPagingList", pageVo);
-
+		int boardNo = pageVo.getBoardNo();
+		List<PostVo> postList;
+		if(boardNo == 1){
+			 postList = sqlSessionTemplate.selectList("post.selectNoticePagingList", pageVo);
+		}
+		else{
+			 postList = sqlSessionTemplate.selectList("post.selectPostPagingList", pageVo);
+		}
 		return postList;
 	}
 
