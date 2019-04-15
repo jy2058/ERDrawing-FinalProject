@@ -362,6 +362,7 @@ public class MemberController {
 		return "jsonView";
 	}
 	
+	//회원탈퇴
 	@RequestMapping("/memberDelete")
 	public String memberDelete(HttpSession session, Model model, MemberVo memVo, HttpServletRequest req,
 			RedirectAttributes ra) {
