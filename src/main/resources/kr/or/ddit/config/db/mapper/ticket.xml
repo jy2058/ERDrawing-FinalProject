@@ -29,7 +29,7 @@
 	 <!-- 티켓 삭제  -->
 	 <delete id="deleteTicket" parameterType="String">
 	 	delete ticket 
-	 	where ticketNo=#{ticketNo}
+	 	where ticketNo=#{ticketNo} 
 	 </delete>
 	 
 	 <!-- 티켓 추가  -->
