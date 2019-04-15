@@ -11,6 +11,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.mail.Session;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -69,7 +70,7 @@ public class PostController {
 	// 게시판 페이징 리스트
 	@RequestMapping(path = "/postList")
 	public String postList(@RequestParam(name="boardNo") int boardNo,
-			               @RequestParam(name="page", defaultValue="1") int page, Model model) {
+			               @RequestParam(name="page", defaultValue="1") int page, Model model, HttpSession session) {
 
 		String boardNm = postService.getSelectBoardNm(boardNo+"");
 
@@ -84,6 +85,7 @@ public class PostController {
 		model.addAttribute("boardNm", boardNm);
 		model.addAttribute("boardNo", boardNo);
 		model.addAttribute("paging", paging);
+		session.setAttribute("SESSION_BOARDNO", boardNo);
 
 		return "postList";
 	}
@@ -114,7 +116,7 @@ public class PostController {
 	
 	// 게시글 등록 화면
 	@RequestMapping(path = "/postInsert", method = RequestMethod.GET)
-	public String postInsertForm(HttpSession session, Model model, String boardNo) {
+	public String postInsertForm(Model model, String boardNo) {
 
 		model.addAttribute("boardNo", boardNo);
 
@@ -216,7 +218,7 @@ public class PostController {
 	// 게시글 수정
 	@RequestMapping(path = "/postUpdate", method = RequestMethod.POST)
 	public String postUpdate(RedirectAttributes ra,
-			                 @RequestParam("postNo") int postNo,
+			                 @RequestParam("postNo") int postNo, 
 			                 @RequestParam("postTitle") String postTitle,
 			                 @RequestParam("postContent") String postContent,
 							 @RequestParam(name="delFile", defaultValue="")String[] arrDelFile,

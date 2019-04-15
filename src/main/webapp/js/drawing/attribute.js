@@ -70,7 +70,10 @@
             y: attrPosition,
             name: 'attribute'
         });
-
+        
+        if(select_group =='pk_group'){
+        	attribute.id(get_numId()); 
+        }
         
 
 
@@ -611,7 +614,7 @@
         arr_fk_group = fk_group.find('.attribute');
         arr_attr_group = attr_group.find('.attribute');
         
-        if(arr_pk_group.length > 2){
+ /*       if(arr_pk_group.length > 2){
             console.log('오름차순');
             arr_pk_group.sort(function(a, b) { // 오름차순
                 return a.id() - b.id();
@@ -620,9 +623,9 @@
         }
        
         
-
+*/
         
-        arr_pk_group.forEach(function(item,i){
+        pk_group.find('.attribute').forEach(function(item,i){
             item.y(23*i);
         });
         fk_group.find('.attribute').forEach(function(item,i){
@@ -668,5 +671,32 @@
 //        arr_pk_group[0]._id = 999;
 //        arr_pk_group[1]._id = 888;
         //layer.draw();
+    }
+    
+    
+    
+    function clickSecond(secondEntity){ // pk 추가 할시 자동으로 fk에도 추가되는 기능을 할 때, second 객체에 resize이 안되는 문제를 해결하기 위해, 잠시 second 객체를 클릭하는 효과를 주는 메서드
+    		entity = secondEntity;
+    		console.log('second_resize');
+    	   entity_container = entity.findOne('.entity_container');
+           entity_logical = entity.findOne('.entity_logical');
+           entity_phisical = entity.findOne('.entity_phisical');
+           entity_logical_txt = entity.findOne('.entity_logical_txt');
+           entity_phisical_txt = entity.findOne('.entity_phisical_txt');
+           
+           btn_entity_group = entity.findOne('.btn_entity_group');
+           
+           btn_entity_delete = btn_entity_group.findOne('.btn_entity_delete');
+           btn_entity_delete_txt = btn_entity_group.findOne('.btn_entity_delete_txt');
+           
+           btn_color = btn_entity_group.findOne('.btn_color');
+           btn_color_txt = btn_entity_group.findOne('.btn_color_txt');
+           
+           btn_pk_add = btn_entity_group.findOne('.btn_pk_add');
+           btn_pk_add_txt = btn_entity_group.findOne('.btn_pk_add_txt');
+           
+           btn_col_add = btn_entity_group.findOne('.btn_col_add');
+           btn_col_add_txt = btn_entity_group.findOne('.btn_col_add_txt');
+    	
     }
 

@@ -114,13 +114,16 @@ public class TeamServiceImpl implements ITeamService{
 				msgVo.setReceiverId(memId);
 				msgVo.setSenderId(makerId);
 				msgVo.setMsgContent(msgContent);
+				
 				msgVo.setMsgType("y");
 				msgVo.setTeamNo(teamNo);
 				memList.add(msgVo);
 			}
 		}
-		memMap.put("memList", memList);
-		messageDao.insertMsg(memMap);
+		if(memList.size() > 0){
+			memMap.put("memList", memList);
+			messageDao.insertMsg(memMap);
+		}
 		
 		return insertTeam;
 	}
@@ -197,9 +200,6 @@ public class TeamServiceImpl implements ITeamService{
 		List<MessageVo> memList = new ArrayList<MessageVo>();
 		Map<String, Object> memMap = new HashMap<>();
 		
-		logger.debug("***addMemberSize : {}", addMember.size());
-		logger.debug("***delMemberSize : {}", delMember.size());
-
 		if(addMember.size() > 0){
 			for(String memId : addMember){
 				TeamListVo vo = new TeamListVo();
@@ -246,10 +246,6 @@ public class TeamServiceImpl implements ITeamService{
 			memMap.put("memList", memList);
 			messageDao.insertMsg(memMap);
 		}
-		
-		logger.debug("***memMapSize : {}", memMap.size());
-//		if(memMap.size() > 0){
-//		}
 		return teamModify;
 	}
 

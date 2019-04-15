@@ -4,12 +4,12 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
  <link rel="icon" href="../../favicon.ico">
-
+<link rel="stylesheet" href="/css/member/memList.css">
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
 
     <!-- Custom styles for this template -->
-   <link href="${cp}/css/dashboard.css" rel="stylesheet">
+   <%-- <link href="${cp}/css/dashboard.css" rel="stylesheet"> --%>
    
 
 <!-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
@@ -25,9 +25,9 @@
           <!-- <h1 class="page-header">게시글 조회</h1> -->
           <form id="frm" action="${cp}/delPost" method="post" class="form-horizontal" role="form">
          <div class="form-group">
-            <label for="title" class="col-sm-2 control-label">글제목 </label>
+            <label for="title" class="col-sm-2 control-label" style="color: #fff;">글제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <div class="col-sm-7">
-               <label class="control-label">${postList.postTitle}</label>
+               <label class="control-label" style="color: #fff;">${postList.postTitle}</label>
             </div>
             
             
@@ -38,7 +38,7 @@
    #layer_popup .popupContent iframe {border:0;padding:0px;margin:0;z-index:10;}
 </style>
 
-	<c:choose>
+	<%-- <c:choose>
 		<c:when test="${boardNo == '1'}">
 			<c:if test="${SESSION_MEMBERVO.memAuth == 'T'}">
 				<input type = "hidden" name="boardNo" value="${boardNo}"> 
@@ -50,9 +50,11 @@
 			<input type = "hidden" name="boardNo" value="${boardNo}"> 
 	   		<input type="button" id="report" onclick="layer_open()" value="신고">
 		</c:otherwise>
-	</c:choose>
-
-
+	</c:choose> --%>
+	
+	<input type = "hidden" name="boardNo" value="${boardNo}"> 
+	<input type="button" id="report" onclick="layer_open()" value="신고">
+	
 <!-- <input type="button" id="report" onclick="layer_open()" value="신고"> -->
 <!-- <input type="button" value="레이어팝업 열기" onclick="layer_open();"  style="cursor:pointer; background-color:#663333; color:#FFF;" /> -->
 <!-- 팝업 -->
@@ -89,39 +91,39 @@
          </div>
          
          <div class="form-group">
-            <label for="writer" class="col-sm-2 control-label">작성자</label>
+            <label for="writer" class="col-sm-2 control-label" style="color: #fff;">작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <div class="col-sm-7">
-               <label class="control-label">${postList.writerId}</label>
+               <label class="control-label" style="color: #fff;">${postList.writerId}</label>
             </div>
          </div>
          
          <div class="form-group">
-            <label for="insertDate" class="col-sm-2 control-label">작성일</label>
+            <label for="insertDate" class="col-sm-2 control-label" style="color: #fff;">작성일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <div class="col-sm-7">
-               <label class="control-label"><fmt:formatDate value="${postList.postRegDt}" pattern="yyyy-MM-dd" /></label>
+               <label class="control-label" style="color: #fff;"><fmt:formatDate value="${postList.postRegDt}" pattern="yyyy-MM-dd" /></label>
             </div>
          </div>
          
          <div class="form-group">
-            <label for="content" class="col-sm-2 control-label">글내용</label>
+            <label for="content" class="col-sm-2 control-label" style="color: #fff;">글내용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <div class="col-sm-7">
-               <label class="control-label">${postList.postContent}</label>
+               <label class="control-label" style="color: #fff;">${postList.postContent}</label>
             </div>
          </div>
          
          <%-- 파일첨부 --%>
-         <div class="form-group">
-            <label for="content" class="col-sm-2 control-label">첨부파일</label>
+         <div class="form-group" style="color: #fff;">
+            <label for="content" class="col-sm-2 control-label" style="color: #fff;">첨부파일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <div class="col-sm-7">
                
                <c:choose>
                		<c:when test="${fileList.size() =='0'}">
-              		 	없음
+               			없음
                		</c:when>
                		
                		<c:otherwise>
                <c:forEach items="${fileList}" var="file">
-               		 		<a href="${cp}/post/fileDownload?uploadFileNo=${file.uploadFileNo}">${file.uploadFileNm}</a>
+               		 		<a href="${cp}/post/fileDownload?uploadFileNo=${file.uploadFileNo}" style="color: #fff;">${file.uploadFileNm}</a>
                </c:forEach>
                		</c:otherwise>
 
@@ -132,22 +134,24 @@
          </div>
 
          <div class="form-group">
-            <label for="content" class="col-sm-1 control-label">댓글</label>
+            <label for="content" class="col-sm-1 control-label" style="color: #fff; margin-left: 100px;">댓글&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <div class="col-sm-5">
                <input type="text" class="form-control" id="cmtText" />
             </div>
+            
             <div class="col-sm-2">
-               <button id="cmtBtn" type="button" class="btn btn-default">등록</button>
+               <button id="cmtBtn" type="button" class="btn btn-default" style="margin-left: 20px;">등록</button>
             </div>
          </div>
 
-         <div class="table-responsive">
-            <table class="table table-striped">
+         <div class="table-responsive" style="margin-right: 20px; width: 70%;" >
+            <table class="table table-striped" style="width: 100%;">
                <thead>
-                  <tr>
-                     <th>댓글번호</th>
-                     <th>작성자</th>
-                     <th>댓글내용</th>
+                  <tr style="height: 50px;">
+                     <th style="text-align: center; border-right: 2px solid #fff;">댓글번호</th>
+                     <th style="text-align: center; border-right: 2px solid #fff;">작성자</th>
+                     <th style="text-align: center; border-right: 2px solid #fff;">댓글내용</th>
+                     <th style="text-align: center;">좋아요</th>
                   </tr>
                </thead>
                
@@ -155,7 +159,7 @@
 	               </tbody>
             </table>
             
-            <nav id="divNav" style="text-align: center;">
+            <nav id="divNav" style="text-align: center; width: 100%;">
 				<ul class="pagination" id="pagination">
 				</ul>
 			</nav>
@@ -185,7 +189,7 @@
 			   		<button type="button" id="replyBtn" class="btn btn-default">답글</button>
 				</c:otherwise>
 			</c:choose>
-           
+			
             </div>
          </div>   
          </div>
@@ -203,6 +207,7 @@
 <!-- 게시글 수정 -->
 <form id="updFrm" action="${cp}/post/postUpdate" method="get">
    <input type="hidden" name="postNo" value="${postList.postNo}" />
+   <input type="hidden" name="boardNo" value="${boardList.boardNo}" />
 </form>   
 
 <!-- 게시글 삭제 -->
@@ -299,7 +304,9 @@
          
          //삭제버튼 클릭이벤트
          $("#delBtn").click(function() {
-            alert("게시글을 삭제 하시겠습니까?");
+        	 if(!confirm("게시글을 삭제 하시겠습니까?")){
+                 return;
+              }
             $("#delFrm").submit();
          });
          
@@ -324,6 +331,16 @@
      			
      		});
       } */
+      
+	      //공지사항은 무조건 신고/답글 안보임
+	      if("${SESSION_BOARDNO}" == 1){
+	     	$("#replyBtn").hide();
+	     	$("#report").hide();
+	     	
+	      }else{
+	     	$("#replyBtn").show();
+	     	$("#report").show();
+	      }
         	 
          //신고확인버튼 클릭이벤트
          $("#reportBtn").click(function() {
@@ -347,7 +364,9 @@
          //댓글등록버튼 클릭이벤트(ajax)
          $("#cmtBtn").click(function() {
             cmtText = $("#cmtText").val();
-            alert("댓글을 등록 하시겠습니까?");
+            if(!confirm("댓글을 등록 하시겠습니까?")){
+                return;
+            }
             cmtInsert(1, "${postNo}", cmtText, "${SESSION_MEMBERVO.memId}");
             $("#cmtText").val("");
          });
@@ -355,7 +374,9 @@
          //댓글삭제버튼 클릭이벤트(ajax)
          $("#cmtTbody").on("click", ".btnDel", function() {
            cmtNo = $(this).data("cmtnum");
-           alert("댓글을 삭제 하시겠습니까?");
+           if(!confirm("댓글을 삭제 하시겠습니까?")){
+              return;
+           }
            cmtDelete(1, "${postNo}", cmtNo);
          });
          

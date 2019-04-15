@@ -30,12 +30,7 @@
     height: 0px;
     margin-top: -5px;
 }
-img{
-	margin: 0px auto;
-    vertical-align: middle;
-    display: block;
-    margin-top: 15%;
-}
+
 
 .tag-a{
     margin: 3px;
@@ -88,7 +83,7 @@ img{
 		
 			<div class="line-title">
 				<h2 class="page-title">TEAM</h2>
-				<a class="add-btn1" id="teamAdd">+</a>
+				<a class="add-btn1" id="teamAdd"><i class="fas fa-plus-square"></i></a>
 			</div>
 			
 			<div class="row">
@@ -152,7 +147,7 @@ img{
 			</div>
 			<div class="line-title">
 				<h2 class="page-title">TEAM ERD</h2>
-				<a class="add-btn1" id="myAdd">+</a>
+				<a class="add-btn1" id="myAdd"><i class="fas fa-plus-square"></i></a>
 			</div>
 			<div class="row">
 						<div class="col-sm-12">
@@ -160,14 +155,17 @@ img{
 							 	<c:forEach var="teamErdList" varStatus="status" items="${teamErdList }">
 							  	<li class="erd-box-item">
 							  		<c:if test="${myTeam.teamAuth ne 'user'}"> <!-- 권한이 유저가 아닐 때 erd 삭제 가능 -->
+							  		<div style="position:absolute; z-index:30;">
 								  		<button type="button" class="btn btn-default delBtn" aria-label="trash" value="${myErdList.erdNo }">
 										  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 										</button>
+									</div>
 									</c:if>
 								  		<a class="preview-box">
 								  			<div class="bg-box">
 								  				<div class="bg-img">
-									  				&nbsp;Image
+								  					<!--이미지 경로 맞춰요~ -->
+								  					<img src="${cp }/erd/erdImg?erdNo=999999">
 									  			</div>
 								  				<div class="table-bg-text">
 								  					<div class="bg-text shinys">
@@ -291,11 +289,7 @@ img{
 		 $("#title").val(teamInfo.teamNm);
 		 $("#teamIntro").val(teamInfo.teamIntro);
 		 $("#makerId").val(teamInfo.makerId);
-		 
-		  /* if(!teamInfo.teamImg){
-			$("#image").attr("src", '${cp}/image/no_img.jpg');
-		 } 
-		 $("#image").attr("src", teamInfo.teamImg); */
+		 $("#teamImg").attr("src","${cp }/team/teamImg?teamNo=${teamInfo.teamNo}");
 		 
 		 $("#teamNo").val(teamInfo.teamNo);
 		 console.log(teamInfo.teamNo);

@@ -81,36 +81,36 @@
 	</form>
 
 	<script type="text/javascript">
-		//문서 로딩이 완료된 이후 이벤트 등록 
+		//문서 로딩이 완료된 이후 이벤트
 		$(document).ready(function() {
 			//게시글 페이지 처리
 			postListPage(1);
 
-			 //사용자 tr태그 클릭 시 이벤트 핸들러 
-			 			$("#postListTbody").on("click", ".postTr", function() {
-			 				console.log("post click");
+			 /* //사용자 tr태그 클릭 시 이벤트
+	 			$("#postListTbody").on("click", ".postTr", function() {
+		 				console.log("post click");
+	
+		 				//클릭한 post태그의 postNo값을 출력
+		 				var flag = $(this).data("flag");
+		 				if(flag == 'F'){
+		 					alert("삭제된 글은 열람할 수 없습니다.")
+		 					return;
+		 				}
+	
+		 				var postNo = $(this).data("postno");
+		 				var postGn = $(this).data("postgn");
+	
+		 				//2. form
+		 				$("#postNo").val(postNo);
+		 				$("#postGn").val(postGn);
+		 				//console.log("postNo" +  postNo);
+						//console.log("postGn" +  postGn);
+		 				// $("#frm").attr("action","/userAllList"); 속성값 수정하는 방법  
+		 				$("#frm").submit();
+	 			}); */
 
-			 				//클릭한 post태그의 postNo값을 출력
-			 				var flag = $(this).data("flag");
-			 				if(flag == 'F'){
-			 					alert("삭제된 글은 열람할 수 없습니다.")
-			 					return;
-			 				}
-
-			 				var postNo = $(this).data("postno");
-			 				var postGn = $(this).data("postgn");
-
-			 				//2. form
-			 				$("#postNo").val(postNo);
-			 				$("#postGn").val(postGn);
-			 				//console.log("postNo" +  postNo);
-							//console.log("postGn" +  postGn);
-			 				// $("#frm").attr("action","/userAllList"); 속성값 수정하는 방법  
-			 				$("#frm").submit();
-			 			}); 
-
-			//로그인한 아이디가 블랙리스트일때 글쓰기권한 없음
-			$(".insertBtn").click(function() {
+		//로그인한 아이디가 블랙리스트일때 글쓰기권한 없음
+		$(".insertBtn").click(function() {
 				var blackMemId = "${SESSION_MEMBERVO.memBlackFlag}";
 
 				//alert(blackMemId);
@@ -141,11 +141,11 @@
 					});
 		}
 
-		 /* function fnTrClick(postNo, postGn, flag) {
+		//게시글 상세화면 이벤트
+		function fnTrClick(postNo, postGn, flag) {
 			console.log("post click");
 
-			//클릭한 TR의 제목을 선택하여 상세로 이동...
-
+			//클릭한 제목의 상세페이지로 이동
 			if (flag == 'F') {
 				alert("삭제된 글은 열람할 수 없습니다.")
 				return;
@@ -154,14 +154,12 @@
 			//2. form
 			//$("#postNo").val(postNo);
 			document.getElementById("postNo").value = postNo;
-// 			$("#postGn").val(postGn);
+			//$("#postGn").val(postGn);
 			document.getElementById("postGn").value = postGn;
-			//console.log("postNo" +  postNo);
-			//console.log("postGn" +  postGn);
-			// $("#frm").attr("action","/userAllList"); 속성값 수정하는 방법  
-// 			$("#frm").submit();
+			//$("#frm").attr("action","/userAllList"); 속성값 수정하는 방법  
+			//$("#frm").submit();
 			document.getElementById("frm").submit();
-		}  */
+		}
 	</script>
 </div>
 

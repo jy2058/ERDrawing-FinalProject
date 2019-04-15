@@ -46,6 +46,10 @@ width: 100px;
     background: #fff;
     color: #000;
 }
+
+.tickets .bg-img{
+color:#fff;
+}
 </style>
 <br />
 <br />
@@ -58,7 +62,7 @@ width: 100px;
 </c:if>
 
 
-<div class="best-erd-list">
+<div class="best-erd-list tickets">
 	<div class="inner-container">
 		<div class="col-sm-12">
 			<ul class="erd-box-list">
@@ -70,7 +74,7 @@ width: 100px;
 							<div class="bg-box">
 								<div class="bg-img">&nbsp;${ticket.ticketContent }</div>
 								<div class="table-bg-text">
-									<div class="bg-text shinys">&nbsp;${ticket.ticketPrice }</div>
+									<div class="bg-text shinys"><h1>${ticket.ticketContent }</h1>${ticket.ticketPrice } 원</div>
 								</div>
 							</div>
 						</a>

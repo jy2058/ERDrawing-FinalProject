@@ -60,7 +60,7 @@ margin-left: 98%;}
 	
 	
 	<div class="row">
-	<form id="frm" action="${cp }/member/memberModify" class="label-member" method="post" enctype="multipart/form-data">
+	<form id="frm" action="${cp }/member/memberModify" method="post" enctype="multipart/form-data">
 			<div class="profileImg col-sm-4">
 			
 			<div><button type="button"  id="imgdel" class="glyphicon glyphicon-remove remove-btn"></button></div>
@@ -109,6 +109,7 @@ margin-left: 98%;}
 
 			<div class="col-shinys-1 col-shinys-offset">
 			
+			<div class="label-member">
 				<span>이름</span>
 				<input type="text"  id="memNm" name="memNm"/>
 				<span>아이디</span>
@@ -134,7 +135,7 @@ margin-left: 98%;}
 					</c:otherwise>
 				</c:choose>
 				
-				
+			</div>	
 			
 			<div class="label-memberDel" id="delBtn">
 				<span>계정삭제</span>

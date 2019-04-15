@@ -50,18 +50,20 @@
 		                a.POSTDELFLAG,
 		                a.BOARDNO,
 		                a.WRITERID,
+		                a.lv as "level",
 		                DECODE( a.COMMENTS_CNT, 0, a.POSTTITLE, a.POSTTITLE || ' (' || a.COMMENTS_CNT || ')' ) AS POSTTITLE, rownum rn 
 		         from 
 		            (select POSTNO, POSTTITLE, POSTGN,
 		             BOARDNO, WRITERID,trim(POSTDELFLAG) as
-		             POSTDELFLAG, POSTREGDT, ( SELECT COUNT(*) FROM COMMENTS WHERE POSTNO = P.POSTNO ) AS COMMENTS_CNT, level
+		             POSTDELFLAG, POSTREGDT, level as lv, ( SELECT COUNT(*) FROM COMMENTS WHERE POSTNO = P.POSTNO ) AS COMMENTS_CNT
 		FROM post P where BOARDNO = #{boardNo}
 		START WITH parentPostNo IS NULL
 		CONNECT BY parentPostNo = prior
 		POSTNO order SIBLINGS By POSTGN desc,
 		POSTNO) a) a where rn between
 		((#{pageNo}-1)*10)+1 and (#{pageNo})*10
-	</select>
+		</select>	
+		
 	<!-- 게시글 페이징 조회 -->
 	<select id="selectNoticePagingList" parameterType="pageVo" resultType="postVo">
 		select *
@@ -72,11 +74,12 @@
 		                a.POSTDELFLAG,
 		                a.BOARDNO,
 		                a.WRITERID,
+						a.lv as "level",
 		                DECODE( a.COMMENTS_CNT, 0, a.POSTTITLE, a.POSTTITLE || ' (' || a.COMMENTS_CNT || ')' ) AS POSTTITLE, rownum rn
 				 from 
 				 	(select POSTNO, POSTTITLE, POSTGN,
 			  		 BOARDNO, WRITERID,trim(POSTDELFLAG) as
-		             POSTDELFLAG, POSTREGDT,( SELECT COUNT(*) FROM COMMENTS WHERE POSTNO = P.POSTNO ) AS COMMENTS_CNT,  level
+		             POSTDELFLAG, POSTREGDT, level as lv, ( SELECT COUNT(*) FROM COMMENTS WHERE POSTNO = P.POSTNO ) AS COMMENTS_CNT
 		FROM post P where BOARDNO = #{boardNo} 
 				    and postDelFlag = 'T'
 		START WITH parentPostNo IS NULL

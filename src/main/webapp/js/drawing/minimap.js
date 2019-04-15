@@ -30,7 +30,28 @@
     }
 
 
+    function get_numId(){
+    	numId+=1;
+    	return numId;
+    } 
 
+    
+ /*  function getMaxNumId(){
+    	var arr_Entity = layer.find('.entity');
+    	var arr_Relation = relationLine_layer.find('Line');
+    	var arr_miniEntity = mini_layer.find('Rect');
+    	
+    	var arr= stage.find('.pk_group');
+    	var arr1 = new Array();
+    		for(var i = 0; i<arr.length; i++){
+    			for(var j=0; j<arr[i].children.length; j++){
+    			arr1.push(arr[i].children[j]);
+    			}
+    	}
+    	var arr_total = arr_Entity.concat(arr_Relation).concat(arr_miniEntity).concat(arr1);
+    	arr_total.attrs.id()
+    }
+*/
 
 /**
  * erdDrawing.jsp minimap 기능에 관련된 스크립트 입니다.

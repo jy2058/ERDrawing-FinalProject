@@ -1,8 +1,6 @@
 /**
  * erdDrawing.jsp relation 기능에 관련된 스크립트 입니다.
  */
-
-
 // entity배열중에  중에 id()가 일치하는entity를 리턴하는  메서드
 function findEntity(findEntityArr, id){
 	id = parseInt(id);
@@ -140,8 +138,8 @@ function makeArrow(e) {
 			points : [ p_x + plus_width, p_y + plus_height, pos.x, pos.y ],
 			pointerLength : 10,
 			pointerWidth : 10,
-			stroke : '#ffff00',
-			strokeWidth : 3
+			stroke : '#ffd400',
+			strokeWidth : 2
 		});
 
 		console.log('create temp_arrow');
@@ -154,7 +152,18 @@ function makeArrow(e) {
 
 		function adjustPoint(e) {
 			console.log('adjustPoint 호출됨');
-			pos = stage.getPointerPosition();
+			
+			
+				//가이드선 절대경로 만들기
+	            var transform = layer.getAbsoluteTransform().copy();
+	
+	            transform.invert();
+
+	            var circlePos = stage.getPointerPosition();
+		        pos = transform.point(circlePos);
+	          
+	         // pos = stage.getPointerPosition();
+
 
 			// 원래 temp_arrow의 x,y 값을 가져옴
 			var x = temp_arrow.attrs.points[0];
@@ -570,6 +579,26 @@ function getAngle(compareX,compareY) { // 두 점 사이의 각도를 구하는 
  	
 
  function compareEntityPosition() {
+	 
+	// 라인객체 생성 좌표값은 switch에서 결정
+	 relationLine = new Konva.Line({  
+		 	strokeWidth:2,
+			lineCap : 'round',
+			linerJoin: 'round',
+			name:firstEntity.id()+'',   // 첫번째 엔터티에 관한 ID값을 참조
+			lastPos : secondEntity.id(), // 두번째 엔터티에 관한 ID값을 참조
+			id : get_numId()
+		});
+	 
+	 //컬럼을 추가한 뒤에  x,y 좌표값을 구해야 선이 정확히 가운데에 그려진다.
+	 if(!relationType){
+			moveColumnIdentifying(false,relationLine.id()); // pk값을 속성값으로 복사 //비식별
+		}
+		else{
+			moveColumnIdentifying(true,relationLine.id()); //pk값을 fk값으로 복사 //식별
+			}
+	 
+	 
 	compareX = firstEntity.x() - secondEntity.x();
 	compareY = firstEntity.y() - secondEntity.y();
 	
@@ -593,14 +622,6 @@ function getAngle(compareX,compareY) { // 두 점 사이의 각도를 구하는 
 	endY   = secondEntity.y();
 	
 		
-	// 라인객체 생성 좌표값은 switch에서 결정
-	 relationLine = new Konva.Line({  
-		 	strokeWidth:2,
-			lineCap : 'round',
-			linerJoin: 'round',
-			name:firstEntity.id()+'',   // 첫번째 엔터티에 관한 ID값을 참조
-			lastPos : secondEntity.id() // 두번째 엔터티에 관한 ID값을 참조
-		});
 	
 	switch(Math.floor(degree/90)){
 	case 0 : 	 // 45~134 도
@@ -772,6 +793,7 @@ function getAngle(compareX,compareY) { // 두 점 사이의 각도를 구하는 
 	if(!relationType){
 		relationLine.dash([5,5]); //점선으로 바꿈
 	}
+
 	 relationLine_layer.add(relationLine);
      relationLine_layer.draw();
 
@@ -1017,7 +1039,7 @@ function deduplicationLine(firstEntity,secondEntity){
 //보여주는 작업을 하기전에 entity들의 위치를 재조정 한다.
 function entityMouseUp(first_Entity,flag){
 	 var arr_line_To= relationLine_layer.find('.'+first_Entity.id());   //첫번째 객체가 시작점인 라인객체의 배열을 얻어옴
-	 var findEntityArr  = stage.find('.entity');
+	 findEntityArr  = stage.find('.entity');
 	 var second_Entity;
 	 var arr_second_Entity = new Array();
 	
@@ -1070,38 +1092,199 @@ function entityMouseUp(first_Entity,flag){
 }
 var id=1230;
 
-function moveColumnIdentifying(){
-	console.log('test');
+//선 연결의 종류를 확인한 뒤, 타입에 맞게 컬럼을 생성해주는 메서드
+//type = true : identifying , false: non-identifying
+function moveColumnIdentifying(type,line_id){
+	console.log('line.id():'+line_id);
+	var identifyType;
+	if(type == true){
+		identifyType = 'fk_group';
+	}
+	else{
+		identifyType = 'attr_group';
+	}
 	
 	var pk=firstEntity.findOne('.pk_group').children;
-	var secondEntityIdx = secondEntity.findOne('.fk_group').children.length;
-	console.log('secondEntity fk 갯수'+secondEntityIdx);
+	var arr_identify = checkIdentify();
+	var arr_total  = new Array();
 	
-	//pk를 다 가져온다.
-	for(var i =0; i<pk.length; i++){
+
+	for(var i= 0; i<pk.length; i++){
+		arr_total.push(pk[i]);
+	}
+	for(var i= 0; i<arr_identify.length; i++){
+		arr_total.push(arr_identify[i]);
+	}
+	
+	var secondEntityIdx = secondEntity.findOne('.'+identifyType).children.length; //second 객체에 이전에 만든 fk가 존재할 수도 있기 때문에
+	
+	for(var i =0; i<arr_total.length; i++){  //첫번째에 클릭한 pk의 길이만큼 반복
 	//fk 추가
-	fn_attributeAdd("fk_group",secondEntity);
+	fn_attributeAdd(identifyType,secondEntity); //fk 생성
 	
 	//위에서 추가한 fk
-	var fk = firstEntity.findOne('.pk_group').children[secondEntityIdx];
+	var fk = secondEntity.findOne('.'+identifyType).children[secondEntityIdx]; //second 객체에 이전에 만든 fk가 존재할 수도 있기 때문에 위에서 추가한 fk의 index를 알기위해서
 	secondEntityIdx++;
 	
 	//pk 값 fk로 복사
-	copyColumnText(pk[i],fk);
-	
-	}
+	copyColumnText(arr_total[i],fk,line_id,type);
 	  entity_resize();
-	  layer.draw();
-}
-
-function moveColumnNonIdentifying(){
-	fn_attributeAdd("attr_group",secondEntity);
-	
-    entity_resize();
+	}
 	layer.draw();
+	
 }
 
-function copyColumnText(pk,fk){
-	console.log('pk:'+pk);
-	console.log('fk:'+fk);
+//type: true = identifying   false = non-identifying
+function copyColumnText(pk,fk,line_id,type){
+	var columnText;
+	console.log('line.id():'+line_id);
+	for(var i = 1; i<8; i++ ){
+		 columnText = pk.find('.attr_groups')[i].children[2].text();
+		fk.find('.attr_groups')[i].children[2].text(columnText);
+	}
+	if(type){ //식별관계 일 때
+		fk.id(get_numId()); // fk에도 id값을 부여해준다.
+		fk.attrs.type = 'identify'
+	}
+	else{
+		fk.attrs.type = 'non-identify'
+	}
+
+	
+	fk.attrs.pkId = pk.attrs.id;
+	if(pk.attrs.pkId != undefined){ //pkId가 존재할 때 => 즉 외래키 일 때
+		fk.attrs.pkId = pk.attrs.pkId;
+	}
+	fk.attrs.lineId = line_id;
+	console.log('fk.attrs.lineId '+  fk.attrs.lineId); //fk 일 경우 fk에  관계선의 id를 넣어준다.
+}
+
+
+//fk중에 identifying 속성이 있는 지 확인하는 메서드
+function checkIdentify(){
+	var arr = firstEntity.findOne('.fk_group').children;
+	var arr_identify = new Array();
+	for(var i=0; i<arr.length; i++){
+		if(arr[i].attrs.type == 'identify'){
+			arr_identify.push(arr[i]);
+		}
+	}
+	return arr_identify;
+}
+
+//추가 버튼을 눌렀을 때, 해당객체를 참조하는 자식 테이블에도 모두 추가하는 메서드 (재귀호출방식)
+function cascadeAddFk(firstEntity,pkId,findEntityArr,pre_identifyingFlag){
+	
+	 //firstEntity = e.target.findAncestor('.entity');
+     var arr_line_To= relationLine_layer.find('.'+firstEntity.id());
+     
+     //관계선이 존재할 경우에만 로직실행
+     if(arr_line_To.length != 0){
+      	 var fk;
+      	 var flag;
+         //배열에 id값을 추출 
+         for(var i =0; i<arr_line_To.length; i++){
+         	 var relationLineId = arr_line_To[i].attrs.id; //관계선 객체의 id
+         			console.log('relationLineId'+ relationLineId);
+         	 
+         	var seconndEntityId = arr_line_To[i].attrs.lastPos //그 선 객체에서 pos에 숨어있는 2번쨰 객체의 참조값을 가져온다.
+     		secondEntity = findEntity(findEntityArr,seconndEntityId); // 선객체에 있는 참조값을 가지고 있는 entity를 찾는 메서드
+     		
+     		if(arr_line_To[i].attrs.dash==undefined){ //식별관계(실선) 
+     			if(!pre_identifyingFlag){ //이전엔티티가 비식별일 경우엔 속성이 추가되지 않는다.
+     				continue;
+     			}
+     			fn_attributeAdd('fk_group',secondEntity);
+     			fk = secondEntity.findOne('.fk_group').children[secondEntity.findOne('.fk_group').children.length-1]; //위에서 추가한 second속성을 가져옴
+     			fk.id(get_numId()); // fk에도 id값을 부여해준다.
+     			fk.attrs.type = 'identify';
+     			flag = true;
+     		}
+     		else if(arr_line_To[i].attrs.dash.length>0){//비식별관계(점선)
+     			if(!pre_identifyingFlag){ //이전엔티티가 비식별일 경우엔 속성이 추가되지 않는다
+     				continue;
+     			}
+     			 fn_attributeAdd("attr_group",secondEntity);
+     			 fk = secondEntity.findOne('.attr_group').children[secondEntity.findOne('.attr_group').children.length-1]; //위에서 추가한 second속성을 가져옴
+     			 fk.attrs.type = 'non-identify';
+     			flag = false;
+     				 
+     		}
+     		
+     			fk.attrs.lineId= relationLineId;
+     			fk.attrs.pkId = pkId;
+     			clickSecond(secondEntity); //second객체 클릭 효과
+            	entity_resize();
+  			
+            	firstEntity = secondEntity;
+  			cascadeAddFk(firstEntity,pkId,findEntityArr,flag);  //재귀호출 
+        		 }
+     } 
+   
+     else return;
+	
+}
+
+
+function cascadeDeletePk(entityId,arr_EntityAboutremoveCol){
+	 var arr_line_To= relationLine_layer.find('.'+firstEntity.id());
+
+//	 var total_arr = arr_line_To.concat(arr_line_From);
+
+	 
+	 if(arr_line_To.length != 0){
+        //배열에 id값을 추출 
+        for(var i =arr_line_To.length-1; i>-1; i--){
+        	 var relationLineId = arr_line_To[i].attrs.id; //관계선 객체의 id
+        	 
+        	 var seconndEntityId = arr_line_To[i].attrs.lastPos; //그 선 객체에서 pos에 숨어있는 2번쨰 객체의 참조값을 가져온다.
+        	 secondEntity = findEntity(findEntityArr,seconndEntityId); // 선객체에 있는 참조값을 가지고 있는 entity를 찾는 메서드
+        	 var delCnt = 0;
+
+
+  			 for(var j=secondEntity.find('.attribute').length-1; j>-1; j--){
+  				 if(secondEntity.find('.attribute')[j].attrs.pkId == entityId){
+   					secondEntity.find('.attribute')[j].destroy();
+   					
+   					arr_EntityAboutremoveCol.push(secondEntity);  //삭제에 영향을 받은 entity를 알아야 하기 때문에 배열에 담는다.
+   				 }
+  			 }
+  			 
+  		
+  	      	clickSecond(secondEntity); //second객체 클릭 효과
+  	    	entity_resize();
+  	    	firstEntity = secondEntity;
+  			cascadeDeletePk(entityId,arr_EntityAboutremoveCol);
+       } 
+        
+	}
+	 else return;
+}
+
+	//관계선을 참조하는 속성이 있는  지 판별해서 없을 시, 삭제시켜주는 메서드
+function deleteRelationLine(arr_EntityAboutremoveCol){
+	
+		for(var i=arr_EntityAboutremoveCol.length-1; i>-1; i-- ){
+			var arr_line_From = findLineRefPos(arr_EntityAboutremoveCol[i].id()); //영향을 받은 엔티티를 참조하는 관계선 배열을 얻는다.
+				for(var j =arr_line_From.length-1; j>-1; j-- ){
+						var relationId = arr_line_From[j].attrs.id;
+						var delCnt = 0;						
+						if(arr_EntityAboutremoveCol[i].find('.attribute').length == 0){ //속성이 존재하지 않을 경우에 무조건 관계를 삭제해야한다.
+						}
+						else{
+						for(var k=arr_EntityAboutremoveCol[i].find('.attribute').length-1; k>-1; k--){  //속성의 개수만큼 for문을 돌면서 해당 라인을 참조하는 객체의 카운트를 구한다.
+							if(arr_EntityAboutremoveCol[i].find('.attribute')[k].attrs.lineId==relationId){
+								delCnt++;
+								break;
+							}
+						}
+						}
+						if(delCnt==0){ //해당 라인을 참조하는 객체가 존재하지 않으면 라인을 삭제한다.
+							arr_line_From[j].destroy();
+						}
+					
+				}
+			
+	}
+	relationLine_layer.draw();
 }
