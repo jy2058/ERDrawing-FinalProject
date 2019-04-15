@@ -63,7 +63,7 @@
                 <div id="button3" class="buttons_right" title="entity 추가"><img src="/image/drawing/entity.png"></div>
                 
                 <div class="buttons_right" title="없거나 한개 또는 여러개"><img src="/image/drawing/NoOneOrMore.png" ></div>
-                <div class="buttons_right" title="없거나 여러개"><img src="/image/drawing/NoOrMore.png" ></div>
+                <div class="buttons_right" title="없거나 여러개"><img src="/image/drawing/NoOrMore.png"></div>
                 <div class="buttons_right" title="없거나 한개"><img src="/image/drawing/NoOrOne.png"></div>
                 
                 <div class="buttons_right" title="오직 한개만"><img src="/image/drawing/onlyone.png"></div>
