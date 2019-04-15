@@ -11,6 +11,9 @@
 #contents{
 color: #000000;
 }
+.modal-dialog, .modal-content {
+    height: auto;
+}
 </style>
 
 	<div class="youtube-title">
@@ -130,7 +133,7 @@ color: #000000;
                <div class="form-group">
                   <label class="modalLabel" >신고 내역</label> 
 				  <table>
-				 	 <thead>
+				 	 <thead id="modalTh">
 				  		<tr>
 					  		<th>신고한 회원</th>
 					  		<th>신고 사유</th>
@@ -146,7 +149,8 @@ color: #000000;
             
                <div class="form-group">
                   <label class="modalLabel">신고당한 횟수</label> 
-                  <input type="text" id="cnt" name="cnt"> 
+                  <label id="cnt" ></label>
+                  <input type="hidden"  name="cnt"> 
                    
                   <div id="dupleCode"></div>
                </div>
@@ -439,35 +443,43 @@ color: #000000;
 
 	}
 	
+
 	function getMemberReportList(memId) {
 
 		$("#modalTd").html("");
-		$("#cnt").val("");
-		
+		$("#cnt").html("");
+
 		$.ajax({
-				url : "${cp}/member/memRepotList",
-				data : {
-					memId : memId
-				},
-				success : function(data) {
-					console.log(data.reportList);
-					console.log(data.inDate);
-					if(data.reportList.length>0){
-					var str ="";
-					for(var i=0; i<data.reportList.length; i++){
-						str += "<tr><td>"+data.reportList[i].fromMemId+"</td>"	+
-						"<td>"+data.reportList[i].reportReason+"</td>	"+
-						"<td>"+data.inDate[i]+"</td></tr>"
+			url : "${cp}/member/memRepotList",
+			data : {
+				memId : memId
+			},
+			success : function(data) {
+				console.log(data.reportList);
+				console.log(data.inDate);
+				if (data.reportList.length > 0) {
+					$("#modalTh").show();
+					var str = "";
+					for (var i = 0; i < data.reportList.length; i++) {
+						str += "<tr><td>" + data.reportList[i].fromMemId
+								+ "</td>" + "<td>"
+								+ data.reportList[i].reportReason + "</td>	"
+								+ "<td>" + data.inDate[i] + "</td></tr>"
 					}
-					
+
 					$("#modalTd").append(str);
-					$("#cnt").val(data.reportList[0].cnt);
-					}
-					
-					
+					$("#cnt").html(data.reportList[0].cnt);
+
+				}	
+				
+				else{
+					$("#modalTh").hide();
+					$("#cnt").html("0");
 				}
-			});
-		}
+			}
+
+		});
+	}
 </script>
 
 

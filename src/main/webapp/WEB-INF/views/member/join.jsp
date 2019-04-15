@@ -33,7 +33,6 @@ margin: 0 0 0 0;
 
 <div class="member">
 	<div class="join-title">
-		<h3>ERDrawing</h3>
 		<h1>Sign Up</h1>
 	</div>
 

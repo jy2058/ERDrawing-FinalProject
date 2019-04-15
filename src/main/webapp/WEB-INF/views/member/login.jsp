@@ -17,6 +17,14 @@
 	margin-left: 5px;
 	margin-right: 5px;
 }
+.submit-btn {
+    display: inline-block;
+    margin: 10px 0 10px 0;
+    width: 100px;
+}
+#loginBtns{
+width: 100%;}
+
 </style>
 
 <div class="member">
@@ -33,12 +41,21 @@
 			action="${cp }/login" method="post">
 			<span>이메일</span> <input type="text" id="memId" name="memId" /> <span>비밀번호</span>
 			<input type="password" id="memPass" name="memPass" />
+			
+			<div id="loginBtns">
 			<div class="submit-btn btn-style1" >로그인</div>
-			
-			
-			
-			<div class="IdSearch btn-style3">아이디를  잊으셨나요?</div>
+
+			<div class="IdSearch btn-style3">아이디/ &nbsp;</div>
 			<div class="pwSearch btn-style3">비밀번호를  잊으셨나요?</div>
+			
+			</div>
+			
+			<br/>
+			
+			<br/>
+			
+			
+			
 			<input type="hidden" id="capResponse" name="capResponse" />
 		</form>
 
@@ -50,11 +67,14 @@
 		</div>
 <br/>
 
-
+<br/>
 		<form action="${cp }/logins" id="apiFrm" method="post"
 			class="col-sm-3 col-sm-offset-1">
-
-			<div class="g-signin2" data-onsuccess="onSignIn"></div><br/><br/><br/>
+<!-- data-onsuccess="onSignIn" -->
+			<div class="g-signin2" data-onsuccess="onSignIn"  data-width="220" data-height="47" data-longtitle="true"></div>
+			<br/>
+			
+			
 			<input type="hidden" name="info" id="info" /> <a
 				id="kakao-login-btn"></a>
 		</form>
@@ -64,6 +84,8 @@
 	<div class="lable-style1 col-sm-10 col-sm-offset-1">
 		계정이 필요하세요?
 		<div class="join-btn btn-style3" onclick="join()">지금 회원가입을 하세요.</div>
+		
+		
 	</div>
 
 
@@ -82,6 +104,7 @@
 
 	$(document).ready(function () {
 
+		
 	var count=	"${count }";
 	var on =0;
 		if(count>=3){
@@ -165,6 +188,13 @@
 		    });
 		
 
+		$(".g-signin2").on("click",function(){
+			var on = $(this).data("onsuccess");
+			onSignIn(on);
+		    });
+		
+		
+		
 		});
 		
 		

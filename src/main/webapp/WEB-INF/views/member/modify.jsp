@@ -19,11 +19,22 @@ cursor: pointer;}
   border: 1px solid #FA4358;
   border-radius: .25em;
 }
+.remove-btn{
+	color: white;
+    background: unset;
+    border: unset;
+    height: 0px;
+    margin-top: -5px;
+}
 
 .filebox label:hover {
   background-color: #FA4358;
 }
-
+.glyphicon{
+    line-height: inherit;
+}
+#imgdel{
+margin-left: 98%;}
 .filebox label:active {
   background-color: #FA4358;
 }
@@ -51,6 +62,8 @@ cursor: pointer;}
 	<div class="row">
 	<form id="frm" action="${cp }/member/memberModify" class="label-member" method="post" enctype="multipart/form-data">
 			<div class="profileImg col-sm-4">
+			
+			<div><button type="button"  id="imgdel" class="glyphicon glyphicon-remove remove-btn"></button></div>
 
 				<div class="sampleImg">
 					<div class="exText">
@@ -88,7 +101,9 @@ cursor: pointer;}
 				<div class="filebox img-btn btn-style1">
 					<label  class="btn-style1" for="input_img">프로필 이미지 올리기</label> 
 					<input	type="file" id="input_img" name="profileImg" />
+					
 				</div>
+				
 			</div>
 
 
@@ -127,6 +142,7 @@ cursor: pointer;}
 			
 		
 			</div>
+			<input type="hidden" name="imgDelCk" id="imgDelCk"/>
 		</form>
 	</div>
 	
@@ -180,6 +196,8 @@ cursor: pointer;}
 		
 		$("#frm").submit();
 		
+	
+		
 	});
 	
 	
@@ -190,6 +208,10 @@ cursor: pointer;}
 		}else{
 			return false;
 		}
+	});
+	
+	$("#imgdel").on("click",function(){
+		delImg();
 	});
 	
 	var pwdCheck=0;
@@ -236,6 +258,15 @@ cursor: pointer;}
               reader.readAsDataURL(f);
           });
       }
+      
+      
+      function delImg() {
+                  $("#profileImg").attr("src","image/noImg.png");
+                  $("#imgDelCk").val("imgno");
+                  
+         
+      }
+      
 	</script>
 
 </div>

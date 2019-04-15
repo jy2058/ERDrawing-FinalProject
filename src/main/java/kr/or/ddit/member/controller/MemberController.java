@@ -1,5 +1,7 @@
 package kr.or.ddit.member.controller;
 
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.log;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -310,7 +312,7 @@ public class MemberController {
 	 }
 
 	@RequestMapping("/memberModify")
-	public String memberModify(MultipartFile profileImg, HttpSession session, Model model, MemberVo memVo,
+	public String memberModify(MultipartFile profileImg, HttpSession session, Model model, MemberVo memVo, String imgDelCk,
 			HttpServletRequest req) throws IllegalStateException, IOException {
 		logger.debug("====ssss{}", memVo);
 		logger.debug("====ssss{}", profileImg);
@@ -324,7 +326,15 @@ public class MemberController {
 
 			profileImg.transferTo(new File(realFilename));
 		}
-		vo.setMemImg(realFilename);
+		
+		logger.debug("imgDelck===={}",imgDelCk);
+		if(imgDelCk.equals("imgno")){
+			vo.setMemImg(null);
+		}else{
+			vo.setMemImg(realFilename);	
+		}
+		
+		
 		vo.setMemNm(memVo.getMemNm());
 		
 		if(memVo.getMemPass()!=null){
@@ -350,6 +360,20 @@ public class MemberController {
 		}
 		model.addAttribute("inDate", inDate);
 		return "jsonView";
+	}
+	
+	//회원탈퇴
+	@RequestMapping("/memberDelete")
+	public String memberDelete(HttpSession session, Model model, MemberVo memVo, HttpServletRequest req,
+			RedirectAttributes ra) {
+		logger.debug("====ssss{}", memVo);
+		memVo.setMemCancelFlag("T");
+		memberService.updateMemberDel(memVo);
+		ra.addFlashAttribute("msg", "계정 탈퇴가 완료되었습니다.        "
+									+ "ERDrawing을 이용해주셔서 감사합니다.  "
+				+"더욱 발전하는 ERDrawing가 되겠습니다");
+		session.removeAttribute("SESSION_MEMBERVO");
+		return "redirect:" + req.getContextPath() +"/";
 	}
 
 }

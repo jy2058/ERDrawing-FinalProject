@@ -63,7 +63,7 @@ public class LoginController {
 			
 			if( checkMemVo.getMemCancelFlag().equals("T")){
 				ra.addFlashAttribute("msg", "이 계정은 탈퇴한 계정입니다.");
-				return "redirect:" + req.getContextPath()+"/" ;
+				return "redirect:" + req.getContextPath()+"/login" ;
 			}
 			
 			if(capResponse!=""){
@@ -127,7 +127,7 @@ public class LoginController {
 			session.setAttribute("SESSION_MEMBERVO", vo);
 		}
 		else{
-			
+			vo.setMemImg(memId.getMemImg());
 			session.setAttribute("SESSION_MEMBERVO", vo);
 		}
 		return "redirect:" + req.getContextPath()+"/" ;
@@ -202,7 +202,7 @@ public class LoginController {
 			else{
 				if( memId.getMemCancelFlag().equals("T")){
 					ra.addFlashAttribute("msg", "이 계정은 탈퇴한 계정입니다.");
-					return "redirect:" + req.getContextPath()+"/" ;
+					return "redirect:" + req.getContextPath()+"/login" ;
 				}
 				session.setAttribute("SESSION_MEMBERVO", memId);
 			}
