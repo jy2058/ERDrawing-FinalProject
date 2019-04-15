@@ -62,14 +62,14 @@
                 <!-- entity 추가-->
                 <div id="button3" class="buttons_right" title="entity 추가"><img src="/image/drawing/entity.png"></div>
                 
-          <!--       <div class="buttons_right" title="없거나 한개 또는 여러개"><img src="/image/drawing/NoOneOrMore.png" ></div>
+                <div class="buttons_right" title="없거나 한개 또는 여러개"><img src="/image/drawing/NoOneOrMore.png" ></div>
                 <div class="buttons_right" title="없거나 여러개"><img src="/image/drawing/NoOrMore.png" ></div>
                 <div class="buttons_right" title="없거나 한개"><img src="/image/drawing/NoOrOne.png"></div>
                 
                 <div class="buttons_right" title="오직 한개만"><img src="/image/drawing/onlyone.png"></div>
-                <div class="buttons_right" title="한개 또는 여러개"><img src="/image/drawing/OneOrMore.png"></div> -->
-                <div class="buttons_right" title="여러개" id='one2one'><img src="/image/drawing/more.png"></div>
-                <div class="buttons_right" title="한개" id='one2many'><img src="/image/drawing/one.png"></div>
+                <div class="buttons_right" title="한개 또는 여러개"><img src="/image/drawing/OneOrMore.png"></div>
+                <div class="buttons_right" title="여러개" id='one2many'><img src="/image/drawing/more.png"></div>
+                <div class="buttons_right" title="한개" id='one2one'><img src="/image/drawing/one.png"></div>
                 
                
                 <label><input type="radio" name="chk_lp" value="lp" checked><div class="buttons_right" title="논리/물리"><img src="/image/drawing/LP.png"></div></label>
