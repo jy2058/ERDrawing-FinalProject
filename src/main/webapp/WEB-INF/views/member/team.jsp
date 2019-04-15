@@ -30,12 +30,7 @@
     height: 0px;
     margin-top: -5px;
 }
-img{
-	margin: 0px auto;
-    vertical-align: middle;
-    display: block;
-    margin-top: 15%;
-}
+
 
 .tag-a{
     margin: 3px;
@@ -170,7 +165,7 @@ img{
 								  			<div class="bg-box">
 								  				<div class="bg-img">
 								  					<!--이미지 경로 맞춰요~ -->
-								  					<img src="${cp }/erd/erdImg?erdNo=${teamErdList.erdNo}">
+								  					<img src="${cp }/erd/erdImg?erdNo=999999">
 									  			</div>
 								  				<div class="table-bg-text">
 								  					<div class="bg-text shinys">
