@@ -115,6 +115,8 @@ public class TeamController {
 	
 	@RequestMapping("/teamImg")
 	public void teamImg(HttpServletRequest req, HttpServletResponse resp, @RequestParam("teamNo") int teamNo) throws IOException{
+		
+		logger.debug("=====teamNO!!! =={}",teamNo);
 		// 1. 사용자 아이디 파라미터 확인
 		// String userId = request.getParameter("userId");
 
@@ -220,8 +222,9 @@ public class TeamController {
 	public String teamModifyPost(TeamVo teamVo, @RequestParam("addMember")List<String> addMember, @RequestParam("delMember")List<String> delMember, HttpServletRequest req,
 			@RequestPart("profileImg") MultipartFile multipartFile) throws Exception, IOException {
 		
-		logger.debug("---teamVo : {}", teamVo);
-
+		TeamVo teamp_vo = teamService.getTeamInfo(teamVo.getTeamNo());
+		String realFile = teamp_vo.getTeamImg();
+		
 		if (multipartFile.getSize() > 0) {
 			String[] split;
 			String fileName = "";
@@ -231,18 +234,17 @@ public class TeamController {
 			fileName = split[0]; // 파일 이름
 			ext = split[1]; // 확장자
 
-			logger.debug("---fileName : {}, ext : {}", fileName, ext);
-
 			String path = req.getRealPath("image"); // image폴더 path
 
 			String filename = fileName + "_" + UUID.randomUUID().toString() + "." + ext;
 
+			realFile = path + "\\" + filename;
+			
 			// 불러온 파일 저장할 공간 생성
-			File profile = new File(path + "\\" + filename);
+			File profile = new File(realFile);
 			multipartFile.transferTo(profile);
-
-			teamVo.setTeamImg(path + "\\" + filename);
 		}
+		teamVo.setTeamImg(realFile);
 		 
 		teamService.teamMofify(teamVo, addMember, delMember);
 		

@@ -197,9 +197,6 @@ public class TeamServiceImpl implements ITeamService{
 		List<MessageVo> memList = new ArrayList<MessageVo>();
 		Map<String, Object> memMap = new HashMap<>();
 		
-		logger.debug("***addMemberSize : {}", addMember.size());
-		logger.debug("***delMemberSize : {}", delMember.size());
-
 		if(addMember.size() > 0){
 			for(String memId : addMember){
 				TeamListVo vo = new TeamListVo();
@@ -246,10 +243,6 @@ public class TeamServiceImpl implements ITeamService{
 			memMap.put("memList", memList);
 			messageDao.insertMsg(memMap);
 		}
-		
-		logger.debug("***memMapSize : {}", memMap.size());
-//		if(memMap.size() > 0){
-//		}
 		return teamModify;
 	}
 
