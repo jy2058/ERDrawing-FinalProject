@@ -162,4 +162,24 @@ public interface ITeamDao {
 	* Method 설명 : 팀 수정
 	*/
 	int teamModify(TeamVo teamVo);
+	
+	/**
+	* Method : teamDel
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param teamNo
+	* @return
+	* Method 설명 : 팀 삭제
+	*/
+	int teamDel(int teamNo);
+	
+	/**
+	* Method : getTeamMemList
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param teamNo
+	* @return
+	* Method 설명 : 팀원 리스트 가져오기
+	*/
+	List<TeamListVo>getTeamMemList(int teamNo);
 }

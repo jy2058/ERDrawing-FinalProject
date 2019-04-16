@@ -17,7 +17,7 @@
 .member-li{
 	display: inline-flex;
 }
-.selectMem{
+.selectMem div{
 	display:inline-block;
 }
 .member input{
@@ -105,17 +105,16 @@
 			<div class="line-title">
 				<h2 class="page-title">TEAM MEMBER</h2>
 			</div>
-			
 			<div class="row">
 				<div style="background:#232323; color:#fff; height:100px; line-height:100px; padding-left:20px; font-size:20px; font-weight:600;">
 					<ul style=" min-height:72px; line-height: 1.5">
 						<c:forEach var="teamMemberGet" items="${teamMember }" varStatus="status">
 							<li class="member-li" data-memid="${teamMemberGet.memId }" data-teamno="${teamList[status.index].teamNo }" data-teamnm="${teamInfo.teamNm }" data-makerid="${teamInfo.makerId }"> <!-- ajax를 위한 커스텀 데이터 생성 -->
-								<a class="" href="">
-									<div class="selectMem">
+								<a class="selectMem" href="">
+									<div>
 										<img alt="" src="/member/memberImg?memId=${teamMemberGet.memId }">
 									</div>
-									<div class="selectMem">
+									<div>
 										<strong>${teamMemberGet.memId }</strong>
 										<span>${teamMemberGet.memMail }</span>
 									</div>
@@ -165,7 +164,7 @@
 								  			<div class="bg-box">
 								  				<div class="bg-img">
 								  					<!--이미지 경로 맞춰요~ -->
-								  					<img src="${cp }/erd/erdImg?erdNo=999999">
+								  					<img src="${cp }/erd/erdImg?erdNo=${myErdList.erdNo }">
 									  			</div>
 								  				<div class="table-bg-text">
 								  					<div class="bg-text shinys">
@@ -311,6 +310,7 @@
 	 $(".selectMem").on("click", function(){
 		 var memId = $(this).closest('li').data('memid');
 		 $(".selectMem").attr('href', "${cp}/member/memberErd?memId=" + memId);
+		 
 	 });
 	
 </script>

@@ -27,8 +27,8 @@
 			</div>
 			<div class="input-box">
 				<label>썸네일 이미지</label>
-				<img alt="" src="${cp }/image/no_img.jpg" id="image">
-				<input type="file" name="profileImg" onchange="loadImg(this)" style="width: 300px"> 
+				<img alt="" src="${cp }/image/no_img.jpg" id="image" width="200px">
+				<input type="file" name="profileImg" onchange="loadImg(this)" style= "width: 300px; height: 300px;"> 
 			</div>
 			
 		</form>

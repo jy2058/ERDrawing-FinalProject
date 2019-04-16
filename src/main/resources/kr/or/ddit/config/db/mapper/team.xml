@@ -84,22 +84,30 @@
 		from team_list
 		where teamno = #{teamNo}
 			and teamagreeflag='y'
+		order by decode(teamauth, 'creator', '1' ,  'admin', '2', '3')	
 	</select>
 	
-	<!-- 팀 멤버 가져오기 -->
+	<!-- 팀 멤버 및 정보 가져오기 -->
 	<select id="getTeamMember" parameterType="int" resultType="MemberVo">
 		select *
 		from team_list a, member b
 		where a.memid = b.memid
 		    and a.teamno = #{teamNo}
 		    and a.teamagreeflag='y'
-		order by 
-		case 
-			when teamauth = 'creator' then 1 
-			when teamauth = 'admin' then 2
-			else 3 
-		end    
+		order by decode(a.teamauth, 'creator', '1' ,  'admin', '2', '3') 
 	</select>
+	
+		<!-- select *
+		from team_list a, member b
+		where a.memid = b.memid
+		    and a.teamno = 1061
+		    and a.teamagreeflag='y'
+		order by 
+        case 
+			when a.teamauth = 'creator' then 1 
+			when a.teamauth = 'admin' then 2
+			else 3 
+		end -->
 	
 	<!-- 팀 멤버 권한 수정하기 -->
 	<update id="authUpdate" parameterType="teamListVo">
@@ -133,4 +141,17 @@
 	  	teamimg = #{teamImg,jdbcType=VARCHAR}
 	  where teamno= #{teamNo}
 	</update>
+	
+	<!-- 팀 삭제 -->
+	<delete id="teamDel" parameterType="int">
+		delete from team
+		where teamno = #{teamNo}
+	</delete>
+	
+	<!-- 팀 멤버 아이디 리스트(정보X) -->
+	<select id="getTeamMemList" parameterType="int" resultType="teamListVo">
+		select *
+		from team_list
+		where teamno = #{teamNo}
+	</select>
 </mapper>

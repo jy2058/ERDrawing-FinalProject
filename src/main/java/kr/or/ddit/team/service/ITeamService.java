@@ -172,4 +172,14 @@ public interface ITeamService {
 	* Method 설명 : 팀 수정
 	*/
 	int teamMofify(TeamVo teamVo, List<String> addMember, List<String> delMember);
+	
+	/**
+	* Method : teamDel
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param teamNo
+	* @return
+	* Method 설명 : 팀 삭제
+	*/
+	int teamDel(TeamVo teamVo);
 }

@@ -5,6 +5,8 @@ import java.util.List;
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.erd.model.ErdVo;
@@ -16,6 +18,9 @@ import kr.or.ddit.team.model.TeamVo;
 
 @Repository("teamDao")
 public class TeamDaoImpl implements ITeamDao{
+	
+	private Logger logger = LoggerFactory.getLogger(TeamDaoImpl.class);
+	
 	@Resource(name="sqlSessionTemplate")
 	private SqlSessionTemplate sqlSession;
 
@@ -71,7 +76,11 @@ public class TeamDaoImpl implements ITeamDao{
 
 	@Override
 	public List<MemberVo> getTeamMember(int teamNo) {
-		return sqlSession.selectList("team.getTeamMember", teamNo);
+		List<MemberVo> list = sqlSession.selectList("team.getTeamMember", teamNo);
+		logger.debug("dao list : {}", list);
+		
+		return list;
+		//return sqlSession.selectList("team.getTeamMember", teamNo);
 	}
 
 	@Override
@@ -92,6 +101,16 @@ public class TeamDaoImpl implements ITeamDao{
 	@Override
 	public int teamModify(TeamVo teamVo) {
 		return sqlSession.update("team.teamModify", teamVo);
+	}
+
+	@Override
+	public int teamDel(int teamNo) {
+		return sqlSession.delete("team.teamDel", teamNo);
+	}
+
+	@Override
+	public List<TeamListVo> getTeamMemList(int teamNo) {
+		return sqlSession.selectList("team.getTeamMemList", teamNo);
 	}
 
 }

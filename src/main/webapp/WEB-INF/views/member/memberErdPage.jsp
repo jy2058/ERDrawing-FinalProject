@@ -6,6 +6,14 @@
 <link rel="stylesheet" href="/css/member/modify.css">
 <link rel="stylesheet" href="/css/member/mypage.css">
 
+<style>
+.tag-a{
+    margin: 3px;
+    padding: 3px;
+    background-color: #444444;
+    font-size: 11px;
+}
+</style>
 
 <div id="contents">
 	<div class="my-bg">
@@ -13,7 +21,7 @@
 			<div class="profile-info">
 				<div class="memberId">${memberVo.memId }</div>
 				<div class="memberEmail">${memberVo.memMail }</div>
-				<div><div class="sampleImg"><div class="exText"><img src="${cp }/member/memberImg?memId=${memberVo.memId }"></div></div></div>
+				<div><div class="sampleImg"><div class="exText"><img src="${cp }/member/memberImg?memId=${memberVo.memId }" width="95" height="95"></div></div></div>
 			</div>
 		</div>
 	</div>
@@ -37,9 +45,7 @@
 									</c:if>
 								  		<a class="preview-box">
 								  			<div class="bg-box">
-								  				<div class="bg-img">
-									  				&nbsp;Image
-									  			</div>
+							  					<img src="${cp }/erd/erdImg?erdNo=${myErdList.erdNo}">
 								  				<div class="table-bg-text">
 								  					<div class="bg-text shinys">
 								  						&nbsp;${myErdList.erdTitle }
@@ -58,15 +64,13 @@
 								  			<c:if test="${entry.key eq myErdList.erdNo}">
 								  				<c:set var="value" value="${entry.value }"/>
 								  				<c:forEach var="tagVo" items="${value}">
-								  				<li>${tagVo.tagContent }</li>
-								  					
+								  					<a class="tag-a" href="${cp}/library?tagContent=${tagVo.tagContent }" title="" class="tagSearch">${tagVo.tagContent }</a>
 								  				</c:forEach>
 								  					
 								  			</c:if>
 								  		</c:forEach>
 								  			</ul>
 								  		</div>
-							  
 							  	</li>
 							  	
 							  	

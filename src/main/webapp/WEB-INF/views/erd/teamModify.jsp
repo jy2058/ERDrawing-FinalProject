@@ -21,6 +21,7 @@
 			<input type="hidden" name="addMember" id="addMember" value="">
 			<input type="hidden" name="delMember" id="delMember" value="">
 			<input type="hidden" name="makerId" id="makerId" value="">
+			
 
 			<div class="input-box">
 				<label>팀설명</label>
@@ -33,7 +34,7 @@
 			</div>
 			<input type="hidden" id="teamNo" name="teamNo" value="">
 		</form>
-		<div class="btn-style1">팀 삭제</div>
+		<div class="btn-style1" id="teamDelBtn">팀 삭제</div>
 		<div class="cancle-btn99 btn-style1">취소</div>
 		<div class="btn-style1" id="teamModifyBtn">업데이트</div>
 		
@@ -111,6 +112,12 @@ $("#teamModifyBtn").on("click", function(){
     $("#addMember").val(addList);
     $("#delMember").val(delList);
 	$("#teamModifyFrm").submit();
+});
+
+$("#teamDelBtn").on("click", function(){
+	$("#teamModifyFrm").attr("action", "/team/teamDelete");
+	$("#teamModifyFrm").submit();
+	
 });
 
 // 이미지 미리보기

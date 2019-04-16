@@ -165,6 +165,7 @@ public class TeamServiceImpl implements ITeamService{
 	public Map<String, Object> teamMemberListMap(int teamNo) {
 		List<TeamListVo> teamList = teamDao.getTeamAllListTeamNo(teamNo);	// 초대 수락 한 팀 리스트
 		List<MemberVo> teamMember = teamDao.getTeamMember(teamNo);	// 초대 수락 한 회원 리스트
+		logger.debug("service teamMember : {}", teamMember);
 		
 		Map<String, Object> teamMemberMap = new HashMap<String, Object>();
 		teamMemberMap.put("teamList", teamList);
@@ -247,6 +248,33 @@ public class TeamServiceImpl implements ITeamService{
 			messageDao.insertMsg(memMap);
 		}
 		return teamModify;
+	}
+
+	@Override
+	public int teamDel(TeamVo teamVo) {
+		int teamNo = teamVo.getTeamNo();
+		
+		List<TeamListVo> teamMemList = teamDao.getTeamMemList(teamNo);
+		List<MessageVo> tempList = new ArrayList<MessageVo>();
+		Map<String, Object> memMap = new HashMap<>();
+		
+		if(teamMemList.size() > 0){
+			for(TeamListVo vo : teamMemList){
+				String memId = vo.getMemId();
+				MessageVo msgVo = new MessageVo();
+				msgVo.setTeamNo(teamNo);
+				msgVo.setMsgContent(teamVo.getTeamNm() + " 팀이 삭제되었습니다.");
+				msgVo.setMsgType("n");
+				msgVo.setReceiverId(memId);
+				msgVo.setSenderId(teamVo.getMakerId());
+				
+				tempList.add(msgVo);
+			}
+			memMap.put("memList", tempList);
+			messageDao.insertMsg(memMap);	// 삭제 알림 보내기
+		}
+		 // 팀 삭제
+		return teamDao.teamDel(teamNo);
 	}
 
 }

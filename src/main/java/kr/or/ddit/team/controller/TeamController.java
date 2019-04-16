@@ -250,5 +250,11 @@ public class TeamController {
 		
 		return "redirect:/team?teamNo=" + teamVo.getTeamNo();
 	}
+	
+	@RequestMapping(path = "/teamDelete", method = RequestMethod.POST)
+	public String teamDelete(TeamVo teamVo){
+		teamService.teamDel(teamVo);	// 팀 삭제
+		return "redirect:/mypage";
+	}
 
 }

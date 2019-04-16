@@ -299,6 +299,7 @@ public class MemberController {
 	 
 	 @RequestMapping("/memberErd")
 	 public String memberErd(@RequestParam("memId")String memId, Model model){
+		 System.out.println("dsfjksdfjsdkfjsdkf;sdjf");
 		 logger.debug("---memId : {}", memId);
 		 
 		 MemberVo memberVo = memberService.selectMember(memId);
