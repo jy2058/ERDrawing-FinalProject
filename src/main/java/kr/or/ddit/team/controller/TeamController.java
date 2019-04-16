@@ -50,7 +50,7 @@ public class TeamController {
 
 		logger.debug("===teamNm : {}", teamVo.getTeamNm());
 		logger.debug("===getTeamIntro : {}", teamVo.getTeamIntro());
-		logger.debug("===teamMember : {}", teamMember);
+		logger.debug("***teamMember : {}", teamMember);
 		
 
 		logger.debug("===getOriginalFilename : {}", multipartFile.getOriginalFilename());

@@ -155,7 +155,10 @@ public class TestController {
 		return "drawing/erdDrawingTestYHS";
 	}
 	
-	
+	@RequestMapping(path="/kjy")
+	public String erdDrawingKJY(){
+		return "drawing/erdDrawing_JY";
+	}
 	
 	// 모달 페이지 변경 메소드 
 	@RequestMapping("/pageViewAjax")

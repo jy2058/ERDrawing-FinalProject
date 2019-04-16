@@ -68,7 +68,7 @@ $( "#autocomplete" ).autocomplete({
         console.log("ui.label : " + ui.item.label + " ui.value : " + ui.item.value);
         
         var html = '';
-        html += '<li class="teamMem">';
+        html += '<li class="teamMem" value="' + ui.item.value + '">';
         html += '	<div><img src="'+ ui.item.data + '"></div>';
         html += '	<div>' + ui.item.value + '</div>';
         html += '	<input id="delBtn" type="button" value="삭제">';
@@ -78,9 +78,8 @@ $( "#autocomplete" ).autocomplete({
         $("#autocomplete").val('');
         
         list.push(ui.item.value);
-        $("#teamMember").val(list);
         
-        console.log(list);
+        console.log("pust : " + list);
         
         return false;	// text clear
         
@@ -92,10 +91,18 @@ $( "#autocomplete" ).autocomplete({
 //추가된 회원 삭제
 $(document).on("click","#delBtn", function(e){
 	$(e.target).parent('li').remove();	
+	var targetId = $(e.target).parent('li').attr('value');
+	
+	// 새로 추가한 멤버 중 삭제한 멤버 리스트에서 꺼내기
+	list = jQuery.grep(list, function(value){
+		return value != targetId;
+	});
 });
 
 
 $("#teamCreate").on("click", function(){
+    $("#teamMember").val(list);
+    console.log("최종 : " + list);
 	$("#teamCreateFrm").submit();
 });
 
