@@ -82,23 +82,23 @@
         </definition>
 
 
-        <definition name="postList" extends="layoutMain">
+        <definition name="postList" extends="layout">
         	<put-attribute name="content" value="/WEB-INF/views/post/postList.jsp" />
         </definition>
         
-        <definition name="postInsert" extends="layoutMain">
+        <definition name="postInsert" extends="layout">
         	<put-attribute name="content" value="/WEB-INF/views/post/postInsert.jsp" />
         </definition>
         
-        <definition name="postDetail" extends="layoutMain">
+        <definition name="postDetail" extends="layout">
         	<put-attribute name="content" value="/WEB-INF/views/post/postDetail.jsp" />
         </definition>
         
-        <definition name="postUpdate" extends="layoutMain">
+        <definition name="postUpdate" extends="layout">
         	<put-attribute name="content" value="/WEB-INF/views/post/postUpdate.jsp" />
         </definition>
         
-        <definition name="postReply" extends="layoutMain">
+        <definition name="postReply" extends="layout">
         	<put-attribute name="content" value="/WEB-INF/views/post/postReply.jsp" />
         </definition>
         

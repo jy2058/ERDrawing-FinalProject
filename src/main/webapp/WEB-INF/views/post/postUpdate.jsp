@@ -3,75 +3,74 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-<meta name="description" content="">
-<meta name="author" content="">
-<link rel="icon" href="../../favicon.ico">
 
+<link rel="icon" href="../../favicon.ico">
+<link rel="stylesheet" href="/css/member/memList.css">
+<%--
 <!-- Bootstrap core CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 <!-- Custom styles for this template -->
  <link href="${cp}/css/dashboard.css" rel="stylesheet">
+--%>
+<style>
+/* .se2_inputarea{
+background: white;
+}
+#postContent{
+background: white;} */
 
-</head>
+</style>
 
-<body>
-	<%-- <%@ include file="/WEB-INF/views/module/header.jsp"%> --%>
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/views/post/left.jsp"%>
-		</div>
 		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<h3 class="page-header">게시글 수정</h3>
+			<h3 class="page-header" style="color: #fff;">게시글 수정</h3>
+			
+			
 			<form id="frm" action="${cp}/post/postUpdate" method="post"
 				  class="form-horizontal" role="form" enctype="multipart/form-data">
 				  
 				<div class="form-group">
-					<label for="postTitle" class="col-sm-2 control-label">글제목</label>
+					<label for="postTitle" class="col-sm-2 control-label" style="color: #fff;">글제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 					<div class="col-sm-7">
 						<input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="글제목" value="${postVo.postTitle}" />
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label for="writerId" class="col-sm-2 control-label">작성자</label>
+					<label for="writerId" class="col-sm-2 control-label" style="color: #fff;">작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 					<div class="col-sm-7">
 						<input type="text" class="form-control" id="writerId" name="writerId" placeholder="작성자" value="${postVo.writerId}" readonly/>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label for="postRegDt" class="col-sm-2 control-label">등록일</label>
+					<label for="postRegDt" class="col-sm-2 control-label" style="color: #fff;">등록일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 					<div class="col-sm-7">
 						<input type="text" class="form-control" id="postRegDt" name="postRegDt" placeholder="등록일" value='<fmt:formatDate value="${postVo.postRegDt}" pattern="yyyy-MM-dd"/>' readonly/>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="postContent" class="col-sm-2 control-label">글내용</label>
-					<div class="col-sm-10">
-						<textarea name="postContent" id="postContent" rows="10" cols="100" style="width: 766px; height: 412px;">
+					<label for="postContent" class="col-sm-2 control-label" style="color: #fff;">글내용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<div class="col-sm-10" style="background: white;">
+						<textarea name="postContent" id="postContent" rows="10" cols="100" style="width: 795px; height: 412px;">
 							${postVo.postContent}
 						</textarea>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="files" class="col-sm-2 control-label">첨부파일</label>
+					<label for="files" class="col-sm-2 control-label" style="color: #fff;">첨부파일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 					<div id="fileUpload" class="col-sm-7">
 						<c:forEach items="${fileList}" var="file">
 							<input id="uploadFileNo${file.uploadFileNo}" type="text" class="form-control" value="${file.uploadFileNm}" readonly />
 						</c:forEach>
 					</div>
 					
-					<div class="col-sm-1">
+					<div class="col-sm-1" style="text-align: right;" >
 						<c:forEach items="${fileList}" var="file">
 							<button data-fileno="${file.uploadFileNo}" type="button" class="delFileBtn btn btn-default">삭제</button>
 						</c:forEach> 
@@ -85,14 +84,17 @@
 						<button id="saveBtn" type="button" class="btn btn-default">저장</button>
 					</div>
 				</div>
+				
 
 				<div id="saveInfo">
 					<input type="hidden" id="postNo" name="postNo" value="${postVo.postNo}" />
 				</div>
 			</form>
+			
+			
 		</div>
 	</div>
-
+</div>
 <form id="cancelFrm" action="${cp}/post/postDetail" method="get">
 	<input type="hidden" name="postNo" value="${postVo.postNo}" />
 </form>
@@ -182,5 +184,3 @@
 			$("#saveInfo").append("<input type='hidden' name='delFile' value='" + uploadFileNo + "'/>");
 		});
 	</script>
-</body>
-</html>

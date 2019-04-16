@@ -3,7 +3,7 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
- <link rel="icon" href="../../favicon.ico">
+<link rel="icon" href="../../favicon.ico">
 <link rel="stylesheet" href="/css/member/memList.css">
     <!-- Bootstrap core CSS -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
@@ -17,7 +17,6 @@
  
 
   <body>
-   <%-- <%@ include file="/WEB-INF/views/module/header.jsp" %> --%>
     <div class="container-fluid">
       <div class="row">
          <%@ include file="/WEB-INF/views/post/left.jsp"%>
@@ -76,7 +75,7 @@
            
             <div class="form-group">
               <label class="modalLabel">신고사유</label> 
-              <input type="text" id="reasonTxt" rows="10" cols="100" style="width: 500px; height: 30px;">    
+              <input type="text" id="reasonTxt" rows="10" cols="100" style="width: 450px; height: 30px;">    
            </div>   
         </div>  
            
@@ -144,14 +143,14 @@
             </div>
          </div>
 
-         <div class="table-responsive" style="margin-right: 20px; width: 70%;" >
+         <div class="table-responsive" style="margin-right: 20px; overflow: hidden;">
             <table class="table table-striped" style="width: 100%;">
                <thead>
                   <tr style="height: 50px;">
-                     <th style="text-align: center; border-right: 2px solid #fff;">댓글번호</th>
-                     <th style="text-align: center; border-right: 2px solid #fff;">작성자</th>
-                     <th style="text-align: center; border-right: 2px solid #fff;">댓글내용</th>
-                     <th style="text-align: center;">좋아요</th>
+                     <th style="text-align: center; border-right: 2px solid #fff; color:black; width:15%;">댓글번호</th>
+                     <th style="text-align: center; border-right: 2px solid #fff; color:black; width:20%;">작성자</th>
+                     <th style="text-align: center; border-right: 2px solid #fff; color:black; width:40%;">댓글내용</th>
+                     <th style="text-align: center; color:black; width:40%;">좋아요</th>
                   </tr>
                </thead>
                

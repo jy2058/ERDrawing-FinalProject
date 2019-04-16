@@ -6,7 +6,7 @@
 
 		<c:forEach items="${postList}" var="post">
 			<tr class='postTr' data-postno="${post.postNo}" data-postgn="${post.postGn}" data-flag="${post.postDelFlag}" style="background-color: #f9f9f9;">
-				<td style="text-align: center; border-right: 2px solid #fff;">${post.postNo}</td>
+				<td style="text-align: center; border-right: 2px solid #fff; color:black;">${post.postNo}</td>
 				<c:choose>
 					<c:when test="${post.level gt 1}"> <!--레벨에 따른 공백주기  -->
 					<a href="javascript:void(0);" onclick="fnTrClick('${post.postNo}', '${post.postGn}', '${post.postDelFlag}');"> ${post.postTitle}</a>
@@ -21,15 +21,14 @@
 							<a href="javascript:void(0);" onclick="fnTrClick('${post.postNo}', '${post.postGn}', '${post.postDelFlag}');"> ${post.postTitle}</a>
 							</c:when>
 							<c:otherwise>
-							 <a href="javascript:void(0);" onclick="fnTrClick('${post.postNo}', '${post.postGn}', '${post.postDelFlag}');"> ${post.postTitle}</a>
-							<span style="color: red;">삭제된 답글입니다.</span>
+								<span style="color: red;">삭제된 답글입니다.</span>
 							</c:otherwise>								
 						</c:choose>
 					 </td>
 					</c:when>
 					
 					<c:otherwise>
-					<td  style="padding-left: 15px; border-right: 2px solid #fff;">
+					<td  style="padding-left: 15px; color: black; border-right: 2px solid #fff; ">
 					<c:choose>
 							<c:when test="${post.postDelFlag eq 'T'}">
 							<a href="javascript:void(0);" onclick="fnTrClick('${post.postNo}', '${post.postGn}', '${post.postDelFlag}');"> ${post.postTitle}</a>
@@ -41,8 +40,8 @@
 					</td>
 					</c:otherwise>
 				</c:choose>			
-					<td style="text-align: center; border-right: 2px solid #fff;">${post.writerId}</td>
-					<td style="text-align: center;"><fmt:formatDate value="${post.postRegDt}" pattern="yyyy-MM-dd" /></td>
+					<td style="text-align: center; border-right: 2px solid #fff; color:black;">${post.writerId}</td>
+					<td style="text-align: center; color:black;"><fmt:formatDate value="${post.postRegDt}" pattern="yyyy-MM-dd" /></td>
 				</tr>
 			</c:forEach>
 			

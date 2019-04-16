@@ -37,10 +37,10 @@
 			<table style="width: 100%;">
 				<thead>
 					<tr style="height: 50px;">
-						<th style="text-align: center; border-right: 2px solid #fff;">글번호</th>
-						<th style="text-align: center; border-right: 2px solid #fff;">글제목</th>
-						<th style="text-align: center; border-right: 2px solid #fff;">작성자</th>
-						<th style="text-align: center;">등록일</th>
+						<th style="text-align: center; border-right: 2px solid #fff; color:black; width:15%;">글번호</th>
+						<th style="text-align: center; border-right: 2px solid #fff; color:black;">글제목</th>
+						<th style="text-align: center; border-right: 2px solid #fff; color:black; width:30%;">작성자</th>
+						<th style="text-align: center; color:black; width:15%;">등록일</th>
 					</tr>
 				</thead>
 
@@ -53,8 +53,7 @@
 						<c:when test="${boardNo == '1'}">
 							<c:if test="${SESSION_MEMBERVO.memAuth == 'T'}">
 								<input type="hidden" name="boardNo" value="${boardNo}">
-								<button type="button" class="insertBtn btn-default">게시글
-									등록</button>
+								<button type="button" class="insertBtn btn-default">게시글 등록</button>
 							</c:if>
 						</c:when>
 
