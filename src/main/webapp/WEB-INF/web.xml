@@ -44,9 +44,6 @@
     <servlet-name>springDispatcherServlet</servlet-name>
     <url-pattern>/</url-pattern>
   </servlet-mapping>
-  
-  
-  
   <filter>
     <filter-name>encodingFilter</filter-name>
     <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
@@ -55,8 +52,6 @@
       <param-value>utf-8</param-value>
     </init-param>
   </filter>
-  
-  
   <filter-mapping>
     <filter-name>encodingFilter</filter-name>
     <url-pattern>/*</url-pattern>
