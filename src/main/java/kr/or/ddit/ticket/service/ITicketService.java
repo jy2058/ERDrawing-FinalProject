@@ -1,7 +1,9 @@
 package kr.or.ddit.ticket.service;
 
 import java.util.List;
+import java.util.Map;
 
+import kr.or.ddit.ticket.model.TicketBuyHistVo;
 import kr.or.ddit.ticket.model.TicketVo;
 
 public interface ITicketService {
@@ -13,6 +15,9 @@ public interface ITicketService {
 	int insertTicket(TicketVo ticketVo);
 
 	int updateTicket(TicketVo ticketVo);
+
 	
 	int deleteTicket(String ticketNo);
+	
+	List<TicketBuyHistVo> selectTicketHist(Map<String, Object> ticketMap);
 }

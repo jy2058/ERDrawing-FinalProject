@@ -1,8 +1,14 @@
 package kr.or.ddit.ticket.controller;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
@@ -10,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import kr.or.ddit.ticket.model.TicketBuyHistVo;
 import kr.or.ddit.ticket.model.TicketVo;
 import kr.or.ddit.ticket.service.ITicketService;
 
@@ -99,7 +106,16 @@ public class TicketController {
 		//티켓차트 페이지
 		@RequestMapping("ticketChart")
 		public String ticketChart(Model model,TicketVo ticketVo,RedirectAttributes ra,HttpServletRequest req){
+			Map<String, Object> map = new HashedMap();
+			SimpleDateFormat format1 = new SimpleDateFormat ( "yyMMdd");
+			Date date = new Date();
+			String time1 = format1.format(date);
 			
+			map.put("startDt", "170101");
+			map.put("endDt", time1);
+			
+			 List<TicketBuyHistVo> ticketBuyList=ticketService.selectTicketHist(map);
+			model.addAttribute("ticketBuyList", ticketBuyList);
 			return "ticketChart";
 		}
 

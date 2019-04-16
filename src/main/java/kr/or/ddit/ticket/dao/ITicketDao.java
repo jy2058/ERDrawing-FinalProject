@@ -1,7 +1,9 @@
 package kr.or.ddit.ticket.dao;
 
 import java.util.List;
+import java.util.Map;
 
+import kr.or.ddit.ticket.model.TicketBuyHistVo;
 import kr.or.ddit.ticket.model.TicketVo;
 
 public interface ITicketDao {
@@ -63,5 +65,7 @@ public interface ITicketDao {
 	 * @return
 	 * Method 설명 : 티켓 
 	 */
-	List<TicketVo> selectTicketHist(String ticketNo);
+	List<TicketBuyHistVo> selectTicketHist(Map<String, Object> ticketMap);
+	
+	
 }

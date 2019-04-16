@@ -1,12 +1,14 @@
 package kr.or.ddit.ticket.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.Resource;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.ddit.ticket.model.TicketBuyHistVo;
 import kr.or.ddit.ticket.model.TicketVo;
 
 @Repository("ticketDao")
@@ -41,8 +43,9 @@ public class TicketDaoImpl implements ITicketDao{
 	}
 
 	@Override
-	public List<TicketVo> selectTicketHist(String ticketNo) {
-		return sqlSession.selectList("ticket.selectTicketHist",ticketNo);
+	public List<TicketBuyHistVo> selectTicketHist(Map<String, Object> ticketMap) {
+		return sqlSession.selectList("ticket.selectTicketHist",ticketMap);
+		
 	}
 
 }

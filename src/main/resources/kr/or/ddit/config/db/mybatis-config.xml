@@ -24,6 +24,7 @@
 	<typeAlias alias="commentLikeVo" type="kr.or.ddit.post.model.CommentLikeVo"/>
 	<typeAlias alias="pageVo" type="kr.or.ddit.util.model.PageVo"/>
 	<typeAlias alias="ticketVo" type="kr.or.ddit.ticket.model.TicketVo"/>
+	<typeAlias alias="ticketBuyHistVo" type="kr.or.ddit.ticket.model.TicketBuyHistVo"/>
 	
 	 
 	

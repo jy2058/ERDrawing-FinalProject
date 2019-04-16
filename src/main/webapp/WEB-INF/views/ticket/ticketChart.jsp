@@ -1,32 +1,36 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-	
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <br/><br/><br/>	
 <div id="chartContainer" style="height: 400px; width: 100%;"></div>
+
+
+
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 
 <script>
 window.onload = function () {
-
+	var dps = new Array();
+	dps[0] = new Array();
 var chart = new CanvasJS.Chart("chartContainer", {
+	
+
 	animationEnabled: true,
 	theme: "light2",
 	title:{
 		text: "Site Traffic"
 	},
-	axisX:{
-		valueFormatString: "DD MMM",
-		crosshair: {
-			enabled: true,
-			snapToDataPoint: true
-		}
+	axisX: {
+		intervalType: "month",
+		interval: 1
 	},
 	axisY: {
-		title: "Number of Visits",
-		crosshair: {
-			enabled: true
-		}
+		title: "Stock Price",
+		prefix: "$",
+		includeZero: false
 	},
 	toolTip:{
 		shared:true
@@ -38,63 +42,58 @@ var chart = new CanvasJS.Chart("chartContainer", {
 		dockInsidePlotArea: true,
 		itemclick: toogleDataSeries
 	},
+	
+	
 	data: [{
 		type: "line",
 		showInLegend: true,
 		name: "Total Visit",
 		markerType: "square",
-		xValueFormatString: "DD MMM, YYYY",
-		color: "#F08080",
-		dataPoints: [
-			{ x: new Date(2017, 0, 3), y: 650 },
-			{ x: new Date(2017, 4, 4), y: 700 },
-			{ x: new Date(2017, 5, 5), y: 710 },
-			{ x: new Date(2018, 1, 6), y: 658 },
-			{ x: new Date(2018, 2, 7), y: 734 },
-			{ x: new Date(2018, 3, 8), y: 963 },
-			{ x: new Date(2018, 4, 9), y: 847 },
-			{ x: new Date(2018, 0, 10), y: 853 },
-			{ x: new Date(2018, 0, 11), y: 869 },
-			{ x: new Date(2018, 0, 12), y: 943 },
-			{ x: new Date(2018, 0, 13), y: 970 },
-			{ x: new Date(2018, 0, 14), y: 869 },
-			{ x: new Date(2018, 0, 15), y: 890 },
-			{ x: new Date(2018, 0, 16), y: 930 }
-		]
-	},
-	{
+		xValueFormatString: "DD MMM, YY",
+		dataPoints: dps[0]
+	},{
 		type: "line",
 		showInLegend: true,
-		name: "Unique Visit",
-		lineDashType: "dash",
-		dataPoints: [
-			{ x: new Date(2017, 0, 3), y: 510 },
-			{ x: new Date(2017, 0, 4), y: 560 },
-			{ x: new Date(2017, 0, 5), y: 540 },
-			{ x: new Date(2017, 0, 6), y: 558 },
-			{ x: new Date(2017, 0, 7), y: 544 },
-			{ x: new Date(2017, 0, 8), y: 693 },
-			{ x: new Date(2017, 0, 9), y: 657 },
-			{ x: new Date(2017, 0, 10), y: 663 },
-			{ x: new Date(2017, 0, 11), y: 639 },
-			{ x: new Date(2017, 0, 12), y: 673 },
-			{ x: new Date(2017, 0, 13), y: 660 },
-			{ x: new Date(2017, 0, 14), y: 562 },
-			{ x: new Date(2017, 0, 15), y: 643 },
-			{ x: new Date(2017, 0, 16), y: 570 }
-		]
+		name: "ss Visit",
+		markerType: "square",
+		xValueFormatString: "DD MMM, YY",
+	dataPoints: dps[1]
 	}]
 });
+
+var yValue;
+var xValue;
+<c:set var="sss" >
+<fmt:formatDate value="${ticketBuyList.get(0).ticketBuyDt }" pattern="yy" />
+</c:set>
+yValue = new Date("${sss}");
+xValue = parseFloat("${ticketBuyList.get(0).ticketFee}");
+dps[0].push({
+	x : xValue,
+	y : yValue,});
+	
+
+dps[0].push({
+	x : xValue,
+	y : yValue,});
+dps[0].push({
+	x : xValue+10,
+	y : yValue,});
+dps[0].push({
+	x : xValue+3,
+	y : yValue,});
+	
 chart.render();
 
+}
 function toogleDataSeries(e){
 	if (typeof(e.dataSeries.visible) === "undefined" || e.dataSeries.visible) {
 		e.dataSeries.visible = false;
 	} else{
-		e.dataSeries.visible = true;
+		e.dataSeries.visible = true;	
 	}
 	chart.render();
 }
 
-}
+
 </script>

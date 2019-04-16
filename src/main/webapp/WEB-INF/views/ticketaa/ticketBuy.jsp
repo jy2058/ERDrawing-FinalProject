@@ -1,235 +1,158 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, width=device-width">
-    <link rel="stylesheet" type="text/css" href="//t1.daumcdn.net/kakaopay/tesla/20180108/pg_web/css/common.min.css">
-    <script src="//t1.daumcdn.net/kakaopay/tesla/20180108/pg_web/js/lib/jquery.min.js"></script>
-
-    
-    
-
-<script>
-        var hash = "a2cec757ac2db402fdbbd046edc48f425031579ca2ea28f4da7af23dacbc159b";
-        var failUrl = "https://developers.kakao.com/payment/web/fail/d91d1563-d759-4519-ba7b-b5ec99c438e8";
-        var remainingSec = 899;
-        var cancelUrl = "https://developers.kakao.com/payment/web/cancel/d91d1563-d759-4519-ba7b-b5ec99c438e8";
-        var isCancelPost = false;
-        var isFailPost = false;
-        var isApprovalPost = false;
-	</script>
-	<script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
-
-<script type="text/javascript" src="/js/v2/common_payment.js?v=version"></script>
-
-<script type="text/javascript" src="/js/v2/user_info.js?v=version"></script>
-
-<body>
-
-<div id="payPopupDiv" class="pay_popup hide">
-    <div class="inner_terms_layer">
-        <div class="layer_head">
-            <strong class="tit_terms">제목</strong>
-        </div>
-        <div class="layer_body">
-            <div class="desc_terms">
-                내용
-            </div>
-        </div>
-        <div class="layer_foot">
-            <button type="button" class="btn_terms">확인</button>
-        </div>
-    </div>
-</div>
-
-<div id="payAlertDiv" class="hide">
-    <div class="agree_layer">
-        <div class="inner_agree_layer inner_agree_layer2">
-            <div class="layer_body">
-                <div class="desc_agree"></div>
-            </div>
-            <div class="layer_foot">
-                <button id="alertOkButton" class="btn_layer">확인</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div id="payConfirmDiv" class="hide">
-    <div class="agree_layer">
-        <div class="inner_agree_layer inner_agree_layer2">
-            <div class="layer_body">
-                <strong class="desc_agree">카카오페이 결제를 중단하시겠습니까?</strong>
-            </div>
-            <div class="layer_foot">
-                <button id="confirmCancelButton" class="btn_layer2">취소</button>
-                <button id="confirmOkButton" class="btn_layer2">확인</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-
-    <!-- /* ---------------------------------- 곧 제거 될 것 임 ------------------------------------------ */ -->
-    function closeTalkPgWebview() {
-        
-        window.location = "app://kakaopay/close";
-    }
-
-    function payPopup(title, msg) {
-        var payPopupDiv = $("#payPopupDiv");
-        payPopupDiv.removeClass("hide");
-        $("body").addClass("layer_on");
-        $(".tit_terms", payPopupDiv).html(title);
-        $(".desc_terms", payPopupDiv).html(msg);
-
-        $(".btn_terms", payPopupDiv).click(function() {
-            $("body").removeClass("layer_on");
-            payPopupDiv.addClass("hide");
-        });
-    }
-
-    function payAlert(msg, onOk) {
-        $("#payAlertDiv").removeClass("hide");
-        $("body").addClass("layer_on");
-        $(".desc_agree").html(msg);
-        $("#alertOkButton").click(function() {
-            $("body").removeClass("layer_on");
-            $("#payAlertDiv").addClass("hide");
-            if(onOk) {
-                onOk();
+   pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+   <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
+   <script src="/js/chart/Chart.min.js"></script>
+   <script src="/js/chart/utils.js"></script>
+   <style>
+   canvas{
+      -moz-user-select: none;
+      -webkit-user-select: none;
+      -ms-user-select: none;
+   }
+   </style>
+   <div style="width:80%;">
+      <canvas id="canvas"></canvas>
+   </div>
+   <br>
+   <br>
+   <button id="randomizeData">Randomize Data</button>
+   <button id="addDataset">Add Dataset</button>
+   <button id="removeDataset">Remove Dataset</button>
+   <button id="addData">Add Data</button>
+   <button id="removeData">Remove Data</button>
+   <script>
+      var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+      var config = {
+         type: 'line',
+         data: {
+            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+            datasets: [{
+               label: '30일권',
+               backgroundColor: window.chartColors.red,
+               borderColor: window.chartColors.red,
+               //데이터가 들어감 
+               data: [
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor()
+               ],
+               fill: false,
+            }, {
+               label: '1일권',
+               fill: false,
+               backgroundColor: window.chartColors.blue,
+               borderColor: window.chartColors.blue,
+               data: [
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor(),
+                  randomScalingFactor()
+               ],
+            }]
+         },
+         options: {
+        	 cursor:"pointer",
+         
+            responsive: true,
+            title: {
+               display: true,
+               text: 'Chart.js Line Chart'
+            },
+            tooltips: {
+               mode: 'index',
+               intersect: false,
+            },
+            hover: {
+               mode: 'nearest',
+               intersect: true
+            },
+            scales: {
+               xAxes: [{
+                  display: true,
+                  scaleLabel: {
+                     display: true,
+                     labelString: 'Month'
+                  }
+               }],
+               yAxes: [{
+                  display: true,
+                  scaleLabel: {
+                     display: true,
+                     labelString: 'Value'
+                  }
+               }]
             }
-        });
-    }
+         }
+      };
 
-    function payConfirm(msg, onOk, onCancel) {
-        $("#payConfirmDiv").removeClass("hide");
-        $("body").addClass("layer_on");
-        $(".desc_agree").html(msg);
+      window.onload = function() {
+         var ctx = document.getElementById('canvas').getContext('2d');
+         window.myLine = new Chart(ctx, config);
+      };
 
-        hide = function () {
-            $("body").removeClass("layer_on");
-            $("#payConfirmDiv").addClass("hide");
-        };
-
-        $("#confirmOkButton").click(function () {
-            hide();
-            onOk();
-        });
-        $("#confirmCancelButton").click(function () {
-            hide();
-            if (onCancel) {
-                onCancel();
-            }
-        });
-    }
-    <!-- /* ---------------------------------- 곧 제거 될 것 임 ------------------------------------------ */ -->
-
-
-    (function() {
-        function closeTalkPgWebview() {
-            
-            window.location = "app://kakaopay/close";
-        }
-
-        function payPopup(title, msg) {
-            var payPopupDiv = $("#payPopupDiv");
-            payPopupDiv.removeClass("hide");
-            $("body").addClass("layer_on");
-            $(".tit_terms", payPopupDiv).html(title);
-            $(".desc_terms", payPopupDiv).html(msg);
-
-            $(".btn_terms", payPopupDiv).click(function() {
-                $("body").removeClass("layer_on");
-                payPopupDiv.addClass("hide");
+      document.getElementById('randomizeData').addEventListener('click', function() {
+         config.data.datasets.forEach(function(dataset) {
+            dataset.data = dataset.data.map(function() {
+               return randomScalingFactor();
             });
-        }
 
-        function payAlert(msg, onOk) {
-            $("#payAlertDiv").removeClass("hide");
-            $("body").addClass("layer_on");
-            $(".desc_agree").html(msg);
-            $("#alertOkButton").click(function() {
-                $("body").removeClass("layer_on");
-                $("#payAlertDiv").addClass("hide");
-                if(onOk) {
-                    onOk();
-                }
+         });
+
+         window.myLine.update();
+      });
+
+      //데이터 추가 
+      var colorNames = Object.keys(window.chartColors);
+      document.getElementById('addDataset').addEventListener('click', function() {
+         var colorName = colorNames[config.data.datasets.length % colorNames.length];
+         var newColor = window.chartColors[colorName];
+         var newDataset = {
+            label: 'Dataset ' + config.data.datasets.length,
+            backgroundColor: newColor,
+            borderColor: newColor,
+            data: [],
+            fill: false
+         };
+
+         for (var index = 0; index < config.data.labels.length; ++index) {
+            newDataset.data.push(randomScalingFactor());
+         }
+
+         config.data.datasets.push(newDataset);
+         window.myLine.update();
+      });
+
+      document.getElementById('addData').addEventListener('click', function() {
+         if (config.data.datasets.length > 0) {
+            var month = MONTHS[config.data.labels.length % MONTHS.length];
+            config.data.labels.push(month);
+
+            config.data.datasets.forEach(function(dataset) {
+               dataset.data.push(randomScalingFactor());
             });
-        }
 
-        function payConfirm(msg, onOk, onCancel) {
-            $("#payConfirmDiv").removeClass("hide");
-            $("body").addClass("layer_on");
-            $(".desc_agree").html(msg);
+            window.myLine.update();
+         }
+      });
 
-            hide = function () {
-                $("body").removeClass("layer_on");
-                $("#payConfirmDiv").addClass("hide");
-            };
+      document.getElementById('removeDataset').addEventListener('click', function() {
+         config.data.datasets.splice(0, 1);
+         window.myLine.update();
+      });
 
-            $("#confirmOkButton").click(function () {
-                hide();
-                onOk();
-            });
-            $("#confirmCancelButton").click(function () {
-                hide();
-                if (onCancel) {
-                    onCancel();
-                }
-            });
-        }
+      document.getElementById('removeData').addEventListener('click', function() {
+         config.data.labels.splice(-1, 1); // remove the label first
 
-        window.teslaBaseCommon = {
-            closeTalkPgWebview: closeTalkPgWebview,
-            payPopup: payPopup,
-            payAlert: payAlert,
-            payConfirm: payConfirm
-        };
+         config.data.datasets.forEach(function(dataset) {
+            dataset.data.pop();
+         });
 
-    })();
-
-</script>
-
-<div class="kakaopay_layer">
-		<div class="inner_kakaopay">
-			<div class="layer_head">
-				<strong class="img_pay logo_kakaopay">kakaopay</strong>
-			</div>
-			<div class="layer_body">
-				<p class="txt_step">결제요청 메시지 전송을 위해<br> 카카오페이에 가입된<br>휴대폰 번호와 생년월일 6자리를 입력해주세요.</p>
-				<form id="userPost" method="post" action="/v1/a2cec757ac2db402fdbbd046edc48f425031579ca2ea28f4da7af23dacbc159b/uinfo" >
-					<fieldset>
-						<legend class="screen_out">휴대폰 번호 및 생년월일 입력</legend>
-						<div class="info_data">
-							<span class="tit_data" id="thPhone_data">
-								<label for="tfPhone" class="lab_data">휴대폰 번호</label>
-								<em class="txt_emph">특수문자 없이 숫자만 입력해주세요.</em>
-							</span>
-							<input type="text" id="tfPhone" class="tf_kakaopay" maxlength="11" placeholder="예) 01056781234" name="tel" autocomplete="off">
-							<span class="line_tf"><span class="inner_line"></span></span>
-						</div>
-						<div class="info_data" id="thBirthday_data">
-							<span class="tit_data">
-								<label for="tfBirthday" class="lab_data">생년월일</label>
-								<em class="txt_emph">생년월일은 6자리로 입력해주세요. 예) 840101</em>
-							</span>
-							<input type="text" id="tfBirthday" class="tf_kakaopay" maxlength="6" placeholder="예) 840301" name="birthDate" autocomplete="off">
-							<span class="line_tf"><span class="inner_line"></span></span>
-						</div>
-						<div class="area_btn">
-							<button type="submit" class="btn_submit" disabled="disabled">결제요청</button>
-						</div>
-					</fieldset>
-				</form>
-			</div>
-			<div class="layer_foot">
-				<button class="btn_close"><span class="img_pay">닫기</span></button>
-			</div>
-		</div>
-		<form id="actionPost" action="approval" method="post">
-		</form>
-	</div>
-
-</body>
+         window.myLine.update();
+      });
+   </script>

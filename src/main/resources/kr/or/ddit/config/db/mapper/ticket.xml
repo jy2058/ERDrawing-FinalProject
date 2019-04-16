@@ -48,10 +48,15 @@
 	 		   sysdate) 
 	 		   
 	 </insert>
-	 
-	 <select id="selectTicketHist" resultType="ticketVo" parameterType="String">
+	 	
+	 <select id="selectTicketHist" resultType="TicketBuyHistVo" parameterType="java.util.Map">
 		select *
-			from ticket_buy_Hist
-		where ticketno= #{ticketno}
+			from ticket_buy_hist
+			where
+			<if test="ticketNo != null">
+				ticketNo=#{ticketNo} and
+			</if>
+				ticketBuyDt <![CDATA[ >= ]]> #{startDt} and
+				ticketBuyDt <![CDATA[ < ]]>	#{endDt}
 	 </select>
 </mapper>
