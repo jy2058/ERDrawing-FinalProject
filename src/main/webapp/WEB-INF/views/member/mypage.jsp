@@ -119,9 +119,8 @@
 				<div class="col-sm-12">
 					<ul class="erd-box-list">
 
-						<c:forEach var="myErdList" varStatus="status"
-							items="${myErdList }">
-							<li class="erd-box-item">
+						<c:forEach var="myErdList" varStatus="status" items="${myErdList }">
+							<li class="erd-box-item erdClick" onclick="erdClick(${myErdList.erdNo})">
 							
 								<div style="position:absolute; z-index:30;">
 									<button type="button" class="btn btn-default delBtn"
@@ -175,7 +174,6 @@
 
 	</div>
 </div>
-
 <script>
 	// erd 삭제
 	$(".delBtn").on("click", function(e) {
@@ -199,17 +197,11 @@
 			}
 		});
 	});
+	
+	function erdClick(erdNo){
+		$(location).attr('href', "${cp}/kjy?erdNo="+erdNo);
+	}
 
-	$(window).scroll(function() {
-		var window = $(this);
-		var scrollTop = window.scrollTop();
-		var windowHeight = window.height();
-		var documentHeight = $(document).height();
-
-		console.log("current scroll : " + $(window).scrollTop());
-		console.log("windowHeight : " + $(window).height());
-		console.log("document Top : " + $(document).height());
-	});
 </script>
 
 

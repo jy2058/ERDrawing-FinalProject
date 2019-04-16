@@ -185,4 +185,33 @@ public class ErdServiceImpl implements IErdService{
 		return erdDao.getErdInfo(erdNo);
 	}
 
+	@Override
+	public int updCnt(int erdNo) {
+		return erdDao.updCnt(erdNo);
+	}
+
+	@Override
+	public Map<String, Object> getAllErdOrderAndTagMap(String orderKind) {
+		ErdVo vo = new ErdVo();
+		vo.setOrderKind(orderKind);
+		
+		List<ErdVo> allErdListOrder = erdDao.getAllErdListOrder(vo);
+		
+		Map<Integer, List<TagVo>> erdTagListMap = new HashMap<>();
+		for(ErdVo erdVo : allErdListOrder){
+			int erdNo = erdVo.getErdNo();
+			List<TagVo> erdTagList = teamDao.getErdTag(erdNo);	// tagList
+			
+			logger.debug("***erdTagList : {}", erdTagList);
+			if(!erdTagList.isEmpty()){
+				erdTagListMap.put(erdNo, erdTagList);	// tagList가 있을 때 erdNo를 key, tagList를 value로 설정
+			}
+		}
+		Map<String, Object> erdTagMap = new HashMap<>();	// 리턴 값 2개 처리하기 위해 erdList와 erdTagListMap을 Map에 넣어 리턴 
+		erdTagMap.put("erdList", allErdListOrder);
+		erdTagMap.put("erdTagListMap", erdTagListMap);
+		
+		return erdTagMap;
+	}
+
 }

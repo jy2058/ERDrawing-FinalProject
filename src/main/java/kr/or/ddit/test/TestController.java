@@ -13,13 +13,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.erd.service.IErdService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.team.model.TeamListVo;
 import kr.or.ddit.team.model.TeamVo;
 import kr.or.ddit.team.service.ITeamService;
-import kr.or.ddit.util.model.PageVo;
 
 @Controller
 public class TestController {
@@ -35,7 +35,12 @@ public class TestController {
 	private IMemberService memberService;
 	
 	@RequestMapping(path="/")
-	public String test1(){
+	public String test1(Model model){
+		//String orderKind = "erdLike";
+		String orderKind = "erdRead";
+		Map<String, Object> allErdOrderAndTagMap = erdService.getAllErdOrderAndTagMap(orderKind);
+		model.addAllAttributes(allErdOrderAndTagMap);
+		
 		return "main";
 	}
 	
@@ -156,7 +161,10 @@ public class TestController {
 	}
 	
 	@RequestMapping(path="/kjy")
-	public String erdDrawingKJY(){
+	public String erdDrawingKJY(ErdVo erdVo){
+		//erdVo에 erdNo만 있음
+		erdService.updCnt(erdVo.getErdNo()); // 조회수 증가
+		
 		return "drawing/erdDrawing_JY";
 	}
 	

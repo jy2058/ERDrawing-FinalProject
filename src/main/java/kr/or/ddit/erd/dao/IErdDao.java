@@ -91,4 +91,24 @@ public interface IErdDao {
 	* Method 설명 : erd정보 조회
 	*/
 	ErdVo getErdInfo(int erdNo);
+	
+	/**
+	* Method : updCnt
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdNo
+	* @return
+	* Method 설명 : erd 조회수 증가
+	*/
+	int updCnt(int erdNo);
+	
+	/**
+	* Method : getAllErdListOrder
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param orderKind
+	* @return
+	* Method 설명 : 모든 ERD 가져오기(정렬선택)
+	*/
+	List<ErdVo>getAllErdListOrder(ErdVo erdVo);
 }
