@@ -582,7 +582,7 @@ function getAngle(compareX,compareY) { // 두 점 사이의 각도를 구하는 
 	 
 	// 라인객체 생성 좌표값은 switch에서 결정
 	 relationLine = new Konva.Line({  
-		 	strokeWidth:2,
+		 	strokeWidth:3,
 			lineCap : 'round',
 			linerJoin: 'round',
 			name:firstEntity.id()+'',   // 첫번째 엔터티에 관한 ID값을 참조
@@ -1172,6 +1172,18 @@ function checkIdentify(){
 	return arr_identify;
 }
 
+function checkIdentify_1(tempEntity){
+	var arr = tempEntity.findOne('.fk_group').children;
+	var arr_identify = new Array();
+	for(var i=0; i<arr.length; i++){
+		if(arr[i].attrs.type == 'identify'){
+			arr_identify.push(arr[i]);
+		}
+	}
+	return arr_identify;
+}
+
+
 //추가 버튼을 눌렀을 때, 해당객체를 참조하는 자식 테이블에도 모두 추가하는 메서드 (재귀호출방식)
 function cascadeAddFk(firstEntity,pkId,findEntityArr,pre_identifyingFlag){
 	
@@ -1265,7 +1277,7 @@ function cascadeDeletePk(entityId,arr_EntityAboutremoveCol){
 function deleteRelationLine(arr_EntityAboutremoveCol){
 	
 		for(var i=arr_EntityAboutremoveCol.length-1; i>-1; i-- ){
-			var arr_line_From = findLineRefPos(arr_EntityAboutremoveCol[i].id()); //영향을 받은 엔티티를 참조하는 관계선 배열을 얻는다.
+			var arr_line_From = findLineRefPos(arr_EntityAboutremoveCol[i].id()); //삭제에 영향을 받은 entity의 from 배열을 찾음
 				for(var j =arr_line_From.length-1; j>-1; j-- ){
 						var relationId = arr_line_From[j].attrs.id;
 						var delCnt = 0;						
@@ -1275,7 +1287,7 @@ function deleteRelationLine(arr_EntityAboutremoveCol){
 						for(var k=arr_EntityAboutremoveCol[i].find('.attribute').length-1; k>-1; k--){  //속성의 개수만큼 for문을 돌면서 해당 라인을 참조하는 객체의 카운트를 구한다.
 							if(arr_EntityAboutremoveCol[i].find('.attribute')[k].attrs.lineId==relationId){
 								delCnt++;
-								break;
+								//break;
 							}
 						}
 						}
@@ -1287,4 +1299,84 @@ function deleteRelationLine(arr_EntityAboutremoveCol){
 			
 	}
 	relationLine_layer.draw();
+}
+
+function firstEntityhighlight(tempEntity){
+	//tempEntity
+	var arr_tempEntity =  tempEntity.find('.pk_group')[0].children;
+	var arr_tempPK = checkIdentify_1(tempEntity);
+	
+	
+	 var total_arr = $.merge( $.merge([],arr_tempEntity), arr_tempPK);
+	 //var total_arr = $.merge(arr_tempEntity, arr_tempPK);
+	 
+	 firstStrokeColor = total_arr[0].findOne('.attr_container').fill();
+	for(var i =0; i<total_arr.length; i++){
+		//console.log('for문 시작');
+		var temp_attribute = total_arr[i]; 
+		//console.log('temp_attribute'+ temp_attribute.attrs.id);
+		highlighting(temp_attribute);
+	}
+	
+//	temp_clickEntity.push(clickTarget(tempEntity));
+	temp_clickEntity[0] = tempEntity;
+}
+function secondEntityhighlight(lineId,tempEntity){
+	secondStrokeColor = tempEntity.find('.attribute')[0].findOne('.attr_container').fill();
+	
+for(var i=0; i<tempEntity.find('.attribute').length; i++){
+	if(tempEntity.find('.attribute')[i].attrs.lineId == lineId){
+		console.log('for문 시작');
+		console.log('temp_attribute'+ tempEntity.find('.attribute')[i].attrs.id);
+		highlighting(tempEntity.find('.attribute')[i]);
+		}
+	}		
+temp_clickEntity[1] = tempEntity;
+}
+
+
+function highlighting(attribute){
+ var total_attribute_length = attribute.children.length-1;
+//attribute.zIndex(attribute.parent.children.length-1);                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+attribute.parent.zIndex(total_attribute_length);      
+  
+attribute.findOne('.attr_container').fill('#ff0000');
+      
+      //선택속성 투명도
+	attribute.findOne('.attr_container').opacity(0.6);
+	attribute.findOne('.attr_background').opacity(0.6);
+
+	
+     //속성 버튼 설정
+	attr_btn_remove = attribute.findOne('.attr_btn_remove');
+    attr_btn_remove_t =attribute.findOne('.attr_btn_remove_t'); 
+    attr_btn_remove.x(attribute.findOne('.attr_container').width()-BORDER_SIZE); //entity.findOne('.entity_container').width()-BORDER_SIZ 뭐가맞을까?
+    attr_btn_remove_t.x(attr_btn_remove.x()+7);
+	 
+	 
+     attribute.findOne('.attr_btn_group').visible(true);
+    attribute.find('.attr_btn_group')[0].attrs.visible =false;
+	//attr_btn_remove = attribute.findOne('.attr_btn_remove').visible(false);
+    //attr_btn_remove_t =attribute.findOne('.attr_btn_remove_t').visible(false); 
+}
+
+function clickTarget(entity){
+
+	
+    //속성 버튼 초기화
+	entity.find('.attr_btn_group').visible(false);
+    //선택속성 투명도 초기화시키기
+	entity.find('.attr_container').opacity(1);
+	entity.find('.attr_background').opacity(1);
+    
+
+	
+	
+//	entity.findOne('.attr_container').opacity(1.0);
+//	entity.findOne('.attr_background').opacity(1.0);	
+//	attribute.findOne('.attr_container').fill('#ffffff');
+//	 attribute.findOne('.attr_btn_group').visible(false); 
+//       old_btn_entity_group.hide();
+//       old_entity.draggable(false);
+//       old_container.strokeWidth(0);
 }

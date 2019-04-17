@@ -227,7 +227,7 @@
 				$(e.target).val(data.auth);
 			},
 			error : function(xhr, status, error){
-				aalert("에러");
+				alert("에러");
 			}
 		});
 	});

@@ -24,6 +24,19 @@
         </definition>
         
         
+        <definition name="layoutERD" template="/WEB-INF/views/template/layoutERD.jsp" >
+        	<put-attribute name="module" value="/WEB-INF/views/template/module.jsp" />
+        	<put-attribute name="content" value="" />
+        </definition>
+        
+        
+        <definition name="erdrawing" extends="layoutERD">
+        	<put-attribute name="content" value="/WEB-INF/views/drawing/erdDrawing_JY.jsp" />
+        </definition>
+        
+        
+        
+        
         
         
         <definition name="main" extends="layoutMain">
@@ -32,7 +45,7 @@
         
         
         
-         <definition name="test2" extends="layout">
+        <definition name="test2" extends="layout">
         	<put-attribute name="content" value="/WEB-INF/views/test3.jsp" />
         </definition>
          <definition name="testyhs" extends="layout">

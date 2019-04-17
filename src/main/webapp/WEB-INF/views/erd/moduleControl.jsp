@@ -115,6 +115,10 @@ display: block;
 				//gogogo1(page);
 			}); 
 			
+			 $("#erdModify").on("click", function(){
+					page = "erdModify";
+					gogogo1(page);
+			});
 			function gogogo1(page){
 				 $.ajax({
 	                    type: 'get',

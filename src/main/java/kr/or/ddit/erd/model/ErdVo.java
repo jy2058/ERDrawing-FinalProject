@@ -15,6 +15,8 @@ public class ErdVo {
 	private String memId;		//회원아이디(팀 erd인 경우 null이 들어감)
 	private int teamNo;			//팀 번호 ( 팀 erd가 아닌 경우, null값이 들어감)
 	private String erdImg;
+	private String orderKind;	// 정렬종류
+	private int likeCnt; 		// 좋아요 수
 	
 	
 	public ErdVo() {
@@ -100,12 +102,31 @@ public class ErdVo {
 	public void setErdImg(String erdImg) {
 		this.erdImg = erdImg;
 	}
+	
+	
+
+	public String getOrderKind() {
+		return orderKind;
+	}
+
+	public void setOrderKind(String orderKind) {
+		this.orderKind = orderKind;
+	}
+
+	public int getLikeCnt() {
+		return likeCnt;
+	}
+
+	public void setLikeCnt(int likeCnt) {
+		this.likeCnt = likeCnt;
+	}
 
 	@Override
 	public String toString() {
 		return "ErdVo [erdNo=" + erdNo + ", erdTitle=" + erdTitle + ", erdScope=" + erdScope + ", erdReadCnt="
 				+ erdReadCnt + ", erdCDt=" + erdCDt + ", erdUDt=" + erdUDt + ", erdColor=" + erdColor + ", memId="
-				+ memId + ", teamNo=" + teamNo + ", erdImg=" + erdImg + "]";
+				+ memId + ", teamNo=" + teamNo + ", erdImg=" + erdImg + ", orderKind=" + orderKind + ", likeCnt="
+				+ likeCnt + "]";
 	}
 
 }

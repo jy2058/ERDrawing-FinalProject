@@ -1,8 +1,10 @@
 <%@page import="kr.or.ddit.member.model.MemberVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<link rel="icon" href="../../favicon.ico">
+<link rel="stylesheet" href="/css/member/memList.css">
 
-<!DOCTYPE html>
+<%-- <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -18,24 +20,25 @@
 
     <!-- Custom styles for this template -->
     <link href="${cp}/css/boxErd.css" rel="stylesheet">
-  </head>
+  </head> --%>
 
-<body>
-	<%-- <%@ include file="/WEB-INF/views/template/header.jsp" %> --%>
 
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/views/post/left.jsp"%>
 		</div>
-		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-			<h3 class="page-header">새 글 등록</h3>
+		<!-- <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"> 
+		<div class="col-sm-10 col-md-10 main"> -->
+		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" >
+		
+			<h2 class="page-header">새 글 등록</h2>
 			<form id="frm" action="${cp}/post/postInsert" method="post"
 				  class="form-horizontal" role="form" enctype="multipart/form-data">
 				<input type="hidden" id="boardNo" name="boardNo" value="${postVo.boardNo}">
 				글제목  <input type="text" id="postTitle" name="postTitle" rows="10" cols="100" style="width: 400px; height: 30px;" /></br></br> 
 			        작성자  <input type="text" id="writerId" name="writerId" value="${SESSION_MEMBERVO.memId}" 
-			                  rows="10" cols="100" style="width: 400px; height: 30px;" readonly /></br></br>
-				<textarea name="postContent" id="smarteditor" rows="10" cols="100" style="width: 766px; height: 412px;" ></textarea>
+			                 rows="10" cols="100" style="width: 400px; height: 30px;" readonly /></br></br>
+				<textarea name="postContent" id="smarteditor" rows="10" cols="100" style="width: 766px; height: 412px; background: white;"></textarea>
 
 				<div class="form-group">
 					<label for="files" class="col-sm-1 control-label">첨부파일</label>
@@ -137,5 +140,5 @@
 			}
 		});
 	</script>
-</body>
+
 </html>

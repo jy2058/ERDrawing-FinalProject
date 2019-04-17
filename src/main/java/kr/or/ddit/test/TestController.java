@@ -11,15 +11,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.erd.service.IErdService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
 import kr.or.ddit.team.model.TeamListVo;
 import kr.or.ddit.team.model.TeamVo;
 import kr.or.ddit.team.service.ITeamService;
-import kr.or.ddit.util.model.PageVo;
 
 @Controller
 public class TestController {
@@ -34,9 +35,22 @@ public class TestController {
 	@Resource(name="memberService")
 	private IMemberService memberService;
 	
-	@RequestMapping(path="/")
-	public String test1(){
+	@RequestMapping(path="/", method=RequestMethod.GET)
+	public String test1(Model model){
+		String orderKind = "erdLike";
+		Map<String, Object> allErdOrderAndTagMap = erdService.getAllErdOrderAndTagMap(orderKind);
+		model.addAllAttributes(allErdOrderAndTagMap);
+		
 		return "main";
+	}
+	
+	@RequestMapping(path="/", method=RequestMethod.POST)
+	public String mainPost(Model model, @RequestParam(name = "orderKind", defaultValue = "erdLike")String orderKind){
+		logger.debug("***orderKind : {} ", orderKind);
+		Map<String, Object> allErdOrderAndTagMap = erdService.getAllErdOrderAndTagMap(orderKind);
+		model.addAllAttributes(allErdOrderAndTagMap);
+		
+		return "jsonView";
 	}
 	
 	@RequestMapping(path="/test2")
@@ -156,8 +170,11 @@ public class TestController {
 	}
 	
 	@RequestMapping(path="/kjy")
-	public String erdDrawingKJY(){
-		return "drawing/erdDrawing_JY";
+	public String erdDrawingKJY(ErdVo erdVo){
+		//erdVo에 erdNo만 있음
+		erdService.updCnt(erdVo.getErdNo()); // 조회수 증가
+		
+		return "erdrawing";
 	}
 	
 	// 모달 페이지 변경 메소드 
@@ -191,11 +208,16 @@ public class TestController {
 			case "searchModal":
 				page = "erd/search";
 				break;
+			case "erdModify":
+				page = "erd/erdModify";
 		}
 		
 		return page;
 	}
 	
+	
+	
+
 	
 	
 }

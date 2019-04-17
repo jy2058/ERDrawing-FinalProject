@@ -95,5 +95,19 @@ public class ErdDaoImplTest extends logicTestConfig{
 
 	}
 	
+	@Test
+	public void testGetAllErdListOrder(){
+		/***Given***/
+		ErdVo erdVo = new ErdVo();
+		erdVo.setOrderKind("");
+		/***When***/
+		List<ErdVo> allErdListOrder = erdDao.getAllErdListOrder(erdVo);
+		/***Then***/
+		assertNotNull(allErdListOrder);
+		
+		logger.debug("***orderKing : {}", allErdListOrder);
+
+	}
+	
 
 }

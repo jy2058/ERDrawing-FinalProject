@@ -6,10 +6,10 @@
 
 		<c:forEach items="${cmtList}" var="cmt">
 			<tr class="cmtTr" border-right: 2px solid #fff;" data-cmtno="${cmt.cmtNo}" style="background-color: #f9f9f9;">
-				<td style="text-align: center; border-right: 2px solid #fff; color:black;">${cmt.cmtNo}</td>
-				<td style="text-align: center; border-right: 2px solid #fff; color:black;">${cmt.memId}</td>
-				<td style="border-right:2px solid #fff; color:black;">&nbsp;${cmt.cmtContent}</td>
-				<td style="text-align: center; border-right: 2px solid #fff; color:black;">( ${cmt.cnt} 건 )
+				<td style="text-align: center; border-right: 2px solid #fff; color:black; height:10px;">${cmt.cmtNo}</td>
+				<td style="text-align: center; border-right: 2px solid #fff; color:black; height:10px;">${cmt.memId}</td>
+				<td style="border-right:2px solid #fff; color:black; height:10px;">&nbsp;${cmt.cmtContent}</td>
+				<td style="text-align: center; border-right: 2px solid #fff; color:black; height:10px;">( ${cmt.cnt} 건 )
 					<button type="button" id="likeBtn" class="btnLike btn-default" data-cmtnum="${cmt.cmtNo}">좋아요</button> 
 					
 					<c:if test="${SESSION_MEMBERVO.memId == cmt.memId}">
