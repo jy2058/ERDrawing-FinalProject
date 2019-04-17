@@ -21,7 +21,7 @@
             </div>
             
             <div class="top_right">
-                <div class="buttons_top" title="ERD 설정" id="erdModify"><i class="fas fa-cog"></i></div>
+                <div class="buttons_top" title="ERD 설정" id="erdModify" data-erdno="${erdNo }"><i class="fas fa-cog"></i></div>
                 <div class="buttons_top" title="알람"><i class="fas fa-bell"></i></div>
                 <div class="buttons_top" title="로그아웃"><i class="fas fa-sign-out-alt"></i></div>
                 <div class="buttons_top" title="검색 창 열기"><i class="fas fa-search"></i></div>
@@ -1526,14 +1526,41 @@
             
         
       });
-    
+// erd 수정 버튼 클릭시       
 $("#erdModify").on("click", function(){
-	alert("sdf");
-	
-})
-        
-</script>
+	var erdNo = $("#erdModify").attr("data-erdno");	
+	erdModifyModal(erdNo);
+});
 
+function erdModifyModal(erdNo) {
+	$.ajax({
+		url : "${cp}/erd/erdModify",
+		type : "get",
+		data : {
+			erdNo : erdNo
+		},
+		success : function(data) {
+			console.log(data);
+			//모달창에  해당 팀의 정보 넣어주기
+			insertInfoToModal(data);
+		}
+	});
+}
+
+function insertInfoToModal(data){
+	var erdVo = data.erdVo;
+	var tagList = data.tagList;
+	
+	var tag = "";
+	for(var i in tagList){
+		tag += tagList[i].tagContent + ",";
+	}
+	tag = tag.substr(0, tag.length-1);	// 마지막 쉼표 지우기
+	$("#title").val(erdVo.erdTitle);
+	$("#tag").val(tag);
+}
+    
+</script>
 
 
 

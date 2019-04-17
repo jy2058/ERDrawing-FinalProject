@@ -182,4 +182,15 @@ public interface ITeamService {
 	* Method 설명 : 팀 삭제
 	*/
 	int teamDel(TeamVo teamVo);
+	
+
+	/**
+	* Method : getErdTag
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdNo
+	* @return
+	* Method 설명 : erd 태그 가져오기
+	*/
+	List<TagVo> getErdTag(int erdNo);
 }

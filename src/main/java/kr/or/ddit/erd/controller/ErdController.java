@@ -2,7 +2,6 @@ package kr.or.ddit.erd.controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -25,8 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.erd.service.IErdService;
 import kr.or.ddit.member.model.MemberVo;
-import kr.or.ddit.message.model.MessageVo;
-import kr.or.ddit.team.model.TeamVo;
+import kr.or.ddit.team.model.TagVo;
 import kr.or.ddit.team.service.ITeamService;
 import kr.or.ddit.util.model.PageVo;
 
@@ -139,5 +137,17 @@ public class ErdController {
 		}
 		sos.close();
 		fis.close();
+	}
+	
+	@RequestMapping(path = "erdModify", method = RequestMethod.GET)
+	public String erdModify(@RequestParam("erdNo")int erdNo, Model model){
+		
+		ErdVo erdVo = erdService.getErdInfo(erdNo);	// erd 정보
+		List<TagVo> tagList = teamService.getErdTag(erdNo);	// erd Tag
+		
+		model.addAttribute("erdVo", erdVo);
+		model.addAttribute("tagList", tagList);
+		
+		return "jsonView";
 	}
 }
