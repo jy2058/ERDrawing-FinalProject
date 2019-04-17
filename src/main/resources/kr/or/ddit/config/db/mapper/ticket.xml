@@ -49,7 +49,7 @@
 	 		   
 	 </insert>
 	 	
-	 <select id="selectTicketHist" resultType="TicketBuyHistVo" parameterType="java.util.Map">
+	 <select id="selectTicketHist" resultType="ticketBuyHistVo" parameterType="java.util.Map">
 		select *
 			from ticket_buy_hist
 			where
@@ -58,5 +58,34 @@
 			</if>
 				ticketBuyDt <![CDATA[ >= ]]> #{startDt} and
 				ticketBuyDt <![CDATA[ < ]]>	#{endDt}
+	 </select>
+	 
+	 <select id="selectTicketMonthList" parameterType="java.util.Map" resultType="ticketBuyHistVo">
+		select to_char(ticketBuyDt,'mm')as ticketMonDt ,
+		       sum(ticketFee) as ticketFee from ticket_buy_hist 
+		where to_char(ticketBuyDt,'yyyy') like #{yyyy} || '%'
+		and ticketNo = #{ticketNo}  
+		 group by to_char(ticketBuyDt,'mm')
+		order by ticketMonDt asc
+	 
+	 </select>
+	 
+	 <select id="selectTicketYearList" resultType="ticketBuyHistVo" parameterType="String">
+	   select ticketMonDt, sum(fee)as TICKETFEE
+   	 from  (select distinct(ticketMonDt) as ticketMonDt,
+         case when ticketMonDts = ticketMonDt then TICKETFEE else 0 end as fee                
+               from (select to_char(TICKETBUYDT,'YYYYMM')as ticketMonDts ,
+                                sum(TICKETFEE) as TICKETFEE
+                       from TICKET_BUY_HIST 
+                      where  TICKETBUYDT <![CDATA[ > ]]> to_char(trunc(add_months(sysdate, -12), 'dd'),'yyyymmdd')
+                        and ticketNo=#{ticketNo}
+                       group by to_char(TICKETBUYDT,'YYYYMM')
+                       order by ticketMonDts) a, 
+                       (select to_char(add_months(sysdate,-(level-1)),'yyyyMM') as ticketMonDt
+                          from dual
+                       connect by level <![CDATA[ <= ]]> 12) b 
+                order by ticketMonDt)
+                  group by ticketMonDt
+                order by ticketMonDt
 	 </select>
 </mapper>
