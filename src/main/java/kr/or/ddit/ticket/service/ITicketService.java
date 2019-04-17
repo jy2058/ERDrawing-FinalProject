@@ -20,4 +20,8 @@ public interface ITicketService {
 	int deleteTicket(String ticketNo);
 	
 	List<TicketBuyHistVo> selectTicketHist(Map<String, Object> ticketMap);
+	
+	List<TicketBuyHistVo> selectTicketMonthList(Map<String, Object> ticketMap);
+	
+	List<TicketBuyHistVo> selectTicketYearList(String ticketNo);
 }

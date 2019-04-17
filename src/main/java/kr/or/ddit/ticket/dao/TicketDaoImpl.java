@@ -45,7 +45,18 @@ public class TicketDaoImpl implements ITicketDao{
 	@Override
 	public List<TicketBuyHistVo> selectTicketHist(Map<String, Object> ticketMap) {
 		return sqlSession.selectList("ticket.selectTicketHist",ticketMap);
-		
 	}
+
+	@Override
+	public List<TicketBuyHistVo> selectTicketMonthList(Map<String, Object> ticketMap) {
+		return sqlSession.selectList("ticket.selectTicketMonthList",ticketMap);
+	}
+
+	@Override
+	public List<TicketBuyHistVo> selectTicketYearList(String ticketNo) {
+		return sqlSession.selectList("ticket.selectTicketYearList",ticketNo);
+	}
+	
+	
 
 }

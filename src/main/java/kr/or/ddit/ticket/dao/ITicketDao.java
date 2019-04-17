@@ -67,5 +67,24 @@ public interface ITicketDao {
 	 */
 	List<TicketBuyHistVo> selectTicketHist(Map<String, Object> ticketMap);
 	
+	/**
+	 * Method : selectTicketMonthList
+	 * 작성자 : PC02
+	 * 변경이력 :
+	 * @param yyyy
+	 * @return
+	 * Method 설명 : 티켓별 매달 매출
+	 */
+	List<TicketBuyHistVo> selectTicketMonthList(Map<String, Object> ticketMap);
+
 	
+	/**
+	 * Method : selectTicketYearList
+	 * 작성자 : PC02
+	 * 변경이력 :
+	 * @param ticketNo
+	 * @return
+	 * Method 설명 :오늘을 기준으로 일년전 티켓매출내역 가져옴
+	 */
+	List<TicketBuyHistVo> selectTicketYearList(String ticketNo);
 }

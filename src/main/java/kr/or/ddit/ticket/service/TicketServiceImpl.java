@@ -47,4 +47,14 @@ public class TicketServiceImpl implements ITicketService{
 		return ticketDao.selectTicketHist(ticketMap);
 	}
 
+	@Override
+	public List<TicketBuyHistVo> selectTicketMonthList(Map<String, Object> ticketMap) {
+		return ticketDao.selectTicketMonthList(ticketMap);
+	}
+
+	@Override
+	public List<TicketBuyHistVo> selectTicketYearList(String ticketNo) {
+		return ticketDao.selectTicketYearList(ticketNo);
+	}
+
 }
