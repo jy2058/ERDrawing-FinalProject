@@ -11,31 +11,22 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 
 <!-- Custom styles for this template -->
- <link href="${cp}/css/dashboard.css" rel="stylesheet">
+<link href="${cp}/css/dashboard.css" rel="stylesheet">
 --%>
-<style>
-/* .se2_inputarea{
-background: white;
-}
-#postContent{
-background: white;} */
-
-</style>
 
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/views/post/left.jsp"%>
-		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<!-- <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"> -->
+		<div class="col-sm-10 col-md-10 main">
 			<h3 class="page-header" style="color: #fff;">게시글 수정</h3>
-			
-			
 			<form id="frm" action="${cp}/post/postUpdate" method="post"
 				  class="form-horizontal" role="form" enctype="multipart/form-data">
 				  
 				<div class="form-group">
 					<label for="postTitle" class="col-sm-2 control-label" style="color: #fff;">글제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 					<div class="col-sm-7">
-						<input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="글제목" value="${postVo.postTitle}" />
+						<input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="글제목" value="${postVo.postTitle}"  />
 					</div>
 				</div>
 				
@@ -56,7 +47,7 @@ background: white;} */
 				<div class="form-group">
 					<label for="postContent" class="col-sm-2 control-label" style="color: #fff;">글내용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 					<div class="col-sm-10" style="background: white;">
-						<textarea name="postContent" id="postContent" rows="10" cols="100" style="width: 795px; height: 412px;">
+						<textarea name="postContent" id="postContent" rows="10" cols="100" style="width: 795px; height: 420px;">
 							${postVo.postContent}
 						</textarea>
 					</div>
@@ -79,7 +70,7 @@ background: white;} */
 				</div>
 
 				<div class="form-group">
-					<div class="col-sm-offset-5 col-sm-10">
+					<div class="col-sm-offset-6 col-sm-10">
 						<button id="cancelBtn" type="button" class="btn btn-default">취소</button>
 						<button id="saveBtn" type="button" class="btn btn-default">저장</button>
 					</div>

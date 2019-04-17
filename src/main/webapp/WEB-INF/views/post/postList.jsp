@@ -18,22 +18,16 @@
     <meta name="description" content="">
     <meta name="author" content="">
    
-
-    <!-- Bootstrap core CSS -->
-   
-    <!-- Custom styles for this template -->
-    
     <!-- <link rel="stylesheet" href="/css/style.css"> -->
-
-
   </head> --%>
+  
 <div class="container-fluid">
 	<div class="row">
-		<%@ include file="/WEB-INF/views/post/left.jsp"%>
+		 <%@ include file="/WEB-INF/views/post/left.jsp"%> 
 
-		<h1 class="page-header" style="color: #fff;">${boardNm}</h1>
+		<h2 class="page-header" style="color: #fff;">${boardNm}</h2>
 
-		<div class="table-responsive" style="margin-right: 20px; width: 80%;">
+		<div class="table-responsive" style="margin-right:20px; width: 80%;">
 			<table style="width: 100%;">
 				<thead>
 					<tr style="height: 50px;">
