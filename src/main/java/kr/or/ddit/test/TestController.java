@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.or.ddit.erd.model.ErdVo;
@@ -34,14 +35,22 @@ public class TestController {
 	@Resource(name="memberService")
 	private IMemberService memberService;
 	
-	@RequestMapping(path="/")
+	@RequestMapping(path="/", method=RequestMethod.GET)
 	public String test1(Model model){
-		//String orderKind = "erdLike";
-		String orderKind = "erdRead";
+		String orderKind = "erdLike";
 		Map<String, Object> allErdOrderAndTagMap = erdService.getAllErdOrderAndTagMap(orderKind);
 		model.addAllAttributes(allErdOrderAndTagMap);
 		
 		return "main";
+	}
+	
+	@RequestMapping(path="/", method=RequestMethod.POST)
+	public String mainPost(Model model, @RequestParam(name = "orderKind", defaultValue = "erdLike")String orderKind){
+		logger.debug("***orderKind : {} ", orderKind);
+		Map<String, Object> allErdOrderAndTagMap = erdService.getAllErdOrderAndTagMap(orderKind);
+		model.addAllAttributes(allErdOrderAndTagMap);
+		
+		return "jsonView";
 	}
 	
 	@RequestMapping(path="/test2")
