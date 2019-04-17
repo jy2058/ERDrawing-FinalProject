@@ -110,7 +110,9 @@
         	<put-attribute name="content" value="/WEB-INF/views/ticket/ticketChart.jsp" />
         </definition>
         
-        
+         <definition name="ticketPie" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/ticket/ticketPie.jsp" />
+        </definition>
         
         
         
