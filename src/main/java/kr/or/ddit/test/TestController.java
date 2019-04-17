@@ -174,7 +174,7 @@ public class TestController {
 		//erdVo에 erdNo만 있음
 		erdService.updCnt(erdVo.getErdNo()); // 조회수 증가
 		
-		return "drawing/erdDrawing_JY";
+		return "erdrawing";
 	}
 	
 	// 모달 페이지 변경 메소드 
@@ -208,11 +208,16 @@ public class TestController {
 			case "searchModal":
 				page = "erd/search";
 				break;
+			case "erdModify":
+				page = "erd/erdModify";
 		}
 		
 		return page;
 	}
 	
+	
+	
+
 	
 	
 }
