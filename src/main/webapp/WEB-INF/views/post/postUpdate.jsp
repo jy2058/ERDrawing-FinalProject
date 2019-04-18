@@ -24,28 +24,28 @@
 				  class="form-horizontal" role="form" enctype="multipart/form-data">
 				  
 				<div class="form-group">
-					<label for="postTitle" class="col-sm-2 control-label" style="color: #fff;">글제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<label for="postTitle" class="col-sm-1 control-label" style="color: #fff;">글제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 					<div class="col-sm-7">
 						<input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="글제목" value="${postVo.postTitle}"  />
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label for="writerId" class="col-sm-2 control-label" style="color: #fff;">작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<label for="writerId" class="col-sm-1 control-label" style="color: #fff;">작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 					<div class="col-sm-7">
 						<input type="text" class="form-control" id="writerId" name="writerId" placeholder="작성자" value="${postVo.writerId}" readonly/>
 					</div>
 				</div>
 				
 				<div class="form-group">
-					<label for="postRegDt" class="col-sm-2 control-label" style="color: #fff;">등록일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<label for="postRegDt" class="col-sm-1 control-label" style="color: #fff;">등록일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 					<div class="col-sm-7">
 						<input type="text" class="form-control" id="postRegDt" name="postRegDt" placeholder="등록일" value='<fmt:formatDate value="${postVo.postRegDt}" pattern="yyyy-MM-dd"/>' readonly/>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<label for="postContent" class="col-sm-2 control-label" style="color: #fff;">글내용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<label for="postContent" class="col-sm-1 control-label" style="color: #fff;">글내용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 					<div class="col-sm-10" style="background: white;">
 						<textarea name="postContent" id="postContent" rows="10" cols="100" style="width: 795px; height: 420px;">
 							${postVo.postContent}
@@ -70,7 +70,7 @@
 				</div>
 
 				<div class="form-group">
-					<div class="col-sm-offset-6 col-sm-10">
+					<div class="col-sm-offset-5 col-sm-10">
 						<button id="cancelBtn" type="button" class="btn btn-default">취소</button>
 						<button id="saveBtn" type="button" class="btn btn-default">저장</button>
 					</div>

@@ -22,36 +22,50 @@
     <link href="${cp}/css/boxErd.css" rel="stylesheet">
   </head> --%>
 
-
 	<div class="container-fluid">
-		<div class="row">
+		<div>
 			<%@ include file="/WEB-INF/views/post/left.jsp"%>
 		</div>
-		<!-- <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"> 
-		<div class="col-sm-10 col-md-10 main"> -->
-		<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" >
-		
-			<h2 class="page-header">새 글 등록</h2>
+		<div class="col-sm-10 col-md-10 main">
+		<!-- 위쪽여백?, 표크기 -->
+			<h3 class="page-header">새 글 등록</h3>
 			<form id="frm" action="${cp}/post/postInsert" method="post"
 				  class="form-horizontal" role="form" enctype="multipart/form-data">
 				<input type="hidden" id="boardNo" name="boardNo" value="${postVo.boardNo}">
-				글제목  <input type="text" id="postTitle" name="postTitle" rows="10" cols="100" style="width: 400px; height: 30px;" /></br></br> 
-			        작성자  <input type="text" id="writerId" name="writerId" value="${SESSION_MEMBERVO.memId}" 
-			                 rows="10" cols="100" style="width: 400px; height: 30px;" readonly /></br></br>
-				<textarea name="postContent" id="smarteditor" rows="10" cols="100" style="width: 766px; height: 412px; background: white;"></textarea>
-
+				
 				<div class="form-group">
-					<label for="files" class="col-sm-1 control-label">첨부파일</label>
-					<div id="fileUpload" class="col-sm-4">
+					<label for="postTitle" class="col-sm-1 control-label" style="color: #fff;">글제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<div class="col-sm-7">
+						<input type="text" class="form-control" id="postTitle" name="postTitle" />
+					</div>
+				</div> 
+				
+				<div class="form-group">
+					<label for="writerId" class="col-sm-1 control-label" style="color: #fff;">작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+			        <div class="col-sm-7">
+			        	<input type="text" class="form-control" id="writerId" name="writerId" value="${SESSION_MEMBERVO.memId}" readonly />
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="writerId" class="col-sm-1 control-label" style="color: #fff;">글내용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<div class="col-sm-10" style="background: white;">
+						<textarea name="postContent" id="smarteditor" rows="10" cols="100" style="width: 795px; height: 420px;"></textarea>
+					</div>
+				</div>
+				
+				<div class="form-group">
+					<label for="files" class="col-sm-1 control-label">첨부파일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+					<div id="fileUpload" class="col-sm-7">
 						<input type="file" class="form-control" name="file" />
 					</div>
-					<div class="col-sm-1">
+					<div class="col-sm-1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						<button id="fileAddBtn" type="button" class="btn btn-default">추가</button>
 					</div>
 				</div>
 
 				<div class="form-group">
-					<div class="col-sm-offset-1 col-sm-10">
+					<div class="col-sm-offset-5 col-sm-10">
 						<input type="hidden" id="postNum" name="postNum" value="${postVo.postNo}" />
 						<input type="hidden" name="memId" value="${SESSION_MEMBERVO.memId}" />
 						<button id="cancelBtn" type="button" class="btn btn-default">취소</button>

@@ -30,41 +30,32 @@
 			<%@ include file="/WEB-INF/views/post/left.jsp"%>
 			<!-- <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"> -->
 				<div class="col-sm-10 col-md-10 main">
-				<h2 class="page-header">답글 등록</h2>
+				<h3 class="page-header">답글 등록</h3>
 				<form id="frm" action="${cp}/post/postReply" method="post"
 						class="form-horizontal" role="form" enctype="multipart/form-data">
 					<div class="form-group">
-						<label for="postTitle" class="col-sm-2 control-label">글제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						<label for="postTitle" class="col-sm-1 control-label">글제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="RE: ${postVo.postTitle}" 
-							         />
+							<input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="RE: ${postVo.postTitle}" />
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<label for="WriterId" class="col-sm-2 control-label">작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						<label for="WriterId" class="col-sm-1 control-label">작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" id="writerId" name="writerId" value="${SESSION_MEMBERVO.memId}" 
-			                       readonly />
+							<input type="text" class="form-control" id="writerId" name="writerId" value="${SESSION_MEMBERVO.memId}" readonly />
 						</div>
 					</div>
 					
-					<%-- <div class="form-group">
-					<label for="postRegDt" class="col-sm-2 control-label" style="color: #fff;">등록일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-					<div class="col-sm-7">
-						<input type="text" class="form-control" id="postRegDt" name="postRegDt" placeholder="등록일" value='<fmt:formatDate value="${postVo.postRegDt}" pattern="yyyy-MM-dd"/>' readonly/>
-					</div>
-				</div> --%>
-					
 					<div class="form-group">
-						<label for="postContent" class="col-sm-2 control-label"></label>
+						<label for="postContent" class="col-sm-1 control-label" style="color: #fff;">글내용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 						<div class="col-sm-10" style="background: white;">
 							<textarea name="postContent" id="smarteditor" rows="10" cols="100" style="width: 795px; height: 420px;"></textarea>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label for="files" class="col-sm-2 control-label">첨부파일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						<label for="files" class="col-sm-1 control-label">첨부파일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 						<div id="fileUpload" class="col-sm-7">
 							<input type="file" class="form-control" name="file" />
 						</div>
@@ -74,7 +65,7 @@
 					</div>
 					
 					<div class="form-group">
-						<div class="col-sm-offset-6 col-sm-10">
+						<div class="col-sm-offset-5 col-sm-10">
 							<input type="hidden" id="boardNo" name="boardNo" />
 							<button id="cancelBtn" type="button" class="btn btn-default">취소</button>
 							<button id="insBtn" type="button" class="btn btn-default">저장</button>
