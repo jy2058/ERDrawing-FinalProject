@@ -12,7 +12,11 @@
 
 }
 .modal-dialog, .modal-content {
-    height: 63%;
+    height: auto;
+}
+
+#ticketModalEvnTest{
+ height: auto;
 }
 .modalLabels{
 width: 100px;
