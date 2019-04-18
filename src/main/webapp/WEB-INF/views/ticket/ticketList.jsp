@@ -2,11 +2,39 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
-
+<link rel="stylesheet" href="/css/member/modify.css">
 <link rel="stylesheet" href="/css/member/mypage.css">
 <link rel="stylesheet" href="/css/boxErd.css">
 
 <style>
+
+.filebox input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+.filebox label {
+  display: inline-block;
+  color: #fff;
+  font-size: inherit;
+  line-height: normal;
+  vertical-align: middle;
+  background-color: #FA4358;
+  cursor: pointer;
+  border: 1px solid #FA4358;
+  border-radius: .25em;
+}
+.filebox label:hover {
+  background-color: #FA4358;
+}
+.filebox label:active {
+  background-color: #FA4358;
+}
 .modal{
  color: #000;
 
@@ -82,7 +110,7 @@ color:#fff;
 								</div>
 							</div>
 						</a>
-						
+				
 						<div class="description-item">
 							<c:if test="${SESSION_MEMBERVO.memAuth == 'T' }">
 								<div  class="modifyModal" style="float: right; cursor: pointer;" data-toggle="modal" data-target="#ticketModalEvnTest" data-ticketno="${ticket.ticketNo }">수정</div>
@@ -103,7 +131,7 @@ color:#fff;
 	
 	
 <!-- 티켓 수정.삭제 하는 모달창 띄우기 -->	
-	<form id="frm" action="/ticket" method="post">
+	<form id="frm" action="/ticket" method="post" enctype="multipart/form-data">
       <div class="modal modal-center fade" id="ticketModalEvnTest" tabindex="1" role="dialog" aria-labelledby="my80sizeCenterModalLabel" >
       <div class="modal-dialog modal-80size modal-center" role="document" >
          <div class="modal-content modal-80size">
@@ -133,8 +161,14 @@ color:#fff;
                
                 <div class="pass form-group">
                   <label class="modalLabels"  >ticketImg</label> 
-                     <input   type="text" class="ticketImg" id="ticketImg" name="ticketImg" />
+                  <img id="profileImg" src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }" width="340" height="320" />
                </div>
+               
+               <div class="filebox img-btn btn-style1">
+					<label  class="btn-style1" for="input_img">프로필 이미지 올리기</label> 
+					<input	type="file" id="input_img" name="profileImg" />
+					
+				</div>
                
                </div>   
                <div id="modalBtn" class="modal-footer">
@@ -156,6 +190,8 @@ color:#fff;
 	var ticketNo = "";
 	var regex= /^[0-9]+$/;
 	$(document).ready(function() {
+		
+	    $("#input_img").on("change", handleImgFileSelect);
 
 		var msg = "${msg}"
 		if(msg !=""){
@@ -286,5 +322,28 @@ color:#fff;
 			$("#ticketPrice").val("");
 			$("#ticketContent").val("");
 		}
+		
+		
+
+	      function handleImgFileSelect(e) {
+	          var files = e.target.files;
+	          var filesArr = Array.prototype.slice.call(files);
+	          filesArr.forEach(function(f) {
+	              if(!f.type.match("image.*")) {
+	                  alert("확장자는 이미지 확장자만 가능합니다.");
+	                  return;
+	              }
+
+	              sel_file = f;
+
+	              var reader = new FileReader();
+	              reader.onload = function(e) {
+	                  $("#profileImg").attr("src", e.target.result);
+	              }
+	              reader.readAsDataURL(f);
+	          });
+	      }
+		
+		
 	</script>
 </div>

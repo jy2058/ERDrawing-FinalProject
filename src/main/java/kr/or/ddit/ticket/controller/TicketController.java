@@ -18,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.ticket.model.TicketBuyHistVo;
@@ -60,7 +61,7 @@ public class TicketController {
    
    //티켓정수정
    @RequestMapping("modifyTicket")
-   public String modifyTicket(Model model,TicketVo ticketVo,RedirectAttributes ra,HttpServletRequest req){
+   public String modifyTicket(Model model,TicketVo ticketVo,RedirectAttributes ra,HttpServletRequest req,MultipartFile profileImg){
       logger.debug("======modify{}",ticketVo);
       int updCnt = ticketService.updateTicket(ticketVo);
       
