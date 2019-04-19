@@ -56,6 +56,11 @@ public class TicketDaoImpl implements ITicketDao{
 	public List<TicketBuyHistVo> selectTicketYearList(String ticketNo) {
 		return sqlSession.selectList("ticket.selectTicketYearList",ticketNo);
 	}
+
+	@Override
+	public int insertticketBuyHist(TicketBuyHistVo ticketBuyHistVo) {
+		return sqlSession.insert("ticket.insertticketBuyHist",ticketBuyHistVo);
+	}
 	
 	
 

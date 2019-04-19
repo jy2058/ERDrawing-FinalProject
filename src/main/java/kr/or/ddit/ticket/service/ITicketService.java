@@ -24,4 +24,6 @@ public interface ITicketService {
 	List<TicketBuyHistVo> selectTicketMonthList(Map<String, Object> ticketMap);
 	
 	List<TicketBuyHistVo> selectTicketYearList(String ticketNo);
+	
+	int insertticketBuyHist(TicketBuyHistVo ticketBuyHistVo);
 }
