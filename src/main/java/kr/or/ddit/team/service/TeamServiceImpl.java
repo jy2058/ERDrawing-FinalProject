@@ -277,4 +277,9 @@ public class TeamServiceImpl implements ITeamService{
 		return teamDao.teamDel(teamNo);
 	}
 
+	@Override
+	public List<TagVo> getErdTag(int erdNo) {
+		return teamDao.getErdTag(erdNo);
+	}
+
 }

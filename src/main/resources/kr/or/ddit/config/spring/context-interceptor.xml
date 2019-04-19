@@ -5,14 +5,16 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-
-	<mvc:interceptors>
+<mvc:interceptors>
 		<mvc:interceptor>
 		
-			<mvc:mapping path="/**"/>
-<!-- 			<mvc:exclude-mapping path="**/"/> -->
+			<mvc:mapping path="/post/postInsert"/>
+			<mvc:mapping path="/post/insertCmt"/>
+			<mvc:mapping path="/post/postReply"/>
+			<mvc:mapping path="/post/postReport"/>
+			<mvc:mapping path="/post/likeCmt"/>
 			
-			 <bean class="kr.or.ddit.util.interceptor.LoginInterceptor"></bean>
+			 <bean class="kr.or.ddit.login.LoginInterceptor"></bean>
 		</mvc:interceptor>
 	</mvc:interceptors>
 

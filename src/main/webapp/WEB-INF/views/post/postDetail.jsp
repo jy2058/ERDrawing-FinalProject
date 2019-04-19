@@ -8,20 +8,18 @@
     <!-- Bootstrap core CSS -->
     <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
 
-    <!-- Custom styles for this template -->
    <%-- <link href="${cp}/css/dashboard.css" rel="stylesheet"> --%>
    
-
 <!-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
 <script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> -->
- 
 
-  <body>
     <div class="container-fluid">
       <div class="row">
-         <%@ include file="/WEB-INF/views/post/left.jsp"%>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-          <!-- <h1 class="page-header">게시글 조회</h1> -->
+         <%@ include file="/WEB-INF/views/post/left.jsp"%><br/><br/><br/><br/>
+<!--  <div class="col-sm-6 col-sm-offset-3 col-md-8col-md-offset-10 main"> --> 
+      
+      <div class="col-sm-10 col-md-10 main">
+           <!-- <h1 class="page-header">게시글 조회</h1>  -->
           <form id="frm" action="${cp}/delPost" method="post" class="form-horizontal" role="form">
          <div class="form-group">
             <label for="title" class="col-sm-2 control-label" style="color: #fff;">글제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -29,27 +27,12 @@
                <label class="control-label" style="color: #fff;">${postList.postTitle}</label>
             </div>
             
-            
 <style>
    #layer_popup {display:none; border:5px solid #cccccc;margin:0;padding:5px;background-color:#ffffff;z-index:2000;}
    #layer_popup .b-close {position:absolute;top:10px;right:30px;color:#f37a20;font-weight:bold;cursor:hand;}
    #layer_popup .popupContent {margin:0;padding:0;text-align:center;border:0;width:650px;height:200px;}
    #layer_popup .popupContent iframe {border:0;padding:0px;margin:0;z-index:10;}
 </style>
-
-	<%-- <c:choose>
-		<c:when test="${boardNo == '1'}">
-			<c:if test="${SESSION_MEMBERVO.memAuth == 'T'}">
-				<input type = "hidden" name="boardNo" value="${boardNo}"> 
-	   			<input type="button" id="report" onclick="layer_open()" value="신고">
-			</c:if>
-		</c:when>
-		
-		<c:otherwise>
-			<input type = "hidden" name="boardNo" value="${boardNo}"> 
-	   		<input type="button" id="report" onclick="layer_open()" value="신고">
-		</c:otherwise>
-	</c:choose> --%>
 	
 	<input type = "hidden" name="boardNo" value="${boardNo}"> 
 	<input type="button" id="report" onclick="layer_open()" value="신고">
@@ -86,9 +69,7 @@
    </div>
 </div>
             
-      
          </div>
-         
          <div class="form-group">
             <label for="writer" class="col-sm-2 control-label" style="color: #fff;">작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <div class="col-sm-7">
@@ -462,5 +443,5 @@
 
       
    </script>
-  </body>
+
     

@@ -7,7 +7,7 @@
 	}
 </style>   
 
-		<h1 class="erd-add h1">Modify ERD</h1>
+		<h1 class="erd-add h1">ERD 설정</h1>
 		<form action="" id="erdAddFrm" method="post">
 			<div class="input-box">
 				<label>제목</label>
@@ -15,7 +15,7 @@
 			</div>
 			<div class="input-box">
 				<label>태그</label>
-				<input type="text" placeholder="태그" name="tag">
+				<input type="text" placeholder="태그" name="tag" id="tag">
 			</div>
 			<div class="input-box">
 				<label>공유</label>
@@ -31,9 +31,13 @@
 					<div>
 						<input type="radio" name="erdScope" value="team">
 						<label>팀</label>
-						
 					</div>
 				</div>
+			</div>
+			<div class="input-box">
+				<label>썸네일 이미지</label>
+				<img alt="" src="" id="erdImg" width="200px"> 
+				<input type="file" name="profileImg" onchange="loadImg(this)" style="width: 300px"> 
 			</div>
 			
 			<!-- 팀 라디오 버튼 선택 시 나타나야 함 -->
@@ -47,20 +51,32 @@
 			</div>
 		</form>
 		<div class="cancle-btn99 btn-style1">취소</div>
-		<div class="submit-btn99 btn-style1" id="erdAdd">만들기</div>
+		<div class="submit-btn99 btn-style1" id="erdSave">저장</div>
 		
-		<script>
-			$("#selTeam").hide();
-		
-			$("#erdAdd").on("click", function(){
- 				$("#erdAddFrm").submit();
- 			});
-			
-			$('input[type=radio][name=erdScope]').change(function() {
-			    if (this.value == 'team') {
-			    	$("#selTeam").show();
-			    }
-			});
+<script>
+	$("#selTeam").hide();
 
-		</script>
+	$("#erdSave").on("click", function(){
+	});
+	
+	
+	
+	$('input[type=radio][name=erdScope]').change(function() {
+	    if (this.value == 'team') {
+	    	$("#selTeam").show();
+	    }
+	});
+	
+	// 이미지 미리보기
+	function loadImg(value){
+		if(value.files && value.files[0]){
+			var reader = new FileReader();
+			reader.onload = function(e){
+				$("#erdImg").attr('src', e.target.result);
+			}
+			reader.readAsDataURL(value.files[0]);
+		}
+	}
+
+</script>
 		

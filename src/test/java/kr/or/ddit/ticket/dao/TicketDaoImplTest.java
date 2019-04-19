@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +37,27 @@ public class TicketDaoImplTest extends logicTestConfig{
 		for(TicketBuyHistVo vo: list )
 		assertTrue(list.size()>20);
 	}
+
+	@Test
+	public void testTicketMonthList() {
+		Map<String,Object> map = new HashMap<>();
+		map.put("yyyy", "2018");
+		map.put("ticketNo", 2);
+		List<TicketBuyHistVo> list = (List<TicketBuyHistVo>) ticketDao.selectTicketMonthList(map);
+		logger.debug("====ser{}",list);
+		
+		assertTrue(list.size()>0);
+	}
 	
+	@Test
+	public void testSelectTicketYearList() {
+		List<TicketBuyHistVo> list =  ticketDao.selectTicketYearList("2");
+		
+		logger.debug("====ser{}",list);
+		
+		assertTrue(list.size()>0);
+		assertTrue(list.size()==12);
+	}
 	
 
 }

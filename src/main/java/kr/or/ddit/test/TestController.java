@@ -175,9 +175,10 @@ public class TestController {
 	}
 	
 	@RequestMapping(path="/kjy")
-	public String erdDrawingKJY(ErdVo erdVo){
+	public String erdDrawingKJY(ErdVo erdVo, Model model){
 		//erdVo에 erdNo만 있음
 		erdService.updCnt(erdVo.getErdNo()); // 조회수 증가
+		model.addAttribute("erdNo", erdVo.getErdNo());
 		
 		return "erdrawing";
 	}

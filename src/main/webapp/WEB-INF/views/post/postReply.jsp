@@ -2,7 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%-- <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
@@ -19,53 +20,50 @@
 <!-- Custom styles for this template -->
  <link href="${cp}/css/boxErd.css" rel="stylesheet">
 
-</head>
+</head> --%>
 
-<body>
+
 <%-- 	<%@ include file="/WEB-INF/views/module/header.jsp"%> --%>
 
 	<div class="container-fluid">
 		<div class="row">
 			<%@ include file="/WEB-INF/views/post/left.jsp"%>
-			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-				<h1 class="page-header">답글 등록</h1>
+			<!-- <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main"> -->
+				<div class="col-sm-10 col-md-10 main">
+				<h3 class="page-header">답글 등록</h3>
 				<form id="frm" action="${cp}/post/postReply" method="post"
 						class="form-horizontal" role="form" enctype="multipart/form-data">
 					<div class="form-group">
-						<label for="postTitle" class="col-sm-2 control-label">글제목</label>
+						<label for="postTitle" class="col-sm-1 control-label">글제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 						<div class="col-sm-7">
-							<input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="RE: ${postVo.postTitle}" 
-							        rows="10" cols="100" style="width: 400px; height: 30px;" />
+							<input type="text" class="form-control" id="postTitle" name="postTitle" placeholder="RE: ${postVo.postTitle}" />
 						</div>
 					</div>
 					
 					<div class="form-group">
-						<label for="WriterId" class="col-sm-2 control-label">작성자</label>
+						<label for="WriterId" class="col-sm-1 control-label">작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 						<div class="col-sm-7">
-							<input type="text" id="writerId" name="writerId" value="${SESSION_MEMBERVO.memId}" 
-			                       rows="10" cols="100" style="width: 400px; height: 30px;" readonly />
+							<input type="text" class="form-control" id="writerId" name="writerId" value="${SESSION_MEMBERVO.memId}" readonly />
 						</div>
 					</div>
 					
-					
-
 					<div class="form-group">
-						<label for="postContent" class="col-sm-2 control-label"></label>
-						<div class="col-sm-10">
-							<textarea name="postContent" id="smarteditor" rows="10" cols="100" style="width: 766px; height: 412px;" ></textarea>
+						<label for="postContent" class="col-sm-1 control-label" style="color: #fff;">글내용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+						<div class="col-sm-10" style="background: white;">
+							<textarea name="postContent" id="smarteditor" rows="10" cols="100" style="width: 795px; height: 420px;"></textarea>
 						</div>
 					</div>
 
 					<div class="form-group">
-						<label for="files" class="col-sm-2 control-label">첨부파일</label>
+						<label for="files" class="col-sm-1 control-label">첨부파일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 						<div id="fileUpload" class="col-sm-7">
 							<input type="file" class="form-control" name="file" />
 						</div>
-						<div class="col-sm-1">
+						<div class="col-sm-1">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<button id="fileAddBtn" type="button" class="btn btn-default">추가</button>
 						</div>
 					</div>
-
+					
 					<div class="form-group">
 						<div class="col-sm-offset-5 col-sm-10">
 							<input type="hidden" id="boardNo" name="boardNo" />
@@ -158,5 +156,3 @@
 			}
 		});
 	</script>
-</body>
-</html>
