@@ -20,7 +20,7 @@
 <script src="/js/drawing/attribute.js"></script>
 <script src="/js/drawing/style.js"></script>
 <script src="/js/drawing/realation.js"></script>
-   
+<script src="/js/drawing/sqlexport.js"></script>
 </head>
 
 <body id='my_body'>

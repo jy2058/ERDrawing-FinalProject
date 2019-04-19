@@ -194,31 +194,30 @@
                         </div>
                     </div>
 
-                    <div class="under_top2">
+                     <div class="under_top2">
                         <label>
-                            <input type="checkbox" value="add_pk" checked> ADD PK CONSTRAINT
+                            <input type="checkbox" value="add_pk" id='add_pk' checked> ADD PK CONSTRAINT
                         </label>
                         <label>
-                            <input type="checkbox" value="add_fk" checked> ADD FK CONSTRAINT
+                            <input type="checkbox" value="add_fk" id='add_fk'> ADD FK CONSTRAINT
                         </label>
                         <label>
-                            <input type="checkbox" value="add_non" > ADD NON IDENTIFYING RELATIONSHIP CONSTRAINT
+                            <input type="checkbox" value="add_non"  id='add_non'> ADD NON IDENTIFYING RELATIONSHIP CONSTRAINT
                         </label>
                         <label>
-                            <input type="checkbox" value="add_drop" > ADD DROP
+                            <input type="checkbox" value="add_drop"  id='add_drop'> ADD DROP
                         </label>
                         
                     </div>
                     
-                    
+                         
                     <div class="container_inner">
-                        <textarea>CREATE TABLE `Untitled` (
-	`Key`	VARCHAR(255)	NOT NULL,
-	`Key4`	VARCHAR(255)	NOT NULL )</textarea>
+                        <textarea id="queryText">
+    					</textarea>
                     </div>
                     
-                    <div class="under-bottom">
-                        <span>SQL Oracle Preview</span>
+                  <div class="under-bottom">
+                        <span id ='preview'>SQL Oracle Preview</span>
                         <span>Download PNG</span>
                     </div>
                 </div>
@@ -1444,6 +1443,47 @@
  
         }
   
+        $('#preview').on('click',function(){
+        	var query = '';
+        	
+        	if(stage.children[0].children.length == 0){ //스테이지에 테이블이 없으면 리턴 
+     			return;
+     		}
+        	
+			if($('#add_drop').prop("checked")){
+				console.log('add_drop=== 체크박스 선택');
+				query+=add_drop();
+			}
+        	
+         	 query += exportQeury();
+         	 
+			
+			if($('#add_pk').prop("checked")){
+				console.log('pk체크박스 선택');
+				query+=add_pk();
+			}
+			
+			if($('#add_fk').prop("checked")){
+				console.log('fk체크박스 선택');
+				query += add_fk();
+			}
+			
+			if($('#add_non').prop("checked")){
+				console.log('non체크박스 선택');
+				query += add_non();
+			}
+			
+			
+			
+         	$('#queryText').text(query);
+        });
+        
+        
+        
+        
+        
+        
+        
         
         
         //스크롤 확대 축소
