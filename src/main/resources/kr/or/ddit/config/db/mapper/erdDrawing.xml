@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="erdDrawing">
+
+
+<!-- 도메인 리스트 출력 -->
+	<select id="domainList" parameterType="Integer" resultType="domainVO">
+		select * from domain
+		where erdno = #{erdno}
+	</select>
+	
+<!-- 도메인 추가 -->
+	<insert id="domainInsert" parameterType="domainVO">
+	
+		<selectKey keyProperty="domainNo" resultType="Integer" order="AFTER">
+			SELECT 
+			seq_domainno.CURRVAL
+			FROM
+			DUAL
+	    </selectKey>
+    
+    
+		insert into domain
+			(domainNo, domainNm, domainDataType, domainDefaultValue, erdNo)
+		values
+			(seq_domainno.nextval, #{domainNm}, #{domainDataType, jdbcType=VARCHAR}, #{domainDefaultValue, jdbcType=VARCHAR}, #{erdNo})
+	</insert>
+	
+<!-- 도메인 수정 -->
+	<update id="domainModify" parameterType="domainVO">
+		update domain
+		set domainNm = #{domainNm},
+			domainDataType = #{domainDataType, jdbcType=VARCHAR},
+			domainDefaultValue = #{domainDefaultValue, jdbcType=VARCHAR}
+		where domainNo = #{domainNo}
+	</update>
+	
+<!-- 도메인 삭제 -->
+	<delete id="domainDelete" parameterType="Integer">
+		delete from domain 
+		where domainNo = #{domainNo}
+	</delete>
+
+<!-- 도메인 검색 -->
+	<select id="domainSearch" parameterType="domainVO" resultType="domainVO">
+		select * from domain
+		where domainNm like '%'||#{domainNm}||'%' 
+		  and erdNo = #{erdNo}
+		  order by domainNo
+	</select>
+
+</mapper>

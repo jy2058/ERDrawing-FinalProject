@@ -26,6 +26,9 @@
 	<typeAlias alias="ticketVo" type="kr.or.ddit.ticket.model.TicketVo"/>
 	<typeAlias alias="ticketBuyHistVo" type="kr.or.ddit.ticket.model.TicketBuyHistVo"/>
 	
+	<typeAlias alias="domainVO" type="kr.or.ddit.erd.model.DomainVo"/>
+	
+	
 	 
 	
   </typeAliases>
@@ -48,5 +51,6 @@
 			<mapper resource="kr/or/ddit/config/db/mapper/erd.xml"/>
 			<mapper resource="kr/or/ddit/config/db/mapper/team.xml"/>
 			<mapper resource="kr/or/ddit/config/db/mapper/ticket.xml"/>
+			<mapper resource="kr/or/ddit/config/db/mapper/erdDrawing.xml"/>
   </mappers>
 </configuration>

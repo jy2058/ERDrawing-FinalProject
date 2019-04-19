@@ -11,6 +11,7 @@
 <link rel="stylesheet" href="/css/erdDrawing.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	
 <script src="https://unpkg.com/konva@3.2.0/konva.min.js"></script>
 <script src="https://use.fontawesome.com/releases/v5.2.0/js/all.js"></script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
@@ -19,8 +20,7 @@
 <script src="/js/drawing/attribute.js"></script>
 <script src="/js/drawing/style.js"></script>
 <script src="/js/drawing/realation.js"></script>
-    
-<script src="/js/drawing/drawingAjax.js"></script>
+   
 </head>
 
 <body id='my_body'>
@@ -29,6 +29,7 @@
 <tiles:insertAttribute name="module"/>
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<script src="/js/drawing/drawingAjax.js"></script>
 
 </body>
 </html>
