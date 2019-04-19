@@ -20,6 +20,7 @@
 <script src="/js/drawing/style.js"></script>
 <script src="/js/drawing/realation.js"></script>
 <script src="/js/drawing/sqlexport.js"></script>
+<script src="/js/drawing/sqlimport.js"></script>
     
 <script src="/js/drawing/drawingAjax.js"></script>
 </head>
@@ -203,9 +204,9 @@
                         </div>
                     </div>
                     <div class="container_inner">
-                        <textarea>입력 하면 erd 드로잉</textarea>
+                        <textarea id="input_query"></textarea>
                     </div>
-                    <div class="under-bottom">
+                    <div class="under-bottom" id="importQuery">
                         <span>Import</span>
                     </div>
                 </div>
@@ -1531,6 +1532,17 @@
  
         }
   
+        $('#importQuery').on('click',function(){
+        	var totalQuery= $('#input_query').val();
+        	var arr_query =  totalQuery.split(';');// ; 를 기준으로 쿼리를 나눈다. 마지막방은 빈 값이 들어간다.
+        	if(arr_query.length<1){
+        		return;
+        	}
+        	drawERD(arr_query);
+        	
+        });
+        
+        
         
         $('#preview').on('click',function(){
         	var query = '';

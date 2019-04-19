@@ -29,7 +29,7 @@
  		var columns = table.find('.attribute');
  		var query = "";
  			for(var i =0; i<columns.length; i++){
- 				if(i==columns.length){
+ 				if(i==columns.length-1){
  		 			query = query+createColum(columns[i])+'\n'; //마지막은 ,가 붙지 않는다.
  		 			break; //마지막이기 때문에 break로 붙어도 된다. 
  		 		}	

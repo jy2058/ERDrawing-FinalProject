@@ -688,19 +688,8 @@ position: relative;
 
 
 /*web-font  */
-@font-face {
-  font-family: NanumSquareWeb;
-  src: local(NanumSquareR),
-       local(NanumSquare),
-       url(NanumSquareR.eot?#iefix) format('embedded-opentype'),
-       url(NanumSquareR.woff) format('woff'),
-       url(NanumSquareR.ttf) format('truetype');
-  font-style: normal;
-  font-weight: normal;
-  unicode-range: U+0-10FFFF;
-}
 #queryText{
- font-family: NanumSquareWeb, sans-serif;
+font-family: 'Nanum Gothic Coding', monospace;
 }
 
 
