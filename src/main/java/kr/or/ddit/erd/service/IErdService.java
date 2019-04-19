@@ -127,4 +127,26 @@ public interface IErdService {
 	* Method 설명 : 모든 ERD와 Tag 가져오기(정렬선택)
 	*/
 	Map<String, Object> getAllErdOrderAndTagMap(String orderKind);
+	
+	/**
+	* Method : erdUdt
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdVo
+	* @param memId
+	* @param tag
+	* @return
+	* Method 설명 : erd 수정
+	*/
+	int erdUdt(ErdVo erdVo, String memId, String tag);
+	
+	/**
+	* Method : erdTitleEdit
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdVo
+	* @return
+	* Method 설명 : erd title 수정
+	*/
+	int erdTitleEdit(ErdVo erdVo);
 }

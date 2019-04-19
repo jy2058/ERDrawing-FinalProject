@@ -71,4 +71,9 @@ public class ErdDaoImpl implements IErdDao{
 		return sqlSession.selectList("getAllErdListOrder", erdVo);
 	}
 
+	@Override
+	public int erdUdt(ErdVo erdVo) {
+		return sqlSession.update("erdUdt",erdVo);
+	}
+
 }

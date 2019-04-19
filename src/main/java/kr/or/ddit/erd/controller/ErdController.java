@@ -1,12 +1,17 @@
 package kr.or.ddit.erd.controller;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
@@ -20,6 +25,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.erd.service.IErdService;
@@ -147,6 +154,90 @@ public class ErdController {
 		
 		model.addAttribute("erdVo", erdVo);
 		model.addAttribute("tagList", tagList);
+		
+		return "jsonView";
+	}
+	
+	@RequestMapping(path = "erdModify", method = RequestMethod.POST)
+	public String erdModifyPost(ErdVo erdVo, @RequestParam("tag")String tag, @RequestParam(name="snapshot", required = false)String snapshot, @RequestPart("profileImg") MultipartFile multipartFile, HttpServletRequest req, HttpSession session) throws IOException{
+		//erdno 없음 
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		String memId = memberVo.getMemId();
+		
+		// 공개설정이 팀일 때
+		if(erdVo.getErdScope().equals("team")){
+			erdVo.setTeamNo(erdVo.getTeamNo());
+		}
+		// 공개설정이 개인일 때
+		else{
+			erdVo.setMemId(memberVo.getMemId());
+			erdVo.setTeamNo(0);
+		}
+
+		String path = "d:\\picture\\" ;
+		String savename =  UUID.randomUUID().toString();
+		
+		ErdVo tempVo = erdService.getErdInfo(erdVo.getErdNo());
+		String realFile = tempVo.getErdImg();
+		
+		if (multipartFile.getSize() > 0) {
+			String[] split;
+			String fileName = "";
+			String ext = "";
+
+			split = multipartFile.getOriginalFilename().split("\\.");
+			fileName = split[0]; // 파일 이름
+			ext = split[1]; // 확장자
+
+			String filename = fileName + "_" + UUID.randomUUID().toString() + "." + ext;
+
+			realFile = path + filename;
+			
+			// 불러온 파일 저장할 공간 생성
+			File profile = new File(realFile);
+			multipartFile.transferTo(profile);
+		}
+		// 스냅샷일 경우
+		else if(!snapshot.isEmpty()){
+			try {
+				// create a buffered image
+				BufferedImage image = null;
+				String[] base64Arr = snapshot.split(","); // image/png;base64, 이 부분 버리기 위한 작업
+				byte[] imageByte = Base64.getDecoder().decode(base64Arr[1]); // base64 to byte array로 변경
+				
+				ByteArrayInputStream bis = new ByteArrayInputStream(imageByte);
+				image = ImageIO.read(bis);
+				bis.close();
+		
+				// write the image to a file
+				
+				File outputfile = new File(path + savename + ".png");
+				ImageIO.write(image, "png", outputfile); // 파일생성
+				
+				realFile = path + savename + ".png";
+				
+			} catch (IOException e) {
+				throw e;
+			}
+		}
+  		erdVo.setErdImg(realFile);
+  		
+  		erdService.erdUdt(erdVo, memId, tag);	// erd 수정
+
+
+		return "redirect:/mypage";
+	}
+	
+	@RequestMapping("/erdTitleEdit")
+	public String erdTitleEdit(ErdVo erdVo, Model model){
+		logger.debug("@@@erdVo : {}", erdVo);
+		ErdVo erdInfoVo = erdService.getErdInfo(erdVo.getErdNo());
+		erdInfoVo.setErdTitle(erdVo.getErdTitle());
+		
+		erdService.erdTitleEdit(erdInfoVo);
+		
+		model.addAttribute("erdTitle", erdInfoVo.getErdTitle());
 		
 		return "jsonView";
 	}

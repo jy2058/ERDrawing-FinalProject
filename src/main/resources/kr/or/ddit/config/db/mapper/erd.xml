@@ -130,4 +130,17 @@
 		set erdreadcnt = erdreadcnt + 1
 		where erdno = #{erdNo}
 	</update>
+	
+	<!-- erd 수정 -->
+	<update id="erdUdt" parameterType="erdVo">
+		update erd 
+		set 
+			erdtitle = #{erdTitle}, 
+			erdscope = #{erdScope}, 
+			memid = #{memId, jdbcType=VARCHAR}, 
+			teamno = nullif(#{teamNo},0), 
+			erdimg = #{erdImg, jdbcType=VARCHAR}
+		where erdno = #{erdNo}
+	</update>
+	
 </mapper>
