@@ -58,7 +58,13 @@ public class PostServiceImpl implements IPostService {
 
 		return postList;
 	}
-
+	
+	@Override
+	public int getViewCnt(String postNo) {
+		int postViewCnt = postDao.getViewCnt(postNo);
+		
+		return postViewCnt;
+	}
 
 	@Override
 	public int insertPost(PostVo postVo) {
@@ -94,5 +100,6 @@ public class PostServiceImpl implements IPostService {
 		
 		return boardNm;
 	}
+
 	
 }

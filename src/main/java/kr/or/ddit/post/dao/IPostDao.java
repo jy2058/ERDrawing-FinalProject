@@ -15,6 +15,8 @@ public interface IPostDao {
 	List<PostVo> selectPostPagingList(PageVo pageVo);
 	
 	int getPostCnt(int boardNo);
+	
+	int getViewCnt(String postNo); //게시글 조회수
 
 	int insertPost(PostVo postVo); //게시글 등록
 	

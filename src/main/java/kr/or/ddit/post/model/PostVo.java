@@ -15,6 +15,7 @@ public class PostVo {
 	private int parentPostNo;     //부모게시글번호
 	private String writerId;      //작성자아이디
 	private String postTitle;     //게시글제목
+	private int viewCnt;		  //게시글 조회수
 	private int level;            
 	
 	public PostVo(){
@@ -28,8 +29,6 @@ public class PostVo {
 		this.postTitle = postTitle;
 	}
 	
-	
-
 	public int getPostNo() {
 		return postNo;
 	}
@@ -111,6 +110,14 @@ public class PostVo {
 	public void setPostTitle(String postTitle) {
 		this.postTitle = postTitle;
 	}
+	
+	public int getViewCnt() {
+		return viewCnt;
+	}
+
+	public void setViewCnt(int viewCnt) {
+		this.viewCnt = viewCnt;
+	}
 
 	public int getLevel() {
 		return level;
@@ -124,9 +131,9 @@ public class PostVo {
 	public String toString() {
 		return "PostVo [postNo=" + postNo + ", postContent=" + postContent + ", postRegDt=" + postRegDt + ", postGn="
 				+ postGn + ", postDelFlag=" + postDelFlag + ", boardNo=" + boardNo + ", parentPostNo=" + parentPostNo
-				+ ", writerId=" + writerId + ", postTitle=" + postTitle + ", level=" + level + "]";
+				+ ", writerId=" + writerId + ", postTitle=" + postTitle + ", viewCnt=" + viewCnt + ", level=" + level
+				+ "]";
 	}
 
-		
 }
 

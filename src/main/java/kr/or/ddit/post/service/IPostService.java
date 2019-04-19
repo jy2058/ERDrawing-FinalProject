@@ -17,8 +17,10 @@ public interface IPostService {
 	
 	List<PostVo> selectPostPagingList(PageVo pageVo);
 	
-	int insertPost(PostVo postVo); //게시글 등록
+	int getViewCnt(String postNo); //게시글 조회수
 	
+	int insertPost(PostVo postVo); //게시글 등록
+
 	int updatePost(PostVo postVo);
 	
 	int deletePost(String PostNo);
