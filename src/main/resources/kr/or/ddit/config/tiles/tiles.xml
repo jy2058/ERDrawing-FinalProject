@@ -35,6 +35,17 @@
         </definition>
         
         
+        <definition name="erdrawing_shin" extends="layoutERD">
+        	<put-attribute name="content" value="/WEB-INF/views/drawing/erdDrawing_ShinYS.jsp" />
+        </definition>
+        
+        <definition name="erdrawing_base" extends="layoutERD">
+        	<put-attribute name="content" value="/WEB-INF/views/drawing/erdDrawing.jsp" />
+        </definition>
+        
+        
+        
+        
         
         
         

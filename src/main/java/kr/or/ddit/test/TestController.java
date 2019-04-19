@@ -157,12 +157,17 @@ public class TestController {
 	
 	
 	
-	
-	
-	@RequestMapping(path="er")
-	public String erdDrawing(){
-		return "drawing/erdDrawing";
+	@RequestMapping("/erdDrawing")
+	public String erdDrawing(Model model, @RequestParam(name="erdNo")String erdNo){
+		model.addAttribute("erdNo",erdNo);
+		
+		return "erdrawing_base";
 	}
+	
+//	@RequestMapping(path="er")
+//	public String erdDrawing(){
+//		return "drawing/erdDrawing";
+//	}
 	
 	@RequestMapping(path="yhs")
 	public String erdDrawingYhs(){
@@ -219,6 +224,13 @@ public class TestController {
 		return page;
 	}
 	
+	
+	@RequestMapping("/sys0130")
+	public String sys0130(Model model, @RequestParam(name="erdNo")String erdNo){
+		model.addAttribute("erdNo",erdNo);
+		
+		return "erdrawing_shin";
+	}
 	
 	
 

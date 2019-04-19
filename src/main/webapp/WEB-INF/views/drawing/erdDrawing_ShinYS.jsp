@@ -194,30 +194,31 @@
                         </div>
                     </div>
 
-                     <div class="under_top2">
+                    <div class="under_top2">
                         <label>
-                            <input type="checkbox" value="add_pk" id='add_pk' checked> ADD PK CONSTRAINT
+                            <input type="checkbox" value="add_pk" checked> ADD PK CONSTRAINT
                         </label>
                         <label>
-                            <input type="checkbox" value="add_fk" id='add_fk'> ADD FK CONSTRAINT
+                            <input type="checkbox" value="add_fk" checked> ADD FK CONSTRAINT
                         </label>
                         <label>
-                            <input type="checkbox" value="add_non"  id='add_non'> ADD NON IDENTIFYING RELATIONSHIP CONSTRAINT
+                            <input type="checkbox" value="add_non" > ADD NON IDENTIFYING RELATIONSHIP CONSTRAINT
                         </label>
                         <label>
-                            <input type="checkbox" value="add_drop"  id='add_drop'> ADD DROP
+                            <input type="checkbox" value="add_drop" > ADD DROP
                         </label>
                         
                     </div>
                     
-                         
+                    
                     <div class="container_inner">
-                        <textarea id="queryText">
-    					</textarea>
+                        <textarea>CREATE TABLE `Untitled` (
+	`Key`	VARCHAR(255)	NOT NULL,
+	`Key4`	VARCHAR(255)	NOT NULL )</textarea>
                     </div>
                     
-                  <div class="under-bottom">
-                        <span id ='preview'>SQL Oracle Preview</span>
+                    <div class="under-bottom">
+                        <span>SQL Oracle Preview</span>
                         <span>Download PNG</span>
                     </div>
                 </div>
@@ -584,7 +585,7 @@
       var tmp_PosY = 0;
     
       //yhs
-       var isRRelationClick = false;  
+      var isRRelationClick = false;  
       var temp_arrow_layer;
       var temp_arrow;  
       var relationLine; //실제 관계를 연결해주는 선
@@ -597,11 +598,7 @@
       var numId = 0;  
       var findEntityArr;
       var pre_identifyingFlag;
-      var temp_stroke;
-      var temp_relationLine;
-      var temp_clickEntity = new Array(2);
-      var firstStrokeColor;
-      var secondStrokeColor;
+      
     
 //    2. ERD화면 초기화
       function init_ERD(){
@@ -959,17 +956,6 @@
         function stageClick(e){
             console.log('스테이지 클릭');
             
-            if(temp_relationLine != null){
-            	temp_relationLine.attrs.stroke = temp_stroke;
-            	temp_relationLine  = null;
-            	
-            	
-            	temp_clickEntity[0].find('.attr_container').fill(firstStrokeColor);
-            	temp_clickEntity[1].find('.attr_container').fill(secondStrokeColor);
-            	clickTarget(temp_clickEntity[0]);
-            	clickTarget(temp_clickEntity[1]);
-            	relationLine_layer.draw();
-            }
             
             
             
@@ -1038,7 +1024,9 @@
                }
            }
             
-         
+           if(allNode.className =='Line'){
+              	console.log('관계선클릭');
+              }  
             
             
             
@@ -1075,23 +1063,6 @@
                }
            }
             
-           else if(allNode.className =='Line'){
-             	console.log('관계선클릭');
-             	
-           	var lindId = allNode.attrs.id;
-            	var first_entity  = stage.find('#'+allNode.attrs.name);
-            	var second_entity = stage.find('#'+allNode.attrs.lastPos);
-            	
-            	firstEntityhighlight(first_entity[0]);
-            	secondEntityhighlight(lindId,second_entity[0]);
-            	
-            	temp_stroke = allNode.attrs.stroke;
-               temp_relationLine = allNode;
-            	
-            	
-            	allNode.attrs.stroke = '#ff0000';
-            	relationLine_layer.draw();
-             }  
             
             
             
@@ -1117,39 +1088,13 @@
  
                 //entity 삭제버튼 이벤트 
                 if(allNode.name().indexOf('btn_entity_delete') > -1){
-                	
-               	 	 findEntityArr  = stage.find('.entity');
-               	  var removeTableNo=allNode.findAncestor('.entity').id();
-              	  var length = allNode.findAncestor('.entity').find('.attribute').length;
-             	  var tempEntity = allNode.findAncestor('.entity');
-           		  var arr_EntityAboutremoveCol = new Array();
-           		  
-           		  //삭제 클릭 시, 내가 클릭한 entity의 속성을 모두 제거
-                for(var i=length-1; i>-1; i--){
-                	 if(allNode.findAncestor('.entity').find('.attribute')[i].attrs.pkId == undefined){  //마스터테이블 일 때,  즉 외래키가 이닐 때
-                         entityId = allNode.findAncestor('.entity').find('.attribute')[i].attrs.id;
-                        }
-                        
-                        else{
-                       	 entityId = allNode.findAncestor('.entity').find('.attribute')[i].attrs.pkId    //삭제를 선택한 녀석이 외래키 일 때
-                        	arr_EntityAboutremoveCol.push(tempEntity);
-                        }
-                        	firstEntity = tempEntity;
-                           	cascadeDeletePk(entityId,arr_EntityAboutremoveCol);
-                            //allNode.findAncestor('.attribute').destroy();
-                            allNode.findAncestor('.entity').find('.attribute')[i].destroy();
-                }
- 				          	deleteRelationLine(arr_EntityAboutremoveCol);
                     
-                    mini_stage.find('.'+removeTableNo).remove(); //미니맵 테이블 삭제
+                    var removeTableNo=allNode.findAncestor('.entity').id();
+                    console.log('삭제할번호'+ removeTableNo);
                     
-                    entity = tempEntity;
-                    entityMouseUp(entity,true); //관계선의 위치 재조정
-                    for(var i =0; i<arr_EntityAboutremoveCol.length;i++){
-                    	entityMouseUp(arr_EntityAboutremoveCol[i],true); //다른 객체의 관계선 위치 재조정
-                    }
+                    mini_stage.find('#'+(removeTableNo+10000)+'').remove(); //미니맵 테이블 삭제
                     
-                    allNode.findAncestor('.entity').remove(); //클릭한 entity 삭제
+                    allNode.findAncestor('.entity').remove();
                     mini_layer.draw();
                     layer.draw();
                     return;
@@ -1209,7 +1154,7 @@
                    	arr_EntityAboutremoveCol.push(firstEntity);
                    }
                    	
-                       cascadeDeletePk(entityId,arr_EntityAboutremoveCol);
+                      	cascadeDeletePk(entityId,arr_EntityAboutremoveCol);
                        allNode.findAncestor('.attribute').destroy();
                        
                     //관계선의 위치를 재조정 해주는 메서드
@@ -1303,21 +1248,22 @@
                 console.log('makeArrow');
                 makeArrow(e);
             }
-           //리사이징 시작
-           if(allNode.className !='Line'){
-           entity_resize();
-           
-           //미니맵에 객체 갱신
-            var mini_entity = mini_stage.find('.'+entity.id());
-            mini_entity.width(entity.children[0].width()*0.048);
-            mini_entity.height(entity.children[0].height()*0.048);
-            mini_layer.draw();
-           
-           }
-           
-           layer.draw();
-       }
-       
+            
+            //리사이징 시작
+            entity_resize();
+            
+            
+            
+            //미니맵에 객체 갱신
+             var mini_entity = mini_stage.find('#'+(entity.id()+10000)+'');
+             mini_entity.width(entity.children[0].width()*0.048);
+             mini_entity.height(entity.children[0].height()*0.048);
+             mini_layer.draw();
+            
+            
+            
+            layer.draw();
+        }
         
     
     
@@ -1498,47 +1444,6 @@
  
         }
   
-        $('#preview').on('click',function(){
-        	var query = '';
-        	
-        	if(stage.children[0].children.length == 0){ //스테이지에 테이블이 없으면 리턴 
-     			return;
-     		}
-        	
-			if($('#add_drop').prop("checked")){
-				console.log('add_drop=== 체크박스 선택');
-				query+=add_drop();
-			}
-        	
-         	 query += exportQeury();
-         	 
-			
-			if($('#add_pk').prop("checked")){
-				console.log('pk체크박스 선택');
-				query+=add_pk();
-			}
-			
-			if($('#add_fk').prop("checked")){
-				console.log('fk체크박스 선택');
-				query += add_fk();
-			}
-			
-			if($('#add_non').prop("checked")){
-				console.log('non체크박스 선택');
-				query += add_non();
-			}
-			
-			
-			
-         	$('#queryText').text(query);
-        });
-        
-        
-        
-        
-        
-        
-        
         
         
         //스크롤 확대 축소

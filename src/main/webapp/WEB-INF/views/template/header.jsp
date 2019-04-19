@@ -21,7 +21,7 @@
 				<li class="navbar-brand communityHover"><a href="/">Community</a>
 					<%@ include file="/WEB-INF/views/template/module/communityMenu.jsp"%>
 				</li>
-				<li class="navbar-brand"><a href="/er">ErdTest</a></li>
+				<li class="navbar-brand"><a href="/erdDrawing?erdNo=1098">ErdTest</a></li>
 				<li class="navbar-brand"><a href="/ticket/ticketList">Ticket</a></li>
 				
 				<c:if test="${SESSION_MEMBERVO.memAuth == 'T' }">
