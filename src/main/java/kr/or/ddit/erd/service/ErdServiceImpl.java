@@ -269,4 +269,9 @@ public class ErdServiceImpl implements IErdService{
 	public int erdTitleEdit(ErdVo erdVo) {
 		return erdDao.erdUdt(erdVo);
 	}
+
+	@Override
+	public int erdLikeCnt(int erdNo) {
+		return erdDao.erdLikeCnt(erdNo);
+	}
 }

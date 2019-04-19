@@ -121,4 +121,14 @@ public interface IErdDao {
 	* Method 설명 : erd 업데이트
 	*/
 	int erdUdt(ErdVo erdVo);
+	
+	/**
+	* Method : erdLikeCnt
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdNo
+	* @return
+	* Method 설명 : erd별 조회수
+	*/
+	int erdLikeCnt(int erdNo);
 }

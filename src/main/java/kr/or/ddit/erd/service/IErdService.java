@@ -149,4 +149,14 @@ public interface IErdService {
 	* Method 설명 : erd title 수정
 	*/
 	int erdTitleEdit(ErdVo erdVo);
+
+	/**
+	* Method : erdLikeCnt
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdNo
+	* @return
+	* Method 설명 : erd별 조회수
+	*/
+	int erdLikeCnt(int erdNo);
 }
