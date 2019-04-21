@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -30,9 +31,7 @@
 	<bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
 	<bean id="profileImgView" class="kr.or.ddit.view.ProfileImgView" />
 	
-	
-	
-	
+
 	<!-- tiles resolver 설정 -->
 	<bean class="org.springframework.web.servlet.view.tiles3.TilesViewResolver" >
 		<property name="order" value="1"/> <!-- 우선순위 -->
@@ -90,6 +89,21 @@
 		<websocket:mapping handler="msgHandler" path="/echo"/>
 		<websocket:sockjs/>
 	</websocket:handlers> -->
+	
+	<!-- 웹소캣 -->
+	<bean id="erdHandler" class="kr.or.ddit.websocket.util.ErdHandler"/>
+	<websocket:handlers>
+		<websocket:mapping path="/erdEcho" handler="erdHandler"/>
+		
+		<!-- http session	 사용하기 위해 추가 -->
+		<websocket:handshake-interceptors>
+			<bean class="org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor"/>
+		</websocket:handshake-interceptors>
+<!-- 		<websocket:sockjs/> -->
+	</websocket:handlers>
+	
+	
+	
 		
 	 
 	 <!-- 국제화 코드 -->

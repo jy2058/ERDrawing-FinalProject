@@ -475,10 +475,11 @@
           $('#container_export').addClass('active');
         
       });
-    
+
+      var json;   
       //데이터 저장
       $('#button20').on('click', function(){
-         var json = stage.toJSON();
+         json = stage.toJSON();
          json = json +'@@' + numId;
          console.log(json); 
       });
