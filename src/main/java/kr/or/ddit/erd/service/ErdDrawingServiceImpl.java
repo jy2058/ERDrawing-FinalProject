@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.erd.dao.IErdDrawingDao;
 import kr.or.ddit.erd.model.DomainVo;
+import kr.or.ddit.erdhistory.model.ErdHistVo;
 
 @Service("erdDrawingService")
 public class ErdDrawingServiceImpl implements IErdDrawingService{
@@ -54,6 +55,16 @@ public class ErdDrawingServiceImpl implements IErdDrawingService{
 		return erdDrawingDao.domainDelete(domainNo);
 	}
 	
+	
+	@Override
+	public int erdHistInsert(ErdHistVo erdHistVo){
+		return erdDrawingDao.erdHistInsert(erdHistVo);
+	}
+	
+	@Override
+	public ErdHistVo erdMaxHistSelect(int erdNo){
+		return erdDrawingDao.erdMaxHistSelect(erdNo);
+	}
 
 
 }

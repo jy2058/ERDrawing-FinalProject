@@ -1,7 +1,6 @@
 package kr.or.ddit.websocket.util;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,17 +48,10 @@ public class ErdHandler extends TextWebSocketHandler{
 		String msg = message.getPayload();
 		if(null != msg){
 			String[] strs = msg.split("★");
-			logger.debug("msg널이 아님");
-			logger.debug("strs length : {}", strs.length);
 			if(strs != null && strs.length == 2){
 				String cmd = strs[0];
 				String content = strs[1];
-				
-				logger.debug("자르기 완료");
-				logger.debug(cmd);
-				logger.debug(content);
 				if(cmd.equals("domain")){
-					logger.debug("도메인 시작");
 					for(WebSocketSession sess : sessionList){
 						//TextMessage tmpMsg = new TextMessage("{\"cmd\":\""+cmd+"\", \"editor\":\""+senderId+"\", \"content\":\""+content+"\"}");
 						TextMessage tmpMsg = new TextMessage(cmd+"★"+senderId+"★"+content);

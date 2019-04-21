@@ -3,6 +3,7 @@ package kr.or.ddit.erd.dao;
 import java.util.List;
 
 import kr.or.ddit.erd.model.DomainVo;
+import kr.or.ddit.erdhistory.model.ErdHistVo;
 
 public interface IErdDrawingDao {
 
@@ -20,6 +21,12 @@ public interface IErdDrawingDao {
 
 	//도메인 검색
 	List<DomainVo> domainSearch(DomainVo domainVo);
+
+	//erd 히스토리 추가
+	int erdHistInsert(ErdHistVo erdHistVo);
+
+	//erd 최신 히스토리 가져오기
+	ErdHistVo erdMaxHistSelect(int erdNo);
 
 	
 	

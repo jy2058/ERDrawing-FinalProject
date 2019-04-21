@@ -1546,7 +1546,7 @@
         var SCALE_MIN = 0.45;
         var SCALE_MAX = 1.8;
         var scaleBy = 1.05;
-        stage.on('wheel', e => {
+        stage.on('wheel', function(e) {
                 
                 e.evt.preventDefault();
                 var oldScale = stage.scaleX();

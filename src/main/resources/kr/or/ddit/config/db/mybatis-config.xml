@@ -27,6 +27,7 @@
 	<typeAlias alias="ticketBuyHistVo" type="kr.or.ddit.ticket.model.TicketBuyHistVo"/>
 	
 	<typeAlias alias="domainVO" type="kr.or.ddit.erd.model.DomainVo"/>
+	<typeAlias alias="erdHistVO" type="kr.or.ddit.erdhistory.model.ErdHistVo"/>
 	
 	
 	 

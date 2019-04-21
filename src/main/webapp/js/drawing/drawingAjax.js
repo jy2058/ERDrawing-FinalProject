@@ -1,104 +1,118 @@
 //웹소캣 테스트
-var jsonz;
-var ws = new WebSocket("ws://localhost:8080/erdEcho");
-ws.onopen = function(){
-	console.log('Info: connection opened.');
+var webSocket;
+$(document).ready(function(){
+	connectWS();
+});
 
-	ws.onmessage = function (event){
-//		var msg = JSON.parse(event.data);
-		var msg = event.data.split("★");
-		
-//		console.log("cmd:",msg.cmd,"editor:",msg.editor,"content:",msg.content);
-		//console.log("cmd:",msg[0],"editor:",msg[1],"content:",msg[2]);
-		
-		switch(msg[0]){
-			case 'domain':
-				console.log(msg[2]);
-				jsonLoad(msg[2]);
-			break;
+
+function connectWS(){
+	var ws = new WebSocket("ws://localhost:8080/erdEcho");
+	webSocket = ws;
+	
+	ws.onopen = function(){
+		console.log('Info: connection opened.');
+
+		ws.onmessage = function (event){
+//			var msg = JSON.parse(event.data);
+			var msg = event.data.split("★");
+			
+//			console.log("cmd:",msg.cmd,"editor:",msg.editor,"content:",msg.content);
+			//console.log("cmd:",msg[0],"editor:",msg[1],"content:",msg[2]);
+			
+			switch(msg[0]){
+				case 'domain':
+					console.log(msg[1]," / check : ", msg[2]);
+					fn_init_search(tmp_search_text);
+					
+					$.ajax({
+						type : "post",
+						url : "/erddrawing/erdMaxHistSelect",
+						async: false,
+						data : {
+							erdNo : erdNo
+						},
+						success : function(data) {
+							jsonLoad(data.erdHistVo.erdJson);
+						},
+						error : function(xhr, status, error) {
+							console.log(error);
+						}
+					});
+					
+				break;
+			}
+			
 		}
-		
-	}
-		
-	ws.onclose = function(event){console.log('Info: connection closed.');}
-	ws.onerror = function(err){console.log('Error:', err);}
+			
+		ws.onclose = function(event){console.log('Info: connection closed.');}
+		ws.onerror = function(err){console.log('Error:', err);}
 
+	}
 }
 
 
-function webSend(cmd, erdData){
+
+function webSend(cmd, data1){
 	//evt.preventDefault();
-	if(ws.readyState !== 1 )
+	if(webSocket.readyState !== 1 )
 		return;
-	ws.send(cmd+"★"+erdData);
+	webSocket.send(cmd+"★"+data1);
 }
 
 
 function jsonSave(){
+	var checksave = "NotSave"; 
 	json = stage.toJSON();
     json = json +'@@' + numId;
-    return json;
+    $.ajax({
+		type : "post",
+		url : "/erddrawing/erdHistInsert",
+		async: false,
+		data : {
+			erdNo : erdNo,
+			erdIsVisible : 'T',
+			erdJson: json
+		},
+		success : function(data) {
+			checksave = "SuccessSave";
+		},
+		error : function(xhr, status, error) {
+			console.log(error);
+		}
+	});
+
+    return checksave;
 }
 
 
 function jsonLoad(loadData){
+
+	stage.children.each(function(item){
+		 	if(item.children.length > 0){
+		 		item.destroyChildren();
+		 	}
+	 });
+	
 	var arr_json=loadData.split('@@');
     stage2 = Konva.Node.create(arr_json[0], 'tmp_canvas');
     numId =   arr_json[1];
 
-     layer.children.destroy();
-     stage2.children.each(function(item1,i){
-         
-           while(item1.children.length > 0){   
-             item1.children[0].moveTo(stage.children[i]);
-             console.log("객체 추가");
-           }
-         
-     });
-     
-     layer.draw();
-     mini_layer.draw();
-     
-     
-     entity.off('dblclick');
-     //entity.on('dblclick', textClick);
-    
-     entity.off('mouseup');
-     entity.off('mousedown');
-    
-     stage.off('click');
-     stage.on('click', stageClick);
-
-    //yhs================================
-     // 엔티티를 클릭했을 경우(mouseup) 엔티티와 관계된 관계선들을 보여준다. 
-     
-   
-      
-    
-    
-    //yhs===========================================
-    
-    
-    //dragEvent1
-     stage.off('.dragSetup');
-     stage.on('dragmove.dragSetup', function dragEvent1(evt){
-         
-         allNode = evt.target;
-         
-             if(allNode.hasName('entity')){
-             console.log("entity : "+allNode.x());
-             var mini_entity = mini_stage.find('#'+(evt.target.id()+10000)+'');
+    	 stage2.children.each(function(item1,i){
              
-             mini_entity.x(evt.target.x()*0.048);
-             mini_entity.y(evt.target.y()*0.048);
-             mini_layer.draw();
+             while(item1.children.length > 0){   
+               item1.children[0].moveTo(stage.children[i]);
+               console.log("객체 추가");
              }
-     }); // move end
-     
+           
+       });
+       
+       layer.draw();
+       mini_layer.draw();
 
 }
 
 
+//=======================[ 도메인 관련 ]=============================
 
 //도메인 초기화 - ShinYS
 var tmp_search_text = "";
@@ -219,7 +233,7 @@ function fn_domainRemove(){
 				domainNo : domainNo
 			},
 			success : function(data) {
-				
+				webSend('domain',jsonSave());
 			},
 			error : function(xhr, status, error) {
 				console.log(error);

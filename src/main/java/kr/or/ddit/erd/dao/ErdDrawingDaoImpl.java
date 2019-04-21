@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.erd.model.DomainVo;
+import kr.or.ddit.erdhistory.model.ErdHistVo;
 
 @Repository("erdDrawingDao")
 public class ErdDrawingDaoImpl implements IErdDrawingDao{
@@ -40,5 +41,14 @@ public class ErdDrawingDaoImpl implements IErdDrawingDao{
 		return sqlSession.selectList("erdDrawing.domainSearch", domainVo);
 	}
 	
+	@Override
+	public int erdHistInsert(ErdHistVo erdHistVo){
+		return sqlSession.insert("erdDrawing.erdHistInsert",erdHistVo); 
+	}
+	
+	@Override
+	public ErdHistVo erdMaxHistSelect(int erdNo){
+		return sqlSession.selectOne("erdDrawing.erdMaxHistSelect",erdNo);
+	}
 	
 }
