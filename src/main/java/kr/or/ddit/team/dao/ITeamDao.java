@@ -182,4 +182,15 @@ public interface ITeamDao {
 	* Method 설명 : 팀원 리스트 가져오기
 	*/
 	List<TeamListVo>getTeamMemList(int teamNo);
+	
+	/**
+	* Method : delTag
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdNo
+	* @return
+	* Method 설명 : 태그 삭제
+	*/
+	int delTag(int erdNo);
+	
 }

@@ -178,7 +178,10 @@ public class TestController {
 	public String erdDrawingKJY(ErdVo erdVo, Model model){
 		//erdVo에 erdNo만 있음
 		erdService.updCnt(erdVo.getErdNo()); // 조회수 증가
-		model.addAttribute("erdNo", erdVo.getErdNo());
+		int erdNo = erdVo.getErdNo();
+		ErdVo erdInfoVo = erdService.getErdInfo(erdNo);
+		model.addAttribute("erdVo", erdInfoVo);
+		model.addAttribute("erdNo", erdNo);
 		
 		return "erdrawing";
 	}

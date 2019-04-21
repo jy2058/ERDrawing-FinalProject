@@ -162,10 +162,7 @@
 									</c:if>
 								  		<a class="preview-box">
 								  			<div class="bg-box">
-								  				<div class="bg-img">
-								  					<!--이미지 경로 맞춰요~ -->
-								  					<img src="${cp }/erd/erdImg?erdNo=${myErdList.erdNo }">
-									  			</div>
+							  					<img src="${cp }/erd/erdImg?erdNo=${teamErdList.erdNo }">
 								  				<div class="table-bg-text">
 								  					<div class="bg-text shinys">
 								  						&nbsp;${teamErdList.erdTitle }

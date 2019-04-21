@@ -130,4 +130,23 @@
 		set erdreadcnt = erdreadcnt + 1
 		where erdno = #{erdNo}
 	</update>
+	
+	<!-- erd 수정 -->
+	<update id="erdUdt" parameterType="erdVo">
+		update erd 
+		set 
+			erdtitle = #{erdTitle}, 
+			erdscope = #{erdScope}, 
+			memid = #{memId, jdbcType=VARCHAR}, 
+			teamno = nullif(#{teamNo},0), 
+			erdimg = #{erdImg, jdbcType=VARCHAR}
+		where erdno = #{erdNo}
+	</update>
+	
+	<!-- erd별 좋아요 수 -->
+	<select id="erdLikeCnt" parameterType="int">
+		select count(*)
+		from erd_like
+		where erdno = #{erdNo}
+	</select>
 </mapper>

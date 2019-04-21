@@ -87,4 +87,14 @@ public interface ITicketDao {
 	 * Method 설명 :오늘을 기준으로 일년전 티켓매출내역 가져옴
 	 */
 	List<TicketBuyHistVo> selectTicketYearList(String ticketNo);
+	
+	/**
+	 * Method : insertticketBuyHist
+	 * 작성자 : PC02
+	 * 변경이력 :
+	 * @param ticketBuyHistVo
+	 * @return
+	 * Method 설명 :티켓구매
+	 */
+	int insertticketBuyHist(TicketBuyHistVo ticketBuyHistVo);
 }

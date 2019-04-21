@@ -34,7 +34,8 @@
 						<th style="text-align: center; border-right: 2px solid #fff; color:black; width:15%;">글번호</th>
 						<th style="text-align: center; border-right: 2px solid #fff; color:black;">글제목</th>
 						<th style="text-align: center; border-right: 2px solid #fff; color:black; width:30%;">작성자</th>
-						<th style="text-align: center; color:black; width:15%;">등록일</th>
+						<th style="text-align: center; border-right: 2px solid #fff; color:black; width:15%;">등록일</th>
+						<th style="text-align: center; color:black; width:8%;">조회수</th>
 					</tr>
 				</thead>
 
@@ -68,9 +69,9 @@
 
 	</div>
 	<form id="frm" action="${cp}/post/postDetail" method="get">
-		<input type="hidden" name="postNo" id="postNo" /> <input type="hidden"
-			name="postGn" id="postGn" /> <input type="hidden" name="boardNo"
-			value="${boardNo}">
+		<input type="hidden" name="postNo" id="postNo" />
+		<input type="hidden" name="postGn" id="postGn" />
+		<input type="hidden" name="boardNo" value="${boardNo}" />
 	</form>
 
 	<script type="text/javascript">

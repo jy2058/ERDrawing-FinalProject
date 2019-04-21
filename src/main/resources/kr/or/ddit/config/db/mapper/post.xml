@@ -50,19 +50,20 @@
 		                a.POSTDELFLAG,
 		                a.BOARDNO,
 		                a.WRITERID,
+		                a.VIEWCNT,
 		                a.lv as "level",
 		                DECODE( a.COMMENTS_CNT, 0, a.POSTTITLE, a.POSTTITLE || ' (' || a.COMMENTS_CNT || ')' ) AS POSTTITLE, rownum rn 
 		         from 
 		            (select POSTNO, POSTTITLE, POSTGN,
 		             BOARDNO, WRITERID,trim(POSTDELFLAG) as
-		             POSTDELFLAG, POSTREGDT, level as lv, ( SELECT COUNT(*) FROM COMMENTS WHERE POSTNO = P.POSTNO ) AS COMMENTS_CNT
+		             POSTDELFLAG, POSTREGDT, VIEWCNT, level as lv, ( SELECT COUNT(*) FROM COMMENTS WHERE POSTNO = P.POSTNO ) AS COMMENTS_CNT
 		FROM post P where BOARDNO = #{boardNo}
 		START WITH parentPostNo IS NULL
 		CONNECT BY parentPostNo = prior
 		POSTNO order SIBLINGS By POSTGN desc,
 		POSTNO) a) a where rn between
 		((#{pageNo}-1)*10)+1 and (#{pageNo})*10
-		</select>	
+	</select>
 		
 	<!-- 게시글 페이징 조회 -->
 	<select id="selectNoticePagingList" parameterType="pageVo" resultType="postVo">
@@ -74,12 +75,13 @@
 		                a.POSTDELFLAG,
 		                a.BOARDNO,
 		                a.WRITERID,
+		                a.VIEWCNT,
 						a.lv as "level",
 		                DECODE( a.COMMENTS_CNT, 0, a.POSTTITLE, a.POSTTITLE || ' (' || a.COMMENTS_CNT || ')' ) AS POSTTITLE, rownum rn
 				 from 
 				 	(select POSTNO, POSTTITLE, POSTGN,
 			  		 BOARDNO, WRITERID,trim(POSTDELFLAG) as
-		             POSTDELFLAG, POSTREGDT, level as lv, ( SELECT COUNT(*) FROM COMMENTS WHERE POSTNO = P.POSTNO ) AS COMMENTS_CNT
+		             POSTDELFLAG, POSTREGDT, VIEWCNT, level as lv, ( SELECT COUNT(*) FROM COMMENTS WHERE POSTNO = P.POSTNO ) AS COMMENTS_CNT
 		FROM post P where BOARDNO = #{boardNo} 
 				    and postDelFlag = 'T'
 		START WITH parentPostNo IS NULL
@@ -95,7 +97,13 @@
 		from post
 		where boardNo = #{boardNo}
 	</select>
-
+	
+	<!-- 게시글 조회수 -->
+	<update id="getViewCnt" parameterType="String">
+		update post
+		set viewCnt = viewCnt + 1
+		where postNo = #{postNo}
+	</update>
 
 	<!-- 게시글 생성 -->
 	<insert parameterType="postVo" id="insertPost">
@@ -174,8 +182,9 @@
 		ORDER BY CMTREGDT DESC
 	</select>
 	
+	<!-- 04/19 수정중 -->
 	<!-- 댓글 페이징 전체 조회 -->
-	<select id="getPagingAllComments" parameterType="pageVo" resultType="commentsVo">
+	<!-- <select id="getPagingAllComments" parameterType="pageVo" resultType="commentsVo">
 		select *
 			from
 				(select a.*, rownum rn
@@ -186,7 +195,40 @@
 						order by cmtRegDt desc 
 						) a where postNo = #{postNo})
 		where rn between ((#{pageNo}-1)*#{pageSize})+1 and (#{pageNo})*#{pageSize}
+	</select> -->
+
+	<select id="getPagingAllComments" parameterType="pageVo" resultType="commentsVo">
+	  SELECT 
+          A.CMTNO,
+          A.CMTREGDT,
+          A.CMTCONTENT,
+          A.CMTDELFLAG,
+          A.POSTNO,
+          A.MEMID,
+          A.CNT,
+          rownum,
+          'T' as "flag"
+         FROM (SELECT 
+            A.*,
+          (SELECT COUNT(*) AS CNT FROM COMMENT_LIKE WHERE CMTNO = A.CMTNO) AS CNT
+      FROM COMMENTS A
+      WHERE POSTNO = #{postNo}
+      order by CNT desc) A 
+      where rownum <![CDATA[ <= ]]> 3
+       and A.CNT <![CDATA[ >= ]]> 3
+      union all
+      select *
+      from
+            (select a.*, rownum rn,'F'
+            from
+               (select COMMENTS.*
+                  ,(SELECT COUNT(*) AS CNT FROM COMMENT_LIKE WHERE CMTNO = COMMENTS.CMTNO) AS CNT
+                  from COMMENTS
+                  order by cmtRegDt desc 
+                  ) a where postNo = #{postNo})
+	  where rn between ((#{pageNo}-1)*#{pageSize})+1 and (#{pageNo})*#{pageSize}
 	</select>
+	
 	
 	<!-- 댓글 갯수 -->
 	<select id="getCmtCnt" resultType="Integer" parameterType="Integer">

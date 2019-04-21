@@ -100,11 +100,11 @@ color:#fff;
 			<ul class="erd-box-list">
 
 				<c:forEach var="ticket" varStatus="status" items="${ticketList }">
-					<li class="erd-box-item">
+					<li class="erd-box-item"  >
 					
-						<a class="preview-box">
+						<a class="preview-box" data-ticketno="${ticket.ticketNo }"  style="" class="modifyModal" data-toggle="modal" data-target="#modifyBuyModal" >
 							<div class="bg-box">
-								<div class="bg-img">&nbsp;${ticket.ticketContent }</div>
+								<div class="bg-img" ><img alt="" src="${cp }/ticket/ticketImg?ticketNo=${ticket.ticketNo }" width="700" height="200"></div>
 								<div class="table-bg-text">
 									<div class="bg-text shinys"><h1>${ticket.ticketContent }</h1>${ticket.ticketPrice } 원</div>
 								</div>
@@ -127,61 +127,10 @@ color:#fff;
 				</c:forEach>
 			</ul>
 		</div>
+	
 	</div>
 	
-	
-<!-- 티켓 수정.삭제 하는 모달창 띄우기 -->	
-	<form id="frm" action="/ticket" method="post" enctype="multipart/form-data">
-      <div class="modal modal-center fade" id="ticketModalEvnTest" tabindex="1" role="dialog" aria-labelledby="my80sizeCenterModalLabel" >
-      <div class="modal-dialog modal-80size modal-center" role="document" >
-         <div class="modal-content modal-80size">
-            <div class="modal-header">
-            <label>| Ticket</label>
-               <button type="button" class="close" data-dismiss="modal"aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-               </button>
-            </div>
-            <div class="modal-body">
-            
-               <div class="form-group">
-                  <label class="modalLabels">Ticket No</label>  
-                   <input   type="hidden" class="ticketContent" id="ticketNo"  name="ticketNo"/>
-                  <div id="dupleCode"></div>
-               </div>
-               
-                <div class="form-group">
-                  <label class="modalLabels">TicketPrice</label> 
-                  <input type="text" name="ticketPrice" id="ticketPrice" >    
-               </div>   
-        
-            <div class="pass form-group">
-                  <label class="modalLabels"  >ticketContent</label> 
-                     <input   type="text" class="ticketContent" id="ticketContent" name="ticketContent"  />
-               </div>
-               
-                <div class="pass form-group">
-                  <label class="modalLabels"  >ticketImg</label> 
-                  <img id="profileImg" src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }" width="340" height="320" />
-               </div>
-               
-               <div class="filebox img-btn btn-style1">
-					<label  class="btn-style1" for="input_img">프로필 이미지 올리기</label> 
-					<input	type="file" id="input_img" name="profileImg" />
-					
-				</div>
-               
-               </div>   
-               <div id="modalBtn" class="modal-footer">
-                  <button type="button" id="insertBtn" class="btn btn-default" data-dismiss="modal">추가</button>
-                  <button type="button" id="modifyBtn" class="btn btn-default" data-dismiss="modal">수정</button>
-                  <button type="button" id="deleteBtn" class="btn btn-default" data-dismiss="modal">삭제</button>
-                  <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
-               </div>
-            </div>
-         </div>
-      </div>
-      </form>
-	
+<%@ include file="/WEB-INF/views/ticket/ticketModal.jsp"%>
 	
 	
 	<script type="text/javascript">
@@ -195,9 +144,15 @@ color:#fff;
 
 		var msg = "${msg}"
 		if(msg !=""){
-			
 			alert(msg);
 		}
+	
+		//티켓 클릭시
+		$(".preview-box").on('click', function() {
+			ticketNo = $(this).data("ticketno");
+			  $("#sinbuy").hide();  
+	    		$("#mobuy").hide();
+		});
 		
 		//티켓리스트의 수정클릭시
 		$(".modifyModal").on('click', function() {
@@ -205,7 +160,7 @@ color:#fff;
 				
 				//수정버튼
 				if(ticketNo!="insert"){
-				$("#insertBtn").hide();
+			    $("#insertBtn").hide();
 				$("#modifyBtn").show();
 				$("#deleteBtn").show();
 				getModify(ticketNo);
@@ -213,10 +168,11 @@ color:#fff;
 				
 				//추가버튼
 				else{
+					
 					$("#insertBtn").show();
 					$("#modifyBtn").hide();
 					$("#deleteBtn").hide();
-					getModifys();	
+					getModifys();		
 				}
 			});
 
@@ -299,8 +255,45 @@ color:#fff;
 					$("#frm").submit();
 				}
 				});
+			
+			//결제모달창 제어
+			//동의 체크박스 제어
+			$("#all-agree").on("click", function(){
+			    if (! $('#all-agree').prop('checked')) {
+			        $('.checkSelect1').prop('checked', false);          
+			    }else{
+			        $('.checkSelect1').prop('checked', 'checked');
+			    }
+			});
+			 $("#age").on("keyup", function(e) {
+			        $(this).val($(this).val().replace(/[^0-9]/g,""));
+			    });
+			$("#licenseNumber").on("keyup", function(e) {
+			     $(this).val($(this).val().replace(/[^0-9]/g,""));
+			  });
+			  $("#cardpwd").on("keyup", function(e) {
+			      $(this).val($(this).val().replace(/[^0-9]/g,""));
+			  });
+			  $(".ipt_cardnumber").on("keyup", function(e) {
+			      $(this).val($(this).val().replace(/[^0-9]/g,""));
+			  })
+			   $("#buyBtn").on("click", function(e) {
+				   var radioVal = $('input[name="buychoose"]:checked').val();		   
+				   if(radioVal =="sin"){
+					cardBuyCk();
+					$("#cardFrm").attr("action","${cp}/ticket/ticketCardBuy");
+				    $("#modalticketNo").val(ticketNo);
+				    console.log($("#ticketNo").val());
+				    console.log($("#memId").val());
+				    $("#cardFrm").submit();
+				    }else{
+					   alert("==");
+				   }
+			  })
+			
 		});
 
+	//해당 티켓 정보 가져오기 
 		function getModify(ticketNo) {
 			$.ajax({
 				url : "${cp}/ticket/ticketModify",
@@ -313,6 +306,7 @@ color:#fff;
 					$("#ticketNo").val(data.ticketVo.ticketNo);
 					$("#ticketPrice").val(data.ticketVo.ticketPrice);
 					$("#ticketContent").val(data.ticketVo.ticketContent);
+					$("#profileImg").attr("src", "${cp }/ticket/ticketImg?ticketNo="+data.ticketVo.ticketNo);
 				}
 			});
 		}
@@ -321,6 +315,7 @@ color:#fff;
 			$("#ticketNo").val("");
 			$("#ticketPrice").val("");
 			$("#ticketContent").val("");
+			$("#profileImg").attr("src","/image/noImg.png");
 		}
 		
 		
@@ -343,6 +338,28 @@ color:#fff;
 	              reader.readAsDataURL(f);
 	          });
 	      }
+	      
+	      function radioBtn_ch() {
+	    	  var radioVal = $('input[name="buychoose"]:checked').val();
+	    	  alert(radioVal);
+	    	  if(radioVal=="sin"){
+	    		$("#sinbuy").show();  
+	    		$("#mobuy").hide();  
+	    	  }else{
+
+		    		$("#sinbuy").hide();  
+		    		$("#mobuy").show();
+	    	  }
+		}
+	      function cardBuyCk() {
+	    	  if($("#cardno1").val().trim()=="")
+	            {
+	                alert("카드 번호를 입력해 주세요.");
+	                $("#cardno1").val() = "";
+	                $("#cardno1").focus();
+	                return false;
+	            }
+		}
 		
 		
 	</script>

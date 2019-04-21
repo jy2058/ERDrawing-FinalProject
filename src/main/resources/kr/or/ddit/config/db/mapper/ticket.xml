@@ -89,4 +89,10 @@
                   group by ticketMonDt
                 order by ticketMonDt
 	 </select>
+	 
+  <insert id="insertticketBuyHist" parameterType="ticketBuyHistVo">
+     insert into 
+        TICKET_BUY_HIST  (TICKETBUYNO, TICKETNO, MEMID, TICKETBUYDT, TICKETFEE)
+       values (seq_ticketbuyno.nextval, #{ticketNo},#{memId},sysdate,#{ticketFee})
+     </insert>
 </mapper>

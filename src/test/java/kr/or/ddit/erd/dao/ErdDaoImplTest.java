@@ -109,5 +109,21 @@ public class ErdDaoImplTest extends logicTestConfig{
 
 	}
 	
+	@Test
+	public void testErdUdt(){
+		/***Given***/
+		ErdVo erdVo = new ErdVo();
+		erdVo.setErdNo(1244);
+		erdVo.setErdTitle("g");
+		erdVo.setErdScope("private");
+		erdVo.setMemId("user3");
+		/***When***/
+		int erdUdt = erdDao.erdUdt(erdVo);
+		/***Then***/
+		assertNotNull(erdUdt);
+		logger.debug("***erdUdt : {}", erdUdt);
+
+	}
+	
 
 }

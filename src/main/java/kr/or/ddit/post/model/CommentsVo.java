@@ -11,8 +11,7 @@ public class CommentsVo {
 	private int postNo;			//게시글번호
 	private String memId;		//댓글작성자아이디
 	private int cnt;			//댓글좋아요 건수
-	
-	
+	private String flag;        //댓글좋아요 순위에 사용
 	
 	public CommentsVo(){
 		
@@ -75,18 +74,27 @@ public class CommentsVo {
 		this.memId = memId;
 	}
 	
-	@Override
-	public String toString() {
-		return "CommentsVo [cmtNo=" + cmtNo + ", cmtRegDt=" + cmtRegDt + ", cmtContent=" + cmtContent + ", cmtDelFlag="
-				+ cmtDelFlag + ", postNo=" + postNo + ", memId=" + memId + "]";
-	}
-
 	public int getCnt() {
 		return cnt;
 	}
-
+	
 	public void setCnt(int cnt) {
 		this.cnt = cnt;
 	}
+	
+	public String getFlag() {
+		return flag;
+	}
+
+	public void setFlag(String flag) {
+		this.flag = flag;
+	}
+	
+	@Override
+	public String toString() {
+		return "CommentsVo [cmtNo=" + cmtNo + ", cmtRegDt=" + cmtRegDt + ", cmtContent=" + cmtContent + ", cmtDelFlag="
+				+ cmtDelFlag + ", postNo=" + postNo + ", memId=" + memId + ", cnt=" + cnt + ", flag=" + flag + "]";
+	}
+
 	
 }

@@ -113,4 +113,9 @@ public class TeamDaoImpl implements ITeamDao{
 		return sqlSession.selectList("team.getTeamMemList", teamNo);
 	}
 
+	@Override
+	public int delTag(int erdNo) {
+		return sqlSession.delete("team.delTag", erdNo);
+	}
+
 }

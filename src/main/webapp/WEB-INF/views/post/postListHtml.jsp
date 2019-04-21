@@ -41,7 +41,8 @@
 					</c:otherwise>
 				</c:choose>			
 					<td style="text-align: center; border-right: 2px solid #fff; color:black;">${post.writerId}</td>
-					<td style="text-align: center; color:black;"><fmt:formatDate value="${post.postRegDt}" pattern="yyyy-MM-dd" /></td>
+					<td style="text-align: center; border-right: 2px solid #fff; color:black;"><fmt:formatDate value="${post.postRegDt}" pattern="yyyy-MM-dd" /></td>
+					<td style="text-align: center; color:black;">${post.viewCnt}</td>
 				</tr>
 			</c:forEach>
 			

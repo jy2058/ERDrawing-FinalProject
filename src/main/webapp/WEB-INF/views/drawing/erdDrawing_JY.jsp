@@ -10,8 +10,8 @@
                 <a id="botton0" class="buttons" href="/">홈</a>
                 <div class="buttons_top" title="라이브러리"><i class="fas fa-book" style="font-size:18px; line-height: 18px;"></i></div>
                 
-                <input id="erdName"type="text" value="ERD이름">
-                <div class="buttons_top" title="ERD이름 변경"><i class="fas fa-pencil-alt" style="font-size:18px; line-height: 18px;"></i></div>
+                <input id="erdName"type="text" value="${erdVo.erdTitle }">
+                <div class="buttons_top" id="erdTitleEditBtn" title="ERD이름 변경"><i class="fas fa-pencil-alt" style="font-size:18px; line-height: 18px;"></i></div>
                 
               <!--   <div id="button1" class="buttons" style="display: none">테이블 이름 가져오기</div>
                 <div id="button5" class="buttons">1대1 연결</div>
@@ -21,6 +21,7 @@
             </div>
             
             <div class="top_right">
+            	<div class="buttons_top" title="ERD 복사"><i class="fas fa-copy"></i></div>
                 <div class="buttons_top" title="ERD 설정" id="erdModify" data-erdno="${erdNo }"><i class="fas fa-cog"></i></div>
                 <div class="buttons_top" title="알람"><i class="fas fa-bell"></i></div>
                 <div class="buttons_top" title="로그아웃"><i class="fas fa-sign-out-alt"></i></div>
@@ -70,6 +71,7 @@
                     
                 </div>
                 <div class="right_bottom">
+                    <div id="erdLikeBtn" class="buttons_right" title="좋아요"><i class="fas fa-thumbs-up"></i></div>
                     <!-- 미니맵 Toggle -->
                     <div id="button4" class="buttons_right" title="미니맵 Toggle"><i class="material-icons">picture_in_picture_alt</i></div>
                     <!-- 확대/축소 초기화 -->
@@ -1526,12 +1528,12 @@
             
         
       });
-// erd 수정 버튼 클릭시       
+// erd 설정 버튼 클릭시       
 $("#erdModify").on("click", function(){
 	var erdNo = $("#erdModify").attr("data-erdno");	
 	erdModifyModal(erdNo);
 });
-
+// 수정할 erd 정보 가져오기 ajax
 function erdModifyModal(erdNo) {
 	$.ajax({
 		url : "${cp}/erd/erdModify",
@@ -1541,12 +1543,12 @@ function erdModifyModal(erdNo) {
 		},
 		success : function(data) {
 			console.log(data);
-			//모달창에  해당 팀의 정보 넣어주기
 			insertInfoToModal(data);
 		}
 	});
 }
 
+// 모달창에 정보 넣기
 function insertInfoToModal(data){
 	var erdVo = data.erdVo;
 	var tagList = data.tagList;
@@ -1558,9 +1560,39 @@ function insertInfoToModal(data){
 	tag = tag.substr(0, tag.length-1);	// 마지막 쉼표 지우기
 	$("#title").val(erdVo.erdTitle);
 	$("#tag").val(tag);
+	$("#erdImg").attr("src","${cp }/erd/erdImg?erdNo=${erdNo}");
+	$("#erdNo").val(erdVo.erdNo);
+	$('input:radio[name="erdScope"][value="' + erdVo.erdScope + '"]').attr( "checked" , "checked");
+	
+	// 스냅샷 찍기
+	$("#snapshotBtn").on("click", function(){
+	var dataURL = stage.toDataURL({ pixelRatio: 3 });
+		$("#erdImg").attr('src', dataURL);
+		$("#snapshot").val(dataURL);
+		$("#profileImg").val(""); 
+	});
+	
 }
-    
+
+// erd 제목 수정 ajax
+$("#erdTitleEditBtn").on("click", function(){
+	var erdTitle = $("#erdName").val();
+	var erdNo = ${erdVo.erdNo};
+	$.ajax({
+		url : "${cp}/erd/erdTitleEdit",
+		type : "get",
+		data : {
+			erdNo : erdNo,
+			erdTitle : erdTitle
+		},
+		success : function(data) {
+			$("#erdName").val(data.erdTitle);
+		}
+	});
+})
+
 </script>
+
 
 
 

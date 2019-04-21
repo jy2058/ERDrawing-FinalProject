@@ -66,7 +66,7 @@ public class ErdServiceImpl implements IErdService{
 					int tagNo = teamDao.getTagNo(tagContent);	// 입력한 태그의 tagNo 가져오기
 					
 					TagHistVo tagHistVo = new TagHistVo();
-					tagHistVo.setErdNo(erdVo.getErdNo());	//erdNo nextKey 가져올 때 시퀀스보다 1씩 작게 가져옴. 임시로 +1 해줌
+					tagHistVo.setErdNo(erdVo.getErdNo());	
 					tagHistVo.setTagNo(tagNo);
 					
 					teamDao.insertTagHist(tagHistVo);
@@ -214,4 +214,64 @@ public class ErdServiceImpl implements IErdService{
 		return erdTagMap;
 	}
 
+	@Override
+	public int erdUdt(ErdVo erdVo, String memId, String tag) {
+		int erdNo = erdVo.getErdNo();
+		teamDao.delTag(erdNo); // 태그 삭제
+
+		// tag 검색을 위한 list
+		ArrayList<String> tagContentList = new ArrayList<>();
+		int erdUdtCnt = 0;
+
+		// 태그가 있을 때
+		if (!tag.isEmpty()) {
+
+			String tagEmptyRemove = tag.replaceAll("\\p{Z}", ""); // 앞뒤 공백 제거
+			String[] tagSplit = tagEmptyRemove.split(","); // (,)로 자르기
+
+			int cnt = 0;
+			for (String tagFinal : tagSplit) {
+				cnt++;
+				// (,)만 넣은 값 판별
+				if (!tagFinal.equals("")) {
+					TagVo tagVo = new TagVo();
+					tagVo.setTagContent(tagFinal);
+					tagVo.setTagMaker(memId);
+
+					teamDao.insertTag(tagVo);
+
+					tagContentList.add(tagFinal); // 입력한 태그 list에 추가
+				}
+			}
+			// 입력받은 태그 다 넣었을 때 erd 수정
+			if (cnt == tagSplit.length) {
+				erdUdtCnt = erdDao.erdUdt(erdVo);
+				// erd 수정 후 태그와 erd 맵핑
+				for (String tagContent : tagContentList) {
+					int tagNo = teamDao.getTagNo(tagContent); // 입력한 태그의 tagNo 가져오기
+					TagHistVo tagHistVo = new TagHistVo();
+					tagHistVo.setErdNo(erdVo.getErdNo());
+					tagHistVo.setTagNo(tagNo);
+
+					teamDao.insertTagHist(tagHistVo);
+				}
+			} else {
+				erdUdtCnt = 0;
+			}
+		}
+		// 태그가 없을 경우
+		else
+			erdUdtCnt = erdDao.erdUdt(erdVo);
+		return erdUdtCnt;
+	}
+
+	@Override
+	public int erdTitleEdit(ErdVo erdVo) {
+		return erdDao.erdUdt(erdVo);
+	}
+
+	@Override
+	public int erdLikeCnt(int erdNo) {
+		return erdDao.erdLikeCnt(erdNo);
+	}
 }

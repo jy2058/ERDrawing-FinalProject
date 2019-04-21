@@ -51,6 +51,13 @@ public class PostDaoImpl implements IPostDao {
 		
 		return postCnt;
 	}
+	
+	@Override
+	public int getViewCnt(String postNo) {
+		int postViewCnt = sqlSessionTemplate.update("post.getViewCnt", postNo);
+		
+		return postViewCnt;
+	}
 
 	@Override
 	public int insertPost(PostVo postVo) {
@@ -85,5 +92,6 @@ public class PostDaoImpl implements IPostDao {
 		String boardNm = sqlSessionTemplate.selectOne("post.getSelectBoardNm", boardNo);
 		return boardNm;
 	}
+
 	
 }

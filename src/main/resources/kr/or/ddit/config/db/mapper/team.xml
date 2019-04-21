@@ -154,4 +154,10 @@
 		from team_list
 		where teamno = #{teamNo}
 	</select>
+	
+	<!-- tag 삭제 -->
+	<delete id="delTag" parameterType="int">
+		delete from tag_hist
+		where erdno = #{erdNo}
+	</delete>
 </mapper>

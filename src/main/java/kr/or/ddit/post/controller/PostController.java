@@ -80,7 +80,6 @@ public class PostController {
 
 		paging.setBoardNo(boardNo); // 파라미터로 받은 게시판 번호를 넘김
 		List<PostVo> postList = postService.selectPostPagingList(paging);
-
 		model.addAttribute("postList", postList);
 		model.addAttribute("boardNm", boardNm);
 		model.addAttribute("boardNo", boardNo);
@@ -111,8 +110,6 @@ public class PostController {
 
 		return "post/postListHtml";
 	}
-	
-	
 	
 	// 게시글 등록 화면
 	@RequestMapping(path = "/postInsert", method = RequestMethod.GET)
@@ -178,7 +175,9 @@ public class PostController {
 
 	// 게시글 상세 화면
 	@RequestMapping(path = "/postDetail", method = RequestMethod.GET)
-	public String postDetailForm(Model model, String postNo, String boardNo) {
+	public String postDetailForm(Model model, HttpSession session, String postNo, String boardNo) {
+		MemberVo memVo = (MemberVo)session.getAttribute("SESSION_MEMBERVO");
+		
 		model.addAttribute("postNo", postNo);
 		model.addAttribute("boardNo", boardNo);
 		
@@ -195,7 +194,11 @@ public class PostController {
 		
 		PostVo postList = postService.getSelectPost(postNo);
 		model.addAttribute("postList", postList);
-
+		if(postList.getWriterId() != memVo.getMemId()){
+			int updateViewCnt = postService.getViewCnt(postNo);
+			//model.addAttribute("updateViewCnt", updateViewCnt);
+			
+		}
 		return "postDetail";
 	}
 	
@@ -346,6 +349,8 @@ public class PostController {
 		paging.setPostNo(intPostNo);
 		
 		List<CommentsVo> cmtList = commentsService.getPagingAllComments(paging);
+		
+		logger.debug("++++++{}", cmtList);
 		
 		
 

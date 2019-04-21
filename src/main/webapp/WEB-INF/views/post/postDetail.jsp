@@ -106,7 +106,6 @@
                		 		<a href="${cp}/post/fileDownload?uploadFileNo=${file.uploadFileNo}" style="color: #fff;">${file.uploadFileNm}</a>
                </c:forEach>
                		</c:otherwise>
-
                   </c:choose>
             
                
@@ -130,8 +129,9 @@
                   <tr style="height: 50px;">
                      <th style="text-align: center; border-right: 2px solid #fff; color:black; width:15%;">댓글번호</th>
                      <th style="text-align: center; border-right: 2px solid #fff; color:black; width:20%;">작성자</th>
-                     <th style="text-align: center; border-right: 2px solid #fff; color:black; width:40%;">댓글내용</th>
-                     <th style="text-align: center; color:black; width:40%;">좋아요</th>
+                     <th style="text-align: center; border-right: 2px solid #fff; color:black; width:35%;">댓글내용</th>
+                     <th style="text-align: right; color:black; width:20%;">좋아요</th>
+                     <th style="text-align: center; color:black; width:20%;"></th>
                   </tr>
                </thead>
                
