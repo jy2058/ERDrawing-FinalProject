@@ -185,7 +185,6 @@ public class PostController {
 		List<UploadFileVo> fileList = uploadFileService.getAllFile(postNo);
 		model.addAttribute("fileList", fileList);
 	
-		
 		/*if(commentLikeVo.getMemId() != null){
 			// 댓글 좋아요 조회
 			List<CommentLikeVo> cmtLikeList = commentLikeService.getSelectCmtLike(commentLikeVo);
@@ -194,10 +193,14 @@ public class PostController {
 		
 		PostVo postList = postService.getSelectPost(postNo);
 		model.addAttribute("postList", postList);
-		if(postList.getWriterId() != memVo.getMemId()){
+		
+		if(memVo != null){
+			if(!postList.getWriterId().equals(memVo.getMemId())){
+				int updateViewCnt = postService.getViewCnt(postNo);
+				//model.addAttribute("updateViewCnt", updateViewCnt);	
+			}
+		}else{
 			int updateViewCnt = postService.getViewCnt(postNo);
-			//model.addAttribute("updateViewCnt", updateViewCnt);
-			
 		}
 		return "postDetail";
 	}
