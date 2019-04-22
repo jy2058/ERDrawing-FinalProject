@@ -24,12 +24,7 @@
 .team-li span{
     font-size: 12px;
 }
-.tag-a{
-    margin: 3px;
-    padding: 3px;
-    background-color: #444444;
-    font-size: 11px;
-}
+
 </style>
 
 <div id="contents">
@@ -123,10 +118,20 @@
 							<li class="erd-box-item erdClick" onclick="erdClick(${myErdList.erdNo})">
 							
 								<div style="position:absolute; z-index:30;">
-									<button type="button" class="btn btn-default delBtn"
-										aria-label="trash" value="${myErdList.erdNo }">
-										<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-									</button> 
+									<div class="stats-box">
+										<i class="fas fa-eye"></i>
+										<label>${myErdList.erdReadCnt }</label>
+									</div>
+									<div class="stats-box">
+										<i class="fas fa-thumbs-up"></i>
+										<label>${myErdList.likeCnt }</label>
+									</div>
+									<div class="stats-box del-div" >
+										<button type="button" class="btn btn-default delBtn "
+											aria-label="trash" value="${myErdList.erdNo }">
+											<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+										</button>
+									</div> 
 								</div>
 								
 								<a class="preview-box">

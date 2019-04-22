@@ -128,6 +128,16 @@ $(document).ready(function(){
 				var html ="";
 				for(var i = 0; i < erdList.length; i++){
 					html += '<li class="erd-box-item">';
+					html += '	<div style="position:absolute; z-index:30;">';
+					html += '		<div class="stats-box">';
+					html += '			<i class="fas fa-eye"></i>';
+					html += '			<label>' + erdList[i].erdReadCnt + '</label>';
+					html += '		</div>';
+					html += '		<div class="stats-box">';
+					html += '			<i class="fas fa-thumbs-up"></i>';
+					html += '			<label>' + erdList[i].likeCnt + '</label>';
+					html += '		</div>';
+					html += '	</div>';
 					html += '	<a class="preview-box">';
 					html += '		<div class="bg-box">';
 					html += '			<img src="${cp }/erd/erdImg?erdNo=' + erdList[i].erdNo + '">';

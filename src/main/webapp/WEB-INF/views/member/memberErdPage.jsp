@@ -13,6 +13,24 @@
     background-color: #444444;
     font-size: 11px;
 }
+.stats-box{
+	display: inline-block;
+	color: #ccc;
+	background-color: black;
+    line-height: 16px;
+    padding: 3px 5px 0px 5px;
+    border-radius: 4px;
+    vertical-align: top;
+    font-size: 10px;
+}
+.delBtn{
+	background-color: transparent;
+	color: white;
+	border: none;
+}
+.del-div{
+	background: none ;
+}
 </style>
 
 <div id="contents">
@@ -38,11 +56,23 @@
 							 	<c:forEach var="myErdList" varStatus="status" items="${myErdList }">
 							 	<c:if test="${myErdList.erdScope eq 'public' }">
 							  	<li class="erd-box-item">
-						  			<c:if test="${SESSION_MEMBERVO.memId eq memberVo.memId }">
-							  			<button type="button" class="btn btn-default delBtn" aria-label="trash" value="${myErdList.erdNo }">
-										  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-										</button>
-									</c:if>
+					  				<div style="position:absolute; z-index:30;">
+										<div class="stats-box">
+											<i class="fas fa-eye"></i>
+											<label>${myErdList.erdReadCnt }</label>
+										</div>
+										<div class="stats-box">
+											<i class="fas fa-thumbs-up"></i>
+											<label>${myErdList.likeCnt }</label>
+										</div>
+							  			<div class="stats-box del-div">
+						  				<c:if test="${SESSION_MEMBERVO.memId eq memberVo.memId }">
+								  			<button type="button" class="btn btn-default delBtn" aria-label="trash" value="${myErdList.erdNo }">
+											  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+											</button>
+										</c:if>
+										</div>
+									</div>
 								  		<a class="preview-box">
 								  			<div class="bg-box">
 							  					<img src="${cp }/erd/erdImg?erdNo=${myErdList.erdNo}">

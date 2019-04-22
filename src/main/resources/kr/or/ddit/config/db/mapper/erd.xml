@@ -25,12 +25,17 @@
 	
 	<!-- 나의 Erd리스트 가져오기 -->
 	<select id="getMyErdList" parameterType="String" resultType="erdVo">
-		select *
-		from erd
-		where memid = #{memId}
+		select a.*, e.likeCnt
+		from erd a, (select a.erdno, count(d.erdno) as likeCnt
+					 from erd a, erd_like d
+					 where a.erdno = d.erdno(+)
+					 group by a.erdno(+)) e
+		where a.memid = #{memId}
+			and a.erdno = e.erdno
 		order by erdudt desc
 	</select>
 	
+
 	<!-- erd 삭제 -->
 	<delete id="delErd" parameterType="int">
 		delete from erd where erdno = #{erdNo}
@@ -38,8 +43,12 @@
 	
 	<!-- 모든 Erd리스트 가져오기 -->
 	<select id="getAllErdList" resultType="erdVo">
-		select *
-		from erd
+		select a.*, e.likeCnt
+		from erd a, (select a.erdno, count(d.erdno) as likeCnt
+		            from erd a, erd_like d
+		            where a.erdno = d.erdno(+)
+		            group by a.erdno(+))e
+		where a.erdno = e.erdno            
 		order by erdudt desc
 	</select>
 	
@@ -59,13 +68,18 @@
 	<select id="getAllErdListPaging" parameterType="pageVo" resultType="erdVo">
 		select *
 		from
-			( select a.*, rownum rn
+			( select b.*, rownum rn
 		      from
-		        (select erd.*
-		         from erd
+		        (select c.*, e.likecnt
+		         from erd c, (select a.erdno,
+                                count(d.erdno) as likecnt
+                                from erd a, erd_like d
+                               where a.erdno = d.erdno(+)
+                                group by a.erdno(+)) e
 		         where erdscope = 'public'
+                    and c.erdno = e.erdno
 		         order by erdudt desc
-		        ) a
+		        ) b
 		    )
 		where rn between ((#{pageNo}-1)*#{pageSize})+1 and (#{pageNo})*#{pageSize}
 	</select>
@@ -81,17 +95,25 @@
 		select e.*           
 		from (select d.*, rownum rn                
 		      from (select c.*        
-		            from(select a.*
-		                 from erd a 
+		            from(select a.*, e.likecnt
+		                 from erd a , (select a.erdno, count(d.erdno) as likecnt
+                                       from erd a, erd_like d
+                                       where a.erdno = d.erdno(+)
+                                       group by a.erdno(+)) e
 		                 where 
-		                    erdtitle like '%'||#{search}||'%'
-		                    and a.erdscope = 'public' <!--  erdtitle에 1이 들어있는 애들 -->   
+                            a.erdno = e.erdno
+		                    and erdtitle like '%'||#{search}||'%'
+		                    and a.erdscope = 'public'    
 		            union 
-		                select a.*
-		                from erd a, tag b ,tag_hist c
+		                select a.*,e.likecnt
+		                from erd a, tag b ,tag_hist c, (select a.erdno, count(d.erdno) as likecnt
+                                                        from erd a, erd_like d
+                                                        where a.erdno = d.erdno(+)
+                                                        group by a.erdno(+)) e
 		                where a.erdno = c.erdno
+                           and a.erdno = e.erdno
 		                    and b.tagno = c.tagno
-		                    and b.tagcontent like '%'||#{search}||'%' <!-- tag에  1이 들어있는애들 -->
+		                    and b.tagcontent like '%'||#{search}||'%'
 		                    and a.erdscope = 'public') c
 		      order by c.erdudt desc) d
 		      ) e
@@ -100,28 +122,57 @@
 	</select>
 	<!-- 검색용 public erd 리스트-->
 	<select id="searchList" parameterType="String" resultType="erdVo">
-		select d.*, rownum rn                
+	
+			  select d.*, rownum rn                
+		      from (select c.*        
+		            from(select a.*, e.likecnt
+		                 from erd a , (select a.erdno, count(d.erdno) as likecnt
+                                       from erd a, erd_like d
+                                       where a.erdno = d.erdno(+)
+                                       group by a.erdno(+)) e
+		                 where 
+                            a.erdno = e.erdno
+		                    and erdtitle like '%'||#{search}||'%'
+		                    and a.erdscope = 'public'    
+		            union 
+		                select a.*,e.likecnt
+		                from erd a, tag b ,tag_hist c, (select a.erdno, count(d.erdno) as likecnt
+                                                        from erd a, erd_like d
+                                                        where a.erdno = d.erdno(+)
+                                                        group by a.erdno(+)) e
+		                where a.erdno = c.erdno
+                           and a.erdno = e.erdno
+		                    and b.tagno = c.tagno
+		                    and b.tagcontent like '%'||#{search}||'%'
+		                    and a.erdscope = 'public') c
+		      order by c.erdudt desc) d
+	
+		<!-- select d.*, rownum rn                
 		      from (select c.*        
 		            from(select a.*
 		                 from erd a 
 		                 where 
 		                    erdtitle like '%'||#{search}||'%'
-		                    and a.erdscope = 'public' <!--  erdtitle에 1이 들어있는 애들 -->   
+		                    and a.erdscope = 'public'  erdtitle에 1이 들어있는 애들   
 		            union 
 		                select a.*
 		                from erd a, tag b ,tag_hist c
 		                where a.erdno = c.erdno
 		                    and b.tagno = c.tagno
-		                    and b.tagcontent like '%'||#{search}||'%' <!-- tag에  1이 들어있는애들 -->
+		                    and b.tagcontent like '%'||#{search}||'%' tag에  1이 들어있는애들
 		                    and a.erdscope = 'public') c
-		      order by c.erdudt desc) d
+		      order by c.erdudt desc) d -->
 	</select>
 	
 	<!-- erd Id로 erd 정보 조회 -->
 	<select id="getErdInfo" parameterType="int" resultType="erdVo">
-		select *
-		from erd
-		where erdno = #{erdNo}
+		select c.*, e.likeCnt
+		from erd c, (select a.erdno, count(d.erdno) as likeCnt
+                     from erd a, erd_like d
+                     where a.erdno = d.erdno(+)
+                     group by a.erdno(+)) e
+		where c.erdno = #{erdNo}
+        and c.erdno = e.erdno
 	</select>
 	
 	<!-- erd 조회수 증가 -->

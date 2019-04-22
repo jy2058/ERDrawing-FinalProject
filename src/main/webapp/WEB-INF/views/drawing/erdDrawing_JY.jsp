@@ -1,244 +1,295 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 
 
 
-    <div id="tmp_canvas" style="display:none;"></div>
-	<div id="drawing_container">
-		<div class="drawing_top">
-            <div class="top_left">
-                <a id="botton0" class="buttons" href="/">홈</a>
-                <div class="buttons_top" title="라이브러리"><i class="fas fa-book" style="font-size:18px; line-height: 18px;"></i></div>
-                
-                <input id="erdName"type="text" value="${erdVo.erdTitle }">
-                <div class="buttons_top" id="erdTitleEditBtn" title="ERD이름 변경"><i class="fas fa-pencil-alt" style="font-size:18px; line-height: 18px;"></i></div>
-                
-              <!--   <div id="button1" class="buttons" style="display: none">테이블 이름 가져오기</div>
+<div id="tmp_canvas" style="display: none;"></div>
+<div id="drawing_container">
+	<div class="drawing_top">
+		<div class="top_left">
+			<a id="botton0" class="buttons" href="/">홈</a>
+			<div class="buttons_top" title="라이브러리">
+				<i class="fas fa-book" style="font-size: 18px; line-height: 18px;"></i>
+			</div>
+
+			<input id="erdName" type="text" value="${erdVo.erdTitle }">
+			<div class="buttons_top" id="erdTitleEditBtn" title="ERD이름 변경">
+				<i class="fas fa-pencil-alt"
+					style="font-size: 18px; line-height: 18px;"></i>
+			</div>
+
+			<!--   <div id="button1" class="buttons" style="display: none">테이블 이름 가져오기</div>
                 <div id="button5" class="buttons">1대1 연결</div>
                 <div id="button6" class="buttons">1대 다 연결</div>
                 <div id="button20" class="buttons">데이터 저장</div> -->
-                <div id="button21" class="buttons">데이터 불러오기</div>
-            </div>
-            
-            <div class="top_right">
-            	<div class="buttons_top" title="ERD 복사"><i class="fas fa-copy"></i></div>
-                <div class="buttons_top" title="ERD 설정" id="erdModify" data-erdno="${erdNo }"><i class="fas fa-cog"></i></div>
-                <div class="buttons_top" title="알람"><i class="fas fa-bell"></i></div>
-                <div class="buttons_top" title="로그아웃"><i class="fas fa-sign-out-alt"></i></div>
-                <div class="buttons_top" title="검색 창 열기"><i class="fas fa-search"></i></div>
-            </div>
-            
-			
-			
-            
-            
+			<div id="button21" class="buttons">데이터 불러오기</div>
 		</div>
+
+		<div class="top_right">
+			<div class="buttons_top" title="ERD 복사">
+				<i class="fas fa-copy"></i>
+			</div>
+			<div class="buttons_top" title="ERD 설정" id="erdModify"
+				data-erdno="${erdNo }">
+				<i class="fas fa-cog"></i>
+			</div>
+			<div class="buttons_top" title="알람">
+				<i class="fas fa-bell"></i>
+			</div>
+			<div class="buttons_top" title="로그아웃">
+				<i class="fas fa-sign-out-alt"></i>
+			</div>
+			<div class="buttons_top" title="검색 창 열기">
+				<i class="fas fa-search"></i>
+			</div>
+		</div>
+
+
+
+
+
+	</div>
 	<div id="container_mini"></div>
-		
-        <div class="drawing_box">
 
-            <session class="drawing_left drawing_pannel">
-                <!-- entity 추가-->
-                <div id="button3" class="buttons_right" title="entity 추가"><img src="/image/drawing/entity.png"></div>
-                
-                <div class="buttons_right" title="없거나 한개 또는 여러개"><img src="/image/drawing/NoOneOrMore.png" ></div>
-                <div class="buttons_right" title="없거나 여러개"><img src="/image/drawing/NoOrMore.png"></div>
-                <div class="buttons_right" title="없거나 한개"><img src="/image/drawing/NoOrOne.png"></div>
-                
-                <div class="buttons_right" title="오직 한개만"><img src="/image/drawing/onlyone.png"></div>
-                <div class="buttons_right" title="한개 또는 여러개"><img src="/image/drawing/OneOrMore.png"></div>
-                <div class="buttons_right" title="여러개" id='one2many'><img src="/image/drawing/more.png"></div>
-                <div class="buttons_right" title="한개" id='one2one'><img src="/image/drawing/one.png"></div>
-                
-               
-                <label><input type="radio" name="chk_lp" value="lp" checked><div class="buttons_right" title="논리/물리"><img src="/image/drawing/LP.png"></div></label>
-                <label><input type="radio" name="chk_lp" value="logical"><div class="buttons_right" title="논리"><img src="/image/drawing/L.png"></div></label>
-                <label><input type="radio" name="chk_lp" value="physical"><div class="buttons_right" title="물리"><img src="/image/drawing/P.png"></div></label>
-                
-                
-                
-                
-            </session>
+	<div class="drawing_box">
 
-            <session class="drawing_right drawing_pannel">
-                
-                <div class="right_top">
-                    <div class="buttons_right" title="엔티티 목록"><i class="fas fa-list-alt"></i></div>
-                    <div class="buttons_right" title="채팅"><i class="far fa-comment"></i></div>
-                    <div class="buttons_right" title="스냅샷"><i class="fas fa-film"></i></div>
-                    <div class="buttons_right" title="히스토리"><i class="fas fa-history"></i></div>
-                    
-                    
-                </div>
-                <div class="right_bottom">
-                    <div id="erdLikeBtn" class="buttons_right" title="좋아요"><i class="fas fa-thumbs-up"></i></div>
-                    <!-- 미니맵 Toggle -->
-                    <div id="button4" class="buttons_right" title="미니맵 Toggle"><i class="material-icons">picture_in_picture_alt</i></div>
-                    <!-- 확대/축소 초기화 -->
-                    <div id="button2" class="buttons_right" title="확대 초기화"><i class="material-icons">visibility</i></div>
-                </div>
-            </session>
+		<session class="drawing_left drawing_pannel"> <!-- entity 추가-->
+		<div id="button3" class="buttons_right" title="entity 추가">
+			<img src="/image/drawing/entity.png">
+		</div>
 
-            <session class="drawing_bottom drawing_pannel">
-                
-                <div class="bottom_left">
-                     <div id="button30" class="buttons"><i class="fas fa-paste" style="margin-right:5px;"></i>도메인</div>
-                     <div id="button31" class="buttons"><i class="fas fa-download" style="margin-right:5px;"></i>가져오기</div>
-                     <div id="button32" class="buttons"><i class="fas fa-upload" style="margin-right:5px;"></i>내보내기</div>
-                </div>
-                
-                
-                <div class="bottom_right">
-<!--
+		<div class="buttons_right" title="없거나 한개 또는 여러개">
+			<img src="/image/drawing/NoOneOrMore.png">
+		</div>
+		<div class="buttons_right" title="없거나 여러개">
+			<img src="/image/drawing/NoOrMore.png">
+		</div>
+		<div class="buttons_right" title="없거나 한개">
+			<img src="/image/drawing/NoOrOne.png">
+		</div>
+
+		<div class="buttons_right" title="오직 한개만">
+			<img src="/image/drawing/onlyone.png">
+		</div>
+		<div class="buttons_right" title="한개 또는 여러개">
+			<img src="/image/drawing/OneOrMore.png">
+		</div>
+		<div class="buttons_right" title="여러개" id='one2many'>
+			<img src="/image/drawing/more.png">
+		</div>
+		<div class="buttons_right" title="한개" id='one2one'>
+			<img src="/image/drawing/one.png">
+		</div>
+
+
+		<label><input type="radio" name="chk_lp" value="lp" checked>
+		<div class="buttons_right" title="논리/물리">
+				<img src="/image/drawing/LP.png">
+			</div></label> <label><input type="radio" name="chk_lp" value="logical">
+		<div class="buttons_right" title="논리">
+				<img src="/image/drawing/L.png">
+			</div></label> <label><input type="radio" name="chk_lp" value="physical">
+		<div class="buttons_right" title="물리">
+				<img src="/image/drawing/P.png">
+			</div></label> </session>
+
+		<session class="drawing_right drawing_pannel">
+
+		<div class="right_top">
+			<div class="buttons_right" title="엔티티 목록">
+				<i class="fas fa-list-alt"></i>
+			</div>
+			<div class="buttons_right" title="채팅">
+				<i class="far fa-comment"></i>
+			</div>
+			<div class="buttons_right" title="스냅샷">
+				<i class="fas fa-film"></i>
+			</div>
+			<div class="buttons_right" title="히스토리">
+				<i class="fas fa-history"></i>
+			</div>
+
+
+		</div>
+		<div class="right_bottom">
+			<div id="erdLikeBtn" class="buttons_right" title="좋아요">
+				<i class="fas fa-thumbs-up"></i>
+			</div>
+			<!-- 미니맵 Toggle -->
+			<div id="button4" class="buttons_right" title="미니맵 Toggle">
+				<i class="material-icons">picture_in_picture_alt</i>
+			</div>
+			<!-- 확대/축소 초기화 -->
+			<div id="button2" class="buttons_right" title="확대 초기화">
+				<i class="material-icons">visibility</i>
+			</div>
+		</div>
+		</session>
+
+		<session class="drawing_bottom drawing_pannel">
+
+		<div class="bottom_left">
+			<div id="button30" class="buttons">
+				<i class="fas fa-paste" style="margin-right: 5px;"></i>도메인
+			</div>
+			<div id="button31" class="buttons">
+				<i class="fas fa-download" style="margin-right: 5px;"></i>가져오기
+			</div>
+			<div id="button32" class="buttons">
+				<i class="fas fa-upload" style="margin-right: 5px;"></i>내보내기
+			</div>
+		</div>
+
+
+		<div class="bottom_right">
+			<!--
                      <label><input type="checkbox" value="attr_logical" class="test_check" checked> 논리 켜기/끄기</label>
                      <label><input type="checkbox" value="attr_phisical" class="test_check" checked> 물리 켜기/끄기</label>
 -->
 
-                    <label><input type="checkbox" value="attr_domain" class="test_check" checked> <span class="check_txt">DOMAIN</span></label>
-                     <label><input type="checkbox" value="attr_type" class="test_check" checked> TYPE</label>
+			<label><input type="checkbox" value="attr_domain"
+				class="test_check" checked> <span class="check_txt">DOMAIN</span></label>
+			<label><input type="checkbox" value="attr_type"
+				class="test_check" checked> TYPE</label> <label><input
+				type="checkbox" value="attr_null" class="test_check" checked>
+				NULL</label> <label><input type="checkbox" value="attr_default"
+				class="test_check" checked> DEFAULT</label> <label><input
+				type="checkbox" value="attr_comment" class="test_check" checked>
+				COMMENT</label>
+
+		</div>
+
+		</session>
 
 
-                    <label><input type="checkbox" value="attr_null" class="test_check" checked> NULL</label>
-                    <label><input type="checkbox" value="attr_default" class="test_check" checked> DEFAULT</label>
-                    <label><input type="checkbox" value="attr_comment" class="test_check" checked> COMMENT</label>
+		<!-- 식별, 비식별 모달 -->
+		<div id="line_background" class="identify_hs">
+			<div id="lineInformation">
+				<div id="identifying">identifying RelationShip</div>
+				<div id="nonidentifying">Non - identifying RelationShip</div>
+			</div>
+		</div>
 
-                </div>
-                
-            </session>
-               
-                
-                <!-- 식별, 비식별 모달 -->
-                <div id="line_background" class ="identify_hs">
-                    <div id="lineInformation">
-                        <div id="identifying">identifying RelationShip</div>
-                        <div id="nonidentifying">Non - identifying RelationShip</div>		
-                    </div>
-                </div>
-            
-            
-                <!-- 도메인 컨테이너 -->
-                <div id="container_domain" class="ani_sys">
-                    <div class="under_top">
-                        <div class="under_top_left">
-                            <span class="title_name">DOMAIN</span>
-                            <span class="btn_domain"><i class="fas fa-plus-square"></i></span>
-                        </div>
-                        <div class="under_top_right">
-                            <span class="btn_search"><i class="fas fa-search"></i></span>
-                            <input class="box_search" type="text" placeholder="Search domain" />
-                            <span class="btn_close_under"><i class="fas fa-times"></i></span>
-                            
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="container_inner">
-                        <div class="under_list_box">
-                        
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th style="width:30%">DOMAIN NAME</th>
-                                        <th style="width:30%">TYPE</th>
-                                        <th style="width:30%">DEFAULT VALUE</th>
-                                        <th style="padding:0 5px;">update</th>
-                                        <th style="padding:0 5px;">delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input class="input_box" type="text"/></td>
-                                        <td><input class="input_box" type="text"/></td>
-                                        <td><input class="input_box" type="text"/></td>
-                                        <td class="btn_d_update"><i class="fas fa-sync-alt"></i></td>
-                                        <td class="btn_d_delete"><i class="fas fa-trash"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td><input class="input_box" type="text"/></td>
-                                        <td><input class="input_box" type="text"/></td>
-                                        <td><input class="input_box" type="text"/></td>
-                                        <td class="btn_d_update"><i class="fas fa-sync-alt"></i></td>
-                                        <td class="btn_d_delete"><i class="fas fa-trash"></i></td>
-                                    </tr>
-                                    
-                                   
-                                    
-                                </tbody>
-                            </table>
-                        </div>
-                        
-                    </div>
-                </div>
-            
-            
-                <!-- 가져오기 컨테이너 -->
-                <div id="container_import" class="ani_sys">
-                    <div class="under_top">
-                        <div class="under_top_left">
-                            <span class="title_name">가져오기</span>
-                        </div>
-                        <div class="under_top_right">
-                            <span class="btn_close_under"><i class="fas fa-times"></i></span>
-                        </div>
-                    </div>
-                    <div class="container_inner">
-                        <textarea>입력 하면 erd 드로잉</textarea>
-                    </div>
-                    <div class="under-bottom">
-                        <span>Import</span>
-                    </div>
-                </div>
-            
-            
-                <!-- 내보내기 컨테이너 -->
-                <div id="container_export" class="ani_sys">
-                    <div class="under_top">
-                        <div class="under_top_left">
-                            <span class="title_name">내보내기</span>
-                        </div>
-                        <div class="under_top_right">
-                            <span class="btn_close_under"><i class="fas fa-times"></i></span>
-                        </div>
-                    </div>
 
-                    <div class="under_top2">
-                        <label>
-                            <input type="checkbox" value="add_pk" checked> ADD PK CONSTRAINT
-                        </label>
-                        <label>
-                            <input type="checkbox" value="add_fk" checked> ADD FK CONSTRAINT
-                        </label>
-                        <label>
-                            <input type="checkbox" value="add_non" > ADD NON IDENTIFYING RELATIONSHIP CONSTRAINT
-                        </label>
-                        <label>
-                            <input type="checkbox" value="add_drop" > ADD DROP
-                        </label>
-                        
-                    </div>
-                    
-                    
-                    <div class="container_inner">
-                        <textarea>CREATE TABLE `Untitled` (
+		<!-- 도메인 컨테이너 -->
+		<div id="container_domain" class="ani_sys">
+			<div class="under_top">
+				<div class="under_top_left">
+					<span class="title_name">DOMAIN</span> <span class="btn_domain"><i
+						class="fas fa-plus-square"></i></span>
+				</div>
+				<div class="under_top_right">
+					<span class="btn_search"><i class="fas fa-search"></i></span> <input
+						class="box_search" type="text" placeholder="Search domain" /> <span
+						class="btn_close_under"><i class="fas fa-times"></i></span>
+
+				</div>
+			</div>
+
+
+			<div class="container_inner">
+				<div class="under_list_box">
+
+					<table>
+						<thead>
+							<tr>
+								<th style="width: 30%">DOMAIN NAME</th>
+								<th style="width: 30%">TYPE</th>
+								<th style="width: 30%">DEFAULT VALUE</th>
+								<th style="padding: 0 5px;">update</th>
+								<th style="padding: 0 5px;">delete</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr>
+								<td><input class="input_box" type="text" /></td>
+								<td><input class="input_box" type="text" /></td>
+								<td><input class="input_box" type="text" /></td>
+								<td class="btn_d_update"><i class="fas fa-sync-alt"></i></td>
+								<td class="btn_d_delete"><i class="fas fa-trash"></i></td>
+							</tr>
+							<tr>
+								<td><input class="input_box" type="text" /></td>
+								<td><input class="input_box" type="text" /></td>
+								<td><input class="input_box" type="text" /></td>
+								<td class="btn_d_update"><i class="fas fa-sync-alt"></i></td>
+								<td class="btn_d_delete"><i class="fas fa-trash"></i></td>
+							</tr>
+
+
+
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+
+
+		<!-- 가져오기 컨테이너 -->
+		<div id="container_import" class="ani_sys">
+			<div class="under_top">
+				<div class="under_top_left">
+					<span class="title_name">가져오기</span>
+				</div>
+				<div class="under_top_right">
+					<span class="btn_close_under"><i class="fas fa-times"></i></span>
+				</div>
+			</div>
+			<div class="container_inner">
+				<textarea>입력 하면 erd 드로잉</textarea>
+			</div>
+			<div class="under-bottom">
+				<span>Import</span>
+			</div>
+		</div>
+
+
+		<!-- 내보내기 컨테이너 -->
+		<div id="container_export" class="ani_sys">
+			<div class="under_top">
+				<div class="under_top_left">
+					<span class="title_name">내보내기</span>
+				</div>
+				<div class="under_top_right">
+					<span class="btn_close_under"><i class="fas fa-times"></i></span>
+				</div>
+			</div>
+
+			<div class="under_top2">
+				<label> <input type="checkbox" value="add_pk" checked>
+					ADD PK CONSTRAINT
+				</label> <label> <input type="checkbox" value="add_fk" checked>
+					ADD FK CONSTRAINT
+				</label> <label> <input type="checkbox" value="add_non">
+					ADD NON IDENTIFYING RELATIONSHIP CONSTRAINT
+				</label> <label> <input type="checkbox" value="add_drop">
+					ADD DROP
+				</label>
+
+			</div>
+
+
+			<div class="container_inner">
+				<textarea>CREATE TABLE `Untitled` (
 	`Key`	VARCHAR(255)	NOT NULL,
 	`Key4`	VARCHAR(255)	NOT NULL )</textarea>
-                    </div>
-                    
-                    <div class="under-bottom">
-                        <span>SQL Oracle Preview</span>
-                        <span>Download PNG</span>
-                    </div>
-                </div>
-            
-            
-            <session class="drawing_content drawing_pannel">
-                <div id="container_Shin"></div>
-            </session>
+			</div>
 
-        </div>
-    </div>
-    
-  
+			<div class="under-bottom">
+				<span>SQL Oracle Preview</span> <span>Download PNG</span>
+			</div>
+		</div>
+
+
+		<session class="drawing_content drawing_pannel">
+		<div id="container_Shin"></div>
+		</session>
+
+	</div>
+</div>
+
+
 
 
 

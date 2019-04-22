@@ -203,5 +203,27 @@ a.preview-box {
   .erd-box-list .erd-box-item:nth-child(2n) {
 	margin-right: 0px;
   }
-
 }
+
+
+
+.stats-box{
+	display: inline-block;
+	color: #ccc;
+	background-color: black;
+    line-height: 16px;
+    padding: 3px 5px 0px 5px;
+    border-radius: 4px;
+    vertical-align: top;
+    font-size: 10px;
+}
+.delBtn{
+	background-color: transparent;
+	color: white;
+	border: none;
+}
+.del-div{
+	background: none ;
+}
+
+
