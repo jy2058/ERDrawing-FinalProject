@@ -13,6 +13,8 @@
 			<mvc:mapping path="/post/postReply"/>
 			<mvc:mapping path="/post/postReport"/>
 			<mvc:mapping path="/post/likeCmt"/>
+			<mvc:mapping path="/ticket/ticketCardBuy"/>
+			
 			
 			 <bean class="kr.or.ddit.login.LoginInterceptor"></bean>
 		</mvc:interceptor>

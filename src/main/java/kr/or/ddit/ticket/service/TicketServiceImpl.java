@@ -62,4 +62,9 @@ public class TicketServiceImpl implements ITicketService{
 		return ticketDao.insertticketBuyHist(ticketBuyHistVo);
 	}
 
+	@Override
+	public List<TicketBuyHistVo> selectTicketYearPieList(Map<String, Object> ticketMap) {
+		return ticketDao.selectTicketYearPieList(ticketMap);
+	}
+
 }

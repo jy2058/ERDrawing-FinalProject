@@ -2,22 +2,51 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<style>
+.page-header {
+    padding-bottom: 9px;
+    margin: 40px 0 20px;
+    border-bottom: 1px solid #eee;
+}
+.navbar-brand1 {
+    float: left;
+    height: 50px;
+    padding: 3px 3px;
+    font-size: 18px;
+    line-height: 20px;
+}
+.left-menu1 .navbar-brand1 {
+    padding: 3px;
+}
+</style>
+<br/><br/>
+<div class="navbar-header" style="padding-right: 10px;">
+	<ul class="left-menu1" style="margin-top: 100px; color: #D1D1D2;">
+		<li class="navbar-brand1" style="font-size: 18px; font-weight: bold;"><a href="/ticket/ticketChart" >Total Sales</a></li>
+	</ul>
+	
+	<ul class="left-menu1" style="color: #D1D1D2;">
+		<li class="navbar-brand1" style="font-size: 18px; font-weight: bold;"><a href="/ticket/ticketPie?yyyy=2019">Sales by Product</a></li>
+	</ul>
+</div>
 <br/><br/><br/>	
-<div id="chartContainer" style="height: 400px; width: 100%;"></div>
+<div id="chartContainer" style="height: 450px; width: 87%;"></div>
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
+
 	window.onload = function() {
+
+	
 		var dps =[[],[],[],[],[],[],[],[],[],[],[],[]];
 		var dps2 =[[],[],[],[],[],[],[],[],[],[],[],[]];
 		var dps3 =[[],[],[],[],[],[],[],[],[],[],[],[]];
 		//var dps3 =new Array();
 		var chart = new CanvasJS.Chart("chartContainer", {
 			animationEnabled : true,
-			theme : "light2",
+			theme : "dark2", //light2
 			title : {
-				text : "Site Traffic"
+				text : "Total Sales"
 			},
 			axisX : {
 				valueFormatString : "MMM YYYY",
@@ -29,7 +58,7 @@
 				}
 			},
 			axisY : {
-				title : "Number of Visits",
+				title : "Sales Amount",
 				crosshair : {
 					enabled : true
 				}
@@ -70,6 +99,7 @@
 				type : "line",
 				xValueType : "dateTime",
 				name: "3개월권",
+				color :"#96b850",
 				showInLegend : true,
 				markerType : "square",
 				xValueFormatString : "MMM, YYYY",
@@ -128,6 +158,7 @@
 
 		chart.render();
 
+		$(".canvasjs-chart-credit").html("");
 		function toogleDataSeries(e) {
 			if (typeof (e.dataSeries.visible) === "undefined"
 					|| e.dataSeries.visible) {

@@ -6,10 +6,13 @@ import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 import java.util.UUID;
 
 import javax.annotation.Resource;
@@ -63,12 +66,12 @@ public class TicketController {
    }
    
    //티켓수정정보요청
-   @RequestMapping("/ticketModify")
-   public String ticketModify(Model model,String ticketNo){
-      TicketVo ticketVo =  ticketService.selectTicket(ticketNo);
-      model.addAttribute("ticketVo", ticketVo);
-      return "jsonView";
-   }
+	@RequestMapping("/ticketModify")
+	public String ticketModify(Model model, String ticketNo) {
+		TicketVo ticketVo = ticketService.selectTicket(ticketNo);
+		model.addAttribute("ticketVo", ticketVo);
+		return "jsonView";
+	}
    
    //티켓정수정
    @RequestMapping("/modifyTicket")
@@ -180,20 +183,38 @@ public class TicketController {
 	}
       
 	// 티켓차트(pie) 페이지
-	@RequestMapping("/ticketPie")
+	@RequestMapping(path="/ticketPie")
 	public String ticketPie(Model model, TicketVo ticketVo, RedirectAttributes ra, HttpServletRequest req,
-			ModelMap modelMap) {
+			ModelMap modelMap,String yyyy,String ticketNo) {
 		Map<String, Object> ticketmap = new HashMap<>();
-		ticketmap.put("yyyy", "2019");
-		ticketmap.put("ticketNo", 2);
+		logger.debug("==ss={}",yyyy);
+		if(ticketNo==null){
+			List<TicketVo> ticket = ticketService.getAllTicketList();
+			 Collections.shuffle(ticket);
+			 ticketNo=ticket.get(0).getTicketNo()+"";
+		}
+		
+		if(yyyy.equals("")){
+			yyyy="2019";
+		}
+		
+		ticketmap.put("yyyy", yyyy);
+		ticketmap.put("yyyyMMdd", yyyy+"0101");
+		ticketmap.put("ticketNo", ticketNo);
 
-		List<TicketBuyHistVo> ticketBuyHistList = ticketService.selectTicketMonthList(ticketmap);
+		List<TicketBuyHistVo> ticketBuyHistList = ticketService.selectTicketYearPieList(ticketmap);
 
 		if (ticketBuyHistList != null) {
 			List<List<Map<Object, Object>>> canvasjsDataList = getCanvasjsDataListPie(ticketBuyHistList);
-			modelMap.addAttribute("dataPointsList", canvasjsDataList);
+			modelMap.addAttribute("dataPointsListPie", canvasjsDataList);
+		}else{
+			ra.addFlashAttribute("msg", "값이 존재 하지 않습니다.");
 		}
-		model.addAttribute("ticketBuyHistList", ticketBuyHistList);
+		model.addAttribute("ticketList", ticketService.getAllTicketList());
+		model.addAttribute("ticketNo", ticketNo);
+		model.addAttribute("ticketTitle", ticketService.selectTicket(ticketNo).getTicketContent());
+		model.addAttribute("yyyy", yyyy);
+	
 		return "ticketPie";
 	}
             
@@ -205,7 +226,7 @@ public class TicketController {
 
 		for (TicketBuyHistVo vo : ticketBuyHistList) {
 			map = new HashMap<Object, Object>();
-			map.put("label", "test" + vo.getTicketMonDt());
+			map.put("label", vo.getTicketMonDt().substring(4));
 			map.put("y", vo.getTicketFee());
 			dataPoints1.add(map);
 		}
@@ -253,7 +274,7 @@ public class TicketController {
 	 
 	 //티켓구매
 	 @RequestMapping(path="/ticketCardBuy" ,method= { RequestMethod.POST })
-	 public String ticketCardBuy(HttpServletRequest req ,int ticketNo,String memId){
+	 public String ticketCardBuy(HttpServletRequest req ,int ticketNo,String memId,RedirectAttributes ra){
 		 logger.debug("======1{}",ticketNo);
 //		 logger.debug("======2{}",memId);
 		 if(memId != null && ticketNo != 0){
@@ -261,6 +282,8 @@ public class TicketController {
 		 vo.setMemId(memId);
 		 vo.setTicketNo(ticketNo);
 		 ticketService.insertticketBuyHist(vo);
+		 
+		 ra.addFlashAttribute("msg", "결제가 완료되었습니다~");
 		 }
 			return "redirect:" + req.getContextPath() + "/ticket/ticketList";
 	 }
