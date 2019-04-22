@@ -51,7 +51,7 @@ public class TicketController {
    @RequestMapping("/ticketList")
    public String ticketList(Model model){
    model.addAttribute("ticketList", ticketService.getAllTicketList());
-      return "ticket";
+      return "ticket"; 
    }
    
    @RequestMapping("/CallPaymentKakaoPaySuccess")
@@ -287,6 +287,13 @@ public class TicketController {
 		 }
 			return "redirect:" + req.getContextPath() + "/ticket/ticketList";
 	 }
+	 
+	 
+	 @RequestMapping(path="/ticketRefList")
+	 public String TicketRefList(HttpServletRequest req ,RedirectAttributes ra){
+			return "ticketRefList";
+	 }
+	 
 	
 	
 }
