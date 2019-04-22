@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import kr.or.ddit.erd.model.ErdLikeVo;
 import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.erd.service.IErdService;
 import kr.or.ddit.member.model.MemberVo;
@@ -175,13 +176,23 @@ public class TestController {
 	}
 	
 	@RequestMapping(path="/kjy")
-	public String erdDrawingKJY(ErdVo erdVo, Model model){
+	public String erdDrawingKJY(ErdVo erdVo, Model model, HttpSession session){
 		//erdVo에 erdNo만 있음
 		erdService.updCnt(erdVo.getErdNo()); // 조회수 증가
 		int erdNo = erdVo.getErdNo();
 		ErdVo erdInfoVo = erdService.getErdInfo(erdNo);
 		model.addAttribute("erdVo", erdInfoVo);
 		model.addAttribute("erdNo", erdNo);
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		String memId = memberVo.getMemId();
+		
+		ErdLikeVo erdLikeVo = new ErdLikeVo();
+		erdLikeVo.setErdNo(erdNo);
+		erdLikeVo.setMemId(memId);
+		int myLikeCnt = erdService.getMyLikeCnt(erdLikeVo);
+		
+		model.addAttribute("likeCnt", myLikeCnt);
 		
 		return "erdrawing";
 	}

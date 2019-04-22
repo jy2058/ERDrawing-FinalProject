@@ -2,9 +2,26 @@ package kr.or.ddit.erd.dao;
 
 import java.util.List;
 
+import kr.or.ddit.erd.model.ErdLikeVo;
 import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.util.model.PageVo;
 
+/**
+* IErdDao.java
+*
+* @author PC08
+* @version 1.0
+* @see
+*
+* <pre>
+* << 개정이력(Modification Information) >>
+*
+* 수정자 수정내용
+* ------ ------------------------
+* PC08 최초 생성
+*
+* </pre>
+*/
 public interface IErdDao {
 	/**
 	* Method : addErd
@@ -131,4 +148,24 @@ public interface IErdDao {
 	* Method 설명 : erd별 조회수
 	*/
 	int erdLikeCnt(int erdNo);
+	
+	/**
+	* Method : erdLikeClick
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdLikeVo
+	* @return
+	* Method 설명 : erd 좋아요 클릭
+	*/
+	int erdLikeClick(ErdLikeVo erdLikeVo);
+	
+	/**
+	* Method : getMyLikeCnt
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdLikeVo
+	* @return
+	* Method 설명 : erd 좋아요 했는지 확인 cnt
+	*/
+	int getMyLikeCnt(ErdLikeVo erdLikeVo);
 }

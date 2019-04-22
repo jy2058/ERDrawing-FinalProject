@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.erd.dao.IErdDao;
+import kr.or.ddit.erd.model.ErdLikeVo;
 import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.team.dao.ITeamDao;
 import kr.or.ddit.team.model.TagHistVo;
@@ -273,5 +274,15 @@ public class ErdServiceImpl implements IErdService{
 	@Override
 	public int erdLikeCnt(int erdNo) {
 		return erdDao.erdLikeCnt(erdNo);
+	}
+
+	@Override
+	public int erdLikeClick(ErdLikeVo erdLikeVo) {
+		return erdDao.erdLikeClick(erdLikeVo);
+	}
+
+	@Override
+	public int getMyLikeCnt(ErdLikeVo erdLikeVo) {
+		return erdDao.getMyLikeCnt(erdLikeVo);
 	}
 }

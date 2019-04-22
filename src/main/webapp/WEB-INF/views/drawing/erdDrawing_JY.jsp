@@ -45,9 +45,6 @@
 		</div>
 
 
-
-
-
 	</div>
 	<div id="container_mini"></div>
 
@@ -112,7 +109,7 @@
 
 		</div>
 		<div class="right_bottom">
-			<div id="erdLikeBtn" class="buttons_right" title="좋아요">
+			<div id="erdLikeBtn" class="buttons_right like" title="좋아요">
 				<i class="fas fa-thumbs-up"></i>
 			</div>
 			<!-- 미니맵 Toggle -->
@@ -1638,6 +1635,34 @@ $("#erdTitleEditBtn").on("click", function(){
 		},
 		success : function(data) {
 			$("#erdName").val(data.erdTitle);
+		}
+	});
+})
+
+var likeFlag = ${likeCnt};
+if(likeFlag == 1){
+	$(".like").css("color", "red");
+}else{
+	$(".like").css("color", "white");
+}
+
+// erd 좋아요 클릭 / 취소
+$("#erdLikeBtn").on("click", function(){
+	var erdNo = ${erdVo.erdNo};
+	$.ajax({
+		url : "${cp}/erd/erdLikeClick",
+		type : "get",
+		data : {
+			erdNo : erdNo
+		},
+		success : function(data) {
+			if(likeFlag == 1){
+				$(".like").css("color", "white");
+				likeFlag = 0;
+			}else{
+				$(".like").css("color", "red");
+				likeFlag = 1;
+			}
 		}
 	});
 })

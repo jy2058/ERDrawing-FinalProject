@@ -200,4 +200,24 @@
 		from erd_like
 		where erdno = #{erdNo}
 	</select>
+	
+	<!-- 좋아요 클릭 -->
+	<insert id="erdLikeClick" parameterType="erdLikeVo">
+		merge into erd_like
+		using dual
+		on (erdno = #{erdNo} and memid= #{memId})
+		when not matched then
+		    insert(erdno, memid, erdlikedt)
+		    values(#{erdNo}, #{memId}, sysdate)
+		when matched then
+		    update set erdlikedt = sysdate
+		    delete where erdno = #{erdNo} and memid= #{memId}
+	</insert>
+	
+	<!-- 좋아요 상태 조회 -->
+	<select id="getMyLikeCnt" parameterType="erdLikeVo" resultType="int">
+		select count(*)
+		from erd_like
+		where erdno = #{erdNo} and memid = #{memId}
+	</select>
 </mapper>

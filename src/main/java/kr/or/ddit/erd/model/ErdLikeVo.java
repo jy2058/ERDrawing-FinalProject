@@ -9,4 +9,31 @@ public class ErdLikeVo {
 	private String memId;			//회원아이디
 	private Date erdLikeDt;			//erd좋아요를 누른 날짜
 	
+	
+	public int getErdNo() {
+		return erdNo;
+	}
+	public void setErdNo(int erdNo) {
+		this.erdNo = erdNo;
+	}
+	public String getMemId() {
+		return memId;
+	}
+	public void setMemId(String memId) {
+		this.memId = memId;
+	}
+	public Date getErdLikeDt() {
+		return erdLikeDt;
+	}
+	public void setErdLikeDt(Date erdLikeDt) {
+		this.erdLikeDt = erdLikeDt;
+	}
+	
+	@Override
+	public String toString() {
+		return "ErdLikeVo [erdNo=" + erdNo + ", memId=" + memId + ", erdLikeDt=" + erdLikeDt + "]";
+	}
+	
+	
+	
 }

@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.slf4j.LoggerFactory;
 
 import ch.qos.logback.classic.Logger;
+import kr.or.ddit.erd.model.ErdLikeVo;
 import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.team.model.TagVo;
 import kr.or.ddit.test.logicTestConfig;
@@ -115,5 +116,26 @@ public class ErdServiceImplTest extends logicTestConfig{
 		int delErd = erdService.delErd(erdNo);
 		/***Then***/
 		assertNotNull(delErd);
+	}
+	
+	/**
+	* Method : testErdLikeClick
+	* 작성자 : PC08
+	* 변경이력 :
+	* Method 설명 : 좋아요 클릭 테스트
+	*/
+	@Test
+	public void testErdLikeClick(){
+		/***Given***/
+		ErdLikeVo erdLikeVo = new ErdLikeVo();
+		erdLikeVo.setErdNo(1275);
+		erdLikeVo.setMemId("user3");
+		/***When***/
+		int erdLikeClick = erdService.erdLikeClick(erdLikeVo);
+
+		/***Then***/
+		assertNotNull(erdLikeClick);
+		logger.debug("***erdLikeClick : {}", erdLikeClick);
+
 	}
 }

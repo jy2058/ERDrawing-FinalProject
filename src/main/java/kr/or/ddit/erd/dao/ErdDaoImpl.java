@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.ddit.erd.model.ErdLikeVo;
 import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.util.model.PageVo;
 
@@ -79,6 +80,16 @@ public class ErdDaoImpl implements IErdDao{
 	@Override
 	public int erdLikeCnt(int erdNo) {
 		return sqlSession.selectOne("erd.erdLikeCnt", erdNo);
+	}
+
+	@Override
+	public int erdLikeClick(ErdLikeVo erdLikeVo) {
+		return sqlSession.insert("erd.erdLikeClick", erdLikeVo);
+	}
+
+	@Override
+	public int getMyLikeCnt(ErdLikeVo erdLikeVo) {
+		return sqlSession.selectOne("erd.getMyLikeCnt", erdLikeVo);
 	}
 
 }
