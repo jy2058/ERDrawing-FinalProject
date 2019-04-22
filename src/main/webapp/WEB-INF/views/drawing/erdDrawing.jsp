@@ -940,7 +940,7 @@
                  
                      if(allNode.hasName('entity')){
                      console.log("entity : "+allNode.x());
-                     var mini_entity = mini_stage.find('#'+(evt.target.id()+10000)+'');
+                     var mini_entity = mini_stage.find('.'+evt.target.id());
                      
                      mini_entity.x(evt.target.x()*0.048);
                      mini_entity.y(evt.target.y()*0.048);
