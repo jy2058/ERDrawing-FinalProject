@@ -152,7 +152,7 @@
 						<div class="col-sm-12">
 							 <ul class="erd-box-list">
 							 	<c:forEach var="teamErdList" varStatus="status" items="${teamErdList }">
-							  	<li class="erd-box-item">
+							  	<li class="erd-box-item" onclick="erdClick(${teamErdList.erdNo})">
 							  		<c:if test="${myTeam.teamAuth ne 'user'}"> <!-- 권한이 유저가 아닐 때 erd 삭제 가능 -->
 							  		<div style="position:absolute; z-index:30;">
 								  		<button type="button" class="btn btn-default delBtn" aria-label="trash" value="${myErdList.erdNo }">
@@ -310,5 +310,8 @@
 		 
 	 });
 	
+	 function erdClick(erdNo){
+			$(location).attr('href', "${cp}/kjy?erdNo="+erdNo);
+	}
 </script>
 

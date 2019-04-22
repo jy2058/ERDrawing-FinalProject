@@ -55,7 +55,7 @@
 							 <ul class="erd-box-list">
 							 	<c:forEach var="myErdList" varStatus="status" items="${myErdList }">
 							 	<c:if test="${myErdList.erdScope eq 'public' }">
-							  	<li class="erd-box-item">
+							  	<li class="erd-box-item" onclick="erdClick(${myErdList.erdNo})">
 					  				<div style="position:absolute; z-index:30;">
 										<div class="stats-box">
 											<i class="fas fa-eye"></i>
@@ -138,6 +138,10 @@
 			}
 		});
 	});
+	
+	function erdClick(erdNo){
+		$(location).attr('href', "${cp}/kjy?erdNo="+erdNo);
+	}	
 </script>
 
 

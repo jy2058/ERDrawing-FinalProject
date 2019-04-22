@@ -119,7 +119,7 @@
 				
 				var html ="";
 				for(var i = 0; i < erdList.length; i++){
-					html += '<li class="erd-box-item">';
+					html += '<li class="erd-box-item" onclick="erdClick(' + erdList[i].erdNo + ')">';
 					html += '	<div style="position:absolute; z-index:30;">';
 					html += '		<div class="stats-box">';
 					html += '			<i class="fas fa-eye"></i>';
@@ -157,6 +157,10 @@
 				$(".erd-box-list").html(html);
 			},
 		});
+	}
+	
+	function erdClick(erdNo){
+		$(location).attr('href', "${cp}/kjy?erdNo="+erdNo);
 	}
 	
 	
