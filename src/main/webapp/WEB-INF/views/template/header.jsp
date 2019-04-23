@@ -94,6 +94,9 @@
 		<input type="hidden" id="memEmailDiv"
 			value="${SESSION_MEMBERVO.memEmailDiv}">
 
+
+		<button id="testBtn" value="테스트"></button>
+
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -132,50 +135,37 @@
 					}//기본 로그인한 경우
 				});
 		
+		var webSocket;
 		
-		/* $(document).ready(function(){
-			
-			$("#sendBtn").click(function() {
-                sendMessage();
-                $('#message').val('')
-
-       		 });
-			
-			// 웹소켓
-			// 웹소켓을 지정한 url로 연결한다.
-	        let sock = new SockJS("<c:url value="/echo"/>");
-	        sock.onmessage = onMessage;
-	        sock.onclose = onClose;
-	
-	        // 메시지 전송
-	        function sendMessage() {
-	               sock.send($("#test").val());
-	        }
-	        // 서버로부터 메시지를 받았을 때
-	        function onMessage(msg) {
-	               var data = msg.data;
-	               $("#data").append(data + "<br/>");
-	        }
-	
-	        // 서버와 연결을 끊었을 때
-	        function onClose(evt) {
-	               $("#data").append("연결 끊김"); 
-	        }
-		});	 */
+		$(document).ready(function(){
+			connectWs();
+		});
 		
+		function connectWs(){
+			var ws = new WebSocket("ws://localhost:8080/msgEcho");
+			webSocket = ws;
 			
-		// 검색모달용 ajax
+			ws.open = function(){
+				console.log("접속");
+				
+				
+				
+				
+				ws.onmessage = function(e){
+					var msg = e.data;
+					console.log("e : " + e)
+					console.log("e.data : " + msg);
+				}
+				ws.onclose = function(event){console.log('Info: connection closed.');}
+			}
+			ws.onerror = function(err){console.log('Error:', err);}
+			
+		$("#testBtn").on("click", function(){
+			var msg = "mmmmm";
+			ws.send(msg);
+		});
 		
-
-// 		 		$.ajax({
-// 					type : "get",
-// 					url : "/pageViewAjax",
-// 					data: { value :"searchModal" },
-// 					success : function(data){
-// 						$("#modals").html(data);
-// 					}
-// 				});
-
+		}
 		
  
 	</script>

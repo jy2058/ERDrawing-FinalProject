@@ -159,8 +159,22 @@ public class TestController {
 	
 	
 	@RequestMapping("/erdDrawing")
-	public String erdDrawing(Model model, @RequestParam(name="erdNo")String erdNo){
-		model.addAttribute("erdNo",erdNo);
+	public String erdDrawing(Model model, ErdVo erdVo, HttpSession session){
+		erdService.updCnt(erdVo.getErdNo()); // 조회수 증가
+		int erdNo = erdVo.getErdNo();
+		ErdVo erdInfoVo = erdService.getErdInfo(erdNo);
+		model.addAttribute("erdVo", erdInfoVo);
+		model.addAttribute("erdNo", erdNo);
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		String memId = memberVo.getMemId();
+		
+		ErdLikeVo erdLikeVo = new ErdLikeVo();
+		erdLikeVo.setErdNo(erdNo);
+		erdLikeVo.setMemId(memId);
+		int myLikeCnt = erdService.getMyLikeCnt(erdLikeVo);
+		
+		model.addAttribute("likeCnt", myLikeCnt);
 		
 		return "erdrawing_base";
 	}

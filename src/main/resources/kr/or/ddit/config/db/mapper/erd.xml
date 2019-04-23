@@ -17,9 +17,9 @@
    			 select seq_erdno.nextval FROM DUAL
   		</selectKey>
 		insert into erd
-			(erdno, erdtitle, erdscope, erdcdt, erdudt, memid, teamno, erdimg)
+			(erdno, erdtitle, erdscope, erdcdt, erdudt, memid, teamno, erdimg, erdreadcnt)
 		values
-			(#{erdNo}, #{erdTitle}, #{erdScope}, sysdate, sysdate, #{memId, jdbcType=VARCHAR}, nullif(#{teamNo},0), #{erdImg, jdbcType=VARCHAR})
+			(#{erdNo}, #{erdTitle}, #{erdScope}, sysdate, sysdate, #{memId, jdbcType=VARCHAR}, nullif(#{teamNo},0), #{erdImg, jdbcType=VARCHAR}, 0)
 	</insert>
 	
 	<!-- 나의 Erd리스트 가져오기 -->

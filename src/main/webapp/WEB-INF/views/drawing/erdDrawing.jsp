@@ -13,12 +13,14 @@
 	<div class="drawing_top">
 		<div class="top_left">
 			<a id="botton0" class="buttons" href="/">홈</a>
-			<div class="buttons_top" title="라이브러리">
-				<i class="fas fa-book" style="font-size: 18px; line-height: 18px;"></i>
+			<div class="buttons_top" id="goLib" title="라이브러리">
+				<a href="/library">
+					<i class="fas fa-book" style="font-size: 18px; line-height: 18px;"></i>
+				</a>
 			</div>
 
-			<input id="erdName" type="text" value="ERD이름">
-			<div class="buttons_top" title="ERD이름 변경">
+			<input id="erdName" type="text" value="${erdVo.erdTitle }">
+			<div class="buttons_top" id="erdTitleEditBtn" title="ERD이름 변경">
 				<i class="fas fa-pencil-alt"
 					style="font-size: 18px; line-height: 18px;"></i>
 			</div>
@@ -31,16 +33,19 @@
 		</div>
 
 		<div class="top_right">
-			<div class="buttons_top" title="ERD 설정" id="erdModify">
+			<div class="buttons_top" title="ERD 복사" id="erdCopyBtn">
+				<i class="fas fa-copy"></i>
+			</div>
+			<div class="buttons_top" title="ERD 설정" id="erdModify" data-erdno="${erdNo }">
 				<i class="fas fa-cog"></i>
 			</div>
-			<div class="buttons_top" title="알람">
+			<div class="buttons_top" id="message" title="알람">
 				<i class="fas fa-bell"></i>
 			</div>
 			<div class="buttons_top" title="로그아웃">
 				<i class="fas fa-sign-out-alt"></i>
 			</div>
-			<div class="buttons_top" title="검색 창 열기">
+			<div class="buttons_top" id="searchModal" title="검색 창 열기">
 				<i class="fas fa-search"></i>
 			</div>
 		</div>
@@ -111,8 +116,12 @@
 			</div>
 
 
+
 		</div>
 		<div class="right_bottom">
+			<div id="erdLikeBtn" class="buttons_right like" title="좋아요">
+				<i class="fas fa-thumbs-up"></i>
+			</div>
 			<!-- 미니맵 Toggle -->
 			<div id="button4" class="buttons_right" title="미니맵 Toggle">
 				<i class="material-icons">picture_in_picture_alt</i>
@@ -396,6 +405,11 @@
 	</div>
 </div>
 
+<form action="${cp }/erd/erdCopy" method="get" id="erdCopyFrm">
+	<input type="hidden" name="erdNo" value="${erdNo }">
+	<input type="hidden" name="erdTitle" value="${erdVo.erdTitle }">
+	<input type="hidden" name="erdImg" value="${erdVo.erdImg }">
+</form>
 
 
 
@@ -1841,13 +1855,104 @@
         
       });
     
-$("#erdModify").on("click", function(){
-	alert("sdf");
-	
-})
-        
-        
-        
+	// erd 설정 버튼 클릭시       
+   $("#erdModify").on("click", function(){
+   	var erdNo = $("#erdModify").attr("data-erdno");	
+   	erdModifyModal(erdNo);
+   });
+   // 수정할 erd 정보 가져오기 ajax
+   function erdModifyModal(erdNo) {
+   	$.ajax({
+   		url : "${cp}/erd/erdModify",
+   		type : "get",
+   		data : {
+   			erdNo : erdNo
+   		},
+   		success : function(data) {
+   			console.log(data);
+   			insertInfoToModal(data);
+   		}
+   	});
+   }
+
+   // 모달창에 정보 넣기
+   function insertInfoToModal(data){
+   	var erdVo = data.erdVo;
+   	var tagList = data.tagList;
+   	
+   	var tag = "";
+   	for(var i in tagList){
+   		tag += tagList[i].tagContent + ",";
+   	}
+   	tag = tag.substr(0, tag.length-1);	// 마지막 쉼표 지우기
+   	$("#title").val(erdVo.erdTitle);
+   	$("#tag").val(tag);
+   	$("#erdImg").attr("src","${cp }/erd/erdImg?erdNo=${erdNo}");
+   	$("#erdNo").val(erdVo.erdNo);
+   	$('input:radio[name="erdScope"][value="' + erdVo.erdScope + '"]').attr( "checked" , "checked");
+   	
+   	// 스냅샷 찍기
+   	$("#snapshotBtn").on("click", function(){
+   	var dataURL = stage.toDataURL({ pixelRatio: 3 });
+   		$("#erdImg").attr('src', dataURL);
+   		$("#snapshot").val(dataURL);
+   		$("#profileImg").val(""); 
+   	});
+   	
+   }
+
+   // erd 제목 수정 ajax
+   $("#erdTitleEditBtn").on("click", function(){
+   	var erdTitle = $("#erdName").val();
+   	var erdNo = ${erdVo.erdNo};
+   	$.ajax({
+   		url : "${cp}/erd/erdTitleEdit",
+   		type : "get",
+   		data : {
+   			erdNo : erdNo,
+   			erdTitle : erdTitle
+   		},
+   		success : function(data) {
+   			$("#erdName").val(data.erdTitle);
+   		}
+   	});
+   })
+
+   var likeFlag = ${likeCnt};
+   if(likeFlag == 1){
+   	$(".like").css("color", "red");
+   }else{
+   	$(".like").css("color", "white");
+   }
+
+   // erd 좋아요 클릭 / 취소
+   $("#erdLikeBtn").on("click", function(){
+   	var erdNo = ${erdVo.erdNo};
+   	$.ajax({
+   		url : "${cp}/erd/erdLikeClick",
+   		type : "get",
+   		data : {
+   			erdNo : erdNo
+   		},
+   		success : function(data) {
+   			if(likeFlag == 1){
+   				$(".like").css("color", "white");
+   				likeFlag = 0;
+   			}else{
+   				$(".like").css("color", "red");
+   				likeFlag = 1;
+   			}
+   		}
+   	});
+   });
+
+   $("#erdCopyBtn").on("click", function(){
+   	$("#erdCopyFrm").submit();
+   });
+
+   
+   
+   
 
         
 </script>
