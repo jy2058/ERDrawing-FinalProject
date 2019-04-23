@@ -10,6 +10,32 @@ a:visited { color: inherit; text-decoration: none;}
 a:hover { color: inherit; text-decoration: none;}
 
 
+#loading{
+	position:absolute;
+	display:block;
+	background:#000000;
+	color:#ffffff;
+	text-align:center;
+	font-size:20px;
+	top:40px;
+	bottom:40px;
+	left:40px;
+	right:40px;
+	opacity:0.8;
+	display:block;
+}
+
+.loading_inner{
+	display:table;
+	width:100%;
+	height:100%;
+}
+
+.lodding_content{
+	display:table-cell;
+	vertical-align:middle;
+}
+
 #drawing_container {
 	width: 100%;
 	display: table;
@@ -32,6 +58,8 @@ a:hover { color: inherit; text-decoration: none;}
 	height: 39px;
 	background: #3b3b3b;
 	color: #ffffff;
+	position:relative;
+	z-index:30;
 }
 
 
@@ -686,6 +714,213 @@ position: relative;
     
 }
 
+
+
+
+/* 우측 컨테이너 (히스토리, 스냅샷) */
+#history_container{
+	position:absolute;
+    right:-431px;
+    top:39px;
+    bottom:40px;
+    width:400px;
+    background:#000000;
+    color:#fff;
+    padding:0 4px 4px 4px;
+    z-index:20;
+}
+
+#history_container > table{
+	width:100%;
+	height:100%;
+}
+
+#history_container.active{
+	right:41px;
+}
+
+
+.flexVertical{
+	display:flex;
+	width:100%;
+	height:100%;
+	flex-direction: column;
+
+}
+
+.flexVertical .container_inner{
+	flex:1;
+	position:relative;
+	width:100%;
+	height:100%;
+	overflow:hidden;
+}
+
+.con_inner{
+	background:#484848;
+	vertical-align:top;
+	width:100%;
+	height:100%;
+	overflow-x:hidden;
+	overflow-y:auto;
+}
+
+
+.right_top{
+	display:table;
+    width:100%;
+    height:40px;
+    vertical-align:middle;
+
+}
+          
+.right_top .right_top_left {
+	display:table-cell;
+    vertical-align:middle;
+    width:40%;
+}
+
+.right_top .right_top_right {
+	display:table-cell;
+    vertical-align:middle;
+    text-align:right;
+    width:60%;
+}
+
+
+#history_container .con_inner table{
+	width:380px;
+	margin:-10px 10px 0 10px;
+	border-spacing: 0 10px;
+}
+
+#history_container .con_inner thead{
+	height:0px;
+}
+#history_container .con_inner tbody tr td{
+	text-align:center;
+	height:80px;
+	background:#666666;
+}
+
+#history_container .con_inner tbody tr td:first-child{
+	text-align:left;
+	padding-left:10px;
+}
+
+.btn_hist_change{
+	display:inline-block;
+	width:60px;
+	height:40px;
+	line-height:40px;
+	background:#000;
+	border-radius:5px;
+	cursor:pointer;
+	opacity:0.7;
+}
+
+.btn_hist_change:hover{
+	opacity:1;
+}
+
+/* 스냅샷 컨테이너 */
+#snapshot_container{
+	position:absolute;
+    right:-431px;
+    top:39px;
+    bottom:40px;
+    width:400px;
+    background:#000000;
+    color:#fff;
+    padding:0 4px 4px 4px;
+    z-index:20;
+}
+
+#snapshot_container.active{
+	right:41px;
+}
+
+
+.btn_snapshot_add{
+    display:inline-block;
+    width:20px;
+    height:20px;
+    font-size:18px;
+    text-align: center;
+    cursor:pointer;
+    vertical-align:middle;
+    border-radius:5px;
+    padding:4px;
+    margin:0 2px;
+}
+
+.btn_snapshot_add:hover{
+    background:#333;
+}
+
+
+
+#snapshot_container .con_inner table{
+	width:380px;
+	margin:-10px 10px 0 10px;
+	border-spacing: 0 10px;
+}
+
+#snapshot_container .con_inner thead{
+	height:0px;
+}
+#snapshot_container .con_inner tbody tr td{
+	text-align:center;
+	height:80px;
+	background:#666666;
+}
+
+#snapshot_container .con_inner tbody tr td:first-child{
+	text-align:left;
+	padding-left:10px;
+}
+
+#snapshot_container table tbody .snap_img{
+
+}
+
+#snapshot_container table tbody .snap_img td{
+
+	height:250px!important;
+	background:#000000;
+	color:#ffffff;
+	text-align:center!important;
+}
+
+/* 채팅 컨테이너 */
+#chat_container{
+	position:absolute;
+    right:-431px;
+    top:39px;
+    bottom:40px;
+    width:400px;
+    height:auto;
+    background:#000000;
+    color:#fff;
+    padding:0 4px 4px 4px;
+    z-index:20;
+}
+
+#chat_container.active{
+	right:41px;
+}
+
+#chat_container .right-bottom{
+	display:block;
+	width:100%;
+	height:40px;
+	vertical-align:middle;
+}
+
+#chat_container .right-bottom .con_inner{
+	background:#000000;
+	line-height:40px;
+}
 
 /*web-font  */
 #queryText{

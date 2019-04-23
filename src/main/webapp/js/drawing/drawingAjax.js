@@ -1,12 +1,48 @@
 //웹소캣 테스트
 var webSocket;
+var tmp_search_text;
+
 $(document).ready(function(){
 	connectWS();
+	
+	//도메인 초기화 - ShinYS
+	tmp_search_text = "";
+	fn_init_search(tmp_search_text);
+	
+	//erdLoad
+	$.ajax({
+		type : "post",
+		url : "/erddrawing/erdMaxHistSelect",
+		async: false,
+		data : {
+			erdNo : erdNo
+		},
+		success : function(data) {
+			if(data.erdHistVo != null){
+				jsonLoad(data.erdHistVo.erdJson);
+			}
+
+		},
+		error : function(xhr, status, error) {
+			console.log(error);
+		}
+	});
+	
+	//스냅샷 로드
+	snapshotList();
+	//historyLoad
+	histLoad();
+	
+	
+	
+	
+	
+	
 });
 
 
 function connectWS(){
-	var ws = new WebSocket("ws://localhost:8080/erdEcho");
+	var ws = new WebSocket("ws://localhost:8080/erdEcho?erdNo="+erdNo);
 	webSocket = ws;
 	
 	ws.onopen = function(){
@@ -19,27 +55,41 @@ function connectWS(){
 //			console.log("cmd:",msg.cmd,"editor:",msg.editor,"content:",msg.content);
 			//console.log("cmd:",msg[0],"editor:",msg[1],"content:",msg[2]);
 			
-			switch(msg[0]){
-				case 'domain':
-					console.log(msg[1]," / check : ", msg[2]);
-					fn_init_search(tmp_search_text);
-					
-					$.ajax({
-						type : "post",
-						url : "/erddrawing/erdMaxHistSelect",
-						async: false,
-						data : {
-							erdNo : erdNo
-						},
-						success : function(data) {
+			var cmd = msg[0];
+			var senderId = msg[1];
+			var receContent = msg[2];
+			var sendSId = msg[3];
+			var receSId = msg[4];
+			
+			if(msg[0].indexOf("domain") > -1){
+				
+				console.log(senderId," / check : ", receContent);
+				fn_init_search(tmp_search_text);
+				
+				$.ajax({
+					type : "post",
+					url : "/erddrawing/erdMaxHistSelect",
+					async: false,
+					data : {
+						erdNo : erdNo
+					},
+					success : function(data) {
+						if(sendSId != receSId && data.erdHistVo != null){
 							jsonLoad(data.erdHistVo.erdJson);
-						},
-						error : function(xhr, status, error) {
-							console.log(error);
+							console.log("Erd드로잉 읽어오기 완료");
 						}
-					});
-					
-				break;
+			
+						histLoadOne(data.erdHistVo);
+
+					},
+					error : function(xhr, status, error) {
+						console.log(error);
+					}
+				});
+				
+				
+				
+				
 			}
 			
 		}
@@ -60,17 +110,43 @@ function webSend(cmd, data1){
 }
 
 
-function jsonSave(){
+function jsonSave(select){
+	
+	var url = "/erddrawing/erdHistInsert";
+	var visible, snapNm, snapImg;
+	
+	if(select === null){
+		return;
+	}
+	
+	if(select === "hist"){
+		visible = "T";
+	}else if(select === "snap"){
+		visible = "F";
+		snapNm = "스냅샷 이름";
+		snapImg = "스냅샷 스크린샷";
+	}
+	
+	stageClick(0);
+	
 	var checksave = "NotSave"; 
 	json = stage.toJSON();
-    json = json +'@@' + numId;
+	json2 = mini_stage.toJSON();
+
+	
+	stageClick(zNode);
+	
+    json = json +'@@' +json2+'@@'+ numId;
+    
     $.ajax({
 		type : "post",
-		url : "/erddrawing/erdHistInsert",
+		url : url,
 		async: false,
 		data : {
 			erdNo : erdNo,
-			erdIsVisible : 'T',
+			erdIsVisible : visible,
+			snapNm:snapNm,
+			snapImg:snapImg,
 			erdJson: json
 		},
 		success : function(data) {
@@ -87,15 +163,34 @@ function jsonSave(){
 
 function jsonLoad(loadData){
 
+
+	//스테이지 삭제
 	stage.children.each(function(item){
 		 	if(item.children.length > 0){
 		 		item.destroyChildren();
 		 	}
 	 });
 	
+
+	mini_stage.children[0].children.each(function(item2){
+			if(item2.id() != "mini_red"){
+				item2.destroy();
+			}
+		});
+		
+		
+//	 	if(item.children.length > 0){
+//	 		item.destroyChildren();
+//	 	}
+	//});
+	
+	
+	
+	//Json가져오기
 	var arr_json=loadData.split('@@');
     stage2 = Konva.Node.create(arr_json[0], 'tmp_canvas');
-    numId =   arr_json[1];
+    mini_stage2 = Konva.Node.create(arr_json[1], 'tmp_canvas2');
+    numId =   arr_json[2];
 
     	 stage2.children.each(function(item1,i){
              
@@ -105,18 +200,231 @@ function jsonLoad(loadData){
              }
            
        });
-       
-       layer.draw();
-       mini_layer.draw();
+    	 
+    	 var tmp_mini_stage = mini_stage2.children[0];
+	 while(tmp_mini_stage.children.length > 1){   
+		 
+		 if(tmp_mini_stage.children[0].id() != "mini_red"){
+			 tmp_mini_stage.children[0].moveTo(mini_stage.children[0]);
+             console.log("미니맵 객체 추가");
+		 }else{
+			 tmp_mini_stage.children[1].moveTo(mini_stage.children[0]);
+             console.log("미니맵 객체 추가");
+		 }
+	 }
 
+    	 
+    	 
+    	 // 드로잉준비
+    	   btn_entity_group = stage.findOne('.btn_entity_group');
+    	   entity_container = stage.findOne('.entity_container');
+    	   old_entity = null;
+       
+       
+       if(layer.find('.entity').length === 0){
+    	   		stage.draw();
+    	   		mini_layer.draw();
+    	        relationLine_layer.draw();
+           return;
+        }
+        
+        
+        layer.find('.entity').each(function(z){
+            entity = z;
+            stageClick();
+        });
+        
+       stageClick(0);
+       stage.on('click', stageClick);
+       
+       
+     //dragEvent1
+       stage.off('.dragSetup');
+       stage.on('dragmove.dragSetup', function dragEvent1(evt){
+           
+           allNode = evt.target;
+           
+               if(allNode.hasName('entity')){
+               console.log("entity : "+allNode.x());
+               var mini_entity = mini_stage.find('.'+evt.target.id());
+               
+               mini_entity.x(evt.target.x()*0.048);
+               mini_entity.y(evt.target.y()*0.048);
+               mini_layer.draw();
+               }
+       }); // move end
+       
+       stage.draw();
+       mini_layer.draw();
+       relationLine_layer.draw();
+
+}
+
+	
+
+
+//날짜 포멧
+function getDateFormat(now) {
+	  year = "" + now.getFullYear();
+	  month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+	  day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+	  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+	  minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+	  second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+	  return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+}
+
+//=======================[ 히스토리 관련 ]=============================
+
+//Erd추가 그려주기
+function histLoadOne(vo){
+	
+		var nowDate = new Date(parseInt(vo.erdDt));
+		var times = getDateFormat(nowDate);
+		var id = "아이디";
+		var title = "히스토리 내용";
+		var temp_str = `<tr>
+						<td>`+ id + " - " + title +`</td>
+						<td>`+ times +`</td>
+						<td><div class="btn_hist_change">변경</td>
+					</tr>`;
+		
+		if($('#history_container .con_inner tbody tr').length >= 10){
+			$('#history_container .con_inner tbody tr:last').remove();
+		}
+		
+	$('#history_container .con_inner tbody').prepend(temp_str);
+
+	
+}
+
+//선택 ErdNo 전체 히스토리 가져오기 (초기화용)
+function histLoad(){
+	$.ajax({
+		type : "post",
+		url : "/erddrawing/erdHistList",
+		async: false,
+		data : {
+			erdNo : erdNo
+		},
+		success : function(data) {
+			var list = data.erdHistList;
+			
+			var temp_str ="";
+
+			$.each(list, function(){
+				var nowDate = new Date(parseInt(this.erdDt));
+				var times = getDateFormat(nowDate);
+				var id = "아이디";
+				var title = "히스토리 내용";
+				
+
+				
+				temp_str += `<tr>
+								<td>`+ id + " - " + title +`</td>
+								<td>`+ times +`</td>
+								<td><div class="btn_hist_change">변경</td>
+							</tr>`;
+				
+			});
+			
+			$('#history_container .con_inner tbody').html(temp_str);
+			$('#loading').css('display','none');
+			
+			
+			
+		},
+		error : function(xhr, status, error) {
+			console.log(error);
+		}
+	});
+
+	
+}
+
+
+//=======================[ 스냅샷 관련 ]=============================
+
+$('.btn_snapshot_add').on('click',function(){
+		jsonSave("snap");
+		snapshotOne();
+});
+
+
+
+//스냅샷 하나 추가
+function snapshotOne(vo){
+//	var nowDate = new Date(parseInt(vo.erdDt));
+//	var times = getDateFormat(nowDate);
+	var times = "시간";
+	var id = "아이디";
+	var title = "스냅샷 내용";
+	var temp_str = `<tr class="snap_img">
+						<td colspan="3">이미지</td>
+					</tr>
+					<tr class="snap_group">
+						<td>`+ id + " - " + title +`</td>
+						<td>`+ times +`</td>
+						<td><div class="btn_hist_change">변경</td>
+					</tr>`;
+	
+	console.log($('#snapshot_container .con_inner tbody .snap_group').length);
+	if($('#snapshot_container .con_inner tbody .snap_group').length >= 10){
+		console.log("삭제해라");
+		$('#snapshot_container .con_inner tbody .snap_img:last').remove();
+		$('#snapshot_container .con_inner tbody .snap_group:last').remove();
+	}
+	
+	$('#snapshot_container .con_inner tbody').prepend(temp_str);
+}
+
+
+//스냅샷 리스트 출력 (초기화용)
+function snapshotList(){
+	$.ajax({
+		type : "post",
+		url : "/erddrawing/erdSnapList",
+		async: false,
+		data : {
+			erdNo : erdNo
+		},
+		success : function(data) {
+			var list = data.erdSnapList;
+			
+			var temp_str ="";
+
+			$.each(list, function(){
+				
+				var nowDate = new Date(parseInt(this.erdDt));
+				var times = getDateFormat(nowDate);
+				var id = "아이디";
+				var title = "스냅샷 내용";
+				temp_str += `<tr class="snap_img">
+								<td colspan="3">이미지</td>
+							</tr>
+							<tr class="snap_group">
+								<td>`+ id + " - " + title +`</td>
+								<td>`+ times +`</td>
+								<td><div class="btn_hist_change">변경</td>
+							</tr>`;
+			});
+			
+			$('#snapshot_container .con_inner tbody').html(temp_str);
+			$('#loading').css('display','none');
+			
+			
+			
+		},
+		error : function(xhr, status, error) {
+			console.log(error);
+		}
+	});
 }
 
 
 //=======================[ 도메인 관련 ]=============================
 
-//도메인 초기화 - ShinYS
-var tmp_search_text = "";
-fn_init_search(tmp_search_text);
+
 
 //도메인 검색 <클릭 이벤트> - ShinYS
 $('.btn_search').on('click', function(){
@@ -175,7 +483,7 @@ function fn_init_search(tmp_search_text){
 	$('.under_list_box').off('click', '.btn_d_update');
 	$('.under_list_box').on('click', '.btn_d_update', function(evt){
 		fn_domainUpdate(evt);
-		webSend('domain',jsonSave());
+//		webSend('domain',jsonSave());
 	});
 	
 	
@@ -204,7 +512,9 @@ $('.btn_domain').on('click', function(){
 	$('.under_list_box').off('click', '.btn_d_update');
 	$('.under_list_box').on('click', '.btn_d_update', function(evt){
 		fn_domainUpdate(evt);
-		webSend('domain',jsonSave());
+		
+//		webSend('domain',jsonSave());
+
 	});
 
 	
@@ -233,7 +543,8 @@ function fn_domainRemove(){
 				domainNo : domainNo
 			},
 			success : function(data) {
-				webSend('domain',jsonSave());
+				webSend('domain 삭제',jsonSave("hist"));
+				histLoad();
 			},
 			error : function(xhr, status, error) {
 				console.log(error);
@@ -288,7 +599,8 @@ function fn_domainUpdate(evt){
 					domainTr.find('.btn_d_update .btn_inner').show();
 
 					
-					
+					webSend('domain 추가/수정 domain 추가/수정',jsonSave("hist"));
+					//histLoad();
 				});
 			}, 500);
 		},

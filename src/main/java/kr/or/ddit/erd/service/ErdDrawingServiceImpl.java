@@ -65,6 +65,17 @@ public class ErdDrawingServiceImpl implements IErdDrawingService{
 	public ErdHistVo erdMaxHistSelect(int erdNo){
 		return erdDrawingDao.erdMaxHistSelect(erdNo);
 	}
-
+	
+	
+	@Override
+	public List<ErdHistVo> erdHistList(int erdNo){
+		return erdDrawingDao.erdHistList(erdNo);
+	}
+	
+	
+	@Override
+	public List<ErdHistVo> erdSnapList(int erdNo){
+		return erdDrawingDao.erdSnapList(erdNo);
+	}
 
 }

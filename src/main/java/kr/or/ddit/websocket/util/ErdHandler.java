@@ -24,6 +24,8 @@ public class ErdHandler extends TextWebSocketHandler{
 		sessionList.add(session);
 		logger.info("{} 연결됨", session.getId());
 		String senderId = getId(session);
+		
+		
 		//userSessions.put(senderId, session);
 		
 //		for(WebSocketSession sess : sessionList){
@@ -51,12 +53,18 @@ public class ErdHandler extends TextWebSocketHandler{
 			if(strs != null && strs.length == 2){
 				String cmd = strs[0];
 				String content = strs[1];
-				if(cmd.equals("domain")){
+				String sendSId = session.getId();
+				if(cmd.indexOf("domain") > -1){
 					for(WebSocketSession sess : sessionList){
+						String receSId = sess.getId();
+						
+						if(session.getUri().equals(sess.getUri())){
+						
 						//TextMessage tmpMsg = new TextMessage("{\"cmd\":\""+cmd+"\", \"editor\":\""+senderId+"\", \"content\":\""+content+"\"}");
-						TextMessage tmpMsg = new TextMessage(cmd+"★"+senderId+"★"+content);
+						TextMessage tmpMsg = new TextMessage(cmd+"★"+senderId+"★"+content+"★"+sendSId+"★"+receSId);
 						
 						sess.sendMessage(tmpMsg);
+						}
 					}
 				}else if(cmd.equals("erd")){
 					for(WebSocketSession sess : sessionList){
@@ -87,6 +95,7 @@ public class ErdHandler extends TextWebSocketHandler{
 			return "Guest"+session.getId();
 		else
 			return loginUser.getMemId();
+		
 	}
 	
 	
