@@ -3,8 +3,7 @@
 <%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-	 <link href="/js/ticket/material-design-iconic-font.min.css" rel="stylesheet" media="all">
-	 <link href="/js/ticket/font-awesome.min.css" rel="stylesheet" media="all">
+	<link href="/js/ticket/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
     <link href="/js/ticket/daterangepicker.css" rel="stylesheet" media="all">
     <link href="/css/ticket.css" rel="stylesheet" media="all"> 
     <link href="/js/ticket/select2.min.css" rel="stylesheet" media="all">
@@ -16,29 +15,30 @@
 		<form method="POST" action="#">
 
 			<div class="row row-space">
-				<div>
-					<select>
-						<option>날짜</option>
-						<option>티켓</option>
-						<option>구매자</option>
-						<option>환불여부</option>
-					</select>
+				<div class="input-group input-group-big">
+					<label class="label">where:</label> <input name="address"
+						class="input--style-1" required="required" type="text"
+						placeholder="검색조건을 입력해주세요"> <i
+						class="zmdi zmdi-search input-group-symbol"></i>
 				</div>
-			
-			<div class="col-2">
-                                        <div class="input-group">
-                                            <label class="label">car group:</label>
-                                            <div class="rs-select2 js-select-simple select--no-search">
-                                                <select name="car-group">
-                                                    <option selected="selected">Group S-car</option>
-                                                    <option>Group 1</option>
-                                                    <option>Group 2</option>
-                                                    <option>Group 3</option>
-                                                </select>
-                                                <div class="select-dropdown"></div>
-                                            </div></div></div>
-                                            
-				
+
+
+				<div class="col-2">
+					<div class="input-group">
+						<label class="label">검색 조건:</label>
+						<div class="rs-select2 js-select-simple select--no-search">
+							<select name="car-group">
+								<option selected="selected">날짜</option>
+								<option>구매자</option>
+								<option>티켓</option>
+								<option>환불여부</option>
+							</select>
+							<div class="select-dropdown"></div>
+						</div>
+					</div>
+				</div>
+
+
 				<div class="col-2">
 					<div class="input-group">
 						<label class="label">to:</label> <input class="input--style-1"
