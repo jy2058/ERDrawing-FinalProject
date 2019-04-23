@@ -1,241 +1,421 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 
-	<script>
-		var erdNo = ${erdNo};
-	</script>
+<script>
+	var erdNo = ${erdNo};
+</script>
 
 
-    <div id="tmp_canvas" style="display:none;"></div>
-	<div id="drawing_container">
-		<div class="drawing_top">
-            <div class="top_left">
-                <a id="botton0" class="buttons" href="/">홈</a>
-                <div class="buttons_top" title="라이브러리"><i class="fas fa-book" style="font-size:18px; line-height: 18px;"></i></div>
-                
-                <input id="erdName"type="text" value="ERD이름">
-                <div class="buttons_top" title="ERD이름 변경"><i class="fas fa-pencil-alt" style="font-size:18px; line-height: 18px;"></i></div>
-                
-              <!--   <div id="button1" class="buttons" style="display: none">테이블 이름 가져오기</div>
+<div id="tmp_canvas" style="display: none;"></div>
+<div id="tmp_canvas2" style="display: none;"></div>
+
+<div id="drawing_container">
+	<div class="drawing_top">
+		<div class="top_left">
+			<a id="botton0" class="buttons" href="/">홈</a>
+			<div class="buttons_top" id="goLib" title="라이브러리">
+				<a href="/library">
+					<i class="fas fa-book" style="font-size: 18px; line-height: 18px;"></i>
+				</a>
+			</div>
+
+			<input id="erdName" type="text" value="${erdVo.erdTitle }">
+			<div class="buttons_top" id="erdTitleEditBtn" title="ERD이름 변경">
+				<i class="fas fa-pencil-alt"
+					style="font-size: 18px; line-height: 18px;"></i>
+			</div>
+
+			<!--   <div id="button1" class="buttons" style="display: none">테이블 이름 가져오기</div>
                 <div id="button5" class="buttons">1대1 연결</div>
                 <div id="button6" class="buttons">1대 다 연결</div>
                 <div id="button20" class="buttons">데이터 저장</div> -->
-                <div id="button21" class="buttons">데이터 불러오기</div>
-            </div>
-            
-            <div class="top_right">
-                <div class="buttons_top" title="ERD 설정" id="erdModify"><i class="fas fa-cog"></i></div>
-                <div class="buttons_top" title="알람"><i class="fas fa-bell"></i></div>
-                <div class="buttons_top" title="로그아웃"><i class="fas fa-sign-out-alt"></i></div>
-                <div class="buttons_top" title="검색 창 열기"><i class="fas fa-search"></i></div>
-            </div>
-            
-			
-			
-            
-            
+			<div id="button21" class="buttons">데이터 불러오기</div>
 		</div>
+
+		<div class="top_right">
+			<div class="buttons_top" title="ERD 복사" id="erdCopyBtn">
+				<i class="fas fa-copy"></i>
+			</div>
+			<div class="buttons_top" title="ERD 설정" id="erdModify" data-erdno="${erdNo }">
+				<i class="fas fa-cog"></i>
+			</div>
+			<div class="buttons_top" id="message" title="알람">
+				<i class="fas fa-bell"></i>
+			</div>
+			<div class="buttons_top" title="로그아웃">
+				<i class="fas fa-sign-out-alt"></i>
+			</div>
+			<div class="buttons_top" id="searchModal" title="검색 창 열기">
+				<i class="fas fa-search"></i>
+			</div>
+		</div>
+
+
+
+
+
+	</div>
 	<div id="container_mini"></div>
-		
-        <div class="drawing_box">
 
-            <session class="drawing_left drawing_pannel">
-                <!-- entity 추가-->
-                <div id="button3" class="buttons_right" title="entity 추가"><img src="/image/drawing/entity.png"></div>
-                
-                <div class="buttons_right" title="없거나 한개 또는 여러개"><img src="/image/drawing/NoOneOrMore.png" ></div>
-                <div class="buttons_right" title="없거나 여러개"><img src="/image/drawing/NoOrMore.png"></div>
-                <div class="buttons_right" title="없거나 한개"><img src="/image/drawing/NoOrOne.png"></div>
-                
-                <div class="buttons_right" title="오직 한개만"><img src="/image/drawing/onlyone.png"></div>
-                <div class="buttons_right" title="한개 또는 여러개"><img src="/image/drawing/OneOrMore.png"></div>
-                <div class="buttons_right" title="여러개" id='one2many'><img src="/image/drawing/more.png"></div>
-                <div class="buttons_right" title="한개" id='one2one'><img src="/image/drawing/one.png"></div>
-                
-               
-                <label><input type="radio" name="chk_lp" value="lp" checked><div class="buttons_right" title="논리/물리"><img src="/image/drawing/LP.png"></div></label>
-                <label><input type="radio" name="chk_lp" value="logical"><div class="buttons_right" title="논리"><img src="/image/drawing/L.png"></div></label>
-                <label><input type="radio" name="chk_lp" value="physical"><div class="buttons_right" title="물리"><img src="/image/drawing/P.png"></div></label>
-                
-                
-                
-                
-            </session>
+	<div class="drawing_box">
 
-            <session class="drawing_right drawing_pannel">
-                
-                <div class="right_top">
-                    <div class="buttons_right" title="엔티티 목록"><i class="fas fa-list-alt"></i></div>
-                    <div class="buttons_right" title="채팅"><i class="far fa-comment"></i></div>
-                    <div class="buttons_right" title="스냅샷"><i class="fas fa-film"></i></div>
-                    <div class="buttons_right" title="히스토리"><i class="fas fa-history"></i></div>
-                    
-                    
-                </div>
-                <div class="right_bottom">
-                    <!-- 미니맵 Toggle -->
-                    <div id="button4" class="buttons_right" title="미니맵 Toggle"><i class="material-icons">picture_in_picture_alt</i></div>
-                    <!-- 확대/축소 초기화 -->
-                    <div id="button2" class="buttons_right" title="확대 초기화"><i class="material-icons">visibility</i></div>
-                </div>
-            </session>
+		<session class="drawing_left drawing_pannel"> <!-- entity 추가-->
+		<div id="button3" class="buttons_right" title="entity 추가">
+			<img src="/image/drawing/entity.png">
+		</div>
 
-            <session class="drawing_bottom drawing_pannel">
-                
-                <div class="bottom_left">
-                     <div id="button30" class="buttons"><i class="fas fa-paste" style="margin-right:5px;"></i>도메인</div>
-                     <div id="button31" class="buttons"><i class="fas fa-download" style="margin-right:5px;"></i>가져오기</div>
-                     <div id="button32" class="buttons"><i class="fas fa-upload" style="margin-right:5px;"></i>내보내기</div>
-                </div>
-                
-                
-                <div class="bottom_right">
-<!--
+		<div class="buttons_right" title="없거나 한개 또는 여러개">
+			<img src="/image/drawing/NoOneOrMore.png">
+		</div>
+		<div class="buttons_right" title="없거나 여러개">
+			<img src="/image/drawing/NoOrMore.png">
+		</div>
+		<div class="buttons_right" title="없거나 한개">
+			<img src="/image/drawing/NoOrOne.png">
+		</div>
+
+		<div class="buttons_right" title="오직 한개만">
+			<img src="/image/drawing/onlyone.png">
+		</div>
+		<div class="buttons_right" title="한개 또는 여러개">
+			<img src="/image/drawing/OneOrMore.png">
+		</div>
+		<div class="buttons_right" title="여러개" id='one2many'>
+			<img src="/image/drawing/more.png">
+		</div>
+		<div class="buttons_right" title="한개" id='one2one'>
+			<img src="/image/drawing/one.png">
+		</div>
+
+
+		<label><input type="radio" name="chk_lp" value="lp" checked>
+		<div class="buttons_right" title="논리/물리">
+				<img src="/image/drawing/LP.png">
+			</div></label> <label><input type="radio" name="chk_lp" value="logical">
+		<div class="buttons_right" title="논리">
+				<img src="/image/drawing/L.png">
+			</div></label> <label><input type="radio" name="chk_lp" value="physical">
+		<div class="buttons_right" title="물리">
+				<img src="/image/drawing/P.png">
+			</div></label> </session>
+
+		<session class="drawing_right drawing_pannel">
+
+		<div class="right_top">
+<!-- 			<div class="buttons_right" title="엔티티 목록"> -->
+<!-- 				<i class="fas fa-list-alt"></i> -->
+<!-- 			</div> -->
+			<div id="button42" class="buttons_right" title="채팅">
+				<i class="far fa-comment"></i>
+			</div>
+			<div id="button41" class="buttons_right" title="스냅샷">
+				<i class="fas fa-film"></i>
+			</div>
+			<div id="button40" class="buttons_right" title="히스토리">
+				<i class="fas fa-history"></i>
+			</div>
+
+
+
+		</div>
+		<div class="right_bottom">
+			<div id="erdLikeBtn" class="buttons_right like" title="좋아요">
+				<i class="fas fa-thumbs-up"></i>
+			</div>
+			<!-- 미니맵 Toggle -->
+			<div id="button4" class="buttons_right" title="미니맵 Toggle">
+				<i class="material-icons">picture_in_picture_alt</i>
+			</div>
+			<!-- 확대/축소 초기화 -->
+			<div id="button2" class="buttons_right" title="확대 초기화">
+				<i class="material-icons">visibility</i>
+			</div>
+		</div>
+		</session>
+
+		<session class="drawing_bottom drawing_pannel">
+
+		<div class="bottom_left">
+			<div id="button30" class="buttons">
+				<i class="fas fa-paste" style="margin-right: 5px;"></i>도메인
+			</div>
+			<div id="button31" class="buttons">
+				<i class="fas fa-download" style="margin-right: 5px;"></i>가져오기
+			</div>
+			<div id="button32" class="buttons">
+				<i class="fas fa-upload" style="margin-right: 5px;"></i>내보내기
+			</div>
+		</div>
+
+
+		<div class="bottom_right">
+			<!--
                      <label><input type="checkbox" value="attr_logical" class="test_check" checked> 논리 켜기/끄기</label>
                      <label><input type="checkbox" value="attr_phisical" class="test_check" checked> 물리 켜기/끄기</label>
 -->
 
-                    <label><input type="checkbox" value="attr_domain" class="test_check" checked> <span class="check_txt">DOMAIN</span></label>
-                     <label><input type="checkbox" value="attr_type" class="test_check" checked> TYPE</label>
+			<label><input type="checkbox" value="attr_domain"
+				class="test_check" checked> <span class="check_txt">DOMAIN</span></label>
+			<label><input type="checkbox" value="attr_type"
+				class="test_check" checked> TYPE</label> <label><input
+				type="checkbox" value="attr_null" class="test_check" checked>
+				NULL</label> <label><input type="checkbox" value="attr_default"
+				class="test_check" checked> DEFAULT</label> <label><input
+				type="checkbox" value="attr_comment" class="test_check" checked>
+				COMMENT</label>
+
+		</div>
+
+		</session>
 
 
-                    <label><input type="checkbox" value="attr_null" class="test_check" checked> NULL</label>
-                    <label><input type="checkbox" value="attr_default" class="test_check" checked> DEFAULT</label>
-                    <label><input type="checkbox" value="attr_comment" class="test_check" checked> COMMENT</label>
+		<!-- 식별, 비식별 모달 -->
+		<div id="line_background" class="identify_hs">
+			<div id="lineInformation">
+				<div id="identifying">identifying RelationShip</div>
+				<div id="nonidentifying">Non - identifying RelationShip</div>
+			</div>
+		</div>
+		
+		
 
-                </div>
-                
-            </session>
-               
-                
-                <!-- 식별, 비식별 모달 -->
-                <div id="line_background" class ="identify_hs">
-                    <div id="lineInformation">
-                        <div id="identifying">identifying RelationShip</div>
-                        <div id="nonidentifying">Non - identifying RelationShip</div>		
-                    </div>
-                </div>
-            
-            
-                <!-- 도메인 컨테이너 -->
-                <div id="container_domain" class="ani_sys">
-                    <div class="under_top">
-                        <div class="under_top_left">
-                            <span class="title_name">DOMAIN</span>
-                            <span class="btn_domain"><i class="fas fa-plus-square"></i></span>
-                        </div>
-                        <div class="under_top_right">
-                            <span class="btn_search"><i class="fas fa-search"></i></span>
-                            <input class="box_search" type="text" placeholder="Search domain" />
-                            <span class="btn_close_under"><i class="fas fa-times"></i></span>
-                            
-                        </div>
-                    </div>
-                    
-                    
-                    <div class="container_inner">
-                        <div class="under_list_box">
-                        
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th style="width:30%">DOMAIN NAME</th>
-                                        <th style="width:30%">TYPE</th>
-                                        <th style="width:30%">DEFAULT VALUE</th>
-                                        <th style="padding:0 5px;">update</th>
-                                        <th style="padding:0 5px;">delete</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-<!--                                     <tr> -->
-<!--                                         <td><input class="input_box" type="text"/></td> -->
-<!--                                         <td><input class="input_box" type="text"/></td> -->
-<!--                                         <td><input class="input_box" type="text"/></td> -->
-<!--                                         <td class="btn_d_update"><i class="fas fa-sync-alt"></i></td> -->
-<!--                                         <td class="btn_d_delete"><i class="fas fa-trash"></i></td> -->
-<!--                                     </tr> -->
-                                  
-                                    
-                                </tbody>
-                            </table>
-                        </div>
-                        
-                    </div>
-                </div>
-            
-            
-                <!-- 가져오기 컨테이너 -->
-                <div id="container_import" class="ani_sys">
-                    <div class="under_top">
-                        <div class="under_top_left">
-                            <span class="title_name">가져오기</span>
-                        </div>
-                        <div class="under_top_right">
-                            <span class="btn_close_under"><i class="fas fa-times"></i></span>
-                        </div>
-                    </div>
-                    <div class="container_inner">
-                        <textarea>입력 하면 erd 드로잉</textarea>
-                    </div>
-                    <div class="under-bottom">
-                        <span>Import</span>
-                    </div>
-                </div>
-            
-            
-                <!-- 내보내기 컨테이너 -->
-                <div id="container_export" class="ani_sys">
-                    <div class="under_top">
-                        <div class="under_top_left">
-                            <span class="title_name">내보내기</span>
-                        </div>
-                        <div class="under_top_right">
-                            <span class="btn_close_under"><i class="fas fa-times"></i></span>
-                        </div>
-                    </div>
 
-                     <div class="under_top2">
-                        <label>
-                            <input type="checkbox" value="add_pk" id='add_pk' checked> ADD PK CONSTRAINT
-                        </label>
-                        <label>
-                            <input type="checkbox" value="add_fk" id='add_fk'> ADD FK CONSTRAINT
-                        </label>
-                        <label>
-                            <input type="checkbox" value="add_non"  id='add_non'> ADD NON IDENTIFYING RELATIONSHIP CONSTRAINT
-                        </label>
-                        <label>
-                            <input type="checkbox" value="add_drop"  id='add_drop'> ADD DROP
-                        </label>
-                        
-                    </div>
-                    
-                         
-                    <div class="container_inner">
-                        <textarea id="queryText">
+		<!-- 도메인 컨테이너 -->
+		<div id="container_domain" class="ani_sys">
+			<div class="under_top">
+				<div class="under_top_left">
+					<span class="title_name">DOMAIN</span> <span class="btn_domain"><i
+						class="fas fa-plus-square"></i></span>
+				</div>
+				<div class="under_top_right">
+					<span class="btn_search"><i class="fas fa-search"></i></span> <input
+						class="box_search" type="text" placeholder="Search domain" /> <span
+						class="btn_close_under"><i class="fas fa-times"></i></span>
+
+				</div>
+			</div>
+
+
+			<div class="container_inner">
+				<div class="under_list_box">
+
+					<table>
+						<thead>
+							<tr>
+								<th style="width: 30%">DOMAIN NAME</th>
+								<th style="width: 30%">TYPE</th>
+								<th style="width: 30%">DEFAULT VALUE</th>
+								<th style="padding: 0 5px;">update</th>
+								<th style="padding: 0 5px;">delete</th>
+							</tr>
+						</thead>
+						<tbody>
+							<!--                                     <tr> -->
+							<!--                                         <td><input class="input_box" type="text"/></td> -->
+							<!--                                         <td><input class="input_box" type="text"/></td> -->
+							<!--                                         <td><input class="input_box" type="text"/></td> -->
+							<!--                                         <td class="btn_d_update"><i class="fas fa-sync-alt"></i></td> -->
+							<!--                                         <td class="btn_d_delete"><i class="fas fa-trash"></i></td> -->
+							<!--                                     </tr> -->
+
+
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+		</div>
+
+
+		<!-- 가져오기 컨테이너 -->
+		<div id="container_import" class="ani_sys">
+			<div class="under_top">
+				<div class="under_top_left">
+					<span class="title_name">가져오기</span>
+				</div>
+				<div class="under_top_right">
+					<span class="btn_close_under"><i class="fas fa-times"></i></span>
+				</div>
+			</div>
+			<div class="container_inner">
+				<textarea>입력 하면 erd 드로잉</textarea>
+			</div>
+			<div class="under-bottom">
+				<span>Import</span>
+			</div>
+		</div>
+
+
+		<!-- 내보내기 컨테이너 -->
+		<div id="container_export" class="ani_sys">
+			<div class="under_top">
+				<div class="under_top_left">
+					<span class="title_name">내보내기</span>
+				</div>
+				<div class="under_top_right">
+					<span class="btn_close_under"><i class="fas fa-times"></i></span>
+				</div>
+			</div>
+
+			<div class="under_top2">
+				<label> <input type="checkbox" value="add_pk" id='add_pk'
+					checked> ADD PK CONSTRAINT
+				</label> <label> <input type="checkbox" value="add_fk" id='add_fk'>
+					ADD FK CONSTRAINT
+				</label> <label> <input type="checkbox" value="add_non" id='add_non'>
+					ADD NON IDENTIFYING RELATIONSHIP CONSTRAINT
+				</label> <label> <input type="checkbox" value="add_drop"
+					id='add_drop'> ADD DROP
+				</label>
+
+			</div>
+
+
+			<div class="container_inner">
+				<textarea id="queryText">
     					</textarea>
-                    </div>
-                    
-                  <div class="under-bottom">
-                        <span id ='preview'>SQL Oracle Preview</span>
-                        <span>Download PNG</span>
-                    </div>
-                </div>
-            
-            
-            <session class="drawing_content drawing_pannel">
-                <div id="container_Shin"></div>
-            </session>
+			</div>
 
-        </div>
-    </div>
-    
-  
+			<div class="under-bottom">
+				<span id='preview'>SQL Oracle Preview</span> <span>Download
+					PNG</span>
+			</div>
+		</div>
+		
+
+		<!-- 히스토리 컨테이너 -->
+		<div id="history_container" class="ani_sys">
+
+			<div class="flexVertical">
+				
+				<div class="right_top">
+					<div class="right_top_left">
+						<span class="title_name">히스토리</span>
+					</div>
+					<div class="right_top_right">
+						<span class="btn_close_under"><i class="fas fa-times"></i></span>
+					</div>
+				</div>
+	
+				<div class="container_inner">
+					<div class="con_inner">
+						
+						<table>
+							<thead>
+								<tr>
+									<th width="200px;"></th>
+									<th width="100px;"></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+							
+					</div>
+				</div>
+	
+			</div>
+		
+		</div>
+		
+		
+		
+		<!-- 스냅샷 컨테이너 -->
+		<div id="snapshot_container" class="ani_sys">
+		
+			<div class="flexVertical">
+				
+				<div class="right_top">
+					<div class="right_top_left">
+						<span class="title_name">스냅샷</span>
+					</div>
+					<div class="right_top_right">
+						<span class="btn_snapshot_add"><i class="fas fa-camera"></i></span>
+						<span class="btn_close_under"><i class="fas fa-times"></i></span>
+					</div>
+				</div>
+	
+				<div class="container_inner">
+					<div class="con_inner">
+						<table>
+							<thead>
+								<tr>
+									<th width="200px;"></th>
+									<th width="100px;"></th>
+									<th></th>
+								</tr>
+							</thead>
+							<tbody>
+								
+							</tbody>
+						</table>
+					</div>
+				</div>
+	
+			</div>
+		
+		</div>
+		
+		
+		<!-- 채팅 컨테이너 -->
+		<div id="chat_container" class="ani_sys">
+
+			<div class="flexVertical">
+				
+				<div class="right_top">
+					<div class="right_top_left">
+						<span class="title_name">채팅</span>
+					</div>
+					<div class="right_top_right">
+						<span class="btn_close_under"><i class="fas fa-times"></i></span>
+					</div>
+				</div>
+	
+				<div class="container_inner">
+					<div class="con_inner">
+							
+					</div>
+				</div>
+	
+	
+				<div class="right-bottom">
+					<div class="con_inner">
+						채팅입력부
+					</div>
+				</div>
+				
+			</div>
+		
+		</div>
+
+
+		<session class="drawing_content drawing_pannel">
+		<div id="container_Shin"></div>
+		<div id="loading">
+			<div class="loading_inner">
+				<div class="lodding_content">
+					로딩중
+				</div>
+			</div>
+		</div>
+		</session>
+
+	</div>
+</div>
+
+<form action="${cp }/erd/erdCopy" method="get" id="erdCopyFrm">
+	<input type="hidden" name="erdNo" value="${erdNo }">
+	<input type="hidden" name="erdTitle" value="${erdVo.erdTitle }">
+	<input type="hidden" name="erdImg" value="${erdVo.erdImg }">
+</form>
+
 
 
 
 <script>
-    
+
     
     //논리,물리 버튼 active
     $('input[name=chk_lp]:checked').closest('label').find('.buttons_right').addClass('active');
@@ -357,6 +537,7 @@
             entity = z;
             stageClick();
         });
+        
         //엔티티 모양이 바뀌었을 경우  관계선의 위치도 재조정
         findEntityArr  = stage.find('.entity');
        for(var i =0; i<findEntityArr.length; i++ ){
@@ -475,54 +656,46 @@
           $('#container_export').addClass('active');
         
       });
-
-      var json;   
-      //데이터 저장
-      $('#button20').on('click', function(){
-         json = stage.toJSON();
-         json = json +'@@' + numId;
-         console.log(json); 
-      });
-    
-      //데이터 불러오기
-      $('#button21').on('click', function(){
-    	  //제이슨불러오기 데이터
-         json = '{"attrs":{"width":1840,"height":857,"draggable":true,"x":-35,"y":-4},"className":"Stage","children":[{"attrs":{},"className":"Layer","children":[{"attrs":{"x":992,"y":247,"opacity":0.9,"name":"entity","id":2},"className":"Group","children":[{"attrs":{"width":282.4736328125,"height":56,"fill":"#8d2d3f","stroke":"white","strokeWidth":0,"name":"entity_container"},"className":"Rect"},{"attrs":{"text":"3","name":"giveColor","visible":false,"fill":"black"},"className":"Text"},{"attrs":{"x":3,"y":3,"width":54,"height":20,"name":"entity_logical"},"className":"Rect"},{"attrs":{"x":207.716796875,"y":3,"width":71.7568359375,"height":20,"name":"entity_phisical"},"className":"Rect"},{"attrs":{"text":"테이블명","x":3,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_logical_txt"},"className":"Text"},{"attrs":{"text":"TableName2","x":207.716796875,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_phisical_txt"},"className":"Text"},{"attrs":{"visible":false,"name":"btn_entity_group"},"className":"Group","children":[{"attrs":{"x":264.4736328125,"y":-22,"width":20,"height":20,"fill":"#262629","cornerRadius":5,"name":"btn_entity_delete"},"className":"Rect"},{"attrs":{"x":243.4736328125,"y":-22,"width":20,"height":20,"fill":"#262629","cornerRadius":5,"name":"btn_color"},"className":"Rect"},{"attrs":{"text":"x","x":271.4736328125,"y":-18.5,"fill":"#ffffff","name":"btn_entity_delete_txt"},"className":"Text"},{"attrs":{"text":"o","x":250.4736328125,"y":-18.5,"fill":"#ffffff","name":"btn_color_txt"},"className":"Text"},{"attrs":{"x":-1,"y":-22,"width":20,"height":20,"fill":"#FFD403","cornerRadius":5,"name":"btn_pk_add"},"className":"Rect"},{"attrs":{"x":20,"y":-22,"width":20,"height":20,"fill":"#0EB6FF","cornerRadius":5,"name":"btn_col_add"},"className":"Rect"},{"attrs":{"text":"+","x":3,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_pk_add_txt"},"className":"Text"},{"attrs":{"text":"+","x":24,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_col_add_txt"},"className":"Text"}]},{"attrs":{"y":26,"name":"key_group pk_group"},"className":"Group","children":[]},{"attrs":{"y":26,"name":"key_group fk_group"},"className":"Group","children":[{"attrs":{"x":3,"name":"attribute","id":5,"type":"identify","pkId":3,"lineId":4},"className":"Group","children":[{"attrs":{"width":276.4736328125,"height":26,"fill":"#710013","name":"attr_container"},"className":"Rect"},{"attrs":{"x":3,"y":3,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":66.25146484375,"height":20,"fill":"#9e4856","name":"attr_background attr_key"},"className":"Rect"},{"attrs":{"text":"ForeignKey","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_key_txt"},"className":"Text"}]},{"attrs":{"name":"attr_btn_group","y":3,"visible":false},"className":"Group","children":[{"attrs":{"name":"attr_btn_move","x":-23,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#0EB6FF"},"className":"Rect"},{"attrs":{"name":"attr_btn_move_t","x":-20.9,"y":2.3,"fill":"#ffffff","fontSize":18,"text":"▦"},"className":"Text"},{"attrs":{"name":"attr_btn_remove","x":30,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#4335af"},"className":"Rect"},{"attrs":{"name":"attr_btn_remove_t","x":37,"y":3.5,"fill":"#ffffff","text":"x"},"className":"Text"}]},{"attrs":{"x":72.25146484375,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#9e4856","name":"attr_background attr_logical"},"className":"Rect"},{"attrs":{"text":"key_논리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key1","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_logical_txt"},"className":"Text"}]},{"attrs":{"x":130.48681640625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#9e4856","name":"attr_background attr_phisical"},"className":"Rect"},{"attrs":{"text":"key_물리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key1","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_phisical_txt"},"className":"Text"}]},{"attrs":{"x":188.72216796875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":47.90380859375,"height":20,"fill":"#9e4856","name":"attr_background attr_domain"},"className":"Rect"},{"attrs":{"text":"Domain","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_domain_txt"},"className":"Text"}]},{"attrs":{"x":239.6259765625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":33.84765625,"height":20,"fill":"#9e4856","name":"attr_background attr_type"},"className":"Rect"},{"attrs":{"text":"Type","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_type_txt"},"className":"Text"}]},{"attrs":{"x":508,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_null"},"className":"Rect"},{"attrs":{"text":"none","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"NOT NULL","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_null_txt"},"className":"Text"}]},{"attrs":{"x":609,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_default"},"className":"Rect"},{"attrs":{"text":"Default value","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_default_txt"},"className":"Text"}]},{"attrs":{"x":710,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_comment"},"className":"Rect"},{"attrs":{"text":"Comment","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_comment_txt"},"className":"Text"}]}]}]},{"attrs":{"y":49,"name":"key_group attr_group"},"className":"Group","children":[]}]},{"attrs":{"x":347,"y":247,"opacity":0.9,"name":"entity","id":1},"className":"Group","children":[{"attrs":{"width":283.064453125,"height":56,"fill":"#000000","stroke":"white","strokeWidth":0,"name":"entity_container"},"className":"Rect"},{"attrs":{"text":"1","name":"giveColor","visible":false,"fill":"black"},"className":"Text"},{"attrs":{"x":3,"y":3,"width":54,"height":20,"name":"entity_logical"},"className":"Rect"},{"attrs":{"x":208.3076171875,"y":3,"width":71.7568359375,"height":20,"name":"entity_phisical"},"className":"Rect"},{"attrs":{"text":"테이블명","x":3,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_logical_txt"},"className":"Text"},{"attrs":{"text":"TableName1","x":208.3076171875,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_phisical_txt"},"className":"Text"},{"attrs":{"visible":false,"name":"btn_entity_group"},"className":"Group","children":[{"attrs":{"x":265.064453125,"y":-22,"width":20,"height":20,"fill":"#262629","cornerRadius":5,"name":"btn_entity_delete"},"className":"Rect"},{"attrs":{"x":244.064453125,"y":-22,"width":20,"height":20,"fill":"#262629","cornerRadius":5,"name":"btn_color"},"className":"Rect"},{"attrs":{"text":"x","x":272.064453125,"y":-18.5,"fill":"#ffffff","name":"btn_entity_delete_txt"},"className":"Text"},{"attrs":{"text":"o","x":251.064453125,"y":-18.5,"fill":"#ffffff","name":"btn_color_txt"},"className":"Text"},{"attrs":{"x":-1,"y":-22,"width":20,"height":20,"fill":"#FFD403","cornerRadius":5,"name":"btn_pk_add"},"className":"Rect"},{"attrs":{"x":20,"y":-22,"width":20,"height":20,"fill":"#0EB6FF","cornerRadius":5,"name":"btn_col_add"},"className":"Rect"},{"attrs":{"text":"+","x":3,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_pk_add_txt"},"className":"Text"},{"attrs":{"text":"+","x":24,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_col_add_txt"},"className":"Text"}]},{"attrs":{"y":26,"name":"key_group pk_group"},"className":"Group","children":[{"attrs":{"x":3,"name":"attribute","id":3},"className":"Group","children":[{"attrs":{"width":277.064453125,"height":26,"fill":"#000000","name":"attr_container"},"className":"Rect"},{"attrs":{"x":3,"y":3,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":66.84228515625,"height":20,"fill":"#412d1b","name":"attr_background attr_key"},"className":"Rect"},{"attrs":{"text":"PrimaryKey","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_key_txt"},"className":"Text"}]},{"attrs":{"name":"attr_btn_group","y":3,"visible":false},"className":"Group","children":[{"attrs":{"name":"attr_btn_move","x":-23,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#0EB6FF"},"className":"Rect"},{"attrs":{"name":"attr_btn_move_t","x":-20.9,"y":2.3,"fill":"#ffffff","fontSize":18,"text":"▦"},"className":"Text"},{"attrs":{"name":"attr_btn_remove","x":30,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#4335af"},"className":"Rect"},{"attrs":{"name":"attr_btn_remove_t","x":37,"y":3.5,"fill":"#ffffff","text":"x"},"className":"Text"}]},{"attrs":{"x":72.84228515625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#412d1b","name":"attr_background attr_logical"},"className":"Rect"},{"attrs":{"text":"key_논리","fill":"#555555","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key1","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_logical_txt"},"className":"Text"}]},{"attrs":{"x":131.07763671875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#412d1b","name":"attr_background attr_phisical"},"className":"Rect"},{"attrs":{"text":"key_물리","fill":"#555555","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key1","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_phisical_txt"},"className":"Text"}]},{"attrs":{"x":189.31298828125,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":47.90380859375,"height":20,"fill":"#412d1b","name":"attr_background attr_domain"},"className":"Rect"},{"attrs":{"text":"Domain","fill":"#555555","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_domain_txt"},"className":"Text"}]},{"attrs":{"x":240.216796875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":33.84765625,"height":20,"fill":"#412d1b","name":"attr_background attr_type"},"className":"Rect"},{"attrs":{"text":"Type","fill":"#555555","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_type_txt"},"className":"Text"}]},{"attrs":{"x":508,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#412d1b","name":"attr_background attr_null"},"className":"Rect"},{"attrs":{"text":"none","fill":"#555555","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"NOT NULL","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_null_txt"},"className":"Text"}]},{"attrs":{"x":609,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#412d1b","name":"attr_background attr_default"},"className":"Rect"},{"attrs":{"text":"Default value","fill":"#555555","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_default_txt"},"className":"Text"}]},{"attrs":{"x":710,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#412d1b","name":"attr_background attr_comment"},"className":"Rect"},{"attrs":{"text":"Comment","fill":"#555555","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_comment_txt"},"className":"Text"}]}]}]},{"attrs":{"y":49,"name":"key_group fk_group"},"className":"Group","children":[]},{"attrs":{"y":49,"name":"key_group attr_group"},"className":"Group","children":[]}]},{"attrs":{"x":998,"y":414,"opacity":0.9,"name":"entity","id":6,"draggable":true},"className":"Group","children":[{"attrs":{"width":282.4736328125,"height":56,"fill":"#8d2d3f","stroke":"white","strokeWidth":3,"name":"entity_container"},"className":"Rect"},{"attrs":{"text":"3","name":"giveColor","visible":false,"fill":"black"},"className":"Text"},{"attrs":{"x":3,"y":3,"width":54,"height":20,"name":"entity_logical"},"className":"Rect"},{"attrs":{"x":207.716796875,"y":3,"width":71.7568359375,"height":20,"name":"entity_phisical"},"className":"Rect"},{"attrs":{"text":"테이블명","x":3,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_logical_txt"},"className":"Text"},{"attrs":{"text":"TableName3","x":207.716796875,"y":3,"padding":5,"fill":"#ffffff","fontSize":11,"name":"entity_phisical_txt"},"className":"Text"},{"attrs":{"visible":true,"name":"btn_entity_group"},"className":"Group","children":[{"attrs":{"x":264.4736328125,"y":-22,"width":20,"height":20,"fill":"#262629","cornerRadius":5,"name":"btn_entity_delete"},"className":"Rect"},{"attrs":{"x":243.4736328125,"y":-22,"width":20,"height":20,"fill":"#262629","cornerRadius":5,"name":"btn_color"},"className":"Rect"},{"attrs":{"text":"x","x":271.4736328125,"y":-18.5,"fill":"#ffffff","name":"btn_entity_delete_txt"},"className":"Text"},{"attrs":{"text":"o","x":250.4736328125,"y":-18.5,"fill":"#ffffff","name":"btn_color_txt"},"className":"Text"},{"attrs":{"x":-1,"y":-22,"width":20,"height":20,"fill":"#FFD403","cornerRadius":5,"name":"btn_pk_add"},"className":"Rect"},{"attrs":{"x":20,"y":-22,"width":20,"height":20,"fill":"#0EB6FF","cornerRadius":5,"name":"btn_col_add"},"className":"Rect"},{"attrs":{"text":"+","x":3,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_pk_add_txt"},"className":"Text"},{"attrs":{"text":"+","x":24,"y":-20.5,"fill":"#000000","fontSize":20,"name":"btn_col_add_txt"},"className":"Text"}]},{"attrs":{"y":26,"name":"key_group pk_group"},"className":"Group","children":[]},{"attrs":{"y":26,"name":"key_group fk_group"},"className":"Group","children":[{"attrs":{"x":3,"name":"attribute","id":8,"type":"identify","pkId":3,"lineId":7},"className":"Group","children":[{"attrs":{"width":276.4736328125,"height":26,"fill":"#710013","name":"attr_container"},"className":"Rect"},{"attrs":{"x":3,"y":3,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":66.25146484375,"height":20,"fill":"#9e4856","name":"attr_background attr_key"},"className":"Rect"},{"attrs":{"text":"ForeignKey","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_key_txt"},"className":"Text"}]},{"attrs":{"name":"attr_btn_group","y":3,"visible":false},"className":"Group","children":[{"attrs":{"name":"attr_btn_move","x":-23,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#0EB6FF"},"className":"Rect"},{"attrs":{"name":"attr_btn_move_t","x":-20.9,"y":2.3,"fill":"#ffffff","fontSize":18,"text":"▦"},"className":"Text"},{"attrs":{"name":"attr_btn_remove","x":30,"width":20,"height":20,"cornerRadius":5,"strokeWidth":1,"stroke":"#ffffff","fill":"#4335af"},"className":"Rect"},{"attrs":{"name":"attr_btn_remove_t","x":37,"y":3.5,"fill":"#ffffff","text":"x"},"className":"Text"}]},{"attrs":{"x":72.25146484375,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#9e4856","name":"attr_background attr_logical"},"className":"Rect"},{"attrs":{"text":"key_논리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key1","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_logical_txt"},"className":"Text"}]},{"attrs":{"x":130.48681640625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":55.2353515625,"height":20,"fill":"#9e4856","name":"attr_background attr_phisical"},"className":"Rect"},{"attrs":{"text":"key_물리","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"Key1","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_phisical_txt"},"className":"Text"}]},{"attrs":{"x":188.72216796875,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":47.90380859375,"height":20,"fill":"#9e4856","name":"attr_background attr_domain"},"className":"Rect"},{"attrs":{"text":"Domain","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_domain_txt"},"className":"Text"}]},{"attrs":{"x":239.6259765625,"y":3,"visible":true,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":33.84765625,"height":20,"fill":"#9e4856","name":"attr_background attr_type"},"className":"Rect"},{"attrs":{"text":"Type","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_type_txt"},"className":"Text"}]},{"attrs":{"x":508,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_null"},"className":"Rect"},{"attrs":{"text":"none","fill":"#000000","padding":5,"fontSize":11,"visible":false,"name":"placeHolder"},"className":"Text"},{"attrs":{"text":"NOT NULL","padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_null_txt"},"className":"Text"}]},{"attrs":{"x":609,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_default"},"className":"Rect"},{"attrs":{"text":"Default value","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_default_txt"},"className":"Text"}]},{"attrs":{"x":710,"y":3,"visible":false,"name":"attr_groups"},"className":"Group","children":[{"attrs":{"width":98,"height":20,"fill":"#9e4856","name":"attr_background attr_comment"},"className":"Rect"},{"attrs":{"text":"Comment","fill":"#000000","padding":5,"fontSize":11,"visible":true,"name":"placeHolder"},"className":"Text"},{"attrs":{"padding":5,"fill":"#ffffff","fontSize":11,"name":"setAttrsText attr_comment_txt"},"className":"Text"}]}]}]},{"attrs":{"y":49,"name":"key_group attr_group"},"className":"Group","children":[]}]}]},{"attrs":{},"className":"Layer","children":[]},{"attrs":{},"className":"Layer","children":[]},{"attrs":{},"className":"Layer","children":[{"attrs":{"lineCap":"round","linerJoin":"round","name":"1","lastPos":2,"id":4,"stroke":"#e08ba3","points":[630.064453125,270,640.064453125,270,640.064453125,265,640.064453125,275,640.064453125,270,977,275,982,275,982,270,982,280,982,275,992,275]},"className":"Line"},{"attrs":{"lineCap":"round","linerJoin":"round","name":"1","lastPos":6,"id":7,"stroke":"#86f5e5","points":[630.064453125,280,640.064453125,280,640.064453125,275,640.064453125,285,640.064453125,280,983,442,988,442,998,447,988,442,998,437,988,442,998,442]},"className":"Line"}]}]}@@8';
-         var arr_json=json.split('@@');
-         stage2 = Konva.Node.create(arr_json[0], 'tmp_canvas');
-        numId =   arr_json[1];
-          
-          //stage2.children.moveTo(stage);
-          //stage2.find(".entity").moveTo(layer);
-          
-          
-          
-
-          
-          stage2.children.each(function(item1,i){
-              
-              while(item1.children.length > 0){
-                    
-                  
-                  item1.children[0].moveTo(stage.children[i]);
-                  
-                  //stage.children[i].add(item1.children[0]);
-                  
-                  console.log("객체 추가");
-
-                }
-              
-          });
-       
-          
-          //stage2.children[0].children.movoTo(stage.children[0])
-
-      });
-    
-    
-       var stage2;
       
-       
+      
+      //히스토리 닫기 버튼
+      $('#history_container .btn_close_under').on('click', function(){
+          $('#history_container').removeClass('active');
+      });
+      
+      //스냅샷 닫기 버튼
+      $('#snapshot_container .btn_close_under').on('click', function(){
+          $('#snapshot_container').removeClass('active');
+      });
+    
+      //채팅 닫기 버튼
+      $('#chat_container .btn_close_under').on('click', function(){
+          $('#chat_container').removeClass('active');
+      });
+      
+      
+      //히스토리 활성화 버튼
+      $('#button40').on('click',function(){
+    	  	$('#snapshot_container').removeClass('active');
+    	  	$('#chat_container').removeClass('active');
+    	  	$('#history_container').addClass('active');
+      });
+
+      //스냅샷 활성화 버튼
+      $('#button41').on('click',function(){
+    	  	$('#history_container').removeClass('active');
+    	  	$('#chat_container').removeClass('active');
+    	  	$('#snapshot_container').addClass('active');
+      });
+
+      //채팅 활성화 버튼
+      $('#button42').on('click',function(){
+    	  	$('#history_container').removeClass('active');
+    	  	$('#snapshot_container').removeClass('active');
+    	  	$('#chat_container').addClass('active');
+      });
+
+
        //identifying을 클릭했을 때
        $("#identifying").on('click', function(){
      	  console.log('identifyingclick')
@@ -581,6 +754,9 @@
       var mini_width, mini_height, screenWidth, screenHeight;;
       var mini_stage, mini_layer, mini_rect;
 
+      //temp변수
+      var json, json2;   
+      var stage2, mini_stage2;
     
       var tmp_PosY = 0;
     
@@ -640,6 +816,7 @@
 		mini_rect = new Konva.Rect({
 			x: 0,
 			y: 0,
+			id: 'mini_red',
 			width: screenWidth*0.048,
 			height: screenHeight*0.048,
 			stroke: 'red',
@@ -935,7 +1112,6 @@
             //dragEvent1
              stage.off('.dragSetup');
              stage.on('dragmove.dragSetup', function dragEvent1(evt){
-                 
                  allNode = evt.target;
                  
                      if(allNode.hasName('entity')){
@@ -955,9 +1131,11 @@
     
         //전역변수로 빼기
         var old_entity;
+        var zNode;
         
         //스테이지 클릭
         function stageClick(e){
+        		
             console.log('스테이지 클릭');
             
             if(temp_relationLine != null){
@@ -972,15 +1150,51 @@
             	relationLine_layer.draw();
             }
             
-            
-            
-            if(e === 0){
-                allNode = stage;
-            }else if(e != null){
-                allNode = e.target;
-            }else{
-                allNode = entity.findOne('.entity_logical_txt');
+            if(stage.find('.entity').length===0){
+            		return;
             }
+            
+            
+            if(e === undefined){
+                allNode = entity.findOne('.entity_logical_txt');
+            }else{
+            	
+            	 	var keycheck = Object.keys(e);
+                 console.log("이벤트 키 : ", keycheck[0]);
+               
+                 if(keycheck[0] === '_id'){
+     	    			allNode = e;
+     	    		}else if(e === 0){
+                     allNode = stage;
+                 }else if(e != null){
+
+     	            	if(e.target.findAncestor('.btn_entity_group') === undefined && e.target.findAncestor('.attr_btn_group') === undefined){
+     	            		
+     	            		zNode = e;
+     	        			console.log("zNode저장");
+     	            	}else{
+     	            		zNode = e.target.findAncestor('.entity');
+     	            		  
+     	            		console.log("zNode - entity저장");
+     	            	}
+     	            	
+     	 
+                     		allNode = e.target;
+
+                 }
+            	
+            }
+            
+           
+//             else{
+//                 allNode = entity.findOne('.entity_logical_txt');
+//             }
+         	
+         	
+         	
+         	
+         	
+         	
             
             
             //이동버튼 클릭시
@@ -1006,12 +1220,19 @@
            }
             
             /////yhs
-           if(allNode.parent === null || temp_arrow != null ){  // 좀 더 생각해보자 temp_arrow != null말고 e.를 활용해서 
+           if(allNode.parent === null || temp_arrow != null){  // 좀 더 생각해보자 temp_arrow != null말고 e.를 활용해서 
                console.log('temp_arrow'+ temp_arrow);
                console.log('allNode'+ allNode);
-               old_btn_entity_group.hide();
-               old_entity.draggable(false);
-               old_container.strokeWidth(0);
+       
+               
+               try {
+            	      old_btn_entity_group.hide();
+            	      old_entity.draggable(false);
+                  old_container.strokeWidth(0);
+				} catch (e) {
+				}
+               
+               
                
                if(temp_arrow != null ){ //빈스테이지를 찍어 temp_arrow를 제거해주는 것.
                	
@@ -1048,9 +1269,15 @@
            if(allNode.parent === null || temp_arrow != null ){  // 좀 더 생각해보자 temp_arrow != null말고 e.를 활용해서 
                console.log('temp_arrow'+ temp_arrow);
                console.log('allNode'+ allNode);
+               
+               try {
                old_btn_entity_group.hide();
                old_entity.draggable(false);
                old_container.strokeWidth(0);
+				
+			} catch (e) {
+				// TODO: handle exception
+			}
                
                if(temp_arrow != null ){ //빈스테이지를 찍어 temp_arrow를 제거해주는 것.
                	
@@ -1113,7 +1340,17 @@
             else {
                 
                 //변수에 클릭 타겟 넣기
-                entity = allNode.findAncestor('.entity');
+	            
+                if(e === undefined){
+                		entity = allNode.findAncestor('.entity')
+                }else if(keycheck[0] === '_id'){
+		        		entity = e;
+                }else{
+		        		entity = allNode.findAncestor('.entity');
+                }
+
+                
+                
                 
  
                 //entity 삭제버튼 이벤트 
@@ -1531,7 +1768,7 @@
 			
 			
 			
-         	$('#queryText').text(query);
+         	$('#queryText').val(query);
         });
         
         
@@ -1618,13 +1855,104 @@
         
       });
     
-$("#erdModify").on("click", function(){
-	alert("sdf");
-	
-})
-        
-        
-        
+	// erd 설정 버튼 클릭시       
+   $("#erdModify").on("click", function(){
+   	var erdNo = $("#erdModify").attr("data-erdno");	
+   	erdModifyModal(erdNo);
+   });
+   // 수정할 erd 정보 가져오기 ajax
+   function erdModifyModal(erdNo) {
+   	$.ajax({
+   		url : "${cp}/erd/erdModify",
+   		type : "get",
+   		data : {
+   			erdNo : erdNo
+   		},
+   		success : function(data) {
+   			console.log(data);
+   			insertInfoToModal(data);
+   		}
+   	});
+   }
+
+   // 모달창에 정보 넣기
+   function insertInfoToModal(data){
+   	var erdVo = data.erdVo;
+   	var tagList = data.tagList;
+   	
+   	var tag = "";
+   	for(var i in tagList){
+   		tag += tagList[i].tagContent + ",";
+   	}
+   	tag = tag.substr(0, tag.length-1);	// 마지막 쉼표 지우기
+   	$("#title").val(erdVo.erdTitle);
+   	$("#tag").val(tag);
+   	$("#erdImg").attr("src","${cp }/erd/erdImg?erdNo=${erdNo}");
+   	$("#erdNo").val(erdVo.erdNo);
+   	$('input:radio[name="erdScope"][value="' + erdVo.erdScope + '"]').attr( "checked" , "checked");
+   	
+   	// 스냅샷 찍기
+   	$("#snapshotBtn").on("click", function(){
+   	var dataURL = stage.toDataURL({ pixelRatio: 3 });
+   		$("#erdImg").attr('src', dataURL);
+   		$("#snapshot").val(dataURL);
+   		$("#profileImg").val(""); 
+   	});
+   	
+   }
+
+   // erd 제목 수정 ajax
+   $("#erdTitleEditBtn").on("click", function(){
+   	var erdTitle = $("#erdName").val();
+   	var erdNo = ${erdVo.erdNo};
+   	$.ajax({
+   		url : "${cp}/erd/erdTitleEdit",
+   		type : "get",
+   		data : {
+   			erdNo : erdNo,
+   			erdTitle : erdTitle
+   		},
+   		success : function(data) {
+   			$("#erdName").val(data.erdTitle);
+   		}
+   	});
+   })
+
+   var likeFlag = ${likeCnt};
+   if(likeFlag == 1){
+   	$(".like").css("color", "red");
+   }else{
+   	$(".like").css("color", "white");
+   }
+
+   // erd 좋아요 클릭 / 취소
+   $("#erdLikeBtn").on("click", function(){
+   	var erdNo = ${erdVo.erdNo};
+   	$.ajax({
+   		url : "${cp}/erd/erdLikeClick",
+   		type : "get",
+   		data : {
+   			erdNo : erdNo
+   		},
+   		success : function(data) {
+   			if(likeFlag == 1){
+   				$(".like").css("color", "white");
+   				likeFlag = 0;
+   			}else{
+   				$(".like").css("color", "red");
+   				likeFlag = 1;
+   			}
+   		}
+   	});
+   });
+
+   $("#erdCopyBtn").on("click", function(){
+   	$("#erdCopyFrm").submit();
+   });
+
+   
+   
+   
 
         
 </script>

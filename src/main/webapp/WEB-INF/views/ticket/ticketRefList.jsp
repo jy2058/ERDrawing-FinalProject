@@ -3,14 +3,11 @@
 <%@ taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib  prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-
-
-    <link href="/js/ticket/material-design-iconic-font.min.css" rel="stylesheet" media="all">
+	 <link href="/js/ticket/material-design-iconic-font.min.css" rel="stylesheet" media="all">
 	 <link href="/js/ticket/font-awesome.min.css" rel="stylesheet" media="all">
     <link href="/js/ticket/daterangepicker.css" rel="stylesheet" media="all">
     <link href="/css/ticket.css" rel="stylesheet" media="all"> 
     <link href="/js/ticket/select2.min.css" rel="stylesheet" media="all">
-    
     <div style="padding-top: 100px"></div>
 
 

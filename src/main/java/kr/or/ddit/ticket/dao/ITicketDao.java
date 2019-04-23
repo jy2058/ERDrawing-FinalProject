@@ -107,4 +107,15 @@ public interface ITicketDao {
 	 * Method 설명 : 티켓별 매달 매출
 	 */
 	List<TicketBuyHistVo> selectTicketYearPieList(Map<String, Object> ticketMap);
+	
+	
+	/**
+	 * Method : getAllTicketRefList
+	 * 작성자 : PC02
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 :전체 환불내역 가져오기
+	 */
+	
+	List<Map<String, Object>> getAllTicketRefList();
 }

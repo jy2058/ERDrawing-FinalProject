@@ -115,4 +115,11 @@
                   group by ticketMonDt
                 order by ticketMonDt
 	 </select> 
+	 
+	 <select id="getAllTicketRefList" resultType="Map">
+	    select a.* ,b.*,to_char(c.ticketcontent) as ticketcontent
+    		from TICKET_BUY_HIST  a, TICKET_REF_HIST b, TICKET c
+   		 where a.TICKETBUYNO = b.TICKETBUYNO and
+          	   a.TICKETNo = c.TICKETNO
+	 </select>
 </mapper>

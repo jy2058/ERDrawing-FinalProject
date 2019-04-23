@@ -289,8 +289,10 @@ public class TicketController {
 	 }
 	 
 	 
+	 //티켓환불 신청 내역
 	 @RequestMapping(path="/ticketRefList")
-	 public String TicketRefList(HttpServletRequest req ,RedirectAttributes ra){
+	 public String TicketRefList(HttpServletRequest req ,RedirectAttributes ra,Model model){
+		 model.addAttribute("ticketRefList", ticketService.getAllTicketRefList());
 			return "ticketRefList";
 	 }
 	 

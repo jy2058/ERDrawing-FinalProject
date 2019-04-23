@@ -8,9 +8,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import kr.or.ddit.erd.model.DomainVo;
 import kr.or.ddit.erd.service.IErdDrawingService;
@@ -71,11 +73,35 @@ public class ErdDrawingController {
 		return "jsonView";
 	}
 	
+	
 	@RequestMapping(path="erdMaxHistSelect", method=RequestMethod.POST)
 	public String erdMaxHistSelect(Model model, int erdNo){
+		
 		ErdHistVo vo = erdDrawingService.erdMaxHistSelect(erdNo);
 		model.addAttribute("erdHistVo", vo);
-		return "jsonView";
+		
+		return "jsonView"; 
 	}
+	
+	
+	@RequestMapping(path="erdHistList", method=RequestMethod.POST)
+	public String erdHistList(Model model, int erdNo){
+		
+		List<ErdHistVo> list = erdDrawingService.erdHistList(erdNo);
+		model.addAttribute("erdHistList", list);
+		
+		return "jsonView"; 
+	}
+	
+	
+	@RequestMapping(path="erdSnapList", method=RequestMethod.POST)
+	public String erdSnapList(Model model, int erdNo){
+		
+		List<ErdHistVo> list = erdDrawingService.erdSnapList(erdNo);
+		model.addAttribute("erdSnapList", list);
+		
+		return "jsonView"; 
+	}
+	
 	
 }

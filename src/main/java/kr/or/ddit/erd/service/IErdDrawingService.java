@@ -25,6 +25,14 @@ public interface IErdDrawingService {
 	//erd 최신 히스토리 가져오기
 	ErdHistVo erdMaxHistSelect(int erdNo);
 
+	//erd 히스토리 가져오기
+	List<ErdHistVo> erdHistList(int erdNo);
+
+	//erd 스냅샷 가져오기
+	List<ErdHistVo> erdSnapList(int erdNo);
+	
+	
+
 
 
 

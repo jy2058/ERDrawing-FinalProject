@@ -8,8 +8,10 @@
 	<div class="drawing_top">
 		<div class="top_left">
 			<a id="botton0" class="buttons" href="/">홈</a>
-			<div class="buttons_top" title="라이브러리">
-				<i class="fas fa-book" style="font-size: 18px; line-height: 18px;"></i>
+			<div class="buttons_top" id="goLib" title="라이브러리">
+				<a href="/library">
+					<i class="fas fa-book" style="font-size: 18px; line-height: 18px;"></i>
+				</a>
 			</div>
 
 			<input id="erdName" type="text" value="${erdVo.erdTitle }">
@@ -33,13 +35,13 @@
 				data-erdno="${erdNo }">
 				<i class="fas fa-cog"></i>
 			</div>
-			<div class="buttons_top" title="알람">
+			<div class="buttons_top" id="message" title="알람">
 				<i class="fas fa-bell"></i>
 			</div>
 			<div class="buttons_top" title="로그아웃">
 				<i class="fas fa-sign-out-alt"></i>
 			</div>
-			<div class="buttons_top" title="검색 창 열기">
+			<div class="buttons_top" id="searchModal" title="검색 창 열기">
 				<i class="fas fa-search"></i>
 			</div>
 		</div>

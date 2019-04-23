@@ -100,7 +100,7 @@ $("#searchBtn_modal").on("click", function(){
 
 
 function erdClick(erdNo){
-	$(location).attr('href', "${cp}/kjy?erdNo="+erdNo);
+	$(location).attr('href', "${cp}/erdDrawing?erdNo="+erdNo);
 }
 
 </script>

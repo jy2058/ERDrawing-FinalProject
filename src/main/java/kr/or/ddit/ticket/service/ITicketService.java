@@ -28,4 +28,6 @@ public interface ITicketService {
 	int insertticketBuyHist(TicketBuyHistVo ticketBuyHistVo);
 	
 	List<TicketBuyHistVo> selectTicketYearPieList(Map<String, Object> ticketMap);
+
+	List<Map<String, Object>> getAllTicketRefList();
 }

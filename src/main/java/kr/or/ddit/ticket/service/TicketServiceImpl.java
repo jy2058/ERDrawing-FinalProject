@@ -67,4 +67,9 @@ public class TicketServiceImpl implements ITicketService{
 		return ticketDao.selectTicketYearPieList(ticketMap);
 	}
 
+	@Override
+	public List<Map<String, Object>> getAllTicketRefList() {
+		return ticketDao.getAllTicketRefList();	
+		}
+
 }

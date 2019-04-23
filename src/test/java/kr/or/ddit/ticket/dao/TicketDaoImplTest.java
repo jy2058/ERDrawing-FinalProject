@@ -18,6 +18,7 @@ import org.slf4j.LoggerFactory;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.test.logicTestConfig;
 import kr.or.ddit.ticket.model.TicketBuyHistVo;
+import kr.or.ddit.ticket.model.TicketRefHistVo;
 import kr.or.ddit.ticket.model.TicketVo;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
 
@@ -58,6 +59,20 @@ public class TicketDaoImplTest extends logicTestConfig{
 		assertTrue(list.size()>0);
 		assertTrue(list.size()==12);
 	}
+	
+	@Test
+	public void testSelectTicketRefList() {
+		List<Map<String, Object>> list =  ticketDao.getAllTicketRefList();
+		
+		logger.debug(list.toString());
+		
+		logger.debug("====ser{}",list.get(0));
+		logger.debug("====ser{}",list.get(0).get("ACCOUNT"));
+		
+		assertTrue(list.size()>0);
+	}
+	
+	
 	
 
 }

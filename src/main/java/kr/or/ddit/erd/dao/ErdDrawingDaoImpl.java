@@ -43,12 +43,35 @@ public class ErdDrawingDaoImpl implements IErdDrawingDao{
 	
 	@Override
 	public int erdHistInsert(ErdHistVo erdHistVo){
-		return sqlSession.insert("erdDrawing.erdHistInsert",erdHistVo); 
+		
+		int cnt = sqlSession.selectOne("erdDrawing.selectCntHist",erdHistVo);
+		
+		if(cnt >= 10){
+			//update
+			sqlSession.update("erdDrawing.erdHistUpdate",erdHistVo);
+		}else{
+			//insert
+			sqlSession.insert("erdDrawing.erdHistInsert",erdHistVo);
+		}
+		
+		return 0; 
 	}
 	
 	@Override
 	public ErdHistVo erdMaxHistSelect(int erdNo){
 		return sqlSession.selectOne("erdDrawing.erdMaxHistSelect",erdNo);
+	}
+	
+	
+	@Override
+	public List<ErdHistVo> erdHistList(int erdNo){
+		return sqlSession.selectList("erdDrawing.erdHistList",erdNo);
+	}
+	
+	
+	@Override
+	public List<ErdHistVo> erdSnapList(int erdNo){
+		return sqlSession.selectList("erdDrawing.erdSnapList",erdNo);
 	}
 	
 }

@@ -28,6 +28,13 @@ public interface IErdDrawingDao {
 	//erd 최신 히스토리 가져오기
 	ErdHistVo erdMaxHistSelect(int erdNo);
 
+	//erd 히스토리 리스트 가져오기
+	List<ErdHistVo> erdHistList(int erdNo);
+
+	//erd 스냅샷 리스트 가져오기
+	List<ErdHistVo> erdSnapList(int erdNo);
+
+
 	
 	
 
