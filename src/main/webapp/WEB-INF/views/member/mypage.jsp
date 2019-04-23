@@ -115,7 +115,7 @@
 					<ul class="erd-box-list">
 
 						<c:forEach var="myErdList" varStatus="status" items="${myErdList }">
-							<li class="erd-box-item erdClick" onclick="erdClick(${myErdList.erdNo})">
+							<li class="erd-box-item">
 							
 								<div style="position:absolute; z-index:30;">
 									<div class="stats-box">
@@ -134,7 +134,7 @@
 									</div> 
 								</div>
 								
-								<a class="preview-box">
+								<a class="preview-box" onclick="erdClick(${myErdList.erdNo})">
 									<div class="bg-box">
 										<img src="${cp }/erd/erdImg?erdNo=${myErdList.erdNo}">
 										<div class="table-bg-text">

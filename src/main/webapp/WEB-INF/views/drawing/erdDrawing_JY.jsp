@@ -26,7 +26,7 @@
 		</div>
 
 		<div class="top_right">
-			<div class="buttons_top" title="ERD 복사">
+			<div class="buttons_top" title="ERD 복사" id="erdCopyBtn">
 				<i class="fas fa-copy"></i>
 			</div>
 			<div class="buttons_top" title="ERD 설정" id="erdModify"
@@ -285,6 +285,12 @@
 
 	</div>
 </div>
+
+<form action="${cp }/erd/erdCopy" method="get" id="erdCopyFrm">
+	<input type="hidden" name="erdNo" value="${erdNo }">
+	<input type="hidden" name="erdTitle" value="${erdVo.erdTitle }">
+	<input type="hidden" name="erdImg" value="${erdVo.erdImg }">
+</form>
 
 
 
@@ -1665,7 +1671,11 @@ $("#erdLikeBtn").on("click", function(){
 			}
 		}
 	});
-})
+});
+
+$("#erdCopyBtn").on("click", function(){
+	$("#erdCopyFrm").submit();
+});
 
 </script>
 

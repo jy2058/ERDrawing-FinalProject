@@ -53,17 +53,21 @@
 	
 	
 	
-<!-- erd히스토리 추가 -->
+<!--  erd히스토리 추가 -->
 	<insert id="erdHistInsert" parameterType="erdHistVO">
 		insert into erd_hist
 			(erdHistNo, erdNo, erdDt, erdIsVisible, snapNm, snapImg, snapCdt, erdTitle, erdJson)
 		values
 			(seq_erdhistno.nextval, #{erdNo}, sysdate, #{erdIsVisible}, #{snapNm, jdbcType=VARCHAR}, #{snapImg, jdbcType=VARCHAR}, sysdate, #{erdTitle, jdbcType=VARCHAR}, #{erdJson, jdbcType=VARCHAR})
 	</insert>
+	
+	
 <!-- erd 최신 히스토리 가져오기 -->
 	<select id="erdMaxHistSelect" parameterType="Integer" resultType="erdHistVO">
 		select * from erd_hist
-		where erdhistno = (select max(erdhistno) as erdhistno from erd_hist where erdNo = #{erdNo})
+		where erdhistno = (select max(erdhistno) as erdhistno from erd_hist 
+							where erdNo = #{erdNo}
+							and erdIsVisible = 'T')
 	</select>
 
 </mapper>

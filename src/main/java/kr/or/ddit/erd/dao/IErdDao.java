@@ -4,6 +4,7 @@ import java.util.List;
 
 import kr.or.ddit.erd.model.ErdLikeVo;
 import kr.or.ddit.erd.model.ErdVo;
+import kr.or.ddit.erdhistory.model.ErdHistVo;
 import kr.or.ddit.util.model.PageVo;
 
 /**
@@ -168,4 +169,5 @@ public interface IErdDao {
 	* Method 설명 : erd 좋아요 했는지 확인 cnt
 	*/
 	int getMyLikeCnt(ErdLikeVo erdLikeVo);
+	
 }

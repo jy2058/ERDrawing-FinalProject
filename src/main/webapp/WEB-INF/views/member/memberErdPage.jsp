@@ -55,7 +55,7 @@
 							 <ul class="erd-box-list">
 							 	<c:forEach var="myErdList" varStatus="status" items="${myErdList }">
 							 	<c:if test="${myErdList.erdScope eq 'public' }">
-							  	<li class="erd-box-item" onclick="erdClick(${myErdList.erdNo})">
+							  	<li class="erd-box-item">
 					  				<div style="position:absolute; z-index:30;">
 										<div class="stats-box">
 											<i class="fas fa-eye"></i>
@@ -73,7 +73,7 @@
 										</c:if>
 										</div>
 									</div>
-								  		<a class="preview-box">
+								  		<a class="preview-box" onclick="erdClick(${myErdList.erdNo})">
 								  			<div class="bg-box">
 							  					<img src="${cp }/erd/erdImg?erdNo=${myErdList.erdNo}">
 								  				<div class="table-bg-text">

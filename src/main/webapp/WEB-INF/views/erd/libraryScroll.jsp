@@ -127,7 +127,7 @@ $(document).ready(function(){
 				
 				var html ="";
 				for(var i = 0; i < erdList.length; i++){
-					html += '<li class="erd-box-item" onclick="erdClick(' + erdList[i].erdNo + ')">';
+					html += '<li class="erd-box-item">';
 					html += '	<div style="position:absolute; z-index:30;">';
 					html += '		<div class="stats-box">';
 					html += '			<i class="fas fa-eye"></i>';
@@ -138,7 +138,7 @@ $(document).ready(function(){
 					html += '			<label>' + erdList[i].likeCnt + '</label>';
 					html += '		</div>';
 					html += '	</div>';
-					html += '	<a class="preview-box">';
+					html += '	<a class="preview-box" onclick="erdClick(' + erdList[i].erdNo + ')">';
 					html += '		<div class="bg-box">';
 					html += '			<img src="${cp }/erd/erdImg?erdNo=' + erdList[i].erdNo + '">';
 					html += '			<div class="table-bg-text">';

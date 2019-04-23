@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.erd.model.ErdLikeVo;
 import kr.or.ddit.erd.model.ErdVo;
+import kr.or.ddit.erdhistory.model.ErdHistVo;
 import kr.or.ddit.util.model.PageVo;
 
 @Repository("erdDao")

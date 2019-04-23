@@ -12,8 +12,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.erd.dao.IErdDao;
+import kr.or.ddit.erd.dao.IErdDrawingDao;
 import kr.or.ddit.erd.model.ErdLikeVo;
 import kr.or.ddit.erd.model.ErdVo;
+import kr.or.ddit.erdhistory.model.ErdHistVo;
 import kr.or.ddit.team.dao.ITeamDao;
 import kr.or.ddit.team.model.TagHistVo;
 import kr.or.ddit.team.model.TagVo;
@@ -27,6 +29,9 @@ public class ErdServiceImpl implements IErdService{
 	private IErdDao erdDao;
 	@Resource(name="teamDao")
 	private ITeamDao teamDao;
+	@Resource(name="erdDrawingDao")
+	private IErdDrawingDao erdDrawingDao;
+	
 
 	@Override
 	public int addErd(ErdVo erdVo) {
@@ -285,4 +290,29 @@ public class ErdServiceImpl implements IErdService{
 	public int getMyLikeCnt(ErdLikeVo erdLikeVo) {
 		return erdDao.getMyLikeCnt(erdLikeVo);
 	}
+
+	@Override
+	public int erdCopy(ErdVo erdVo) {
+		ErdHistVo erdMaxHistVo = erdDrawingDao.erdMaxHistSelect(erdVo.getErdNo());	// 복사 대상의 최신 erd hist
+		erdVo.setErdTitle(erdVo.getErdTitle() + " of copy");
+		erdVo.setErdScope("private");
+		logger.debug("!@!@ erdVo : {}", erdVo);
+		erdDao.addErd(erdVo);	// 복사할 erd 생성
+		
+		int erdNo = erdVo.getErdNo();
+		
+		// 새로 생성한 erd에 복사 대상의 erdhist 넣어주기
+		if(erdMaxHistVo == null){
+			ErdHistVo newErdHistVo = new ErdHistVo();
+			newErdHistVo.setErdNo(erdNo);
+			newErdHistVo.setErdIsVisible("T");
+			erdDrawingDao.erdHistInsert(newErdHistVo);
+		}else{
+			erdMaxHistVo.setErdNo(erdNo);
+			erdMaxHistVo.setErdIsVisible("T");
+			erdDrawingDao.erdHistInsert(erdMaxHistVo);
+		}
+		return 0;
+	}
+
 }

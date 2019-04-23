@@ -43,7 +43,7 @@
 				<div class="col-sm-12">
 					 <ul class="erd-box-list">
 						<c:forEach var="erdList" varStatus="status" items="${erdList }">
-							<li class="erd-box-item erdClick" onclick="erdClick(${erdList.erdNo})">
+							<li class="erd-box-item erdClick">
 								<div style="position:absolute; z-index:30;">
 									<div class="stats-box">
 										<i class="fas fa-eye"></i>
@@ -54,7 +54,7 @@
 										<label>${erdList.likeCnt }</label>
 									</div>
 								</div>
-								<a class="preview-box">
+								<a class="preview-box" onclick="erdClick(${erdList.erdNo})">
 									<div class="bg-box">
 										<img src="${cp }/erd/erdImg?erdNo=${erdList.erdNo}">
 										<div class="table-bg-text">
@@ -119,7 +119,7 @@
 				
 				var html ="";
 				for(var i = 0; i < erdList.length; i++){
-					html += '<li class="erd-box-item" onclick="erdClick(' + erdList[i].erdNo + ')">';
+					html += '<li class="erd-box-item">';
 					html += '	<div style="position:absolute; z-index:30;">';
 					html += '		<div class="stats-box">';
 					html += '			<i class="fas fa-eye"></i>';
@@ -130,7 +130,7 @@
 					html += '			<label>' + erdList[i].likeCnt + '</label>';
 					html += '		</div>';
 					html += '	</div>';
-					html += '	<a class="preview-box">';
+					html += '	<a class="preview-box" onclick="erdClick(' + erdList[i].erdNo + ')">';
 					html += '		<div class="bg-box">';
 					html += '			<img src="${cp }/erd/erdImg?erdNo=' + erdList[i].erdNo + '">';
 					html += '			<div class="table-bg-text">';

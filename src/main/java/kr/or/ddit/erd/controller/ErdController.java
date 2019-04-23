@@ -264,4 +264,15 @@ public class ErdController {
 		
 		return "jsonView";
 	}
+	
+	@RequestMapping("/erdCopy")
+	public String erdCopy(ErdVo erdVo, HttpSession session){
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		String memId = memberVo.getMemId();
+		erdVo.setMemId(memId);
+		
+		erdService.erdCopy(erdVo);
+		
+		return "redirect:/mypage";
+	}
 }

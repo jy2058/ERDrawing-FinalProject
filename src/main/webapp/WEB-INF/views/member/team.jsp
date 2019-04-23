@@ -152,7 +152,7 @@
 						<div class="col-sm-12">
 							 <ul class="erd-box-list">
 							 	<c:forEach var="teamErdList" varStatus="status" items="${teamErdList }">
-							  	<li class="erd-box-item" onclick="erdClick(${teamErdList.erdNo})">
+							  	<li class="erd-box-item">
 							  		<c:if test="${myTeam.teamAuth ne 'user'}"> <!-- 권한이 유저가 아닐 때 erd 삭제 가능 -->
 							  		<div style="position:absolute; z-index:30;">
 								  		<button type="button" class="btn btn-default delBtn" aria-label="trash" value="${myErdList.erdNo }">
@@ -160,7 +160,7 @@
 										</button>
 									</div>
 									</c:if>
-								  		<a class="preview-box">
+								  		<a class="preview-box" onclick="erdClick(${teamErdList.erdNo})">
 								  			<div class="bg-box">
 							  					<img src="${cp }/erd/erdImg?erdNo=${teamErdList.erdNo }">
 								  				<div class="table-bg-text">
