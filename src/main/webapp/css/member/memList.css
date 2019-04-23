@@ -3,7 +3,7 @@
     padding-right: 0px;
     padding-left: 0px;
     margin-right: 0px;
-    margin-left: -155px;
+    margin-left: -105px;
     position: absolute;
     color: #000000;
     }
@@ -107,9 +107,6 @@ border:0px;
 position:absolute;
 width:100px;
 z-index:200;
-}
-ul{
-color: #ffffff;
 }
 .d1 ul ul li {
 	display: block;
