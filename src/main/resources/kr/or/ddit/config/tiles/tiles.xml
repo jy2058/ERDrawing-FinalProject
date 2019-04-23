@@ -138,6 +138,9 @@
         	<put-attribute name="content" value="/WEB-INF/views/ticket/ticketPie.jsp" />
         </definition>
         
+            <definition name="ticketRefList" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/ticket/ticketRefList.jsp" />
+        </definition>
         
         
         

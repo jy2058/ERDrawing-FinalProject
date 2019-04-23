@@ -95,4 +95,24 @@
         TICKET_BUY_HIST  (TICKETBUYNO, TICKETNO, MEMID, TICKETBUYDT, TICKETFEE)
        values (seq_ticketbuyno.nextval, #{ticketNo},#{memId},sysdate,#{ticketFee})
      </insert>
+     
+     
+    	 <select id="selectTicketYearPieList" resultType="ticketBuyHistVo" parameterType="java.util.Map">
+	   select ticketMonDt, sum(fee) as TICKETFEE
+   	 from  (select distinct(ticketMonDt) as ticketMonDt,
+         case when ticketMonDts = ticketMonDt then TICKETFEE else 0 end as fee                
+               from (select to_char(TICKETBUYDT,'YYYYMM')as ticketMonDts ,
+                                sum(TICKETFEE) as TICKETFEE
+                       from TICKET_BUY_HIST 
+                      where  to_char(TICKETBUYDT,'yyyy') like 	#{yyyy}||'%'
+                        and ticketNo=#{ticketNo}
+                       group by to_char(TICKETBUYDT,'YYYYMM')
+                       order by ticketMonDts) a, 
+                       (select to_char(add_months(#{yyyyMMdd},+(level-1)),'yyyyMM') as ticketMonDt
+                          from dual
+                       connect by level<![CDATA[ <= ]]> 12) b 
+                order by ticketMonDt)
+                  group by ticketMonDt
+                order by ticketMonDt
+	 </select> 
 </mapper>

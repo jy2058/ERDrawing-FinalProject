@@ -97,4 +97,14 @@ public interface ITicketDao {
 	 * Method 설명 :티켓구매
 	 */
 	int insertticketBuyHist(TicketBuyHistVo ticketBuyHistVo);
+	
+	/**
+	 * Method : selectTicketYearPieList
+	 * 작성자 : PC02
+	 * 변경이력 :
+	 * @param yyyy
+	 * @return
+	 * Method 설명 : 티켓별 매달 매출
+	 */
+	List<TicketBuyHistVo> selectTicketYearPieList(Map<String, Object> ticketMap);
 }

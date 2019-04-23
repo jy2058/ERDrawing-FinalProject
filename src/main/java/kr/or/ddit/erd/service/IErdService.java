@@ -3,7 +3,9 @@ package kr.or.ddit.erd.service;
 import java.util.List;
 import java.util.Map;
 
+import kr.or.ddit.erd.model.ErdLikeVo;
 import kr.or.ddit.erd.model.ErdVo;
+import kr.or.ddit.erdhistory.model.ErdHistVo;
 import kr.or.ddit.util.model.PageVo;
 
 public interface IErdService {
@@ -159,4 +161,35 @@ public interface IErdService {
 	* Method 설명 : erd별 조회수
 	*/
 	int erdLikeCnt(int erdNo);
+	
+	/**
+	* Method : erdLikeClick
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdLikeVo
+	* @return
+	* Method 설명 : erd 좋아요 클릭
+	*/
+	int erdLikeClick(ErdLikeVo erdLikeVo);
+	
+	/**
+	* Method : getMyLikeCnt
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdLikeVo
+	* @return
+	* Method 설명 : erd 좋아요 했는지 확인 cnt
+	*/
+	int getMyLikeCnt(ErdLikeVo erdLikeVo);
+	
+	/**
+	* Method : erdCopy
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdVo
+	* @return
+	* Method 설명 : erd 복사
+	*/
+	int erdCopy(ErdVo erdVo);
+	
 }

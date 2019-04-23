@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
  <% %>
-	
-<!-- 티켓 수정.삭제 하는 모달창 띄우기 -->	
-	<form id="frm" action="/ticket" method="post" enctype="multipart/form-data">
+   
+<!-- 티켓 수정.삭제 하는 모달창 띄우기 -->   
+   <form id="frm" action="/ticket" method="post" enctype="multipart/form-data">
       <div class="modal modal-center fade" id="ticketModalEvnTest" tabindex="1" role="dialog" aria-labelledby="my80sizeCenterModalLabel" >
       <div class="modal-dialog modal-80size modal-center" role="document" >
          <div class="modal-content modal-80size">
@@ -36,10 +36,10 @@
                </div>
                
                <div class="filebox img-btn btn-style1">
-					<label  class="btn-style1" for="input_img">티켓 이미지 선택</label> 
-					<input	type="file" id="input_img" name="profileImg" />
-					
-				</div>
+               <label  class="btn-style1" for="input_img">티켓 이미지 선택</label> 
+               <input   type="file" id="input_img" name="profileImg" />
+               
+            </div>
                
                </div>   
                <div id="modalBtn" class="modal-footer">
@@ -54,8 +54,8 @@
       </form>
       
       
-      <!-- 티켓 구매 모달창 띄우기 -->	
-	
+      <!-- 티켓 구매 모달창 띄우기 -->   
+   
       <div class="modal modal-center fade" id="modifyBuyModal" tabindex="1" role="dialog" aria-labelledby="my80sizeCenterModalLabel" >
       <div class="modal-dialog modal-80size modal-center" role="document" >
          <div class="modal-content modal-80size">
@@ -74,11 +74,11 @@
                   <div id="dupleCode"></div>
                </div>
                
-                <!-- ======================== 신용카드 결제 화면 ========================-->	
-                <form name="ATGAutoForm" id="cardFrm"  method="post">
+                <!-- ======================== 신용카드 결제 화면 ========================-->   
+                <form name="ATGAutoForm" action="${cp}/ticket/ticketCardBuy" id="cardFrm"  method="post">
                 <div class="form-group" id="sinbuy">
                   <label class="modalLabels">신용카드 결제</label>
-                	 <div class="frm-grp">
+                    <div class="frm-grp">
                         <label class="modalLabels">카드번호</label>
                         <div class="row label_slc1">
                             <span class="field1">
@@ -224,20 +224,60 @@
                
                <input type="hidden" id="memId" name="memId" value="${SESSION_MEMBERVO.memId }"/>
                <input type="hidden" id="modalticketNo" name="ticketNo">
-      </form>
+  
                <!-- ======================== 무통장 결제 화면 ========================-->
-                <div class="form-group" id="mobuy">
-                  <label class="modalLabels">무통장 결제</label>
-                	 
-                  <div id="dupleCode"></div>
+            <div class="form-group" id="mobuy">
+               <label class="modalLabels">무통장 결제</label>
+               <div class="form-group" id="mobuy">
+                  <label class="modalLabels">입금은행</label> <span class="pay-kind"></span>
+                  <select id="vcdbank" name="vcdbank">
+                     <option selected="selected" value="">은행선택</option>
+                     <option id="D01" value="W003">기업은행</option>
+                     <option id="D02" value="W005">외환은행</option>
+                     <option id="D03" value="W004">국민은행</option>
+                     <option id="D04" value="W011">농협중앙회</option>
+                     <option id="D05" value="W020">우리은행</option>
+                     <option id="D06" value="W088">신한은행</option>
+                     <option id="D07" value="W023">SC제일은행</option>
+                     <option id="D08" value="W027">씨티은행</option>
+                     <option id="D09" value="W031">대구은행</option>
+                     <option id="D10" value="W032">부산은행</option>
+                     <option id="D11" value="W034">광주은행</option>
+                     <option id="D13" value="W039">경남은행</option>
+                     <option id="D14" value="W071">우체국</option>
+                     <option id="D15" value="W081">KEB 하나은행</option>
+                     <option id="D19" value="W007">수협중앙회</option>
+                  </select>
+                  <div class="form-group" id="mobuy">
+                     <label class="modalLabels">무통장입금 안내 </label>
+
+                     <ul>
+                        <li>ㆍ입금 시 주문자 이름과 상관없이 금액만 일치하면 정상 입금처리 됩니다.</li>
+                        <li>ㆍ반드시 입금 기한 내에 정확한 결제금액을 입금해 주세요.</li>
+                        <li>ㆍ입금 기한이 지나면 주문은 자동취소 되므로 다시 주문해주세요.</li>
+                        <li>ㆍ자동화 기기에서는 카드를 통해 이체해 주시기 바랍니다.<br>&nbsp;&nbsp;&nbsp;(일부
+                           기기에서는 현금, 통장 이체 제한됨)
+                        </li>
+                     </ul>
+                  </div>
                </div>
+            
+              
+               <h5></h5>
+            </div>
+                </form>
+ 				<label class="modalLabels">결제금액</label>
+				<h1  id="price"></h1>
+				
+         </div>
                
-               </div>   
+               
+                
                <div id="modalBtn" class="modal-footer">
-                  <button type="button" id="buyBtn" >결제</button>
+                  <button type="button" class="btn btn-default" id="buyBtn" onclick="fnSubmit(ATGAutoForm)">결제</button>
                   <button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
                </div>
             </div>
          </div>
       </div>
-	
+   

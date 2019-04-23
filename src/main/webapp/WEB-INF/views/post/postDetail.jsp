@@ -35,7 +35,7 @@
 </style>
 	
 	<input type = "hidden" name="boardNo" value="${boardNo}"> 
-	<input type="button" id="report" onclick="layer_open()" value="신고">
+	<input type="button" id="report" onclick="layer_open()" value="신고" style="text-align: right" />
 	
 <!-- <input type="button" id="report" onclick="layer_open()" value="신고"> -->
 <!-- <input type="button" value="레이어팝업 열기" onclick="layer_open();"  style="cursor:pointer; background-color:#663333; color:#FFF;" /> -->

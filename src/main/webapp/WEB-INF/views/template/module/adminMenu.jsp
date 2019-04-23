@@ -5,5 +5,6 @@
 	<ul>
 		<li><a href="${cp }/member/memberList">MemberList</a></li>
 		<li><a href="${cp }/ticket/ticketChart">TicketChart</a></li>
+		<li><a href="${cp }/ticket/ticketRefList">TicketRefList</a></li>
 	</ul>
 </div>

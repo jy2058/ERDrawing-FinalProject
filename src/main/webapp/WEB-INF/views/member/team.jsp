@@ -160,7 +160,7 @@
 										</button>
 									</div>
 									</c:if>
-								  		<a class="preview-box">
+								  		<a class="preview-box" onclick="erdClick(${teamErdList.erdNo})">
 								  			<div class="bg-box">
 							  					<img src="${cp }/erd/erdImg?erdNo=${teamErdList.erdNo }">
 								  				<div class="table-bg-text">
@@ -310,5 +310,8 @@
 		 
 	 });
 	
+	 function erdClick(erdNo){
+			$(location).attr('href', "${cp}/kjy?erdNo="+erdNo);
+	}
 </script>
 

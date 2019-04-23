@@ -24,12 +24,7 @@
 .team-li span{
     font-size: 12px;
 }
-.tag-a{
-    margin: 3px;
-    padding: 3px;
-    background-color: #444444;
-    font-size: 11px;
-}
+
 </style>
 
 <div id="contents">
@@ -120,16 +115,26 @@
 					<ul class="erd-box-list">
 
 						<c:forEach var="myErdList" varStatus="status" items="${myErdList }">
-							<li class="erd-box-item erdClick" onclick="erdClick(${myErdList.erdNo})">
+							<li class="erd-box-item">
 							
 								<div style="position:absolute; z-index:30;">
-									<button type="button" class="btn btn-default delBtn"
-										aria-label="trash" value="${myErdList.erdNo }">
-										<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-									</button> 
+									<div class="stats-box">
+										<i class="fas fa-eye"></i>
+										<label>${myErdList.erdReadCnt }</label>
+									</div>
+									<div class="stats-box">
+										<i class="fas fa-thumbs-up"></i>
+										<label>${myErdList.likeCnt }</label>
+									</div>
+									<div class="stats-box del-div" >
+										<button type="button" class="btn btn-default delBtn "
+											aria-label="trash" value="${myErdList.erdNo }">
+											<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+										</button>
+									</div> 
 								</div>
 								
-								<a class="preview-box">
+								<a class="preview-box" onclick="erdClick(${myErdList.erdNo})">
 									<div class="bg-box">
 										<img src="${cp }/erd/erdImg?erdNo=${myErdList.erdNo}">
 										<div class="table-bg-text">

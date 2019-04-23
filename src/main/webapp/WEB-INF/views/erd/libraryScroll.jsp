@@ -128,7 +128,17 @@ $(document).ready(function(){
 				var html ="";
 				for(var i = 0; i < erdList.length; i++){
 					html += '<li class="erd-box-item">';
-					html += '	<a class="preview-box">';
+					html += '	<div style="position:absolute; z-index:30;">';
+					html += '		<div class="stats-box">';
+					html += '			<i class="fas fa-eye"></i>';
+					html += '			<label>' + erdList[i].erdReadCnt + '</label>';
+					html += '		</div>';
+					html += '		<div class="stats-box">';
+					html += '			<i class="fas fa-thumbs-up"></i>';
+					html += '			<label>' + erdList[i].likeCnt + '</label>';
+					html += '		</div>';
+					html += '	</div>';
+					html += '	<a class="preview-box" onclick="erdClick(' + erdList[i].erdNo + ')">';
 					html += '		<div class="bg-box">';
 					html += '			<img src="${cp }/erd/erdImg?erdNo=' + erdList[i].erdNo + '">';
 					html += '			<div class="table-bg-text">';
@@ -166,6 +176,10 @@ $(document).ready(function(){
 			}
 		});
 	};
+	
+	function erdClick(erdNo){
+		$(location).attr('href', "${cp}/kjy?erdNo="+erdNo);
+	}
 	
 	
 </script>

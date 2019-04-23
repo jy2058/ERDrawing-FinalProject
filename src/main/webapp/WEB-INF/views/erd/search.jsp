@@ -84,7 +84,7 @@ $("#searchBtn_modal").on("click", function(){
 			var html ="";
 			for(var i = 0; i < erdVoList.length; i++){
 				console.log(erdVoList.erdNo);
-				html += '<li class="list-group-item">';
+				html += '<li class="list-group-item" onclick="erdClick(' + erdVoList[i].erdNo + ')">';
 				html += '	<a class="">';
 				html += '		<div class="list-contents">';
 				html += '			<div class="modal_search"><img src="${cp }/erd/erdImg?erdNo=' + erdVoList[i].erdNo + '"></div>';
@@ -97,6 +97,12 @@ $("#searchBtn_modal").on("click", function(){
 		}
 	});
 });
+
+
+function erdClick(erdNo){
+	$(location).attr('href', "${cp}/kjy?erdNo="+erdNo);
+}
+
 </script>
 
 <style>

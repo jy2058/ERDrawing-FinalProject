@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
+import kr.or.ddit.erd.model.ErdLikeVo;
 import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.erd.service.IErdService;
 import kr.or.ddit.member.model.MemberVo;
@@ -240,5 +241,38 @@ public class ErdController {
 		model.addAttribute("erdTitle", erdInfoVo.getErdTitle());
 		
 		return "jsonView";
+	}
+	
+	
+	/**
+	* Method : erdLikeClick
+	* 작성자 : PC08
+	* 변경이력 :
+	* @param erdLikeVo
+	* @param session
+	* @return
+	* Method 설명 : erd 좋아요 클릭
+	*/
+	@RequestMapping("/erdLikeClick")
+	public String erdLikeClick(ErdLikeVo erdLikeVo, HttpSession session){
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		String memId = memberVo.getMemId();
+		
+		erdLikeVo.setMemId(memId);
+		
+		erdService.erdLikeClick(erdLikeVo);
+		
+		return "jsonView";
+	}
+	
+	@RequestMapping("/erdCopy")
+	public String erdCopy(ErdVo erdVo, HttpSession session){
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		String memId = memberVo.getMemId();
+		erdVo.setMemId(memId);
+		
+		erdService.erdCopy(erdVo);
+		
+		return "redirect:/mypage";
 	}
 }

@@ -18,7 +18,6 @@ public class ErdVo {
 	private String orderKind;	// 정렬종류
 	private int likeCnt; 		// 좋아요 수
 	
-	
 	public ErdVo() {
 	}
 
