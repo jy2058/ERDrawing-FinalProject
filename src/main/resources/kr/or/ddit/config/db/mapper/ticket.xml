@@ -131,8 +131,8 @@
                from (select a.ticketbuyno,a.ticketno,a.memid,a.ticketbuydt,a.ticketfee,b.account,b.refundreqdt,b.banknm,b.refund_respdt,b.accountholder,to_char(c.ticketcontent) as ticketcontent
                        from TICKET_BUY_HIST  a, TICKET_REF_HIST b, TICKET c
                       where  0 = 0  and
-                      		<if test="toDay != null">
-   							  b.refundreqdt between #{toDay} and #{endDay} and
+                      		<if test="inputstart != null">
+   							  b.refundreqdt between #{inputstart} and #{inputend} and
   							</if>
   							<if test="memId != null">
    							   a.memid  like '%;'||#{memId}||'%' and 

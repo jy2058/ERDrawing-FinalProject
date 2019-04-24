@@ -12,7 +12,7 @@
 
 <div class="tab-content" >
 	<div class="tab-pane active" id="tab1">
-		<form method="POST" action="#">
+		<form method="POST" action="">
 
 			<div class="row row-space">
 				<div class="col-2">
@@ -20,6 +20,17 @@
 						<label class="label">to:</label> <input class="input--style-1"
 							type="text" name="check-in" placeholder="mm/dd/yyyy"
 							id="input-start" width="100px">
+							
+					</div>
+					<div id="ticketradio">
+					            <c:forEach var="ticket"  items="${ticketList }">
+					            <label ><input type="radio" name="ticketNo" value="${ticket.ticketNo }" onclick="radioBtn_ch()"   >${ticket.ticketContent }권</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+					            </c:forEach>
+						
+					</div>
+					<div id="refradio">
+					<label ><input type="radio" name="refnull" value="refNull" onclick="radioBtn_ch()">환불가능</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+						<label><input type="radio" name="refnull" value="refNotNull" onclick="radioBtn_ch()">환불완료</label>
 					</div>
 				</div>
 				<div class="col-2">
@@ -29,13 +40,11 @@
 							id="input-end">
 					</div>
 				</div>
-
 			
 				<div class="input-group input-group-big">
-				
 				<label class="label">검색 조건:</label>
 						<div class="rs-select2 js-select-simple select--no-search" style="width: 100px">
-							<select name="car-group">
+							<select name="searchgroup" onchange="selectCh()">
 								<option selected="selected">날짜</option>
 								<option>구매자</option>
 								<option>티켓</option>
@@ -45,9 +54,8 @@
 						</div>
 				
 				
-					<label class="label" style="padding-left: 30px">where:</label> <input name="address"
-						class="input--style-1" required="required" type="text" style="width: 260px"
-						placeholder="검색조건을 입력해주세요"> 
+					<label class="label" style="padding-left: 30px">where:</label> 
+					<input name="memId" id="memId" class="input--style-1" required="required" type="text" style="width: 260px"placeholder="검색조건을 입력해주세요"> 
 						<i class="zmdi zmdi-search input-group-symbol" style="cursor: pointer;" id="searchBtn"></i>
 				</div>
 
@@ -92,8 +100,18 @@
 	$(document).ready(function() {
 		getTicketRefPageListHtml(1);	//페이징 아작스
 	
+		$("#ticketradio").hide();
+		$("#refradio").hide();
 		$("#searchBtn").on("click",function(){
-			console.log($("#input-start").val());
+			var inputstart = $("#input-start").val();
+			var inputend   = $("#input-end").val();
+			var searchgroup = $("select[name=searchgroup]").val();
+			var memId = $("#memId").val();
+			console.log(inputstart);
+			console.log(inputend);
+			console.log(searchgroup);
+			console.log(memId);
+			console.log("===");
 		});
 	});
 	
@@ -114,5 +132,29 @@
 					}
 				});
 	}
+	
+	function selectCh() {
+		console.log("값변경")
+		var searchgroup = $("select[name=searchgroup]").val();
+		if(searchgroup=="티켓"){
+			$("#ticketradio").show();
+			$("#refradio").hide();
+		}else if(searchgroup=="환불여부"){
+			$("#ticketradio").hide();
+			$("#refradio").show();
+		}else{
+			$("#ticketradio").hide();
+			$("#refradio").hide();
+		}
+		
+	}
+	
+	function radioBtn_ch() {
+		var radioValtic = $('input[name="ticketNo"]:checked').val();	//티켓라디오값
+		var radioValref = $('input[name="refnull"]:checked').val();	//환불여부 라디오값
+		console.log("티켓~"+radioValtic)
+		console.log("환불~"+radioValref)
+		
+	}
 	</script>
-    
+     

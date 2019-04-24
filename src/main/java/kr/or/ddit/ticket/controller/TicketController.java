@@ -303,6 +303,7 @@ public class TicketController {
 		 paging.setPageSize(10);
 		 int cnts = Integer.valueOf((String) ticketService.getAllTicketRefList(map).get(0).get("CNT"));
 		 paging.setTotalCount(cnts);
+		 model.addAttribute("ticketList", ticketService.getAllTicketList());
 		 model.addAttribute("ticketRefList", ticketService.getAllTicketRefList(map));
 		 model.addAttribute("paging", paging);
 			return "ticketRefList";
@@ -322,6 +323,12 @@ public class TicketController {
 			 int cnts = Integer.valueOf((String) ticketService.getAllTicketRefList(map).get(0).get("CNT"));
 			 paging.setTotalCount(cnts);
 		 model.addAttribute("paging", paging);
+		 
+		 
+		 
+		 
+		 
+		 
 			return "ticket/ticketRefListHtml";
 	 }
 	 
