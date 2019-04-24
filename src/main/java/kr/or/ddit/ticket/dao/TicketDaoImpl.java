@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.ticket.model.TicketBuyHistVo;
 import kr.or.ddit.ticket.model.TicketVo;
+import kr.or.ddit.util.model.PageVo;
 
 @Repository("ticketDao")
 public class TicketDaoImpl implements ITicketDao{
@@ -68,9 +69,14 @@ public class TicketDaoImpl implements ITicketDao{
 	}
 
 	@Override
-	public List<Map<String, Object>> getAllTicketRefList() {
-		return  sqlSession.selectList("ticket.getAllTicketRefList");
+	public List<Map<String, Object>> getAllTicketRefList(Map<String, Object> map) {
+		return  sqlSession.selectList("ticket.getAllTicketRefList",map);
 		
+	}
+
+	@Override
+	public int getAllTicketRefListCnt() {
+		return  sqlSession.selectOne("ticket.getAllTicketRefListCnt");
 	}
 	
 	

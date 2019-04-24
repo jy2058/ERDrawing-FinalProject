@@ -116,10 +116,47 @@
                 order by ticketMonDt
 	 </select> 
 	 
-	 <select id="getAllTicketRefList" resultType="Map">
-	    select a.* ,b.*,to_char(c.ticketcontent) as ticketcontent
-    		from TICKET_BUY_HIST  a, TICKET_REF_HIST b, TICKET c
-   		 where a.TICKETBUYNO = b.TICKETBUYNO and
-          	   a.TICKETNo = c.TICKETNO
+	 <select id="getAllTicketRefListCnt" resultType="int" >
+    select count(*)
+       from (select a.*,rownum rn         
+               from (select a.ticketbuyno,a.ticketno,a.memid,a.ticketbuydt,a.ticketfee,b.account,b.refundreqdt,b.banknm,b.refund_respdt,b.accountholder,to_char(c.ticketcontent) as ticketcontent
+                       from TICKET_BUY_HIST  a, TICKET_REF_HIST b, TICKET c
+                      where a.TICKETBUYNO = b.TICKETBUYNO and
+                            a.TICKETNo = c.TICKETNO
+                      order by b.refundreqdt desc) a) a
 	 </select>
+	 
+	 <select id="getAllTicketRefList" resultType="Map" parameterType="Map">
+ 	   with t as (select a.*,rownum rn
+               from (select a.ticketbuyno,a.ticketno,a.memid,a.ticketbuydt,a.ticketfee,b.account,b.refundreqdt,b.banknm,b.refund_respdt,b.accountholder,to_char(c.ticketcontent) as ticketcontent
+                       from TICKET_BUY_HIST  a, TICKET_REF_HIST b, TICKET c
+                      where  0 = 0  and
+                      		<if test="toDay != null">
+   							  b.refundreqdt between #{toDay} and #{endDay} and
+  							</if>
+  							<if test="memId != null">
+   							   a.memid  like '%;'||#{memId}||'%' and 
+  							</if>
+  							<if test="ticketNo != null">
+   							   a.ticketno = #{ticketNo} and 
+  							</if>
+  							<if test="cknullOk != null">
+   							   b.refund_respdt is null and
+  							</if>
+  							<if test="cknullNo != null">
+   							   b.refund_respdt is not null
+  							</if>
+                            a.TICKETBUYNO = b.TICKETBUYNO and
+                            a.TICKETNo = c.TICKETNO
+                      order by b.refundreqdt desc) a
+                      )                  
+   
+    select a.*,to_char(b.cnt) as cnt
+  from  t a, (select count(*) cnt
+               from t) b  
+          where rn between ((#{pageNo}-1)*#{pageSize})+1 and (#{pageNo})*#{pageSize}
+	 </select>
+	 
+	 
+	 
 </mapper>

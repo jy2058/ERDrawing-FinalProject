@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.or.ddit.ticket.model.TicketBuyHistVo;
 import kr.or.ddit.ticket.model.TicketVo;
+import kr.or.ddit.util.model.PageVo;
 
 public interface ITicketService {
 
@@ -29,5 +30,6 @@ public interface ITicketService {
 	
 	List<TicketBuyHistVo> selectTicketYearPieList(Map<String, Object> ticketMap);
 
-	List<Map<String, Object>> getAllTicketRefList();
+	List<Map<String, Object>> getAllTicketRefList(Map<String, Object> ticketMap);
+	
 }

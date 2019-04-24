@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import kr.or.ddit.ticket.dao.ITicketDao;
 import kr.or.ddit.ticket.model.TicketBuyHistVo;
 import kr.or.ddit.ticket.model.TicketVo;
+import kr.or.ddit.util.model.PageVo;
 
 @Service("ticketService")
 public class TicketServiceImpl implements ITicketService{
@@ -68,8 +69,14 @@ public class TicketServiceImpl implements ITicketService{
 	}
 
 	@Override
-	public List<Map<String, Object>> getAllTicketRefList() {
-		return ticketDao.getAllTicketRefList();	
+	public List<Map<String, Object>> getAllTicketRefList(Map<String, Object> ticketMap) {
+		PageVo pageVo = new PageVo();
+		 List<Map<String, Object>> cnt = ticketDao.getAllTicketRefList(ticketMap);
+	
+		if(cnt.size()>0){
+			 int cnts = Integer.valueOf((String)cnt.get(0).get("CNT"));
+			pageVo.setTotalCount(cnts);	 
+		 }
+		return ticketDao.getAllTicketRefList(ticketMap);	
 		}
-
 }

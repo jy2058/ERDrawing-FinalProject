@@ -5,6 +5,7 @@ import java.util.Map;
 
 import kr.or.ddit.ticket.model.TicketBuyHistVo;
 import kr.or.ddit.ticket.model.TicketVo;
+import kr.or.ddit.util.model.PageVo;
 
 public interface ITicketDao {
 	/**
@@ -117,5 +118,14 @@ public interface ITicketDao {
 	 * Method 설명 :전체 환불내역 가져오기
 	 */
 	
-	List<Map<String, Object>> getAllTicketRefList();
+	List<Map<String, Object>> getAllTicketRefList(Map<String, Object> map);
+	
+	/**
+	 * Method : getAllTicketRefListCnt
+	 * 작성자 : PC02
+	 * 변경이력 :
+	 * @return
+	 * Method 설명 : 티켓환불내역 갯수 가져오기
+	 */
+	int getAllTicketRefListCnt();
 }

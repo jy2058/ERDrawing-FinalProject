@@ -38,6 +38,7 @@ import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.ticket.model.TicketBuyHistVo;
 import kr.or.ddit.ticket.model.TicketVo;
 import kr.or.ddit.ticket.service.ITicketService;
+import kr.or.ddit.util.model.PageVo;
 
 @RequestMapping("/ticket")
 @Controller
@@ -277,10 +278,12 @@ public class TicketController {
 	 public String ticketCardBuy(HttpServletRequest req ,int ticketNo,String memId,RedirectAttributes ra){
 		 logger.debug("======1{}",ticketNo);
 //		 logger.debug("======2{}",memId);
+		 ;
 		 if(memId != null && ticketNo != 0){
 		 TicketBuyHistVo vo = new TicketBuyHistVo();
 		 vo.setMemId(memId);
 		 vo.setTicketNo(ticketNo);
+		 vo.setTicketFee(ticketService.selectTicket(ticketNo+"").getTicketPrice());
 		 ticketService.insertticketBuyHist(vo);
 		 
 		 ra.addFlashAttribute("msg", "결제가 완료되었습니다~");
@@ -291,11 +294,32 @@ public class TicketController {
 	 
 	 //티켓환불 신청 내역
 	 @RequestMapping(path="/ticketRefList")
-	 public String TicketRefList(HttpServletRequest req ,RedirectAttributes ra,Model model){
-		 model.addAttribute("ticketRefList", ticketService.getAllTicketRefList());
+	 public String TicketRefList(HttpServletRequest req ,RedirectAttributes ra,Model model,@RequestParam(name = "page", defaultValue = "1") int page){
+		 Map<String, Object> map = new HashMap<>();
+		map.put("pageNo", page)	;
+		map.put("pageSize", 10)	;
+		PageVo paging= new PageVo();
+		 paging.setPageNo(page);
+		 paging.setPageSize(10);
+		 model.addAttribute("ticketRefList", ticketService.getAllTicketRefList(map));
+		 model.addAttribute("paging", paging);
 			return "ticketRefList";
 	 }
 	 
-	
+	 //티켓환불 신청 내역
+	 @RequestMapping(path="/ticketRefAjaxList")
+	 public String ticketRefAjaxList(HttpServletRequest req ,RedirectAttributes ra,Model model,@RequestParam(name = "page", defaultValue = "1") int page){
+		 logger.debug("==={}",page);
+		 PageVo paging= new PageVo();
+		 paging.setPageNo(page);
+		 paging.setPageSize(10);
+		 Map<String, Object> map = new HashMap<>();
+			map.put("pageNo", page)	;
+			map.put("pageSize", 10)	;
+			 model.addAttribute("ticketRefList", ticketService.getAllTicketRefList(map));
+		 model.addAttribute("paging", paging);
+			return "ticket/ticketRefListHtml";
+	 }
+	 
 	
 }

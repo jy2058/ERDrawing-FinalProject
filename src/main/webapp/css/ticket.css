@@ -16,7 +16,7 @@
 }
 
 .row-space {
-	padding: 20px;
+	  padding-left: 220px;
 }
 
 .row-refine {
@@ -24,7 +24,7 @@
 }
 
 .col-2 {
-	width: calc(( 58% - 25px)/2);
+	width: calc(( 80% - 25px)/2);
 }
 
 @media ( max-width : 767px) {
@@ -447,7 +447,6 @@ button {
 }
 
 .input-group-big {
-	padding: 10px 20px;
 	padding-right: 60px;
 }
 

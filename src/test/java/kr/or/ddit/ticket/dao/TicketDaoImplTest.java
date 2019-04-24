@@ -21,6 +21,7 @@ import kr.or.ddit.ticket.model.TicketBuyHistVo;
 import kr.or.ddit.ticket.model.TicketRefHistVo;
 import kr.or.ddit.ticket.model.TicketVo;
 import kr.or.ddit.util.encrypt.kisa.sha256.KISA_SHA256;
+import kr.or.ddit.util.model.PageVo;
 
 public class TicketDaoImplTest extends logicTestConfig{
 	private Logger logger = LoggerFactory.getLogger(TicketDaoImplTest.class);
@@ -62,12 +63,19 @@ public class TicketDaoImplTest extends logicTestConfig{
 	
 	@Test
 	public void testSelectTicketRefList() {
-		List<Map<String, Object>> list =  ticketDao.getAllTicketRefList();
+		
+		Map<String, Object> map = new HashMap<>();
+		
+		map.put("pageNo", 1);
+		map.put("pageSize", 10);
+		List<Map<String, Object>> list =  ticketDao.getAllTicketRefList(map);
 		
 		logger.debug(list.toString());
 		
 		logger.debug("====ser{}",list.get(0));
-		logger.debug("====ser{}",list.get(0).get("ACCOUNT"));
+		logger.debug("====ser{}",list.get(0).get("CNT"));
+		 int cnts = Integer.valueOf((String) list.get(0).get("CNT"));
+		logger.debug("====ser{}",cnts);
 		
 		assertTrue(list.size()>0);
 	}
