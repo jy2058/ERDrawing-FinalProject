@@ -5,6 +5,8 @@ import java.util.Map;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.ticket.dao.ITicketDao;
@@ -15,6 +17,8 @@ import kr.or.ddit.util.model.PageVo;
 @Service("ticketService")
 public class TicketServiceImpl implements ITicketService{
 
+	private Logger logger = LoggerFactory.getLogger(TicketServiceImpl.class);
+	
 	@Resource(name="ticketDao")
 	private ITicketDao ticketDao;
 	
@@ -70,13 +74,8 @@ public class TicketServiceImpl implements ITicketService{
 
 	@Override
 	public List<Map<String, Object>> getAllTicketRefList(Map<String, Object> ticketMap) {
-		PageVo pageVo = new PageVo();
-		 List<Map<String, Object>> cnt = ticketDao.getAllTicketRefList(ticketMap);
 	
-		if(cnt.size()>0){
-			 int cnts = Integer.valueOf((String)cnt.get(0).get("CNT"));
-			pageVo.setTotalCount(cnts);	 
-		 }
+
 		return ticketDao.getAllTicketRefList(ticketMap);	
 		}
 }

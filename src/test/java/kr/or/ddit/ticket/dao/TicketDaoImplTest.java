@@ -65,17 +65,30 @@ public class TicketDaoImplTest extends logicTestConfig{
 	public void testSelectTicketRefList() {
 		
 		Map<String, Object> map = new HashMap<>();
+		PageVo vo = new PageVo();
 		
+		logger.debug("====sersssasdasd{}",vo.getPageNo());
 		map.put("pageNo", 1);
 		map.put("pageSize", 10);
 		List<Map<String, Object>> list =  ticketDao.getAllTicketRefList(map);
+		logger.debug("====serssssssssssssds{}",vo.getPageNo());
+		logger.debug("====ser122 : {}",map.get("pageNo"));
 		
+		int cnts = Integer.valueOf((String) list.get(0).get("CNT"));
 		logger.debug(list.toString());
 		
-		logger.debug("====ser{}",list.get(0));
-		logger.debug("====ser{}",list.get(0).get("CNT"));
-		 int cnts = Integer.valueOf((String) list.get(0).get("CNT"));
-		logger.debug("====ser{}",cnts);
+		vo.setPageNo((int) map.get("pageNo"));
+		vo.setPageNo((int) map.get("pageSize"));
+		vo.setTotalCount(cnts);
+		logger.debug("====ser1{}",list.get(0));
+		logger.debug("====ser2{}",vo.getPageNo()-1);
+		logger.debug("====ser2{}",vo.getPageSize());
+		logger.debug("====ser4{}",vo.getPrevPageNo());
+		logger.debug("====ser5{}",vo.getEndPageNo());
+		
+		
+		 
+		logger.debug("====ser3{}",cnts);
 		
 		assertTrue(list.size()>0);
 	}
