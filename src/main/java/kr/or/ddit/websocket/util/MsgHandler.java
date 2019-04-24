@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -16,18 +18,26 @@ import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
 
 import kr.or.ddit.member.model.MemberVo;
+import kr.or.ddit.member.service.IMemberService;
+import kr.or.ddit.message.service.IMessageService;
 
 @Repository
 public class MsgHandler extends TextWebSocketHandler{
 	private Logger logger = LoggerFactory.getLogger(MsgHandler.class);
 	private List<WebSocketSession> sessionList = new ArrayList<WebSocketSession>();
+	@Resource(name = "messageService")
+	private IMessageService messageService;
 	
 	//클라이언트와 연결 이후에 실행되는 메서드
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
-		sessionList.add(session);
+		//sessionList.add(session);
 		logger.info("{} 연결됨", session.getId());
-		String senderId = getId(session);
+//		String senderId = getId(session);
+		String receiverId = getId(session);
+		
+		int msgCnt = messageService.getMsgCnt(receiverId);
+		session.sendMessage(new TextMessage(msgCnt+""));
 	}
 	
 	//클라이언트가 서버로 메시지를 전송했을 때 실행되는 메서드
@@ -39,9 +49,11 @@ public class MsgHandler extends TextWebSocketHandler{
 		
 		//protocol : cmd, ERD수정자, ERD번호	(ex: msg,user1,123)
 		String msg = message.getPayload();
-		if(null != msg){
+		TextMessage tmpMsg = new TextMessage(msg);
+		session.sendMessage(tmpMsg);
+		/*if(null != msg){
 			
-		}
+		}*/
 		
 	}
 	

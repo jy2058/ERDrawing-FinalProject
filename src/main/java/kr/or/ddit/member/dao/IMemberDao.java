@@ -116,4 +116,5 @@ public interface IMemberDao {
 	 * Method 설명 :신고사유 조회
 	 */
 	List<ReportVo> selectReport(String tiemid);
+	
 }

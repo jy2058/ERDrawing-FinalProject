@@ -163,5 +163,4 @@
 		$(location).attr('href', "${cp}/erdDrawing?erdNo="+erdNo);
 	}
 	
-	
 </script>

@@ -82,13 +82,7 @@
 	 	<property name="maxUploadSize" value="26214400" />		<!--  -->
 	 	<property name="maxUploadSizePerFile" value="5242880" />	<!-- 1024 * 1024 * 5 -->
 	 </bean>
-	 
-	<!--   웹소켓 
-	<bean id="msgHandler" class="kr.or.ddit.message.MsgHandler"/>
-	<websocket:handlers>
-		<websocket:mapping handler="msgHandler" path="/echo"/>
-		<websocket:sockjs/>
-	</websocket:handlers> -->
+
 	
 	<!-- 웹소캣 -->
 	<bean id="erdHandler" class="kr.or.ddit.websocket.util.ErdHandler"/>

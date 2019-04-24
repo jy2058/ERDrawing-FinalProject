@@ -70,6 +70,6 @@ public class MemberDaoImpl implements IMemberDao{
 	@Override
 	public List<ReportVo> selectReport(String tomemid) {
 		return sqlSession.selectList("post.selectReport",tomemid);
-	}	
+	}
 
 }

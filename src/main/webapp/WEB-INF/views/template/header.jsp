@@ -77,7 +77,7 @@
 								</c:choose>
 						</a></li>
 						<%-- 						<li><a href="${cp }/message/messageView">메세지</a></li> --%>
-						<li><a id="message">메세지</a></li>
+						<li><a id="message">메세지<span class="badge" id="msgCnt"></span></a></li>
 						<li><a id="logout" href="#" hidden="">로그아웃</a></li>
 					</c:otherwise>
 				</c:choose>
@@ -93,9 +93,6 @@
 
 		<input type="hidden" id="memEmailDiv"
 			value="${SESSION_MEMBERVO.memEmailDiv}">
-
-
-		<button id="testBtn" value="테스트"></button>
 
 	<script
 		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -135,35 +132,29 @@
 					}//기본 로그인한 경우
 				});
 		
-		var webSocket;
+		var msgWebSocket;
 		
 		$(document).ready(function(){
-			connectWs();
+			connectMsgWs();
 		});
 		
-		function connectWs(){
-			var ws = new WebSocket("ws://localhost:8080/msgEcho");
-			webSocket = ws;
+		function connectMsgWs(){
+			var msgWs = new WebSocket("ws://localhost/msgEcho");
+			msgWebSocket = msgWs;
 			
-			ws.open = function(){
+			msgWs.onopen = function(){
 				console.log("접속");
+				setTimeout(() => {
+					connectMsgWs();
+				}, 2000);
 				
-				
-				
-				
-				ws.onmessage = function(e){
-					var msg = e.data;
-					console.log("e : " + e)
-					console.log("e.data : " + msg);
+				msgWs.onmessage = function(event){
+					var msg = event.data;
+					$("#msgCnt").html(msg);
 				}
-				ws.onclose = function(event){console.log('Info: connection closed.');}
+				msgWs.onclose = function(event){console.log('Info: connection closed.');}
 			}
-			ws.onerror = function(err){console.log('Error:', err);}
-			
-		$("#testBtn").on("click", function(){
-			var msg = "mmmmm";
-			ws.send(msg);
-		});
+			msgWs.onerror = function(err){console.log('Error:', err);}
 		
 		}
 		

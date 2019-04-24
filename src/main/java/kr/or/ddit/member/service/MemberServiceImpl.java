@@ -71,6 +71,4 @@ public class MemberServiceImpl implements IMemberService{
 		return memberDao.selectReport(tomemid);
 	}
 	
-	
-	
 }

@@ -40,7 +40,7 @@
 				<i class="fas fa-cog"></i>
 			</div>
 			<div class="buttons_top" id="message" title="알람">
-				<i class="fas fa-bell"></i>
+				<i class="fas fa-bell"></i><span class="badge" id="msgCnt"></span>
 			</div>
 			<div class="buttons_top" title="로그아웃">
 				<i class="fas fa-sign-out-alt"></i>
@@ -1950,11 +1950,29 @@
    	$("#erdCopyFrm").submit();
    });
 
-   
-   
-   
-
-        
+   var MsgWebSocket;
+	
+	connectMsgWs();
+	
+	function connectMsgWs(){
+		var msgWs = new WebSocket("ws://localhost/msgEcho");
+		MsgWebSocket = msgWs;
+		 
+		msgWs.onopen = function(){
+			console.log("접속");
+			setTimeout(() => {
+				connectMsgWs();
+			}, 2000);
+			
+			msgWs.onmessage = function(event){
+				var msg = event.data;
+				$("#msgCnt").html(msg);
+			}
+			msgWs.onclose = function(event){console.log('Info: connection closed.');}
+		}
+		msgWs.onerror = function(err){console.log('Error:', err);}
+	}
+	
 </script>
 
 

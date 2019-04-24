@@ -52,7 +52,8 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 			List<MessageVo> msgList = messageService.getAllMsg(memberVo.getMemId());
 			session.setAttribute("MSGLIST", msgList);
 			
-			logger.debug("===msgList : {} ", msgList);
+			int msgCnt = messageService.getMsgCnt(memberVo.getMemId());
+			session.setAttribute("MSGCNT", msgCnt);
 			
 			// preHandle의 return은 컨트롤러 요청 uri로 가도 되냐 안되냐를 허가하는 의미임
 			// 따라서 true로하면 컨트롤러 uri로 가게 됨.

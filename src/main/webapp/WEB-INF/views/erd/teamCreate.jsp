@@ -102,7 +102,6 @@ $(document).on("click","#delBtn", function(e){
 
 $("#teamCreate").on("click", function(){
     $("#teamMember").val(list);
-    console.log("최종 : " + list);
 	$("#teamCreateFrm").submit();
 });
 

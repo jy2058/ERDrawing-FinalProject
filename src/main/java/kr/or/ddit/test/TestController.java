@@ -19,6 +19,7 @@ import kr.or.ddit.erd.model.ErdVo;
 import kr.or.ddit.erd.service.IErdService;
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.member.service.IMemberService;
+import kr.or.ddit.message.service.IMessageService;
 import kr.or.ddit.team.model.TeamListVo;
 import kr.or.ddit.team.model.TeamVo;
 import kr.or.ddit.team.service.ITeamService;
@@ -35,9 +36,9 @@ public class TestController {
 	
 	@Resource(name="memberService")
 	private IMemberService memberService;
-	
+
 	@RequestMapping(path="/", method=RequestMethod.GET)
-	public String test1(Model model){
+	public String test1(Model model, HttpSession session){
 		String orderKind = "erdLike";
 		Map<String, Object> allErdOrderAndTagMap = erdService.getAllErdOrderAndTagMap(orderKind);
 		model.addAllAttributes(allErdOrderAndTagMap);
