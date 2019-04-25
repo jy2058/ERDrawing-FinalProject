@@ -8,7 +8,15 @@
     <link href="/css/ticket.css" rel="stylesheet" media="all"> 
     <link href="/js/ticket/select2.min.css" rel="stylesheet" media="all">
     <div style="padding-top: 100px"></div>
+<style>
+.modal-dialog, .modal-content {
+    height: auto;
+}
+.modal{
+ color: #000;
 
+}
+</style>
 
 <div class="tab-content" >
 	<div class="tab-pane active" id="tab1">
@@ -91,42 +99,135 @@
 			</nav>
 </div>
     
-    <script src="/js/ticket/select2.min.js" type="08a3d66d4e4ffeca331a2908-text/javascript"></script>
+<!-- ===================tr클릭시 해당 정보 모달띄우기==================== -->
+	<div class="modal modal-center fade" id="ticketRefModal" tabindex="1"
+		role="dialog" aria-labelledby="my80sizeCenterModalLabel">
+		<div class="modal-dialog modal-80size modal-center" role="document">
+			<div class="modal-content modal-80size">
+				<div class="modal-header">
+					<label>| 환불신청 내역</label>
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+				
+				<div class="form-group">
+						<label class="modalLabels">User</label> 
+						<label class="labelContext" id="modalMemId">내용</label> 
+					</div>
+					
+					
+				<div class="form-group">
+						<label class="modalLabels">UserInfo</label> 
+						<label class="labelContext" id="tel">폰</label>
+						<label class="labelContext" id="email">이메일</label> 
+					</div>
+				
+					<div class="form-group">
+						<label class="modalLabels">Ticket</label> 
+						<label class="labelContext" id="TicketText">내용s</label> 
+					</div>
+
+					<div class="form-group">
+						<label class="modalLabels">TicketPrice</label>
+						<label class="labelContext" id="TicketMoney">내용</label> 
+					</div>
+
+					<div class="pass form-group">
+						<label class="modalLabels">TicketBuyDate</label> 
+						<label class="labelContext" id="TicketbuyDt">내용</label> 
+					</div>
+					
+					<div class="pass form-group">
+						<label class="modalLabels">RefApplyDate</label> 
+						<label class="labelContext" id="TicketRefDt">내dfdf용</label> 
+					</div>
+					
+					<div class="pass form-group">
+						<label class="modalLabels">RefBank</label> 
+						<label class="labelContext" id="bankNm">은행명</label> 
+						<label class="labelContext" id="accountHolder">예금주</label> 
+						<label class="labelContext" id="account">계좌번호</label> 
+					</div>
+
+
+
+				</div>
+				<div id="modalBtn" class="modal-footer">
+					<button type="button" id="updateBtn" class="btn btn-default" data-dismiss="modal">확인</button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+<form id="frm" action="${cp }/ticket/updateTicketRefDt" method="post">
+<input type="hidden" id="ticbuyNo" name="ticbuyNo">
+</form>
+
+<script src="/js/ticket/select2.min.js" type="08a3d66d4e4ffeca331a2908-text/javascript"></script>
     <script src="/js/ticket/moment.min.js" type="08a3d66d4e4ffeca331a2908-text/javascript"></script>
     <script src="/js/ticket/daterangepicker.js" type="08a3d66d4e4ffeca331a2908-text/javascript"></script>
     <script src="/js/ticket/global.js" type="08a3d66d4e4ffeca331a2908-text/javascript"></script>
 	<script src="https://ajax.cloudflare.com/cdn-cgi/scripts/a2bd7673/cloudflare-static/rocket-loader.min.js" data-cf-settings="08a3d66d4e4ffeca331a2908-|49" defer=""></script></body><!-- This templates was made by Colorlib (https://colorlib.com) -->
 	<script>
+	
+	var radioValtic ="" ;	
+	var radioValref =""
+	var inputstart = "";
+	var inputend   = "";
+	var searchgroup = "";
+	var memId = "";
+	var ticbuyNo= "";
+	
 	$(document).ready(function() {
 		getTicketRefPageListHtml(1);	//페이징 아작스
-	
 		$("#ticketradio").hide();
 		$("#refradio").hide();
+		
 		$("#searchBtn").on("click",function(){
-			var inputstart = $("#input-start").val();
-			var inputend   = $("#input-end").val();
-			var searchgroup = $("select[name=searchgroup]").val();
-			var memId = $("#memId").val();
-			console.log(inputstart);
-			console.log(inputend);
-			console.log(searchgroup);
-			console.log(memId);
-			console.log("===");
+			 inputstart = $("#input-start").val();
+			 inputend   = $("#input-end").val();
+			 searchgroup = $("select[name=searchgroup]").val();
+			 memId = $("#memId").val();
+			 
+			getTicketRefPageListHtml(1);
 		});
+		
+		$("#ticketRefListTbody").on("click",".ticketRefTr",function(){
+			
+			ticbuyNo = $(this).data("ticketbuyno");
+			ticketRefInfo($(this).data("ticketbuyno"));
+		})
+		
+		$("#updateBtn").on("click",function(){
+			if (confirm("환불 승인을 하시겠습니까??") == true) {
+				$("#ticbuyNo").val(ticbuyNo);
+				$("#frm").submit();
+			} else { //취소
+				return false;
+			}
+		})
+		
 	});
 	
 	//전체 테이블 Ajax처리
 	function getTicketRefPageListHtml(page) {
-		$
-				.ajax({
+		$.ajax({
 					url : "${cp}/ticket/ticketRefAjaxList",
 					data : {
-						page : page
+						page : page,
+						inputstart : inputstart,
+						inputend   : inputend,
+						searchgroup: searchgroup,
+						memId	   : memId,
+						radioValtic: radioValtic,
+						radioValref: radioValref
 					},
 					success : function(data) {
-						console.log(data);
-						var htmlArr = data
-								.split("======================seperator==========================");
+						var htmlArr = data.split("======================seperator==========================");
 						$("#ticketRefListTbody").html(htmlArr[0]);
 						$("#pagination").html(htmlArr[1]);
 					}
@@ -150,11 +251,42 @@
 	}
 	
 	function radioBtn_ch() {
-		var radioValtic = $('input[name="ticketNo"]:checked').val();	//티켓라디오값
-		var radioValref = $('input[name="refnull"]:checked').val();	//환불여부 라디오값
+		 radioValtic = $('input[name="ticketNo"]:checked').val();	//티켓라디오값
+		 radioValref = $('input[name="refnull"]:checked').val();	//환불여부 라디오값
 		console.log("티켓~"+radioValtic)
-		console.log("환불~"+radioValref)
-		
+		console.log("환df불~"+radioValref)
 	}
+
+	//모달창에 환불정보 띄우기
+	function ticketRefInfo(ticketBuyNo) {
+		$.ajax({
+			url : "${cp}/ticket/ticketRefInfo",
+			data : {
+				ticketBuyNo : ticketBuyNo
+			},
+			success : function(data) {
+				console.log(data.ticketbuyVo);
+				
+				 $.each(data, function(idx, val) {      
+					 console.log(idx)
+					 
+					 $("#modalMemId").html(val.MEMID+"("+val.MEMNM  +")");
+					 $("#tel").html(val.MEMTEL);
+					 $("#email").html(val.MEMEMAIL);
+					 $("#TicketText").html(val.ticketContext);
+					 $("#TicketMoney").html(val.TICKETFEE);
+					 
+					 $("#TicketbuyDt").html(val.TICKETBUYDT);
+					 $("#TicketRefDt").html(val.REFUNDREQDT);
+					 $("#bankNm").html(val.BANKNM);
+					 $("#accountHolder").html(val.ACCOUNTHOLDER);
+					 $("#account").html(val.ACCOUNT);
+					 
+				 }); 
+			}
+		});
+	}
+	
+
 	</script>
      

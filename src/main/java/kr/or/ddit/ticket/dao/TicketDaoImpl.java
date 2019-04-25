@@ -78,6 +78,16 @@ public class TicketDaoImpl implements ITicketDao{
 	public int getAllTicketRefListCnt() {
 		return  sqlSession.selectOne("ticket.getAllTicketRefListCnt");
 	}
+
+	@Override
+	public List<Map<String, Object>> selectTicketBuyHist(String ticketBuyNo) {
+		return sqlSession.selectList("ticket.selectTicketBuyHist",ticketBuyNo);
+	}
+
+	@Override
+	public int updateTicketRefDt(String ticketbutNo) {
+		return sqlSession.update("ticket.updateTicketRefDt",ticketbutNo);
+	}
 	
 	
 

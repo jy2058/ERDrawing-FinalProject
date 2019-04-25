@@ -135,7 +135,7 @@
    							  b.refundreqdt between #{inputstart} and #{inputend} and
   							</if>
   							<if test="memId != null">
-   							   a.memid  like '%;'||#{memId}||'%' and 
+   							   a.memid  like '%'||#{memId}||'%' and 
   							</if>
   							<if test="ticketNo != null">
    							   a.ticketno = #{ticketNo} and 
@@ -144,7 +144,7 @@
    							   b.refund_respdt is null and
   							</if>
   							<if test="cknullNo != null">
-   							   b.refund_respdt is not null
+   							   b.refund_respdt is not null and
   							</if>
                             a.TICKETBUYNO = b.TICKETBUYNO and
                             a.TICKETNo = c.TICKETNO
@@ -157,6 +157,20 @@
           where rn between ((#{pageNo}-1)*#{pageSize})+1 and (#{pageNo})*#{pageSize}
 	 </select>
 	 
+	  <select id="selectTicketBuyHist" resultType="Map" parameterType="String">
+		    		select a.TICKETBUYNO, a.TICKETNO, a.MEMID, to_char(a.TICKETBUYDT,'yyyy-MM-dd') as TICKETBUYDT, a.TICKETFEE,to_char(b.REFUNDREQDT,'yyyy-MM-dd') as REFUNDREQDT, b.ACCOUNT, b.BANKNM, b.ACCOUNTHOLDER, 
+                    to_char(b.REFUND_RESPDT,'yyyy-MM-dd') as REFUND_RESPDT, c.MEMEMAIL, c.MEMNM,c.MEMTEL, c.MEMPERIOD, c.MEMBLACKFLAG
+                from ticket_buy_hist a, TICKET_REF_HIST b ,member c
+                where a.ticketbuyNo =b.ticketbuyNo and
+                      a.memId = c.memId and
+                    a.ticketbuyNo=#{ticketbuyNo}
+	 </select>
+	 
+	 <update id="updateTicketRefDt" parameterType="String">
+	 	update TICKET_REF_HIST
+           set REFUND_RESPDT =sysdate
+         where TICKETBUYNO=#{ticketBuyNo}
+	 </update>
 	 
 	 
 </mapper>

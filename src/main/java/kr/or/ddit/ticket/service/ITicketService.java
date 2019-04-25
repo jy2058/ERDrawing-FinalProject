@@ -32,4 +32,8 @@ public interface ITicketService {
 
 	List<Map<String, Object>> getAllTicketRefList(Map<String, Object> ticketMap);
 	
+	List<Map<String, Object>> selectTicketBuyHist(String ticketBuyNo);
+	
+	int updateTicketRefDt(String ticketbutNo);
+	
 }

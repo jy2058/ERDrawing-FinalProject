@@ -5,7 +5,7 @@
 
 
     			<c:forEach items="${ticketRefList }" var="ticket">
-    				<tr>	
+    				<tr data-ticketbuyno="${ticket.get("TICKETBUYNO") }" class="ticketRefTr"  data-target="#ticketRefModal" class="modifyModal" data-toggle="modal" >	
     					<td style="text-align: center;">${ticket.get("TICKETCONTENT") }&nbsp;권</td>	
     					<td style="text-align: center;">
     					 <fmt:formatDate value="${ticket.get('TICKETBUYDT') }" pattern="yy-MM-dd"/>

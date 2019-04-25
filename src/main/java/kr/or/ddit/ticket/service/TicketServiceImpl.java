@@ -78,4 +78,14 @@ public class TicketServiceImpl implements ITicketService{
 
 		return ticketDao.getAllTicketRefList(ticketMap);	
 		}
+
+	@Override
+	public List<Map<String, Object>> selectTicketBuyHist(String ticketBuyNo) {
+		return ticketDao.selectTicketBuyHist(ticketBuyNo);	
+	}
+
+	@Override
+	public int updateTicketRefDt(String ticketbutNo) {
+		return ticketDao.updateTicketRefDt(ticketbutNo);	
+	}
 }

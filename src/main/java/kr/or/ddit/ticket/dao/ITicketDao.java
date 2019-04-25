@@ -128,4 +128,25 @@ public interface ITicketDao {
 	 * Method 설명 : 티켓환불내역 갯수 가져오기
 	 */
 	int getAllTicketRefListCnt();
+	
+	/**
+	 * Method : selectTicketBuyHist
+	 * 작성자 : PC02
+	 * 변경이력 :
+	 * @param map
+	 * @return
+	 * Method 설명 : 티켓구매 정보+티켓 환불신청정보  가져오기
+	 */
+	List<Map<String, Object>> selectTicketBuyHist(String ticketBuyNo);
+	
+	/**
+	 * Method : updateTicketRefDt
+	 * 작성자 : PC02
+	 * 변경이력 :
+	 * @param ticketbutNo
+	 * @return 
+	 * Method 설 명 :환불 되면 환불된 날짜 업데이트
+	 */
+	int updateTicketRefDt(String ticketbutNo);
+	
 }

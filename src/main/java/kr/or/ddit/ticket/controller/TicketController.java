@@ -311,26 +311,83 @@ public class TicketController {
 	 
 	 //티켓환불 신청 내역
 	 @RequestMapping(path="/ticketRefAjaxList")
-	 public String ticketRefAjaxList(HttpServletRequest req ,RedirectAttributes ra,Model model,@RequestParam(name = "page", defaultValue = "1") int page){
-		 logger.debug("==={}",page);
-		 PageVo paging= new PageVo();
-		 paging.setPageNo(page);
-		 paging.setPageSize(10);
-		 Map<String, Object> map = new HashMap<>();
-			map.put("pageNo", page)	;
-			map.put("pageSize", 10)	;
-			 model.addAttribute("ticketRefList", ticketService.getAllTicketRefList(map));
-			 int cnts = Integer.valueOf((String) ticketService.getAllTicketRefList(map).get(0).get("CNT"));
-			 paging.setTotalCount(cnts);
-		 model.addAttribute("paging", paging);
+	 public String ticketRefAjaxList(HttpServletRequest req ,RedirectAttributes ra,Model model,@RequestParam(name = "page", defaultValue = "1") int page,String inputstart,String inputend,String searchgroup,String memId,String radioValref,String radioValtic){
+		 logger.debug("오나?");
+		 logger.debug("오나?inputstart=={}",inputstart);
+		 logger.debug("오나?inputend=={}",inputend);
+		 logger.debug("오나?searchgroup=={}",searchgroup);
+		 logger.debug("오나?memId=={}",memId);
+		 logger.debug("오나?radioValref=={}",radioValref);
+		 logger.debug("오나?radioValtic=={}",radioValtic);
 		 
+		 PageVo paging = new PageVo();
+			paging.setPageNo(page);
+			paging.setPageSize(10);
+			
+			Map<String, Object> map = new HashMap<>();
+			map.put("pageNo", page);
+			map.put("pageSize", 10);
+			
+			if(searchgroup.equals("날짜")){
+				map.put("inputstart", inputstart.substring(6)+inputstart.substring(0, 2)+inputstart.substring(3,5));
+				map.put("inputend", inputend.substring(6)+inputend.substring(0, 2)+inputend.substring(3,5));
+				map.put("memId", memId);
+			}else if(searchgroup.equals("티켓")){
+				map.put("ticketNo", radioValtic);
+				map.put("memId", memId);
+			}else if(searchgroup.equals("구매자")){
+				map.put("memId", memId);
+			}else if(searchgroup.equals("환불여부")){//환불여부
+				if(radioValref.equals("refNull")){
+					map.put("cknullOk", "cknullOk");
+					map.put("memId", memId);
+				}else{
+					map.put("cknullNo", "cknullNo");
+					map.put("memId", memId);
+				}
+			}else{
+				map.put("pageNo", page);
+				map.put("pageSize", 10);
+			}
+			
+			model.addAttribute("ticketRefList", ticketService.getAllTicketRefList(map));
+			
+			if (ticketService.getAllTicketRefList(map).size() > 0) {
+				int cnts = Integer.valueOf((String) ticketService.getAllTicketRefList(map).get(0).get("CNT"));
+				paging.setTotalCount(cnts);
+			}
 		 
+			model.addAttribute("paging", paging);
 		 
-		 
-		 
-		 
-			return "ticket/ticketRefListHtml";
+		 return "ticket/ticketRefListHtml";
 	 }
+	 
+	 
+	 //티켓환불 신청 정보띄우기
+	 @RequestMapping(path="/ticketRefInfo")
+	 public String ticketRefInfo(Model model,String ticketBuyNo,ModelMap modelMap){
+		 
+	List<Map<String, Object>> ticketbuyVo = ticketService.selectTicketBuyHist(ticketBuyNo);
+	if(ticketbuyVo.size()>0){
+		//ticketbuyVo.get(0).get("")
+
+		//int ticketno = Integer.valueOf((String) ticketbuyVo.get(0).get("TICKETNO"));
+		TicketVo ticketvo = ticketService.selectTicket(String.valueOf(ticketbuyVo.get(0).get("TICKETNO")));
+		ticketbuyVo.get(0).put("ticketContext",ticketvo.getTicketContent());
+		model.addAttribute("ticketbuyVo", ticketbuyVo.get(0));
+	}
+			return "jsonView";
+	 }
+	 
+	 @RequestMapping(path="/updateTicketRefDt")
+	 public String updateTicketRefDt(Model model,String ticbuyNo,HttpServletRequest req){
+		 logger.debug("=====ticbuyNo===={}",ticbuyNo);
+		 int cnt = ticketService.updateTicketRefDt(ticbuyNo);
+		 logger.debug("=====cnt===={}",cnt);
+		 return "redirect:" + req.getContextPath() +"/ticket/ticketRefList";
+	 }
+	 
+	 
 	 
 	
 }
