@@ -5,6 +5,7 @@
 <%-- <link href="${cp}/css/boxErd.css" rel="stylesheet"> --%>
 <link rel="icon" href="../../favicon.ico">
 <link rel="stylesheet" href="/css/member/memList.css">
+
 <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
 <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
@@ -25,7 +26,7 @@
 	<div class="row">
 		 <%@ include file="/WEB-INF/views/post/left.jsp"%> 
 
-		<h2 class="page-header" style="color: #fff;">${boardNm}</h2>
+		<h3 class="page-header" style="color: #D1D1D2;">${boardNm}</h3>
 
 		<div class="table-responsive" style="margin-right:20px; width: 80%;">
 			<table style="width: 100%;">

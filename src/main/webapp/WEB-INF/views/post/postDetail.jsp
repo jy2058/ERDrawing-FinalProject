@@ -15,14 +15,14 @@
 
     <div class="container-fluid">
       <div class="row">
-         <%@ include file="/WEB-INF/views/post/left.jsp"%><br/><br/><br/><br/>
-<!--  <div class="col-sm-6 col-sm-offset-3 col-md-8col-md-offset-10 main"> --> 
+         <%@ include file="/WEB-INF/views/post/left.jsp"%>
+
       
+      <h3 class="page-header" style="color: #D1D1D2;">상세조회</h3>
       <div class="col-sm-10 col-md-10 main">
-           <!-- <h1 class="page-header">게시글 조회</h1>  -->
           <form id="frm" action="${cp}/delPost" method="post" class="form-horizontal" role="form">
          <div class="form-group">
-            <label for="title" class="col-sm-2 control-label" style="color: #fff;">글제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <label for="title" class="col-sm-1 control-label" style="color: #fff;">글제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <div class="col-sm-7">
                <label class="control-label" style="color: #fff;">${postList.postTitle}</label>
             </div>
@@ -35,7 +35,7 @@
 </style>
 	
 	<input type = "hidden" name="boardNo" value="${boardNo}"> 
-	<input type="button" id="report" onclick="layer_open()" value="신고" style="text-align: right" />
+	<input type="button" id="report" onclick="layer_open()" value="신고" style="margin-left: 250px" />
 	
 <!-- <input type="button" id="report" onclick="layer_open()" value="신고"> -->
 <!-- <input type="button" value="레이어팝업 열기" onclick="layer_open();"  style="cursor:pointer; background-color:#663333; color:#FFF;" /> -->
@@ -71,21 +71,21 @@
             
          </div>
          <div class="form-group">
-            <label for="writer" class="col-sm-2 control-label" style="color: #fff;">작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <label for="writer" class="col-sm-1 control-label" style="color: #fff;">작성자&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <div class="col-sm-7">
                <label class="control-label" style="color: #fff;">${postList.writerId}</label>
             </div>
          </div>
          
          <div class="form-group">
-            <label for="insertDate" class="col-sm-2 control-label" style="color: #fff;">작성일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <label for="insertDate" class="col-sm-1 control-label" style="color: #fff;">작성일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <div class="col-sm-7">
                <label class="control-label" style="color: #fff;"><fmt:formatDate value="${postList.postRegDt}" pattern="yyyy-MM-dd" /></label>
             </div>
          </div>
          
          <div class="form-group">
-            <label for="content" class="col-sm-2 control-label" style="color: #fff;">글내용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <label for="content" class="col-sm-1 control-label" style="color: #fff;">글내용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <div class="col-sm-7">
                <label class="control-label" style="color: #fff;">${postList.postContent}</label>
             </div>
@@ -93,7 +93,7 @@
          
          <%-- 파일첨부 --%>
          <div class="form-group" style="color: #fff;">
-            <label for="content" class="col-sm-2 control-label" style="color: #fff;">첨부파일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <label for="content" class="col-sm-1 control-label" style="color: #fff;">첨부파일&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
             <div class="col-sm-7">
                
                <c:choose>
@@ -113,8 +113,8 @@
          </div>
 
          <div class="form-group">
-            <label for="content" class="col-sm-1 control-label" style="color: #fff; margin-left: 100px;">댓글&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-            <div class="col-sm-5">
+            <label for="content" class="col-sm-1 control-label" style="color: #fff;">댓글&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+            <div class="col-sm-7">
                <input type="text" class="form-control" id="cmtText" />
             </div>
             
@@ -122,6 +122,7 @@
                <button id="cmtBtn" type="button" class="btn btn-default" style="margin-left: 20px;">등록</button>
             </div>
          </div>
+         <br><br>
 
          <div class="table-responsive" style="margin-right: 20px; overflow: hidden;">
             <table class="table table-striped" style="width: 100%;">
