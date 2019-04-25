@@ -4827,6 +4827,7 @@ a.label:focus {
   vertical-align: baseline;
   background-color: #777;
   border-radius: 10px;
+  margin-left: 5px;
 }
 .badge:empty {
   display: none;
