@@ -146,7 +146,7 @@
 				console.log("접속");
 				setTimeout(() => {
 					connectMsgWs();
-				}, 10000000000);
+				}, 2000);
 				
 				msgWs.onmessage = function(event){
 					var msg = event.data;

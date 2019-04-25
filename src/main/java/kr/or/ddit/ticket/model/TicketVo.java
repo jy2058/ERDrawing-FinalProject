@@ -8,10 +8,26 @@ public class TicketVo {
 	private String ticketImg;         //이용권 이미지 경로
 	private String ticketContent;     //이용권 내용
 	private Date ticketInDt;          //이용권 등록일
+	private String ticketPeriod;     //이용권 기한
+	
 	
 	public TicketVo(){
 		
 	}
+	
+	
+
+	public String getTicketPeriod() {
+		return ticketPeriod;
+	}
+
+
+
+	public void setTicketPeriod(String ticketPeriod) {
+		this.ticketPeriod = ticketPeriod;
+	}
+
+
 
 	public Integer getTicketNo() {
 		return ticketNo;
@@ -53,11 +69,15 @@ public class TicketVo {
 		this.ticketInDt = ticketInDt;
 	}
 
+
+
 	@Override
 	public String toString() {
 		return "TicketVo [ticketNo=" + ticketNo + ", ticketPrice=" + ticketPrice + ", ticketImg=" + ticketImg
-				+ ", ticketContent=" + ticketContent + ", ticketInDt=" + ticketInDt + "]";
+				+ ", ticketContent=" + ticketContent + ", ticketInDt=" + ticketInDt + ", ticketPeriod=" + ticketPeriod
+				+ "]";
 	}
+
 	
 	
 

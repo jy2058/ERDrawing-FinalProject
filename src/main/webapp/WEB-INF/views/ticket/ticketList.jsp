@@ -304,11 +304,11 @@ color:#fff;
             },
             success : function(data) {
                console.log(data);
-               //모달창에  해당 회원의 값 넣어주기
                $("#ticketNo").val(data.ticketVo.ticketNo);
                $("#ticketPrice").val(data.ticketVo.ticketPrice);
                $("#ticketContent").val(data.ticketVo.ticketContent);
                $("#profileImg").attr("src", "${cp }/ticket/ticketImg?ticketNo="+data.ticketVo.ticketNo);
+               $("#ticketPeriod").val(data.ticketVo.ticketPeriod);
             }
          });
       }
