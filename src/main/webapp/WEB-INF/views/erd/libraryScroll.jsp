@@ -65,6 +65,7 @@ $(document).ready(function(){
 		tagContent = $("#searchTxt").val();
 		searchFlag = true;
 		page = 0;
+		stat = true;
 		showErd();
 	});
 	
@@ -86,8 +87,8 @@ $(document).ready(function(){
    			var documentHeight = $(document).height();
    			var currentScroll = scrollTop + windowHeight + footer + content_padding_b;
    			
-   	 		console.log("documentHeight:" + documentHeight + " | scrollTop:" + currentScroll + " | windowHeight: " + windowHeight );
-   			
+   	 		console.log("documentHeight:" + documentHeight + " | currentScroll:" + currentScroll + " | windowHeight: " + windowHeight );
+   			console.log("stat:" + stat);
    			if( documentHeight < currentScroll && stat == true){
    				showErd();
    			}
@@ -115,7 +116,7 @@ $(document).ready(function(){
 				var erdTagMapKey = Object.keys(erdTagMap);	// 맵의 키를 따로 저장
 				var erdTagMapNew = new Map(); //erdTagMapKey를 맵타입으로 바꾸기 위해서. 
 				//스크립트에서 맵 안에 있는 맵을 배열로 인식.
-				
+				console.log(erdList.length);
 				if(erdList.length < 12){
 					stat = false;
 				}

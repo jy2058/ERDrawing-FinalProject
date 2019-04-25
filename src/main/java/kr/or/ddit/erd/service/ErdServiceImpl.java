@@ -160,8 +160,8 @@ public class ErdServiceImpl implements IErdService{
 	@Override
 	public Map<String, Object> searchPagingList(PageVo pageVo) {
 		List<ErdVo> searchList = erdDao.searchList(pageVo.getSearch());
-		pageVo.setPageSize(searchList.size());
-		pageVo.setTotalCount(12);
+		pageVo.setPageSize(12);
+		pageVo.setTotalCount(searchList.size());
 		
 		List<ErdVo> allErdListPaging = erdDao.searchPagingList(pageVo);
 		

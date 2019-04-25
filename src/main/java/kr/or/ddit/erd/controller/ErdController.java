@@ -104,7 +104,7 @@ public class ErdController {
 		return "jsonView";
 	}
 	
-	// erd 검색
+	// erd 모달 검색
 	@RequestMapping("/erdSearch")
 	public String erdSearch(@RequestParam("searchTxt_modal")String searchTxt, Model model){
 		List<ErdVo> searchList = erdService.searchList(searchTxt);
