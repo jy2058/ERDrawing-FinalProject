@@ -20,6 +20,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.commons.collections.map.HashedMap;
 import org.slf4j.Logger;
@@ -387,6 +388,19 @@ public class TicketController {
 		 return "redirect:" + req.getContextPath() +"/ticket/ticketRefList";
 	 }
 	 
+	 @RequestMapping(path="/myTicket")
+	 public String myTicket(Model model,HttpSession session){
+		  MemberVo memVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		  
+		  //남은 일수로 사용가능한 날수 구하기
+		  
+		  
+		  if(memVo !=null){
+			  List<Map<String, Object>> myTicketList = ticketService.selectMyTicketDt(memVo.getMemId());
+			  model.addAttribute("myTicketList", myTicketList);
+		  }
+		 return "myTicket";
+	 }
 	 
 	 
 	

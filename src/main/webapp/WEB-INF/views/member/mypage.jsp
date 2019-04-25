@@ -31,6 +31,10 @@
 
 	<div class="my-bg">
 		<div class="container">
+		<div class="inner-container" >
+				<a href="${cp}/ticket/myTicket" class="btn-style2" style="margin-right: 10%;" >My Ticket</a>
+			</div>
+		
 			<div class="inner-container">
 				<a href="/modify?memId=${SESSION_MEMBERVO.memId  }" class="btn-style2">프로필 수정</a>
 			</div>

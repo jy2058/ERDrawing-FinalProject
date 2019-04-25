@@ -40,13 +40,15 @@
 			     ticketprice,
 				 ticketimg,
 				 ticketcontent,
-				 ticketindt
+				 ticketindt,
+				 ticketPeriod
 	 	) 
 	 	values(seq_ticketno.nextval,
 	 		   nvl(#{ticketPrice,jdbcType=VARCHAR}, '0'),
 	 		   #{ticketImg,jdbcType=VARCHAR},
 	 		   #{ticketContent,jdbcType=VARCHAR}, 
-	 		   sysdate) 
+	 		   sysdate,
+	 		   nvl(#{ticketPeriod,jdbcType=VARCHAR}, '0')) 
 	 		   
 	 </insert>
 	 	
@@ -171,6 +173,21 @@
            set REFUND_RESPDT =sysdate
          where TICKETBUYNO=#{ticketBuyNo}
 	 </update>
+	 
+	   <select id="selectMyTicketDt" resultType="Map" parameterType="String">
+		 SELECT TRUNC(SYSDATE -a.ticketbuydt) as days,to_char(a.ticketbuyDt,'yyyy-MM-dd') as ticketbuyDt,
+                to_char(b.TICKETCONTENT) as TICKETCONTENT,b.TICKETPRICE,
+                CASE  WHEN  to_number(TRUNC(SYSDATE -a.ticketbuydt))>to_number(b.TICKETPERIOD) then '0'
+                      ELSE  to_char(to_number(b.TICKETPERIOD)-to_number(TRUNC(SYSDATE -a.ticketbuydt)))
+                END as "PeriodUse"
+          	FROM ticket_buy_hist a, ticket  b
+           	where  a.ticketno = b.ticketno and
+                   a.memId = #{memId}
+	 </select>
+	 
+	 <select id="selectEndDt" parameterType="String" resultType="String">
+	  select to_char(sysdate + #{addDT}) as endDt from dual
+	 </select>
 	 
 	 
 </mapper>

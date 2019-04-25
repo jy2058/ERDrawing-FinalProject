@@ -88,4 +88,14 @@ public class TicketServiceImpl implements ITicketService{
 	public int updateTicketRefDt(String ticketbutNo) {
 		return ticketDao.updateTicketRefDt(ticketbutNo);	
 	}
+
+	@Override
+	public List<Map<String, Object>> selectMyTicketDt(String memId) {
+		return ticketDao.selectMyTicketDt(memId);	
+	}
+
+	@Override
+	public String selectEndDt(String addDt) {
+		return ticketDao.selectEndDt(addDt);	
+	}
 }

@@ -138,11 +138,13 @@
         	<put-attribute name="content" value="/WEB-INF/views/ticket/ticketPie.jsp" />
         </definition>
         
-            <definition name="ticketRefList" extends="layout">
+        <definition name="ticketRefList" extends="layout">
         	<put-attribute name="content" value="/WEB-INF/views/ticket/ticketRefListContent.jsp" />
         </definition>
         
-        
+        <definition name="myTicket" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/ticket/myTicket.jsp" />
+        </definition>
         
         
         

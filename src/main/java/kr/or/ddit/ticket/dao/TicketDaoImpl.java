@@ -88,6 +88,16 @@ public class TicketDaoImpl implements ITicketDao{
 	public int updateTicketRefDt(String ticketbutNo) {
 		return sqlSession.update("ticket.updateTicketRefDt",ticketbutNo);
 	}
+
+	@Override
+	public List<Map<String, Object>> selectMyTicketDt(String memId) {
+		return sqlSession.selectList("ticket.selectMyTicketDt",memId);
+	}
+
+	@Override
+	public String selectEndDt(String addDt) {
+		return sqlSession.selectOne("ticket.selectEndDt",addDt);
+	}
 	
 	
 

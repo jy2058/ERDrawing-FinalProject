@@ -30,6 +30,11 @@
                      <input   type="text" class="ticketContent" id="ticketContent" name="ticketContent"  />
                </div>
                
+                <div class="form-group">
+                  <label class="modalLabels">TicketPeriod</label> 
+                  <input type="text" name="ticketPeriod" id="ticketPeriod" >    
+               </div>   
+               
                 <div class="pass form-group">
                   <label class="modalLabels"  >ticketImg</label> 
                   <img id="profileImg" src="" width="340" height="320" />
