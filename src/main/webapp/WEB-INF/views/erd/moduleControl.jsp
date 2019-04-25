@@ -125,7 +125,7 @@ display: block;
 	                    url: "/pageViewAjax",
 	                    data: { value : page },
 	                    success: function(data) {
-	                    	
+	                    	$(document).scrollTop(0);
 	               			// 모달 띄우기
 	                    	var height = $(document).height();
 	            			$(".background-etc").css({"display":"block", "height" : height + "px"});

@@ -155,7 +155,7 @@
 							  	<li class="erd-box-item">
 							  		<c:if test="${myTeam.teamAuth ne 'user'}"> <!-- 권한이 유저가 아닐 때 erd 삭제 가능 -->
 							  		<div style="position:absolute; z-index:30;">
-								  		<button type="button" class="btn btn-default delBtn" aria-label="trash" value="${myErdList.erdNo }">
+								  		<button type="button" class="btn btn-default delBtn" aria-label="trash" value="${teamErdList.erdNo }">
 										  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 										</button>
 									</div>
@@ -224,6 +224,29 @@
 				$(e.target).val(data.auth);
 			},
 			error : function(xhr, status, error){
+				alert("에러");
+			}
+		});
+	});
+	
+	// erd 삭제
+	$(".delBtn").on("click", function(e) {
+		var result = confirm("삭제하시겠습니까?");
+		if (!result) {
+			return;
+		}
+
+		var erdNo = $(this).val();
+		$.ajax({
+			type : "get",
+			url : "${cp}/erd/delErd",
+			data : {
+				erdNo : erdNo
+			},
+			success : function(data) {
+				$(e.target).closest('li').remove();
+			},
+			error : function(xhr, status, error) {
 				alert("에러");
 			}
 		});
