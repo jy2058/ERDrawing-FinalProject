@@ -151,6 +151,6 @@ public interface ITicketDao {
 	
 	List<Map<String, Object>> selectMyTicketDt(String memId);
 	
-	String selectEndDt(String addDt);
+	String selectEndDt(String addDt); 
 	
 }
