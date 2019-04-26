@@ -223,6 +223,8 @@ color:#fff;
             
             $("#frm").attr("action", "/ticket/modifyTicket");
             $("#frm").submit();
+         }else{
+        	 return false;
          }
          });
 

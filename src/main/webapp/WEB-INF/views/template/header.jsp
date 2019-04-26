@@ -146,7 +146,7 @@
 				console.log("접속");
 				setTimeout(() => {
 					connectMsgWs();
-				}, 2000);
+				}, 1000000);
 				
 				msgWs.onmessage = function(event){
 					var msg = event.data;
@@ -154,8 +154,8 @@
 				}
 				msgWs.onclose = function(event){console.log('Info: connection closed.');}
 			}
-			msgWs.onerror = function(err){console.log('Error:', err);}
-		
+			msgWs.onerror = function(err){console.log('Error:', err);
+			}
 		}
 		
  

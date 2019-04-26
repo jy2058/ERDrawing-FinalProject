@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import kr.or.ddit.ticket.model.TicketBuyHistVo;
+import kr.or.ddit.ticket.model.TicketRefHistVo;
 import kr.or.ddit.ticket.model.TicketVo;
 import kr.or.ddit.util.model.PageVo;
 
@@ -152,5 +153,11 @@ public interface ITicketDao {
 	List<Map<String, Object>> selectMyTicketDt(String memId);
 	
 	String selectEndDt(String addDt); 
+	
+	List<TicketVo> selectRefOkList(String memId);
+	
+	int insertTicketRef(TicketRefHistVo ticketRefHistVo);
+
+	List<Map<String, Object>> selectTicketBuyList(String ticketBuyNo);
 	
 }

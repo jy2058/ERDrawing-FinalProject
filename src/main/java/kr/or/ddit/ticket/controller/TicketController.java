@@ -397,11 +397,45 @@ public class TicketController {
 		  
 		  if(memVo !=null){
 			  List<Map<String, Object>> myTicketList = ticketService.selectMyTicketDt(memVo.getMemId());
-			  model.addAttribute("myTicketList", myTicketList);
+			  int totalPeriod=0;
+
+				if(myTicketList.size()>0){
+					for(int i = 0; i<myTicketList.size(); i++){
+						 int PeriodUse = Integer.valueOf((String) myTicketList.get(i).get("PeriodUse"));
+						 totalPeriod+=PeriodUse;
+						 logger.debug("===totalPeriod={}",totalPeriod);
+						logger.debug("===PeriodUse={}",PeriodUse);
+					}
+					
+					String endDt = ticketService.selectEndDt(totalPeriod+"");
+					logger.debug("====endDt{}==",endDt);
+					int totalRef=0;
+					List<TicketVo> ticketVo = ticketService.selectRefOkList(memVo.getMemId());
+					if(ticketVo != null){
+						for(int i=0; i<ticketVo.size(); i++){
+						String period=ticketVo.get(i).getTicketPeriod();
+						totalRef +=Integer.parseInt(period); 
+						}
+					}
+					model.addAttribute("myTicketList",myTicketList);
+					model.addAttribute("endDt", endDt);
+					model.addAttribute("totalPeriod", totalPeriod-totalRef);
+				}else{
+					model.addAttribute("endDt", 0);
+					model.addAttribute("totalPeriod", 0);
+				}
 		  }
 		 return "myTicket";
 	 }
 	 
+	 
+	 @RequestMapping(path="/ticketBuyInfoAjax")
+	 public String ticketBuyInfoAjax(Model model,String ticketBuyNo,HttpServletRequest req){
+		 List<Map<String, Object>> ticketBuyInfo = ticketService.selectTicketBuyList(ticketBuyNo);
+		 logger.debug("====ddd?{}",ticketBuyInfo.size());
+		 model.addAttribute("ticketBuyInfo",ticketBuyInfo.get(0));
+		 return "jsonView";
+	 }
 	 
 	
 }

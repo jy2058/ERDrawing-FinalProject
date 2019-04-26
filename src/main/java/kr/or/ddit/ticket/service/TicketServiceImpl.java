@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import kr.or.ddit.ticket.dao.ITicketDao;
 import kr.or.ddit.ticket.model.TicketBuyHistVo;
+import kr.or.ddit.ticket.model.TicketRefHistVo;
 import kr.or.ddit.ticket.model.TicketVo;
 import kr.or.ddit.util.model.PageVo;
 
@@ -97,5 +98,20 @@ public class TicketServiceImpl implements ITicketService{
 	@Override
 	public String selectEndDt(String addDt) {
 		return ticketDao.selectEndDt(addDt);	
+	}
+
+	@Override
+	public List<TicketVo> selectRefOkList(String memId) {
+		return ticketDao.selectRefOkList(memId);
+	}
+
+	@Override
+	public int insertTicketRef(TicketRefHistVo ticketRefHistVo) {
+		return ticketDao.insertTicketRef(ticketRefHistVo);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectTicketBuyList(String ticketBuyNo) {
+		return ticketDao.selectTicketBuyList(ticketBuyNo);
 	}
 }

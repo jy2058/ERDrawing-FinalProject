@@ -9,6 +9,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.ticket.model.TicketBuyHistVo;
+import kr.or.ddit.ticket.model.TicketRefHistVo;
 import kr.or.ddit.ticket.model.TicketVo;
 import kr.or.ddit.util.model.PageVo;
 
@@ -97,6 +98,21 @@ public class TicketDaoImpl implements ITicketDao{
 	@Override
 	public String selectEndDt(String addDt) {
 		return sqlSession.selectOne("ticket.selectEndDt",addDt);
+	}
+
+	@Override
+	public List<TicketVo> selectRefOkList(String memId) {
+		return sqlSession.selectList("ticket.selectRefOkList",memId);
+	}
+
+	@Override
+	public int insertTicketRef(TicketRefHistVo ticketRefHistVo) {
+		return sqlSession.insert("ticket.insertTicketRef",ticketRefHistVo);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectTicketBuyList(String ticketBuyNo) {
+		return sqlSession.selectList("ticket.selectTicketBuyList",ticketBuyNo);
 	}
 	
 	
