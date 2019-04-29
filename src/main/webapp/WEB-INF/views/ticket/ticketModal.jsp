@@ -75,31 +75,31 @@
                <div class="form-group">
                   <label class="modalLabels">결제 수단</label>  
                    <label><input type="radio" name="buychoose" value="mo" onclick="radioBtn_ch()"/> 무통장입금</label> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                   <label><input   type="radio" name="buychoose" value="sin" onclick="radioBtn_ch()"/>신용카드</label>
+                   <label><input type="radio" name="buychoose" value="sin" onclick="radioBtn_ch()"/>신용카드</label>
                   <div id="dupleCode"></div>
                </div>
                
                 <!-- ======================== 신용카드 결제 화면 ========================-->   
                 <form name="ATGAutoForm" action="${cp}/ticket/ticketCardBuy" id="cardFrm"  method="post">
                 <div class="form-group" id="sinbuy">
-                  <label class="modalLabels">신용카드 결제</label>
+                  <!-- <label class="modalLabels">신용카드 결제</label> -->
                     <div class="frm-grp">
                         <label class="modalLabels">카드번호</label>
                         <div class="row label_slc1">
                             <span class="field1">
-                                <input type="tel" width="10px" id="cardno1" name="cardno1" class="ipt_cardnumber" maxlength="4" style="font-size:16px;" onkeyup="if(this.value.length == 4) ATGAutoForm.cardno2.focus();">
+                                <input type="tel" id="cardno1" name="cardno1" class="ipt_cardnumber" maxlength="4" style="font-size:16px; width:130px;" onkeyup="if(this.value.length == 4) ATGAutoForm.cardno2.focus();">
                             </span>
                             <span class="field2 one-txt">-</span>
                             <span class="field2">
-                                <input type="password" id="cardno2" name="cardno2" class="ipt_cardnumber" maxlength="4" style="font-size:16px;" onkeyup="if(this.value.length == 4) ATGAutoForm.cardno3.focus();">
+                                <input type="password" id="cardno2" name="cardno2" class="ipt_cardnumber" maxlength="4" style="font-size:16px; width:130px;" onkeyup="if(this.value.length == 4) ATGAutoForm.cardno3.focus();">
                             </span>
                             <span class="field2 one-txt">-</span>
                             <span class="field2">
-                                <input type="password" id="cardno3" name="cardno3" class="ipt_cardnumber" maxlength="4" style="font-size:16px;" onkeyup="if(this.value.length == 4) ATGAutoForm.cardno4.focus();">
+                                <input type="password" id="cardno3" name="cardno3" class="ipt_cardnumber" maxlength="4" style="font-size:16px; width:130px;" onkeyup="if(this.value.length == 4) ATGAutoForm.cardno4.focus();">
                             </span>
                             <span class="field2 one-txt">-</span>
                             <span class="field2">
-                                <input type="tel" id="cardno4" name="cardno4" class="ipt_cardnumber" maxlength="4" style="font-size:16px;">
+                                <input type="tel" id="cardno4" name="cardno4" class="ipt_cardnumber" maxlength="4" style="font-size:16px; width:130px;">
                             </span>
                         </div>
                   
@@ -177,7 +177,7 @@
                     </div>
 
                     <div class="card_cbox">
-                        <label class="label_tit date_of_birth">생년월일<br><em>(6자리)</em></label>
+                        <label class="label_tit date_of_birth">생년월일<em>(6자리)</em></label>
                         <label class="label_tit business_creditCard" style="display: none;">사업자번호</label>
                         <div class="row label_slc3 mr15 age_box">
                             <span class="field2">
@@ -232,7 +232,7 @@
   
                <!-- ======================== 무통장 결제 화면 ========================-->
             <div class="form-group" id="mobuy">
-               <label class="modalLabels">무통장 결제</label>
+               <!-- <label class="modalLabels">무통장 결제</label> -->
                <div class="form-group" id="mobuy">
                   <label class="modalLabels">입금은행</label> <span class="pay-kind"></span>
                   <select id="vcdbank" name="vcdbank">

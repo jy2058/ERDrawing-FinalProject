@@ -6,6 +6,30 @@
 <link rel="icon" href="../../favicon.ico">
 <link rel="stylesheet" href="/css/member/memList.css">
 
+<style>
+tbody tr:nth-child(even) {
+	background-color: #ffffff;
+	height: 50px;
+	
+}
+
+tbody tr:nth-child(odd) {
+	background-color: #dddddd;
+	height: 50px;
+}
+
+th {
+
+ 
+ background-color: darkgray;
+ text-align: center;
+}
+
+td{
+
+}
+</style>
+
 <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
 <!--  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script> -->
 <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script> -->
@@ -32,16 +56,17 @@
 			<table style="width: 100%;">
 				<thead>
 					<tr style="height: 50px;">
-						<th style="text-align: center; border-right: 2px solid #fff; color:black; width:15%;">글번호</th>
-						<th style="text-align: center; border-right: 2px solid #fff; color:black;">글제목</th>
-						<th style="text-align: center; border-right: 2px solid #fff; color:black; width:30%;">작성자</th>
-						<th style="text-align: center; border-right: 2px solid #fff; color:black; width:15%;">등록일</th>
-						<th style="text-align: center; color:black; width:8%;">조회수</th>
+						<th style="text-align: center; color:black; width:9%;">글번호</th>
+						<th style="text-align: center; color:black; width:35%;">글제목</th>
+						<th style="text-align: center; color:black; width:30%;">작성자</th>
+						<th style="text-align: center; color:black; width:15%;">등록일</th>
+						<th style="text-align: center; color:black; width:9%; border-right: 0px">조회수</th>
 					</tr>
 				</thead>
 
 				<tbody id="postListTbody">
 				</tbody>
+				
 			</table>
 			<div style="text-align: right; margin-top: 10px;">
 				<form id="insertFrm" action="${cp}/post/postInsert" method="get">

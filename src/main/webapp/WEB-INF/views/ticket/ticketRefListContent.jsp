@@ -139,13 +139,13 @@ table {
 					
 				<div class="form-group">
 						<label class="modalLabels">UserInfo</label> 
-						<label class="labelContext" id="tel">폰</label>
-						<label class="labelContext" id="email">이메일</label> 
+						<label class="labelContext" id="tel">휴대폰</label></br>
+						<label class="labelContext" id="email" style="padding-left: 134px;">이메일</label> 
 					</div>
 				
 					<div class="form-group">
 						<label class="modalLabels">Ticket</label> 
-						<label class="labelContext" id="TicketText">내용s</label> 
+						<label class="labelContext" id="TicketText">내용s</label>
 					</div>
 
 					<div class="form-group">
@@ -165,9 +165,9 @@ table {
 					
 					<div class="pass form-group">
 						<label class="modalLabels">RefBank</label> 
-						<label class="labelContext" id="bankNm">은행명</label> 
-						<label class="labelContext" id="accountHolder">예금주</label> 
-						<label class="labelContext" id="account">계좌번호</label> 
+						<label class="labelContext" id="bankNm">은행명</label></br>
+						<label class="labelContext" id="accountHolder" style="padding-left: 134px;">예금주</label></br>
+						<label class="labelContext" id="account" style="padding-left: 134px;">계좌번호</label> 
 					</div>
 
 
@@ -289,16 +289,15 @@ table {
 					 console.log(idx)
 					 
 					 $("#modalMemId").html(val.MEMID+"("+val.MEMNM  +")");
-					 $("#tel").html(val.MEMTEL);
-					 $("#email").html(val.MEMEMAIL);
+					 $("#tel").html("휴대폰 : " + val.MEMTEL);
+					 $("#email").html("이메일 : " + val.MEMEMAIL);
 					 $("#TicketText").html(val.ticketContext);
-					 $("#TicketMoney").html(val.TICKETFEE);
-					 
+					 $("#TicketMoney").html(val.TICKETFEE + "원");
 					 $("#TicketbuyDt").html(val.TICKETBUYDT);
 					 $("#TicketRefDt").html(val.REFUNDREQDT);
-					 $("#bankNm").html(val.BANKNM);
-					 $("#accountHolder").html(val.ACCOUNTHOLDER);
-					 $("#account").html(val.ACCOUNT);
+					 $("#bankNm").html("은행명 : " + val.BANKNM);
+					 $("#accountHolder").html("예금주 : " + val.ACCOUNTHOLDER);
+					 $("#account").html("계좌번호 : " + val.ACCOUNT);
 					 
 				 }); 
 			}

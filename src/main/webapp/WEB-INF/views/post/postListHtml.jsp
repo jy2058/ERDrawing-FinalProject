@@ -5,13 +5,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 		<c:forEach items="${postList}" var="post">
-			<tr class='postTr' data-postno="${post.postNo}" data-postgn="${post.postGn}" data-flag="${post.postDelFlag}" style="background-color: #f9f9f9;">
-				<td style="text-align: center; border-right: 2px solid #fff; color:black; height:10px;">${post.postNo}</td>
+			<tr class='postTr' data-postno="${post.postNo}" data-postgn="${post.postGn}" data-flag="${post.postDelFlag}" >
+				<td style="text-align: center;  color:black; height:10px;">${post.postNo}</td>
 				<c:choose>
 					<c:when test="${post.level gt 1}"> <!--레벨에 따른 공백주기  -->
 					<a href="javascript:void(0);" onclick="fnTrClick('${post.postNo}', '${post.postGn}', '${post.postDelFlag}');"> ${post.postTitle}</a>
 					
-					<td style="border-right: 2px solid #fff; color:black; height:10px;">
+					<td style="color:black; height:10px;">
 						<c:forEach begin="1" end="${post.level-1}">
 						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 						</c:forEach>
@@ -28,7 +28,7 @@
 					</c:when>
 					
 					<c:otherwise>
-					<td style="padding-left: 15px; color: black; border-right: 2px solid #fff; height:10px;">
+					<td style="padding-left: 15px; color: black;  height:10px;">
 					<c:choose>
 							<c:when test="${post.postDelFlag eq 'T'}">
 							<a href="javascript:void(0);" onclick="fnTrClick('${post.postNo}', '${post.postGn}', '${post.postDelFlag}');"> ${post.postTitle}</a>
@@ -40,8 +40,8 @@
 					</td>
 					</c:otherwise>
 				</c:choose>			
-					<td style="text-align: center; border-right: 2px solid #fff; color:black;">${post.writerId}</td>
-					<td style="text-align: center; border-right: 2px solid #fff; color:black;"><fmt:formatDate value="${post.postRegDt}" pattern="yyyy-MM-dd" /></td>
+					<td style="text-align: center;  color:black;">${post.writerId}</td>
+					<td style="text-align: center; color:black;"><fmt:formatDate value="${post.postRegDt}" pattern="yyyy-MM-dd" /></td>
 					<td style="text-align: center; color:black;">${post.viewCnt}</td>
 				</tr>
 			</c:forEach>

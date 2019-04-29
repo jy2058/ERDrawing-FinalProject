@@ -125,7 +125,7 @@
          <br><br>
 
          <div class="table-responsive" style="margin-right: 20px; overflow: hidden;">
-            <table class="table table-striped" style="width: 100%;">
+            <table class="table table-striped" style="width: 100%; height: 100px">
                <thead>
                   <tr style="height: 50px;">
                      <th style="text-align: center; border-right: 2px solid #fff; color:black; width:15%;">댓글번호</th>
