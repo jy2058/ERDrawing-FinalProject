@@ -39,6 +39,7 @@
 			<div class="input-box" id="selTeam">
 				<label>팀</label>
 				<select name="teamNo">
+					<option value="0">팀 선택</option>
 					<c:forEach var="teamInfoList" items="${teamInfoList}">
 						<option value="${teamInfoList.teamNo }">${teamInfoList.teamNm }</option>
 					</c:forEach>
@@ -52,20 +53,33 @@
 			</div>
 			<input type="hidden" id="snapshot" name="snapshot" value="">
 			<input type="hidden" id="erdNo" name="erdNo" value="">
+			<input type="hidden" id="selTeamNo" name="selTeamNo" value="">
 		</form>
 		<div class="cancle-btn99 btn-style1">취소</div>
 		<div class="submit-btn99 btn-style1" id="erdSave">저장</div>
 		
 <script>
+	var clickTeam = false;
+	
 	$("#selTeam").hide();
-
+	
 	$("#erdSave").on("click", function(){
-		$("#erdModifyFrm").submit();
+		var selTeam = $("select[name=teamNo]").val();
+		if(selTeam == 0 && clickTeam == true){
+			alert("팀을 선택해 주세요.");
+			return;
+		}else
+			$("#erdModifyFrm").submit();
 	});
 	
+	
 	$('input[type=radio][name=erdScope]').change(function() {
-	    if (this.value == 'team') {
+		if (this.value == 'team') {
 	    	$("#selTeam").show();
+	    	clickTeam = true;
+	    }else{
+	    	$("#selTeam").hide();
+	    	clickTeam = false;
 	    }
 	});
                    	

@@ -40,6 +40,7 @@
 			<div class="input-box" id="selTeam">
 				<label>팀</label>
 				<select name="teamNo">
+					<option value="0">팀 선택</option>
 					<c:forEach var="teamInfoList" items="${teamInfoList}">
 						<option value="${teamInfoList.teamNo }">${teamInfoList.teamNm }</option>
 					</c:forEach>
@@ -50,15 +51,25 @@
 		<div class="submit-btn99 btn-style1" id="erdAdd">만들기</div>
 		
 		<script>
+			var clickTeam = false;	
 			$("#selTeam").hide();
 		
 			$("#erdAdd").on("click", function(){
- 				$("#erdAddFrm").submit();
+				var selTeam = $("select[name=teamNo]").val();
+				if(selTeam == 0 && clickTeam == true){
+					alert("팀을 선택해 주세요.");
+					return;
+				}else
+ 					$("#erdAddFrm").submit();
  			});
 			
 			$('input[type=radio][name=erdScope]').change(function() {
 			    if (this.value == 'team') {
 			    	$("#selTeam").show();
+			    	clickTeam = true;
+			    }else{
+			    	$("#selTeam").hide();
+			    	clickTeam = false;
 			    }
 			});
 
