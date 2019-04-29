@@ -146,6 +146,8 @@
         	<put-attribute name="content" value="/WEB-INF/views/ticket/myTicket.jsp" />
         </definition>
         
-        
+          <definition name="chatbot" extends="layout">
+        	<put-attribute name="content" value="/WEB-INF/views/chatbot/chatbot.jsp" />
+        </definition>
         
 	</tiles-definitions>

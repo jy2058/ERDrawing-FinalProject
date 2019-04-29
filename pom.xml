@@ -33,10 +33,23 @@
  <!-- nexus repository 어떤 회사에서 등록한 ojdbc가져오기 -->
    <repositories>
       <!-- ojdbc6 설정시 -->
-      <repository>
+      <!--<repository>
          <id>codelds</id>
          <url>https://code.lds.org/nexus/content/groups/main-repo</url>
-      </repository>
+      </repository>-->
+      
+      <repository>
+			<id>oracle</id>
+			<name>ORACLE JDBC Repository</name>
+			<url>http://maven.jahia.org/maven2</url>
+		</repository>
+
+
+		<repository>
+			<id>spring-repo</id>
+			<name>Spring Repository</name>
+			<url>https://repo.spring.io/release</url>
+		</repository>
    </repositories>
    
    
@@ -218,20 +231,20 @@
 
 
 
-		<!-- 웹 소켓 -->
-		
-		<dependency>
-	        <groupId>org.springframework</groupId>
-	        <artifactId>spring-websocket</artifactId>
-	        <version>4.2.4.RELEASE</version>
-		</dependency>
-		
-		<!-- 스프링 웹소캣에 http세션을 가져오기위해 추가 -->
-		<dependency>
-			<groupId>javax.websocket</groupId>
-			<artifactId>javax.websocket-api</artifactId>
-			<version>1.1</version>
-		</dependency>
+      <!-- 웹 소켓 -->
+      
+      <dependency>
+           <groupId>org.springframework</groupId>
+           <artifactId>spring-websocket</artifactId>
+           <version>4.2.4.RELEASE</version>
+      </dependency>
+      
+      <!-- 스프링 웹소캣에 http세션을 가져오기위해 추가 -->
+      <dependency>
+         <groupId>javax.websocket</groupId>
+         <artifactId>javax.websocket-api</artifactId>
+         <version>1.1</version>
+      </dependency>
 
 
       <!-- json -->
@@ -285,13 +298,20 @@
             <version>${spring.version}</version>
         </dependency>
       
-		<!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
-		<dependency>
-		    <groupId>com.googlecode.json-simple</groupId>
-		    <artifactId>json-simple</artifactId>
-		    <version>1.1.1</version>
-		</dependency>
-	
+      <!-- https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple -->
+      <dependency>
+          <groupId>com.googlecode.json-simple</groupId>
+          <artifactId>json-simple</artifactId>
+          <version>1.1.1</version>
+      </dependency>
+      
+      <!-- 챗봇 -->
+      <dependency>
+  		<groupId>com.ibm.watson.developer_cloud</groupId>
+		<artifactId>java-sdk</artifactId>
+  		<version>6.14.0</version>
+	</dependency>
+   
        
    </dependencies>
    
