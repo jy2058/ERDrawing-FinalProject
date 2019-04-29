@@ -110,7 +110,7 @@
 
 			<div class="line-title">
 				<h2 class="page-title">MY-ERD</h2>
-				<a class="add-btn1" id="myAdd"><i class="fas fa-plus-square"></i></a>
+				<a class="add-btn1 myAdd"><i class="fas fa-plus-square"></i></a>
 			</div>
 
 			<div class="row">

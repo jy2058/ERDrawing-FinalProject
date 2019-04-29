@@ -87,9 +87,11 @@
 	<!-- 웹소캣 -->
 	<bean id="erdHandler" class="kr.or.ddit.websocket.util.ErdHandler"/>
 	<bean id="msgHandler" class="kr.or.ddit.websocket.util.MsgHandler"/>
+	<bean id="chatHandler" class="kr.or.ddit.websocket.util.ChatHandler"/>
 	<websocket:handlers>
 		<websocket:mapping path="/erdEcho" handler="erdHandler"/>
 		<websocket:mapping path="/msgEcho" handler="msgHandler"/>
+		<websocket:mapping path="/chatEcho" handler="chatHandler"/>
 		
 		<!-- http session	 사용하기 위해 추가 -->
 		<websocket:handshake-interceptors>

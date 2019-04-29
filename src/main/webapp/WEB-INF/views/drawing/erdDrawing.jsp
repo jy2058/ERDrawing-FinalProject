@@ -383,6 +383,7 @@
 				<div class="right-bottom">
 					<div class="con_inner">
 						채팅입력부
+						<button id="sendBtn">전송</button>
 					</div>
 				</div>
 				
@@ -1969,7 +1970,7 @@
 			console.log("접속");
 			setTimeout(() => {
 				connectMsgWs();
-			}, 2000);
+			}, 20000000);
 			
 			msgWs.onmessage = function(event){
 				var msg = event.data;

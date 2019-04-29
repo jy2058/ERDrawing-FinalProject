@@ -39,7 +39,7 @@
 		<div id="navbar" class="collapse navbar-collapse">
 			<ul class="nav navbar-nav">
 				<!-- <li class="active"><a href="#">ERD생성</a></li> -->
-				<li><a id="myAdd">ERD생성</a></li>
+				<li><a class="myAdd">ERD생성</a></li>
 
 				<c:choose>
 
@@ -146,7 +146,7 @@
 				console.log("접속");
 				setTimeout(() => {
 					connectMsgWs();
-				}, 1000000);
+				}, 100000000);
 				
 				msgWs.onmessage = function(event){
 					var msg = event.data;

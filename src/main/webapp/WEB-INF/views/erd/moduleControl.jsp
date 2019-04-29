@@ -86,7 +86,7 @@ display: block;
 		
 			var page;
 	
-			$("#myAdd").on("click", function(){
+			$(".myAdd").on("click", function(){
 				page = "erdAdd";
 				gogogo1(page);
 			});

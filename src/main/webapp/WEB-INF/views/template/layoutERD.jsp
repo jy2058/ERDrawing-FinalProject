@@ -33,6 +33,7 @@
 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
 <script src="/js/drawing/drawingAjax.js"></script>
+<script src="/js/drawing/chat.js"></script>
 
 </body>
 </html>

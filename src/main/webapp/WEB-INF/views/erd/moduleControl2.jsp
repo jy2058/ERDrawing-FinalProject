@@ -102,7 +102,7 @@ display: block;
 		}
 		
 		// erd추가 스크립트
-		$("#myAdd").on("click", function(){
+		$(".myAdd").on("click", function(){
 			importView=`<%@ include file="/WEB-INF/views/erd/erdadd.jsp"%>`;
 			moduleSet(importView);
 			
