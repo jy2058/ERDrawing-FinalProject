@@ -7,27 +7,66 @@
 <link rel="stylesheet" href="/css/member/memList.css">
 
 <style>
+table{
+	border-radius:10px;
+	overflow:hidden;
+	box-shadow: 2px 2px 2px 2px gray;
+}
 tbody tr:nth-child(even) {
 	background-color: #ffffff;
-	height: 50px;
+	height: 40px;
 	
 }
 
 tbody tr:nth-child(odd) {
-	background-color: #dddddd;
-	height: 50px;
+	background-color: #eeeeee;
+	height: 40px;
 }
 
 th {
-
- 
- background-color: darkgray;
+ background-color: #ccdb5c;
+ color:#000000;
+ font-weight:bold;
  text-align: center;
 }
 
 td{
-
 }
+
+.table-responsive{
+	/* background:#eeeeee; */
+	padding:20px;
+	border-radius:10px;
+	
+}
+
+/* #contents{background:#eee;} */
+
+.pagination {
+  border:0px;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  z-index: 2;
+  color: #000000;
+  cursor: default;
+  background-color: #ccdb5c;
+  border-color: #ccdb5c;
+}
+
+.insertBtn{
+padding:7px;
+margin:10px 0;
+border-radius:5px;
+}
+
+
+
 </style>
 
 <!--  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
@@ -55,12 +94,12 @@ td{
 		<div class="table-responsive" style="margin-right:20px; width: 80%;">
 			<table style="width: 100%;">
 				<thead>
-					<tr style="height: 50px;">
-						<th style="text-align: center; color:black; width:9%;">글번호</th>
-						<th style="text-align: center; color:black; width:35%;">글제목</th>
-						<th style="text-align: center; color:black; width:30%;">작성자</th>
-						<th style="text-align: center; color:black; width:15%;">등록일</th>
-						<th style="text-align: center; color:black; width:9%; border-right: 0px">조회수</th>
+					<tr style="height: 40px;">
+						<th style="text-align: center; width:9%;">글번호</th>
+						<th style="text-align: center; width:50%;">글제목</th>
+						<th style="text-align: center; width:15%;">작성자</th>
+						<th style="text-align: center; width:15%;">등록일</th>
+						<th style="text-align: center; width:9%; border-right: 0px">조회수</th>
 					</tr>
 				</thead>
 
