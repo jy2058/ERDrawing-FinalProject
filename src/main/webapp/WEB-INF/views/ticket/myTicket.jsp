@@ -1,12 +1,42 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-    
+<link rel="stylesheet" href="/css/member/memList.css">
 <style>
- .item-cate h4  {
-    height: 29px;
-    background: #656565;
-    line-height: 29px;
+
+table {
+    width: 100%;
+    font-size: 18px;
+    color: #000;
+    text-align: center;
+  
+}
+tbody tr:nth-child(even) {
+	background-color: #ffffff;
+	height: 50px;
+	
+}
+
+tbody tr:nth-child(odd) {
+	background-color: #dddddd;
+	height: 50px;
+}
+th {
+ border-right: 2px solid gray;
+ border-bottom: 2px solid gray;
+ background-color: darkgray;
+    text-align: center;
+}
+
+td{
+ border-top: 2px solid darkgray;
+ border-right: 2px solid darkgray;
+}
+ .item-cate {
+     width: 500px;
+    height: 40px;
+    background: gray;
+    line-height: 50px;
     color: #fff;
     font-weight: bold;
     text-align: center;
@@ -14,7 +44,10 @@
 .item-detail-large {
     margin-bottom: 25px;
     border-bottom: 1px solid #dedede;
-        PADDING-LEFT: 38%;
+    PADDING-LEFT: 5.9%;
+    font-size: 27px;
+     padding-top: 70px;
+    padding-bottom: 18px;
 }
 
 .modal-dialog, .modal-content {
@@ -55,7 +88,7 @@ padding-left: 10%;}
 
 
 
-<table border="3">
+<table>
 	<tr>
 		<th rowspan="2">티켓번호</th>
 		<th colspan='3' style="text-align: center;">티켓 상세</th>
@@ -63,7 +96,7 @@ padding-left: 10%;}
 		<th rowspan="2">환불 신청 날짜</th>
 		<th rowspan="2">환불 여부</th>
 		<th rowspan="2">환불 된 날짜</th>
-		<th rowspan="2">환불 신청</th>
+		<th rowspan="2" style="border-right: 2px ;">환불 신청</th>
 	</tr>
 	<tr>
 		<th>티켓 구매일</th>
@@ -88,16 +121,16 @@ padding-left: 10%;}
 					<c:choose>
 						<c:when
 							test="${ticket.REFUND_RESPDT ==null && ticket.REFUNDAPLLY != null}">
-							<td   class="refTd" data-ref="Waiting">환불대기</td>
+							<td   class="refTd" data-ref="Waiting" style="border-right: 2px ;">환불대기</td>
 						</c:when>
 						<c:otherwise>
-							<td class="refTd" data-ticketbuyno="${ticket.TICKETBUYNO }" style="cursor: pointer;"  data-target="#ticketRefApplyModal" class="modifyModal" data-toggle="modal">환불신청</td>
+							<td class="refTd" data-ticketbuyno="${ticket.TICKETBUYNO }" style="cursor: pointer; border-right: 2px ;"  data-target="#ticketRefApplyModal" class="modifyModal" data-toggle="modal">환불신청</td>
 						</c:otherwise>
 					</c:choose>
 				</c:when>
 			<c:otherwise>
 			<td>${ticket.REFUND_RESPDT }</td>
-			<td class="refTd"  data-ref="complete">환불완료</td>
+			<td class="refTd"  data-ref="complete" style="border-right: 2px ;">환불완료</td>
 			</c:otherwise>
 		</c:choose>
 		</tr>
@@ -215,8 +248,7 @@ padding-left: 10%;}
 				success : function(data) {
 					console.log(data);
 					 $.each(data, function(idx, val) {      
-						 console.log(idx)
-						 
+						 console.log(idx);
 						 $("#ticketno").html(val.TICKETNO);
 						 $("#ticketcontent").html(val.MEMTEL);
 						 $("#ticketbuydt").html(val.MEMEMAIL);

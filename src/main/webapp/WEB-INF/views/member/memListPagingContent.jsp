@@ -3,13 +3,14 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+<link rel="stylesheet" href="/css/member/memList.css">
 <link
 	href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css"
 	rel="stylesheet">
 <script
 	src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script>
 <link rel="stylesheet" href="/css/boxErd.css">
-<link rel="stylesheet" href="/css/member/memList.css">
+
 <style>
 #contents {
 	color: #000000;
@@ -178,7 +179,6 @@
 
 <!----------------------------- 회원정보 테이블 -------------------------->
 <form id="frm" action="${cp }/member/memberDel">
-	<div id="guswl">
 		<table>
 			<thead>
 				<tr>
@@ -204,7 +204,6 @@
 			</ul>
 		</nav>
 
-	</div>
 </form>
 
 
