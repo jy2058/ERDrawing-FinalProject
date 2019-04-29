@@ -11,7 +11,7 @@ width:100%;
 height:100%;
 left:0;
 top:0;
-background:#000;
+background-color:rgba(0, 0, 0, 0.8);;
 color:#fff;
 }
 
@@ -26,11 +26,21 @@ color:#fff;
     margin-right: 2%;
     margin-bottom: 2%;
     float: left; */
-    border: 2px solid #fff;
-    background-color : #1e1e1e;
-    width : auto;
-    color: #fff; 
+/*     border: 2px solid #fff; */
+/*     background-color : #1e1e1e; */
+/*     width : auto; */
+/*     color: #fff;  */
+    
+/*     width:500px; */
+/*     position:relative; */
+/*     margin:100px auto 0; */
+    
+    
+    
 }
+
+
+
 
 .inner-add .h1{
 	position: relative;
@@ -61,6 +71,7 @@ z-index:99999;
 ul[id*="ui-"] li{
 display: block;
 }
+
 
 </style>
 

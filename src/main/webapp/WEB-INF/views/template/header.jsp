@@ -139,7 +139,7 @@
 		});
 		
 		function connectMsgWs(){
-			var msgWs = new WebSocket("ws://localhost/msgEcho");
+			var msgWs = new WebSocket("ws://localhost:8080/msgEcho");
 			msgWebSocket = msgWs;
 			
 			msgWs.onopen = function(){

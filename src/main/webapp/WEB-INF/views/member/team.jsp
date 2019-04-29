@@ -171,7 +171,7 @@ margin-left:10px;
 							 	<c:forEach var="teamErdList" varStatus="status" items="${teamErdList }">
 							  	<li class="erd-box-item">
 							  		<c:if test="${myTeam.teamAuth ne 'user'}"> <!-- 권한이 유저가 아닐 때 erd 삭제 가능 -->
-							  		<div style="position:absolute; width:100%; height:100%; z-index:30;">
+							  		<div style="position:absolute; width:100%; z-index:30;">
 								  		<button type="button" class="btn btn-default delBtn del-div" aria-label="trash" value="${teamErdList.erdNo }">
 										  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 										</button>

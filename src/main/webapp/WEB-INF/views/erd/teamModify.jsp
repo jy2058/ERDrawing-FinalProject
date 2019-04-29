@@ -1,15 +1,80 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<style>
+.modal_container_sys{
+	border: 2px solid #fff;
+   background-color : #1e1e1e;
+   width : auto;
+   color: #fff; 
+   
+   width:400px;
+   position:relative;
+   margin:100px auto 0;
+   
+   padding-bottom:30px;
+ 
+}
+
+.modal_container_sys input, .modal_container_sys select, .modal_container_sys textarea{
+ margin-left:34px;
+ width:200px;
+ }
+
+label{
+margin-right:20px;
+}
+
+#teamModifyFrm{
+	padding:20px;
+}
+
+.btn-style1{
+display:inline-block;
+width:100px;
+opacity:1;
+}
+
+.cancle-btn99{
+background-color:rgba(86, 84, 84,0.9);
+}
+
+.cancle-btn99:hover{
+background-color:rgba(86, 84, 84,1);
+}
+
+#teamModifyBtn{
+background-color:rgba(224, 51, 122,0.9);
+width:200px;
+}
+
+#teamModifyBtn:hover{
+background-color:rgba(224, 51, 122,1);
+}
+
+
+#teamDelBtn{
+background-color:rgba(124, 121, 121,0.9);
+}
+
+#teamDelBtn:hover{
+background-color:rgba(124, 121, 121,1);
+
+}
+
+
+</style>
+
+<div class="modal_container_sys">
 
 		<h1 class="erd-add h1">Modify team</h1>
 		<form action="/team/teamModify" id="teamModifyFrm" method="post" enctype="multipart/form-data">
 			<div class="input-box">
-				<label>팀이름</label>
+				<label>팀이름 : </label>
 				<input type="text" id="title" name="teamNm" placeholder="팀이름">
 			</div>
 			<div class="input-box">
-				<label>팀회원</label>
+				<label>팀회원 : </label>
 				<input type="text" id="autocomplete" placeholder="팀회원">
 			</div>
 
@@ -24,20 +89,30 @@
 			
 
 			<div class="input-box">
-				<label>팀설명</label>
+				<label>팀설명 : </label>
 				<textarea style="color: black" rows="" cols="" name="teamIntro" id="teamIntro"></textarea>
 			</div>
 			<div class="input-box">
 				<label>썸네일 이미지</label>
 			<img alt="" src="" id="teamImg" width="200px"> 
-			<input type="file" name="profileImg" onchange="loadImg(this)" style="width: 300px"> 
+			<input type="file" name="profileImg" onchange="loadImg(this)" style= "margin-left:100px; color:#fff;"> 
 			</div>
 			<input type="hidden" id="teamNo" name="teamNo" value="">
 		</form>
-		<div class="btn-style1" id="teamDelBtn">팀 삭제</div>
-		<div class="cancle-btn99 btn-style1">취소</div>
-		<div class="btn-style1" id="teamModifyBtn">업데이트</div>
 		
+		<div style="margin: 0 auto; text-align:center; margin-bottom:5px; ">
+			<div class="btn-style1" id="teamModifyBtn">업데이트</div>
+		</div>
+		
+		<div style="margin: 0 auto; text-align:center; ">
+			<div class="btn-style1" id="teamDelBtn">팀 삭제</div>
+			<div class="cancle-btn99 btn-style1">취소</div>
+		</div>
+		
+
+
+
+</div>		
 <script>
 var addList = new Array();
 var delList = new Array();

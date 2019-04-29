@@ -40,14 +40,14 @@
 				<i class="fas fa-cog"></i>
 			</div>
 			<div class="buttons_top" id="message" title="알람">
-				<i class="fas fa-bell"></i><span class="badge" id="msgCnt"></span>
+				<i class="fas fa-bell"></i><div style="position:relative;"><span class="badge" id="msgCnt"></span></div>
 			</div>
 			<div class="buttons_top" title="로그아웃">
 				<i class="fas fa-sign-out-alt"></i>
 			</div>
-			<div class="buttons_top" id="searchModal" title="검색 창 열기">
-				<i class="fas fa-search"></i>
-			</div>
+<!-- 			<div class="buttons_top" id="searchModal" title="검색 창 열기"> -->
+<!-- 				<i class="fas fa-search"></i> -->
+<!-- 			</div> -->
 		</div>
 
 
@@ -1963,7 +1963,7 @@
 	connectMsgWs();
 	
 	function connectMsgWs(){
-		var msgWs = new WebSocket("ws://localhost/msgEcho");
+		var msgWs = new WebSocket("ws://localhost:8080/msgEcho");
 		MsgWebSocket = msgWs;
 		 
 		msgWs.onopen = function(){
