@@ -29,9 +29,9 @@ public class ChatHandler extends TextWebSocketHandler{
 	//클라이언트와 연결 이후에 실행되는 메서드
 	@Override
 	public void afterConnectionEstablished(WebSocketSession session) throws Exception{
-		//sessionList.add(session);
+		sessionList.add(session);
 		logger.info("{} 연결됨", session.getId());
-		String senderId = getId(session);
+		//String senderId = getId(session);
 		
 	}
 	
@@ -44,8 +44,16 @@ public class ChatHandler extends TextWebSocketHandler{
 		
 		//protocol : cmd, ERD수정자, ERD번호	(ex: msg,user1,123)
 		String msg = message.getPayload();
-		TextMessage tmpMsg = new TextMessage(msg);
-		session.sendMessage(tmpMsg);
+		
+		String[] strs = msg.split("★");
+		String content = strs[0];
+		int erdNo = Integer.parseInt(strs[1]);
+		
+		for(WebSocketSession sess : sessionList){
+			TextMessage tmpMsg = new TextMessage(senderId + "★" + content + "★" + erdNo);
+			sess.sendMessage(tmpMsg);
+		}
+		
 	}
 	
 	//클라이언트와 연결을 끊었을 때 실행되는 메서드

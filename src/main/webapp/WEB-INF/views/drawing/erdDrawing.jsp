@@ -374,7 +374,7 @@
 				</div>
 	
 				<div class="container_inner">
-					<div class="con_inner">
+					<div class="con_inner" id="inputTxt">
 							
 					</div>
 				</div>
@@ -382,7 +382,7 @@
 	
 				<div class="right-bottom">
 					<div class="con_inner">
-						채팅입력부
+						<input type="text" id="sendChat">
 						<button id="sendBtn">전송</button>
 					</div>
 				</div>
