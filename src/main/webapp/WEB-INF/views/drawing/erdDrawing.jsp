@@ -1889,7 +1889,14 @@
    	$("#tag").val(tag);
    	$("#erdImg").attr("src","${cp }/erd/erdImg?erdNo=${erdNo}");
    	$("#erdNo").val(erdVo.erdNo);
+   	$("#selTeamNo").val(erdVo.teamNo);
    	$('input:radio[name="erdScope"][value="' + erdVo.erdScope + '"]').attr( "checked" , "checked");
+	
+   	if(erdVo.erdScope == "team"){
+	   	$("#selTeam").show();
+	   	$("select[name=teamNo").val(erdVo.teamNo).prop("selected", true);
+	}
+
    	
    	// 스냅샷 찍기
    	$("#snapshotBtn").on("click", function(){

@@ -6,6 +6,7 @@
 	<link href="/js/ticket/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
     <link href="/js/ticket/daterangepicker.css" rel="stylesheet" media="all">
     <link href="/css/ticket.css" rel="stylesheet" media="all"> 
+	<link rel="stylesheet" href="/css/member/memList.css">
     <link href="/js/ticket/select2.min.css" rel="stylesheet" media="all">
     <div style="padding-top: 100px"></div>
 <style>
@@ -15,6 +16,23 @@
 .modal{
  color: #000;
 
+}
+
+.modalLabels{
+width: 130px;
+}
+
+#divNav {
+    margin-left: 0px;
+     width: 123%; 
+}
+
+table {
+    width: 100%;
+    font-size: 18px;
+    color: #000;
+    text-align: center;
+  
 }
 </style>
 

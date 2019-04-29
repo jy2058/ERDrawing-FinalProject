@@ -1,14 +1,8 @@
-#guswl {
-    width: 70%;
-    padding-right: 0px;
-    padding-left: 0px;
-    margin-right: 0px;
-    margin-left: -105px;
-    position: absolute;
-    color: #000000;
-    }
 
-
+h2{
+	color: #ffffff;
+	    border-bottom: 1px solid #dedede;
+}
 
 input[type=checkbox].toggle-switch:checked {
     background-color: #3af;
@@ -52,7 +46,7 @@ input[type=checkbox].toggle-switch:checked::after {
     
 #divNav{
 	 margin-left: 0px;
-	 	width: 123%;
+	 	width: 0;
 }
 tbody tr:nth-child(even) {
 	background-color: #dddddd;
@@ -66,8 +60,8 @@ tbody tr:nth-child(odd) {
 }
 
 table {
-	width: 123%;
-	height: 150px;
+	width: 100%;
+	height: 120px;
 	font-size: 18px
 
 }
