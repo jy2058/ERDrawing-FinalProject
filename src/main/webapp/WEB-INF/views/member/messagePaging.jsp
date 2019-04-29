@@ -4,7 +4,14 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="/css/message/messageModal.css">
 
-<div class="message">
+<style>
+.modalms{
+	width:550px;
+}
+</style>
+
+
+<div class="message modalms">
 	<h1>
 		<div class="massage-title">알림</div>
 		<button class="btn glyphicon glyphicon-trash" id="delAllBtn" value="delAll"></button>
