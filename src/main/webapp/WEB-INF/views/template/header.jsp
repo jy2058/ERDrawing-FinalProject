@@ -16,12 +16,12 @@
 			</button>
 
 			<ul class="left-menu">
-				<li class="navbar-brand"><a href="/">ERDrawing</a></li>
+				<li class="navbar-brand" style="padding:7px 30px 3px 15px;"><a href="/"><img height="40" src="/image/erdlogo2.png"></a></li>
 				<li class="navbar-brand"><a href="/library">Library</a></li>
 				<li class="navbar-brand communityHover"><a href="/">Community</a>
 					<%@ include file="/WEB-INF/views/template/module/communityMenu.jsp"%>
 				</li>
-				<li class="navbar-brand"><a href="/erdDrawing?erdNo=1098">ErdTest</a></li>
+<!-- 				<li class="navbar-brand"><a href="/erdDrawing?erdNo=1098">ErdTest</a></li> -->
 				<li class="navbar-brand"><a href="/ticket/ticketList">Ticket</a></li>
 				
 				<c:if test="${SESSION_MEMBERVO.memAuth == 'T' }">
@@ -48,27 +48,27 @@
 						<li><a href="${cp }/join">회원가입</a></li>
 					</c:when>
 					<c:otherwise>
-						<li><a href="${cp }/mypage">
+						<li><a href="${cp }/mypage" style="padding:7px 15px 7px 15px;">
 					 	<c:choose>
 									<c:when test="${SESSION_MEMBERVO.memEmailDiv =='basic'}">
 										<img alt=""
 											src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }"
-											width="35" height="30">
+											width="36" height="36">
 									</c:when>
 									<c:otherwise>
 
 										<c:choose>
 											<c:when
 												test="${ fn:indexOf(SESSION_MEMBERVO.memImg,'http') > -1}">
-												<img alt="" src="${SESSION_MEMBERVO.memImg }" width="35"
-													height="30">
+												<img alt="" src="${SESSION_MEMBERVO.memImg }" width="36"
+													height="36">
 
 											</c:when>
 											<c:otherwise>
 
 												<img alt=""
 													src="${cp }/member/memberImg?memId=${SESSION_MEMBERVO.memId }"
-													width="35" height="30">
+													width="36" height="36">
 
 											</c:otherwise>
 										</c:choose>
@@ -77,12 +77,12 @@
 								</c:choose>
 						</a></li>
 						<%-- 						<li><a href="${cp }/message/messageView">메세지</a></li> --%>
-						<li><a id="message">메세지<span class="badge" id="msgCnt"></span></a></li>
+						<li><a id="message" style="cursor:pointer">메세지<span class="badge" id="msgCnt"></span></a></li>
 						<li><a id="logout" href="#" hidden="">로그아웃</a></li>
 					</c:otherwise>
 				</c:choose>
 
-				<li><a id="searchModal" data-toggle="modal" data-target="#modalEvnTest">검색</a></li>
+				<li><a id="searchModal" style="cursor:pointer" data-toggle="modal" data-target="#modalEvnTest">검색</a></li>
 			</ul>
 		</div>	
 		<!--/.nav-collapse -->

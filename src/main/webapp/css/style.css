@@ -36,6 +36,7 @@ li {
 	background: #232323;
 	color: #d1d1d2;
 	font-weight: 600;
+	height:50px;
 }
 
 #contents {
@@ -50,8 +51,19 @@ li {
 	padding-bottom: 20px;
 }
 
+#footer h4{
+	font-weight:800;
+}
 #footer div div {
 	padding-top: 20px;
+}
+
+.foot_contact{
+	font-size:40px;
+}
+
+.foot_contact a:hover{
+	color:#ddd;
 }
 
 .foot_menu li {

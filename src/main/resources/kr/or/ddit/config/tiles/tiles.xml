@@ -101,7 +101,7 @@
         	<put-attribute name="content" value="/WEB-INF/views/member/memListPagingContent.jsp" />
         </definition>
         
-        <definition name="memberErdPage" extends="layout">
+        <definition name="memberErdPage" extends="layoutMain">
         	<put-attribute name="content" value="/WEB-INF/views/member/memberErdPage.jsp" />
         </definition>
 

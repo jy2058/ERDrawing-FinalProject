@@ -221,9 +221,17 @@ a.preview-box {
 	background-color: transparent;
 	color: white;
 	border: none;
-}
-.del-div{
-	background: none ;
+	
 }
 
+.delBtn span{
+	font-size:14px;
+}
+
+.del-div{
+	background: none ;
+	right:0;
+	position:absolute;
+	
+}
 

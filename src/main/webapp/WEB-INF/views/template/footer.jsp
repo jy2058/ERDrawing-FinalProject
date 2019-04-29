@@ -6,7 +6,7 @@
     <div class="container">
 
         <div class="col-sm-4">
-            <h4>ERD로고</h4>
+            <a href="/"><img height="40" src="/image/erdlogo2.png"></a>
         </div>
         
         <div class="foot_menu col-sm-4">
@@ -17,14 +17,14 @@
             
         </div>
         
-        <div class="col-sm-4">
+        <div class="col-sm-4 foot_contact">
             <h4>FollowERDdrawing</h4>
-            [FaceBook] [Youtue]
+            <a href="/"><i class="fab fa-facebook-square"></i></a> <a href="/"><i class="fab fa-youtube-square"></i></a>
             
             <h4>CONTACT</h4>
-            [Git] [E-Mail]
+            <a href="/"><i class="fab fa-github"></i></a> <a href="/"><i class="fas fa-envelope-square"></i></a>
             
-            <h4>[Language : Korean]</h4>
+<!--             <h4>[Language : Korean]</h4> -->
         </div>
         
         

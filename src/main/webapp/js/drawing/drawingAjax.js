@@ -42,7 +42,7 @@ $(document).ready(function(){
 
 
 function connectWS(){
-	var ws = new WebSocket("ws://192.168.206.35:8080/erdEcho?erdNo="+erdNo);
+	var ws = new WebSocket("ws://localhost:8080/erdEcho?erdNo="+erdNo);
 	webSocket = ws;
 	
 	ws.onopen = function(){

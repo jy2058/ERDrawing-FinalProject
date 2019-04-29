@@ -25,13 +25,14 @@
     font-size: 12px;
 }
 
+
 </style>
 
 <div id="contents">
 
 	<div class="my-bg">
 		<div class="container">
-		<div class="inner-container" >
+			<div class="inner-container" >
 				<a href="${cp}/ticket/myTicket" class="btn-style2" style="margin-right: 10%;" >My Ticket</a>
 			</div>
 		
@@ -121,7 +122,7 @@
 						<c:forEach var="myErdList" varStatus="status" items="${myErdList }">
 							<li class="erd-box-item">
 							
-								<div style="position:absolute; z-index:30;">
+								<div style="position:absolute; width:100%; height:100%;z-index:30;">
 									<div class="stats-box">
 										<i class="fas fa-eye"></i>
 										<label>${myErdList.erdReadCnt }</label>
