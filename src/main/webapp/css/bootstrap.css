@@ -1089,8 +1089,9 @@ textarea {
   line-height: inherit;
 }
 a {
-  color: #337ab7;
+/*   color: #337ab7; */
   text-decoration: none;
+  cursor:pointer;
 }
 a:hover,
 a:focus {
@@ -3255,6 +3256,7 @@ fieldset[disabled] .btn-warning.active {
   color: #f0ad4e;
   background-color: #fff;
 }
+
 .btn-danger {
   color: #fff;
   background-color: #d9534f;

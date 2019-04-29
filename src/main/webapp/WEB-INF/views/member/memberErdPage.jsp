@@ -56,7 +56,7 @@
 							 	<c:forEach var="myErdList" varStatus="status" items="${myErdList }">
 							 	<c:if test="${myErdList.erdScope eq 'public' }">
 							  	<li class="erd-box-item">
-					  				<div style="position:absolute; z-index:30;">
+					  				<div style="position:absolute; width:100%; height:100%; z-index:30;">
 										<div class="stats-box">
 											<i class="fas fa-eye"></i>
 											<label>${myErdList.erdReadCnt }</label>

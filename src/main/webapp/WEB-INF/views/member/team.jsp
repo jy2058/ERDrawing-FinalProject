@@ -15,7 +15,7 @@
 	margin-bottom:10px;
 }
 .member-li{
-	display: inline-flex;
+ 	display: inline-flex;
 }
 .selectMem div{
 	display:inline-block;
@@ -60,6 +60,22 @@
 }
 
 
+.member-li{
+	background:#686868;
+	padding:5px;
+	border-radius:5px;
+	margin-right:10px;
+	margin-bottom:20px;
+	
+}
+
+.memAuth{
+padding:0 10px 4px 10px;
+background:#333;
+border-radius:20px;
+margin-left:10px;
+}
+
 </style>
 
 <div id="contents">
@@ -88,8 +104,8 @@
 			</div>
 			
 			<div class="row">
-				<div style="background:#232323; color:#fff; height:100px; line-height:100px; padding-left:20px; font-size:20px; font-weight:600;">
-					<ul style=" min-height:72px; line-height: 2.2">
+				<div style="background:#232323; color:#fff; min-height:50px; line-height:100px; padding-left:5px; font-size:20px; font-weight:600;">
+					<ul style=" min-height:50px; line-height: 2.2">
 					<c:forEach var="teamList" items="${teamInfoList }" >
 						<li class="team-li">
 							<a href="/team?teamNo=${teamList.teamNo }">
@@ -107,13 +123,13 @@
 				<h2 class="page-title">TEAM MEMBER</h2>
 			</div>
 			<div class="row">
-				<div style="background:#232323; color:#fff; height:100px; line-height:100px; padding-left:20px; font-size:20px; font-weight:600;">
-					<ul style=" min-height:72px; line-height: 1.5; padding-top: 15px;">
+				<div style="background:#232323; color:#fff; font-size:20px; font-weight:600; padding:20px 20px 0 20px;">
+					<ul style=" min-height:72px; line-height: 1.5;">
 						<c:forEach var="teamMemberGet" items="${teamMember }" varStatus="status">
 							<li class="member-li" data-memid="${teamMemberGet.memId }" data-teamno="${teamList[status.index].teamNo }" data-teamnm="${teamInfo.teamNm }" data-makerid="${teamInfo.makerId }"> <!-- ajax를 위한 커스텀 데이터 생성 -->
 								<a class="selectMem" href="">
 									<div>
-										<img alt="" src="/member/memberImg?memId=${teamMemberGet.memId }">
+										<img alt="" width="50" height="50" src="/member/memberImg?memId=${teamMemberGet.memId }">
 									</div>
 									<div>
 										<strong>${teamMemberGet.memId }</strong>
@@ -155,8 +171,8 @@
 							 	<c:forEach var="teamErdList" varStatus="status" items="${teamErdList }">
 							  	<li class="erd-box-item">
 							  		<c:if test="${myTeam.teamAuth ne 'user'}"> <!-- 권한이 유저가 아닐 때 erd 삭제 가능 -->
-							  		<div style="position:absolute; z-index:30;">
-								  		<button type="button" class="btn btn-default delBtn" aria-label="trash" value="${teamErdList.erdNo }">
+							  		<div style="position:absolute; width:100%; height:100%; z-index:30;">
+								  		<button type="button" class="btn btn-default delBtn del-div" aria-label="trash" value="${teamErdList.erdNo }">
 										  <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
 										</button>
 									</div>

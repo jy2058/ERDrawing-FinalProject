@@ -70,6 +70,10 @@ background:#3d3d3d;
 	display:table;
 }
 
+.sampleImg img{
+	width:100%;
+}
+
 
 .exText{
 display:table-cell;
