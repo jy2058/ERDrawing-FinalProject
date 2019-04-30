@@ -24,7 +24,8 @@
 }
 #loginBtns{
 width: 100%;}
-
+#fmdiv{
+margin-left: 35%;}
 </style>
 
 <div class="member">
@@ -32,6 +33,12 @@ width: 100%;}
 	<div class="row">
 		<div class="join-title col-sm-4 col-sm-offset-1">
 			<h1>Login</h1>
+			
+			<div id="fmdiv" style="display: none;">
+			<div class="g-recaptcha"
+				data-sitekey="6LfnUpoUAAAAAMtKydIehTmTDdm7JZUubAfHHVuf"></div>
+			<br />
+		</div>
 		</div>
 	</div>
 
@@ -60,11 +67,7 @@ width: 100%;}
 		</form>
 
 
-		<div id="fmdiv" style="display: none;">
-			<div class="g-recaptcha"
-				data-sitekey="6LfnUpoUAAAAAMtKydIehTmTDdm7JZUubAfHHVuf"></div>
-			<br />
-		</div>
+		
 <br/>
 
 <br/>
@@ -101,21 +104,16 @@ width: 100%;}
 
 
 <script>	
-
+var on =0;
+var count=	"${count }";
 	$(document).ready(function () {
-
-		
-	var count=	"${count }";
-	var on =0;
+		 on =0;
 		if(count>=3){
 			on=1;
 			$("#fmdiv").show();
 			
 		}
 		
-		
-
-	
 	
 		 Kakao.init('8eded83f4085ba344e793801d05f3722');
 		    // 카카오 로그인 버튼을 생성합니다.
@@ -151,28 +149,7 @@ width: 100%;}
   		
 		//로그인버튼 클릭시
 		$(".submit-btn").on("click",function(){
-			if ($("#memId").val().trim() == "") {
-				alert("ID를 입력해주세요");
-				$("#memId").focus();
-				return false;
-			}
-			if ($("#memPass").val().trim() == "") {
-				alert("비밀번호를 입력해주세요");
-				$("#memPass").focus();
-				return false;
-			}
-			
-			
-		var sst=$("#g-recaptcha-response").val();
-		if(on==1){
-			if(sst==''){
-				alert("리캡챠를 먼저해주세요 ");
-				return;
-			}
-		}
-			
-			$("#capResponse").val(sst);
-			$("#erdFrm").submit();
+			loginAction();
 		});
 	
 		
@@ -192,6 +169,13 @@ width: 100%;}
 			var on = $(this).data("onsuccess");
 			onSignIn(on);
 		    });
+		
+		$("#memPass").on("keydown",function(e){
+			  if(e.keyCode == 13){
+				  loginAction();
+			   }
+		    });
+		
 		
 		
 		
@@ -214,10 +198,39 @@ width: 100%;}
 		  $("#info").val(info);
 			 $("#apiFrm").submit();
 		}   
+	
+	
 	function join() {
 		location.href = '${cp }/join';
 	}
 	
+	
+	function loginAction() {
+
+		if ($("#memId").val().trim() == "") {
+			alert("ID를 입력해주세요");
+			$("#memId").focus();
+			return false;
+		}
+		if ($("#memPass").val().trim() == "") {
+			alert("비밀번호를 입력해주세요");
+			$("#memPass").focus();
+			return false;
+		}
+		
+		
+	var sst=$("#g-recaptcha-response").val();
+	if(on==1){
+		if(sst==''){
+			alert("리캡챠를 먼저해주세요 ");
+			return;
+		}
+	}
+		
+		$("#capResponse").val(sst);
+		$("#erdFrm").submit();
+		
+	}
 	function gogogo1(page){
 		 $.ajax({
                type: 'get',
