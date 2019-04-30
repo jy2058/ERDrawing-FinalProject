@@ -33,16 +33,12 @@ $(document).ready(function(){
 	//historyLoad
 	histLoad();
 	
-	
-	
-	
-	
-	
+
 });
 
 
 function connectWS(){
-	var ws = new WebSocket("ws://localhost/erdEcho?erdNo="+erdNo);
+	var ws = new WebSocket("ws://192.168.206.35:8080/erdEcho?erdNo="+erdNo);
 	webSocket = ws;
 	
 	ws.onopen = function(){
@@ -91,17 +87,38 @@ function connectWS(){
 			//=======================채팅===============================
 			}else if(msg[0].indexOf("chat") > -1){
 
-				var htmls = `<ul>
-								<li><img src="/member/memberImg?memId=`+senderId+`"></li>
-								<li>
-									<div class="msg_id">`+senderId+`</div>
-									<div style="position:relative; padding:10px;">
-										<div class="msg_chat">`+receContent+`</div>
-										<span>`+getTime()+`</span>
-									</div>
-								</li>
-							</ul>`;
 				
+				if(sendSId != receSId){
+		
+					var htmls = `<ul>
+									<li><img src="/member/memberImg?memId=`+senderId+`"></li>
+									<li>
+										<div class="msg_id">`+senderId+`</div>
+										<div style="position:relative; padding:10px;">
+											<div class="msg_chat">`+receContent+`</div>
+											<span>`+getTime()+`</span>
+										</div>
+									</li>
+								</ul>`;
+				
+				}else{
+					
+					var htmls = `<ul style="float:right;">
+									<li>
+										<div class="msg_id" style="text-align:right; padding-right:10px;">`+senderId+`</div>
+										<div style="position:relative; padding:10px;">
+											<span style="margin-right:5px;">`+getTime()+`</span>
+											<div class="msg_chat" style="background:#F7E04B; color:#000; font-weight:800;">`+receContent+`</div>
+											
+										</div>
+									</li>
+									<li><img src="/member/memberImg?memId=`+senderId+`"></li>
+								</ul>`;
+					
+				}
+				
+				
+				htmls += "<div style='clear:both;'></div>";
 				$("#inputTxt").append(htmls);
 //				$("#inputTxt").append(senderId + " : " + receContent + "<br>");
 				
