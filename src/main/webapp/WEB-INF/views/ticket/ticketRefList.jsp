@@ -7,9 +7,9 @@
     <link href="/js/ticket/daterangepicker.css" rel="stylesheet" media="all">
     <link href="/css/ticket.css" rel="stylesheet" media="all"> 
     <link href="/js/ticket/select2.min.css" rel="stylesheet" media="all">
-    <div style="padding-top: 100px"></div>
+    
 
-
+<div style="padding-top: 100px"></div>
 <div class="tab-content">
 	<div class="tab-pane active" id="tab1">
 		<form method="POST" action="#">

@@ -19,6 +19,61 @@
 .modal-dialog, .modal-content {
 	height: auto;
 }
+
+table{
+	border-radius:10px;
+	overflow:hidden;
+	/* box-shadow: 2px 2px 2px 2px gray; */
+	font-size: 13px;
+}
+tbody tr:nth-child(even) {
+	background-color: #ffffff;
+	height: 40px;
+	
+}
+
+tbody tr:nth-child(odd) {
+	background-color: #eeeeee;
+	height: 40px;
+}
+
+th {
+ background-color: #ccdb5c;
+ color:#000000;
+ font-weight:bold;
+ text-align: center;
+ height: 40px;
+}
+
+td{
+	text-align: center;
+}
+
+.table-responsive{
+	/* background:#eeeeee; */
+	padding:20px;
+	border-radius:10px;
+	
+}
+
+/* #contents{background:#eee;} */
+
+.pagination {
+  border:0px;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  z-index: 2;
+  color: #000000;
+  cursor: default;
+  background-color: #ccdb5c;
+  border-color: #ccdb5c;
+}
 </style>
 
 <div class="youtube-title">
@@ -190,7 +245,7 @@
 
 					<!-- <th>Status</th> -->
 					<th>Secession</th>
-					<th>Action</th>
+					<th style="text-align: right;">Action</th>
 					<th></th>
 				</tr>
 			</thead>
@@ -199,7 +254,7 @@
 			</tbody>
 		</table>
 
-		<nav id="divNav" style="text-align: center;">
+		<nav id="divNav" style="text-align: center; width: 100%;">
 			<ul class="pagination" id="pagination">
 			</ul>
 		</nav>

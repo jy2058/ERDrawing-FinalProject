@@ -10,7 +10,8 @@
 table{
 	border-radius:10px;
 	overflow:hidden;
-	box-shadow: 2px 2px 2px 2px gray;
+	/* box-shadow: 2px 2px 2px 2px gray; */
+	font-size: 13px;
 }
 tbody tr:nth-child(even) {
 	background-color: #ffffff;
@@ -64,8 +65,6 @@ padding:7px;
 margin:10px 0;
 border-radius:5px;
 }
-
-
 
 </style>
 

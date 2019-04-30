@@ -5,16 +5,15 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 
-
 		<c:forEach items="${cmtList}" var="cmt">
-			<tr class="cmtTr" border-right: 2px solid #fff;" data-cmtno="${cmt.cmtNo}" style="background-color: #f9f9f9;">
-				<td style="text-align: center; border-right: 2px solid #fff; color:black; height:10px;">${cmt.cmtNo}</td>
-				<td style="text-align: center; border-right: 2px solid #fff; color:black; height:10px;">${cmt.memId}</td>
+			<tr class="cmtTr" data-cmtno="${cmt.cmtNo}">
+				<td style="text-align: center; color:black; height:10px; line-height: 25px;">${cmt.cmtNo}</td>
+				<td style="text-align: center; color:black; height:10px; line-height: 25px;">${cmt.memId}</td>
 				
 				<c:if test="${cmt.flag eq 'T'}">
-					<td style="border-right:2px solid #fff; color:black; height:10px;">
+					<td style="color:black; height:10px; vertical-align: bottom">
 					<!-- <img src="https://img.icons8.com/material/24/000000/fairytale.png"> -->
-					<svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="24" height="24" viewBox="0 0 192 192" style="fill: #000000;">
+					<svg  xmlns="http://www.w3.org/2000/svg" x="0px" y="100px" width="20" height="20" viewBox="0 0 192 192" style="fill: #000000;">
 						<g xmlns="http://www.w3.org/2000/svg" font-family="none"
 						   font-size="none" font-weight="none" style="mix-blend-mode: normal"
 						   fill="none" fill-rule="nonzero" stroke="none" stroke-dasharray=""
@@ -27,13 +26,13 @@
 					&nbsp;${cmt.cmtContent}</td>
 				</c:if>
 				<c:if test="${cmt.flag eq 'F'}">
-					<td style="border-right:2px solid #fff; color:black; height:10px;">&nbsp;${cmt.cmtContent}</td>
+					<td style="border-right:2px solid #fff; color:black; height:10px; line-height: 25px;">&nbsp;${cmt.cmtContent}</td>
 				</c:if>
 				
 				
 				<td style="text-align: center; color:black; height:10px;">( ${cmt.cnt} 건 )
 					<%-- <button type="button" id="likeBtn" class="btnLike btn-default" data-cmtnum="${cmt.cmtNo}">좋아요</button> --%> 
-					<img src="https://img.icons8.com/ios-glyphs/30/000000/facebook-like.png" id="likeBtn" class="btnLike btn-default" data-cmtnum="${cmt.cmtNo}" style="cursor: pointer;" />
+					<img src="https://img.icons8.com/ios-glyphs/30/000000/facebook-like.png" id="likeBtn" width="24" height="24" class="btnLike btn-default" data-cmtnum="${cmt.cmtNo}" style="cursor: pointer;" />
 					<%-- <c:if test="${SESSION_MEMBERVO.memId == cmt.memId}">
 					<button type="button" class="btnDel btn-default" data-cmtnum="${cmt.cmtNo}">삭제</button>
 						 <c:choose>
