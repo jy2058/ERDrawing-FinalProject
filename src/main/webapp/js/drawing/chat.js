@@ -33,6 +33,7 @@ $("#button42").on("click", function(){
 			var html = "";
 			for(var i in chatList){
 				html += chatList[i].memId + ' : ' + chatList[i].chatContent + '<br>';
+				html += getDateFormatMS(new Date(parseInt(chatList[i].chatInDt)));
 			}
 			$("#inputTxt").html(html)
 		},
