@@ -66,8 +66,12 @@ td{
 }
 .modalLabels{
 width: 25%;}
+
 .ticketInfo{
-padding-left: 10%;}
+padding-left: 10%;
+
+width: 30%;
+}
 </style>
 
 
@@ -145,6 +149,7 @@ padding-left: 10%;}
 </table>
 
 <!--=================환불신청 모달창=======================  -->
+<form id="frm" action="${cp }/ticket/ticketRefInsert">
 <div class="modal modal-center fade" id="ticketRefApplyModal"
 	tabindex="1" role="dialog" aria-labelledby="my80sizeCenterModalLabel">
 	<div class="modal-dialog modal-80size modal-center" role="document">
@@ -181,12 +186,12 @@ padding-left: 10%;}
 
 				<div class="form-group">
 					<label class="modalLabels">Account</label> <input type="text" placeholder="'-'자 없이 입력해주세요"
-						class="ipt_cardnumber" name="ticketPrice" id="ticketPrice">
+						class="ipt_cardnumber" name="account" id="account">
 				</div>
 
 				<div class="pass form-group">
 					<label class="modalLabels">BANK</label> 
-					    <select id="vcdbank" name="vcdbank">
+					    <select id="bankNm" name="bankNm">
                      <option selected="selected" value="">은행선택</option>
                      <option id="D01" value="W003">기업은행</option>
                      <option id="D02" value="W005">외환은행</option>
@@ -207,8 +212,8 @@ padding-left: 10%;}
 				</div>
 
 				<div class="form-group">
-					<label class="modalLabels">ACCOUNTHOLDER<br/>(예금주명)</label> <input type="text"
-						name="ticketPeriod" id="ticketPeriod">
+					<label class="modalLabels">ACCOUNTHOLDER<br/>(예금주명)</label>
+					 <input type="text" name="accountHolder" id="accountHolder">
 				</div>
 			</div>
 			<div id="modalBtn" class="modal-footer">
@@ -218,16 +223,17 @@ padding-left: 10%;}
 		</div>
 	</div>
 </div>
-
+<input type="hidden" id="ticketBuyNo" name="ticketBuyNo">
+</form>
 <script>
-
+var ticketBuyNo="";
 	$(".refTd").on("click",function(){
 		if($(this).data("ref")=="complete"){
 			alert("환불처리가 완료된 티켓입니다")
 		}else if($(this).data("ref")=="Waiting"){
 			alert("환불 승인을 기다리고 있습니다.")
 		}else{			
-		alert($(this).data("ticketbuyno"));
+			ticketBuyNo=$(this).data("ticketbuyno");
 		ticketBuyInfo($(this).data("ticketbuyno"));
 		}
 	
@@ -239,7 +245,27 @@ padding-left: 10%;}
       })
 	$("#insertBtn").on("click",function(){
         if (confirm("환불신청을 하시겠습니까???") == true) {
-        	
+        		$("#ticketBuyNo").val(ticketBuyNo);
+        		
+        		 if($("#account").val().trim()==""){
+                     alert("계좌번호를 입력해주세요");
+                     $("#account").focus();
+                     return false;
+                  }
+        		 
+        		 if($("#bankNm").val().trim()==""){
+                     alert("은행을 선택해 주세요");
+                     $("#bankNm").focus();
+                     return false;
+                  }
+        		 
+        		 if($("#accountHolder").val().trim()==""){
+                     alert("예금주를 입력해 주세요");
+                     $("#accountHolder").focus();
+                     return false;
+                  }
+        		
+        		$("#frm").submit();
         }else{
         	return false;
         }
@@ -257,9 +283,9 @@ padding-left: 10%;}
 					 $.each(data, function(idx, val) {      
 						 console.log(idx);
 						 $("#ticketno").html(val.TICKETNO);
-						 $("#ticketcontent").html(val.MEMTEL);
-						 $("#ticketbuydt").html(val.MEMEMAIL);
-						 $("#ticketperiod").html(val.ticketContext);
+						 $("#ticketcontent").html(val.TICKETCONTENT);
+						 $("#ticketbuydt").html(val.TICKETBUYDT);
+						 $("#ticketperiod").html(val.TICKETFEE);
 					 }); 
 				}
 			});

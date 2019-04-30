@@ -37,6 +37,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.member.model.MemberVo;
 import kr.or.ddit.ticket.model.TicketBuyHistVo;
+import kr.or.ddit.ticket.model.TicketRefHistVo;
 import kr.or.ddit.ticket.model.TicketVo;
 import kr.or.ddit.ticket.service.ITicketService;
 import kr.or.ddit.util.model.PageVo;
@@ -436,6 +437,13 @@ public class TicketController {
 		 model.addAttribute("ticketBuyInfo",ticketBuyInfo.get(0));
 		 return "jsonView";
 	 }
+	 
+	 @RequestMapping(path="/ticketRefInsert")
+	 public String ticketBuyInfoAjax(TicketRefHistVo ticketRefHistVo,Model model,String ticketBuyNo,HttpServletRequest req){
+		 ticketService.insertTicketRef(ticketRefHistVo);
+		 return "redirect:" + req.getContextPath() +"/ticket/myTicket";
+	 }
+	 
 	 
 	
 }
