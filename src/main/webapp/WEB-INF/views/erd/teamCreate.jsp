@@ -21,8 +21,9 @@
  width:200px;
  }
 
-label{
+.modal_container_sys label{
 margin-right:20px;
+vertical-align:top;
 }
 
 #teamCreateFrm{
@@ -49,6 +50,38 @@ background-color:rgba(224, 51, 122,0.9);
 
 #teamCreate:hover{
 background-color:rgba(224, 51, 122,1);
+}
+
+
+.teamMem{
+margin:5px;
+padding:5px;
+border:2px solid #fff;
+background:#000;
+border-radius:10px;
+}
+
+.teamMem img{
+width:20px;
+height:20px;
+}
+
+.teamMem div{
+display:inline-block;
+}
+
+#delBtn{
+position:relative;
+cursor:pointer;
+}
+
+#delBtn:after{
+content:'';
+position:absolute;
+width:100%;
+height:100%;
+display:block;
+top:0px;
 }
 
 </style>
@@ -81,7 +114,7 @@ background-color:rgba(224, 51, 122,1);
 			<div class="input-box">
 				<label>썸네일 이미지</label>
 				<img alt="" src="${cp }/image/no_img.jpg" id="image" width="200px">
-				<input type="file" name="profileImg" onchange="loadImg(this)" style= "margin-left:100px; color:#fff;"> 
+				<input type="file" name="profileImg" onchange="loadImg(this)" style= "margin-left:100px; color:#fff; margin-top:10px; margin-bottom:10px;"> 
 			</div>
 			
 		</form>
@@ -120,13 +153,13 @@ $( "#autocomplete" ).autocomplete({
     autoFocus: true,
     select: function( event, ui ) {
         // 만약 검색리스트에서 선택하였을때 선택한 데이터에 의한 이벤트발생
-        console.log("ui.label : " + ui.item.label + " ui.value : " + ui.item.value);
+        console.log("ui.label : " + ui.item.label + " ui.value : " + ui.item.value + " ui.item.data : " + ui.item.data);
         
         var html = '';
         html += '<li class="teamMem" value="' + ui.item.value + '">';
-        html += '	<div><img src="'+ ui.item.data + '"></div>';
+        html += '	<div><img src="/member/memberImg?memId='+ui.item.value+'"></div>';
         html += '	<div>' + ui.item.value + '</div>';
-        html += '	<input id="delBtn" type="button" value="삭제">';
+        html += '	<div id="delBtn"><i class="fas fa-minus-circle"></i></div>';
         html += '</li>';
 
         $("#ul").append(html); 
