@@ -375,8 +375,10 @@
 				</div>
 	
 				<div class="container_inner">
-					<div class="con_inner" id="inputTxt">
-							
+					<div class="con_inner">
+						<div class="con_inner2" id="inputTxt">
+						
+						</div>
 					</div>
 				</div>
 	

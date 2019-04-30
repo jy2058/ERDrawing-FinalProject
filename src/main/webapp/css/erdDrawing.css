@@ -912,6 +912,8 @@ position: relative;
     z-index:20;
 }
 
+
+
 #chat_container.active{
 	right:41px;
 }

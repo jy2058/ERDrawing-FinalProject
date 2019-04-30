@@ -42,7 +42,7 @@ $(document).ready(function(){
 
 
 function connectWS(){
-	var ws = new WebSocket("ws://localhost:8080/erdEcho?erdNo="+erdNo);
+	var ws = new WebSocket("ws://localhost/erdEcho?erdNo="+erdNo);
 	webSocket = ws;
 	
 	ws.onopen = function(){
@@ -104,6 +104,8 @@ function connectWS(){
 				
 				$("#inputTxt").append(htmls);
 //				$("#inputTxt").append(senderId + " : " + receContent + "<br>");
+				
+				$(".con_inner").scrollTop($('.con_inner2').height()+300);
 				
 			}
 			
