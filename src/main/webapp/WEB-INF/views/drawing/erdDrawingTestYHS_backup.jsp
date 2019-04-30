@@ -3,7 +3,6 @@
 
 <script>
 	var erdNo = ${erdNo};
-	
 </script>
 
 
@@ -41,14 +40,14 @@
 				<i class="fas fa-cog"></i>
 			</div>
 			<div class="buttons_top" id="message" title="알람">
-				<i class="fas fa-bell"></i><div style="position:relative;"><span class="badge" id="msgCnt"></span></div>
+				<i class="fas fa-bell"></i>
 			</div>
 			<div class="buttons_top" title="로그아웃">
 				<i class="fas fa-sign-out-alt"></i>
 			</div>
-<!-- 			<div class="buttons_top" id="searchModal" title="검색 창 열기"> -->
-<!-- 				<i class="fas fa-search"></i> -->
-<!-- 			</div> -->
+			<div class="buttons_top" id="searchModal" title="검색 창 열기">
+				<i class="fas fa-search"></i>
+			</div>
 		</div>
 
 
@@ -223,7 +222,6 @@
 						</tbody>
 					</table>
 				</div>
-
 			</div>
 		</div>
 
@@ -239,11 +237,28 @@
 				</div>
 			</div>
 			<div class="container_inner">
-				<textarea id="input_query"> </textarea>
-			</div>
+                        <textarea id="input_query">                        
+CREATE TABLE "TableName3" ( 
+"Key1"   VARCHAR(255)   NOT NULL,
+"Key2"   VARCHAR(255)   NOT NULL,
+"Key3"   VARCHAR(255)   NOT NULL,
+"Field1"   VARCHAR(255)   NULL,
+"Field2"   VARCHAR(255)   NULL,
+"Field3"   VARCHAR(255)   NOT NULL
+);
+
+
+
+ALTER TABLE "TableName3" ADD CONSTRAINT "PK_TableName3" PRIMARY KEY( 
+"Key1", 
+"Key2", 
+"Key3" 
+);
+                        </textarea>
+                    </div>
 			<div class="under-bottom" id="importQuery">
-				<span>Import</span>
-			</div>
+                        <span>Import</span>
+                    </div>
 		</div>
 
 
@@ -376,22 +391,17 @@
 	
 				<div class="container_inner">
 					<div class="con_inner">
-						<div class="con_inner2" id="inputTxt">
-						
-						</div>
+							
 					</div>
 				</div>
 	
 	
 				<div class="right-bottom">
 					<div class="con_inner">
-						<input type="text" id="sendChat">
-						<div id="sendBtn">전송</div>
+						채팅입력부
 					</div>
 				</div>
-				
 			</div>
-		
 		</div>
 
 
@@ -713,13 +723,6 @@
      relationType = true;
      compareEntityPosition(true); 
      });
-       
-     // team이 아닐 경우 채팅 아이콘 삭제
-     var erdScope = "${erdVo.erdScope}";
-	 if(erdScope != "team"){
-		$("#button42").remove();
-	 }
-     
      
      //nonidentifying을 클릭했을 때
        $("#nonidentifying").on('click', function(){
@@ -790,12 +793,13 @@
       var temp_clickEntity = new Array(2);
       var firstStrokeColor;
       var secondStrokeColor;
-    
       
+
       //쿼리로 ERD를 그릴 때, 테이블들의 위치정보를 담아놓을 변수
-      var sqlimportX =-400;
-      var sqlimportY =20;
+      var sqlimportX =0;
+      var sqlimportY =50;
       
+    
 //    2. ERD화면 초기화
       function init_ERD(){
           
@@ -1804,7 +1808,6 @@
         
         
         
-        
         //스크롤 확대 축소
         var SCALE_MIN = 0.45;
         var SCALE_MAX = 1.8;
@@ -1915,14 +1918,7 @@
    	$("#tag").val(tag);
    	$("#erdImg").attr("src","${cp }/erd/erdImg?erdNo=${erdNo}");
    	$("#erdNo").val(erdVo.erdNo);
-   	$("#selTeamNo").val(erdVo.teamNo);
    	$('input:radio[name="erdScope"][value="' + erdVo.erdScope + '"]').attr( "checked" , "checked");
-	
-   	if(erdVo.erdScope == "team"){
-	   	$("#selTeam").show();
-	   	$("select[name=teamNo").val(erdVo.teamNo).prop("selected", true);
-	}
-
    	
    	// 스냅샷 찍기
    	$("#snapshotBtn").on("click", function(){
@@ -1983,29 +1979,11 @@
    	$("#erdCopyFrm").submit();
    });
 
-   var MsgWebSocket;
-	
-	connectMsgWs();
-	
-	function connectMsgWs(){
-		var msgWs = new WebSocket("ws://localhost:8080/msgEcho");
-		MsgWebSocket = msgWs;
-		 
-		msgWs.onopen = function(){
-			console.log("접속");
-			setTimeout(() => {
-				connectMsgWs();
-			}, 20000000);
-			
-			msgWs.onmessage = function(event){
-				var msg = event.data;
-				$("#msgCnt").html(msg);
-			}
-			msgWs.onclose = function(event){console.log('Info: connection closed.');}
-		}
-		msgWs.onerror = function(err){console.log('Error:', err);}
-	}
-	
+   
+   
+   
+
+        
 </script>
 
 

@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import kr.or.ddit.erd.dao.IErdDrawingDao;
+import kr.or.ddit.erd.model.ChatVo;
 import kr.or.ddit.erd.model.DomainVo;
 import kr.or.ddit.erdhistory.model.ErdHistVo;
 
@@ -76,6 +77,16 @@ public class ErdDrawingServiceImpl implements IErdDrawingService{
 	@Override
 	public List<ErdHistVo> erdSnapList(int erdNo){
 		return erdDrawingDao.erdSnapList(erdNo);
+	}
+
+	@Override
+	public int chatInsert(ChatVo chatVo) {
+		return erdDrawingDao.chatInsert(chatVo);
+	}
+
+	@Override
+	public List<ChatVo> chatList(int erdNo) {
+		return erdDrawingDao.chatList(erdNo);
 	}
 
 }

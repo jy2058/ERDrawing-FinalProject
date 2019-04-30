@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import kr.or.ddit.erd.model.ChatVo;
 import kr.or.ddit.erd.model.DomainVo;
 import kr.or.ddit.erdhistory.model.ErdHistVo;
 
@@ -72,6 +73,16 @@ public class ErdDrawingDaoImpl implements IErdDrawingDao{
 	@Override
 	public List<ErdHistVo> erdSnapList(int erdNo){
 		return sqlSession.selectList("erdDrawing.erdSnapList",erdNo);
+	}
+
+	@Override
+	public int chatInsert(ChatVo chatVo) {
+		return sqlSession.insert("erdDrawing.chatInsert", chatVo);
+	}
+
+	@Override
+	public List<ChatVo> chatList(int erdNo) {
+		return sqlSession.selectList("erdDrawing.chatList", erdNo);
 	}
 	
 }

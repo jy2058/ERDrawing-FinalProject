@@ -5,35 +5,42 @@
 <style>
 
 table {
+ 	border-radius:10px;
+	overflow:hidden;
     width: 100%;
-    font-size: 18px;
+    font-size: 13px;
     color: #000;
     text-align: center;
   
 }
 tbody tr:nth-child(even) {
 	background-color: #ffffff;
-	height: 50px;
+	height: 40px;
 	
 }
 
 tbody tr:nth-child(odd) {
-	background-color: #dddddd;
-	height: 50px;
+	background-color: #eeeeee;
+	height: 40px;
 }
 th {
  border-right: 2px solid gray;
  border-bottom: 2px solid gray;
- background-color: darkgray;
-    text-align: center;
+ 
+ background-color: #ccdb5c;
+ color:#000000;
+ font-weight:bold;
+ text-align: center;
+ margin-top: -100px;
+ 
 }
 
 td{
- border-top: 2px solid darkgray;
- border-right: 2px solid darkgray;
+/*  border-top: 2px solid gray;
+ border-right: 2px solid gray; */
 }
  .item-cate {
-     width: 500px;
+    width: 500px;
     height: 40px;
     background: gray;
     line-height: 50px;
@@ -46,7 +53,7 @@ td{
     border-bottom: 1px solid #dedede;
     PADDING-LEFT: 5.9%;
     font-size: 27px;
-     padding-top: 70px;
+    padding-top: 70px;
     padding-bottom: 18px;
 }
 

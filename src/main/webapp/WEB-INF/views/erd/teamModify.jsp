@@ -21,8 +21,9 @@
  width:200px;
  }
 
-label{
+.modal_container_sys label{
 margin-right:20px;
+vertical-align:top;
 }
 
 #teamModifyFrm{
@@ -63,6 +64,39 @@ background-color:rgba(124, 121, 121,1);
 }
 
 
+
+.teamMem{
+margin:5px;
+padding:5px;
+border:2px solid #fff;
+background:#000;
+border-radius:10px;
+}
+
+.teamMem img{
+width:20px;
+height:20px;
+}
+
+.teamMem div{
+display:inline-block;
+}
+
+#delBtn{
+position:relative;
+cursor:pointer;
+}
+
+#delBtn:after{
+content:'';
+position:absolute;
+width:100%;
+height:100%;
+display:block;
+top:0px;
+}
+
+
 </style>
 
 <div class="modal_container_sys">
@@ -95,7 +129,7 @@ background-color:rgba(124, 121, 121,1);
 			<div class="input-box">
 				<label>썸네일 이미지</label>
 			<img alt="" src="" id="teamImg" width="200px"> 
-			<input type="file" name="profileImg" onchange="loadImg(this)" style= "margin-left:100px; color:#fff;"> 
+			<input type="file" name="profileImg" onchange="loadImg(this)" style= "margin-left:100px; color:#fff; margin-top:10px;"> 
 			</div>
 			<input type="hidden" id="teamNo" name="teamNo" value="">
 		</form>
@@ -149,10 +183,11 @@ $( "#autocomplete" ).autocomplete({
         
         var html = '';
         html += '<li class="teamMem addNew" value="' + ui.item.value + '">';
-        html += '	<div><img src="'+ ui.item.data + '"></div>';
+        html += '	<div><img src="/member/memberImg?memId='+ui.item.value+'"></div>';
         html += '	<div>' + ui.item.value + '</div>';
-        html += '	<input id="delBtn" type="button" value="삭제">';
+        html += '	<div id="delBtn"><i class="fas fa-minus-circle"></i></div>';
         html += '</li>';
+        
 
         $("#ul").append(html); 
         $("#autocomplete").val('');

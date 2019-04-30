@@ -39,8 +39,18 @@
 						</c:choose>
 					</td>
 					</c:otherwise>
-				</c:choose>			
-					<td style="text-align: center;  color:black;">${post.writerId}</td>
+				</c:choose>		
+					
+					<c:choose>
+						<c:when test="${fn:contains(post.writerId, '@')}">
+						<c:set var="keywordArr" value="${fn:split(post.writerId, '@')}"></c:set>
+						<td style="text-align: center;  color:black;">${keywordArr[0] }</td>
+						</c:when>
+						<c:otherwise>
+						<td style="text-align: center;  color:black;">${post.writerId}</td></c:otherwise>
+					</c:choose>
+					
+					
 					<td style="text-align: center; color:black;"><fmt:formatDate value="${post.postRegDt}" pattern="yyyy-MM-dd" /></td>
 					<td style="text-align: center; color:black;">${post.viewCnt}</td>
 				</tr>

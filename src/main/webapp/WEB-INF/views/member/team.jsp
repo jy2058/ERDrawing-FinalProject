@@ -333,10 +333,11 @@ margin-left:10px;
 		 var html = '';
 		 for(var i in teamMember){
 			 if(teamMember[i].memId != teamInfo.makerId){
+				 
 		        html += '<li class="teamMem dbLoad" value="' + teamMember[i].memId + '">';
-		        html += '	<div><img src="'+ teamMember[i].memImg + '"></div>';
+		        html += '	<div><img src="/member/memberImg?memId='+teamMember[i].memId+'"></div>';
 		        html += '	<div>' + teamMember[i].memId + '</div>';
-		        html += '	<input id="delBtn" type="button" value="삭제">';
+		        html += '	<div id="delBtn"><i class="fas fa-minus-circle"></i></div>';
 		        html += '</li>';
 			 }
 		 }

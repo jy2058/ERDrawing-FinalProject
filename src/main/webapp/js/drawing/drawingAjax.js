@@ -42,7 +42,7 @@ $(document).ready(function(){
 
 
 function connectWS(){
-	var ws = new WebSocket("ws://localhost:8080/erdEcho?erdNo="+erdNo);
+	var ws = new WebSocket("ws://localhost/erdEcho?erdNo="+erdNo);
 	webSocket = ws;
 	
 	ws.onopen = function(){
@@ -88,7 +88,24 @@ function connectWS(){
 				});
 				
 				
+			//=======================채팅===============================
+			}else if(msg[0].indexOf("chat") > -1){
+
+				var htmls = `<ul>
+								<li><img src="/member/memberImg?memId=`+senderId+`"></li>
+								<li>
+									<div class="msg_id">`+senderId+`</div>
+									<div style="position:relative; padding:10px;">
+										<div class="msg_chat">`+receContent+`</div>
+										<span>`+getTime()+`</span>
+									</div>
+								</li>
+							</ul>`;
 				
+				$("#inputTxt").append(htmls);
+//				$("#inputTxt").append(senderId + " : " + receContent + "<br>");
+				
+				$(".con_inner").scrollTop($('.con_inner2').height()+300);
 				
 			}
 			
@@ -101,7 +118,26 @@ function connectWS(){
 }
 
 
+function getTime(){
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+	var HH = today.getHours();
+	var MM = today.getMinutes();
+	var SS = today.getSeconds();
 
+	if(dd<10) {
+	    dd='0'+dd
+	} 
+
+	if(mm<10) {
+	    mm='0'+mm
+	} 
+
+	return mm+'/'+dd+'<br>'+HH+':'+mm;
+	
+}
 function webSend(cmd, data1){
 	//evt.preventDefault();
 	if(webSocket.readyState !== 1 )
@@ -274,6 +310,16 @@ function getDateFormat(now) {
 	  return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
 }
 
+// 날짜 포맷 (분/초)
+function getDateFormatMS(now) {
+	  year = "" + now.getFullYear();
+	  month = "" + (now.getMonth() + 1); if (month.length == 1) { month = "0" + month; }
+	  day = "" + now.getDate(); if (day.length == 1) { day = "0" + day; }
+	  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
+	  minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
+	  second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
+	  return month + "/" + day + "<br>" + hour + ":" + minute;
+}
 //=======================[ 히스토리 관련 ]=============================
 
 //Erd추가 그려주기

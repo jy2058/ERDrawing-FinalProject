@@ -10,17 +10,18 @@
  				continue;
  			}
  			query	+= createTable(stage.children[0].children[i])+'\n';
- 		}
- 		
+ 			query	+= createComments(stage.children[0].children[i])+'\n';
+ 		}		
  		return query;
  	}
  	
 //2번 -테이블에 접근
  	function createTable(table){
  		var tableName = table.children[5].attrs.text;
- 		var query = "CREATE TABLE '" + tableName + "' ( \n"; 
+ 		var query = 'CREATE TABLE "' + tableName + '" ( \n'; 
  		query+= createColumns(table);
- 		query+=');'
+ 		query+=');\n'
+ 			
  		return query;
  	}
  	
@@ -54,16 +55,30 @@
  		if(defaultValue != ''){
  			defaultValue = space+'DEFAULT  ' + defaultValue;
  		}
- 		var comment = column[7].children[2].attrs.text;
- 		if(comment != ''){
- 			comment = space+'COMMENT' +"'"+comment+"'";  //마지막 공백은 COMMENT가 있을 경우에만 준다.
- 		}
- 		
- 		return "'"+key+"'"+space+domain+space+nullable+defaultValue+comment;  
+
+ 		return '"'+key+'"'+space+domain + defaultValue +space+nullable;  
  	}
  	
- 	
- 	
+//2번 중간 - 커멘트를 만들어주는 메서드 	
+  function createComments(table){
+	  var tableName = table.children[5].attrs.text;
+		var columns = table.find('.attribute');
+		
+		var query = "";
+			for(var i =0; i<columns.length; i++){
+			var column = columns[i].find('.attr_groups');
+				
+	 		var comment = column[7].children[2].attrs.text;
+	 		//
+	 		if(comment != ''){
+	 			var key = column[2].children[2].attrs.text;
+	 			query += 'COMMENT ON COLUMN "'+tableName+'"."'+key+'" IS '+"'"+comment+"'; \n";
+	 			}
+			}
+	
+			return query;
+		
+  }
  	
  
  	
@@ -73,8 +88,19 @@
  		var query = "";
  		for(var i = 0; i<stage.children[0].children.length; i++ ){
  			var pk = stage.children[0].children[i].findOne('.pk_group').children; //해당 테이블에 pk속성배열
+ 			
+ 			pk.sort(function (a,b){ //합치기전에 pk끼리 정렬
+ 				return a.attrs.id<b.attrs.id?-1 : a.attrs.id>b.attrs.id?1:0;   //현재 이 배열에는 내가 선택한 곳에 포함되는 객체들이 모두 들어있다.
+ 			});
+ 			
  			var pk_fk = checkIdentify_1(stage.children[0].children[i]); 		  //해당 테이블에 fk면서 pk인 속성배열(identifying인 fk)
- 			var total_pk =$.merge( $.merge([],pk), pk_fk);
+ 			
+ 			pk_fk.sort(function (a,b){ //합치기전에 ㄹk끼리 정렬
+ 				return a.attrs.id<b.attrs.id?-1 : a.attrs.id>b.attrs.id?1:0;   //현재 이 배열에는 내가 선택한 곳에 포함되는 객체들이 모두 들어있다.
+ 			});
+ 			
+ 			
+ 			var total_pk =$.merge( $.merge([],pk), pk_fk); //각자 정렬된 애들로 합치기
  			
  			if(total_pk.length==0){ //속성이 없는 테이블은 만들지 않는다. 
  				continue;
@@ -88,14 +114,14 @@
  	//2번 pk 쿼리 생성
  	function createPk(table,total_pk){
  		var tableName = table.children[5].attrs.text;
- 		var query = "ALTER TABLE '" + tableName + "' ADD CONSTRAINT " + "'PK_"+tableName+"' PRIMARY KEY( \n";  
+ 		var query = 'ALTER TABLE "' + tableName +'" ADD CONSTRAINT ' + '"PK_'+tableName+'" PRIMARY KEY( \n';  
  			for(var i=0; i<total_pk.length; i++){
  				
  				if(i == total_pk.length-1){
- 					query += "'"+total_pk[i].find('.attr_groups')[2].children[2].attrs.text+"' \n);"; //마지막은 쉼표 생략;
+ 					query += '"'+total_pk[i].find('.attr_groups')[2].children[2].attrs.text+'" \n);\n'; //마지막은 쉼표 생략;
  					break;
  				}
- 				query += "'"+total_pk[i].find('.attr_groups')[2].children[2].attrs.text+"', \n";
+ 				query += '"'+total_pk[i].find('.attr_groups')[2].children[2].attrs.text+'", \n';
  			}
  		return query;
  	}
@@ -142,9 +168,13 @@
  		for(var i = 0; i<fk[0].children.length; i++){
  			pk_id = fk[0].children[i].attrs.pkId;
  			
- 			 var pk_Attr= selectPkId(superEntity,pk_id);
+ 			var pk_Attr= selectPkId(superEntity,pk_id);
  			 
- 			query += createFkQuery(pk_tableName,fk_tableName,pk_Attr,fk[0].children[i]) +'\n';
+ 			 if(pk_Attr  != null){ //참조하는 값이 있을때만 실행한다.
+ 				 query += createFkQuery(pk_tableName,fk_tableName,pk_Attr,fk[0].children[i]) +'\n';
+ 			 }
+ 			
+ 			//query += createFkQuery(pk_tableName,fk_tableName,pk_Attr,fk[0].children[i]) +'\n';
  			 
  			
  		}
@@ -155,14 +185,19 @@
  	//2번 -중간  해당 fk가 참조하는 pk의 속성을 리턴한다.
  	function selectPkId(superEntity,pk_id){
  		var pk =superEntity.find('.pk_group');
+ 		var fk = superEntity.find('.fk_group');
  		
  		for(var i = 0; i<pk[0].children.length; i++){
  			if(pk[0].children[i].attrs.id == pk_id){
  				return pk[0].children[i];
- 				
  			}
- 			
  		}
+ 		for(var i = 0; i<fk[0].children.length; i++){
+ 			if(fk[0].children[i].attrs.pkId == pk_id){
+ 				return fk[0].children[i];
+ 			}
+ 		}
+ 		
  	}
  	
  	
@@ -173,7 +208,7 @@
  		var query='';
  		var pk_key=pk.children[4].children[2].attrs.text;
  		var fk_key=fk.children[4].children[2].attrs.text;
- 		query = "ALTER TABLE '"+fk_tableName+"' ADD CONSTRAINT 'FK_"+pk_tableName+"_TO_"+fk_tableName+"' FOREIGN KEY ( \n '"+fk_key+"' \n ) \n REFERENCES '"+pk_tableName+"' (\n '"+pk_key+"' \n);";
+ 		query = 'ALTER TABLE "'+fk_tableName+'" ADD CONSTRAINT "FK_'+pk_tableName+'_TO_'+fk_tableName+'" FOREIGN KEY ( \n "'+fk_key+'" \n ) \n REFERENCES "'+pk_tableName+'" (\n "'+pk_key+'" \n);\n';
  		return query; 
  	}
  	
@@ -223,7 +258,12 @@ function createAttr(superEntity,subEntity){
  			
  			 var pk_Attr= selectPkId(superEntity,pk_id);
  			 
- 			query += createFkQuery(pk_tableName,fk_tableName,pk_Attr,fk[0].children[i]) +'\n';
+ 			 
+ 			 if(pk_Attr  != null){ //참조하는 값이 있을때만 실행한다.
+ 				 query += createFkQuery(pk_tableName,fk_tableName,pk_Attr,fk[0].children[i]) +'\n';
+ 			 }
+ 			 
+ 			//query += createFkQuery(pk_tableName,fk_tableName,pk_Attr,fk[0].children[i]) +'\n';
  			
  		}
  		return query;
@@ -235,14 +275,14 @@ function add_drop(){
 			if(stage.children[0].children[i].find('.attribute').length==0){ //속성이 없는 테이블은 만들지 않는다. 
 				continue;
 			}
-			query	+= drop_Table(stage.children[0].children[i]);
+			query	+= drop_Table(stage.children[0].children[i])+'\n';
 		}
-		
+			
 		return query;
 }
 function drop_Table(table){
 	var tableName = table.children[5].attrs.text;
-		var query = "DROP TABLE IF EXISTS '" + tableName + "'; \n"; 
+		var query = 'DROP TABLE IF EXISTS "' + tableName + '"; \n'; 
 		return query;
 	
 } 	

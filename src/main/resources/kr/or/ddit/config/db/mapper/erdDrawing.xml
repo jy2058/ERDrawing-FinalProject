@@ -64,7 +64,7 @@
 	<update id="erdHistUpdate" parameterType="erdHistVO">
 		update erd_hist
 				   set erdHistNo = seq_erdhistno.nextval,
-		               erdNo = 1098,
+		               erdNo = #{erdNo},
 		               erdDt = sysdate,
 		               erdIsVisible = #{erdIsVisible},
 		               snapNm = #{snapNm, jdbcType=VARCHAR},
@@ -114,6 +114,20 @@
 		order by erdHistNo desc
 	</select>
 	
-
+	<!-- 채팅 내용 insert -->
+	<insert id="chatInsert" parameterType="chatVo">
+		insert into chat
+		(chatno, erdno, memid, chatcontent, chatindt)
+		values
+		(SEQ_CHATNO.nextval, #{erdNo}, #{memId}, #{chatContent}, sysdate)
+	</insert>
+	
+	<!-- 채팅 리스트 가져오기 -->
+	<select id="chatList" parameterType="int" resultType="chatVo">
+		select *
+		from chat
+		where erdno = #{erdNo}
+		order by chatindt asc
+	</select>
 
 </mapper>

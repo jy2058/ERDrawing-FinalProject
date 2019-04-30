@@ -71,6 +71,14 @@ public class ErdHandler extends TextWebSocketHandler{
 						TextMessage tmpMsg = new TextMessage(senderId + "님이 ");
 						sess.sendMessage(tmpMsg);
 					}
+				}else if(cmd.equals("chat")){
+					for(WebSocketSession sess : sessionList){
+						String receSId = sess.getId();
+						if(session.getUri().equals(sess.getUri())){
+							TextMessage tmpMsg = new TextMessage(cmd + "★" + senderId + "★" + content + "★" + sendSId + "★" + receSId);
+							sess.sendMessage(tmpMsg);
+						}
+					}
 				}
 
 			}

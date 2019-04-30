@@ -48,7 +48,7 @@ display:inline-block;
 width:100px;
 opacity:1;
 cursor:pointer;
-height:30px;
+height:35px;
 line-height:35px;
 border-radius:5px;
 }
@@ -115,7 +115,7 @@ background-color:rgba(224, 51, 122,1);
 			<div class="input-box">
 				<label>썸네일 이미지</label>
 				<img alt="" src="" id="erdImg" width="200px" style="background:#3b3b3b;"> 
-				<input type="file" name="profileImg" onchange="loadImg(this)" id="profileImg" value="" style= "margin-left:115px; color:#fff;">
+				<input type="file" name="profileImg" onchange="loadImg(this)" id="profileImg" value="" style= "margin-left:115px; color:#fff; margin-top:10px; margin-bottom:10px;">
 				<input type="button" id="snapshotBtn"  value="스냅샷 찍기" style= "margin-left:115px;"> 
 			</div>
 			<input type="hidden" id="snapshot" name="snapshot" value="">

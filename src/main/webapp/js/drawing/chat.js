@@ -1,35 +1,75 @@
-var chatWebSocket;
 
-$(document).ready(function(){
-	connectChatWS();
+
+
+// 채팅입력 엔터
+$("#sendChat").on("keydown", function(e){
+	if(e.keyCode == 13){
+		chatSend();
+	}
 });
 
-function connectChatWS(){
-	var chatWS = new WebSocket("ws://localhost/chatEcho?erdNo="+erdNo);
-	console.log("chatWS: " + chatWS);
-	chatWebSocket = chatWS;
+// 채팅입력 클릭
+$("#sendBtn").on("click", function(){
+	chatSend();
+});
+
+// 채팅입력 보내기
+function chatSend(){
 	
-	chatWS.onopen = function(){
-		console.log("채팅 웹소켓 오픈");
-		
-		chatWS.onmessage = function(event){
-			var msg = event.data.split("★");
-			console.log("msg : " + msg);
-			var senderId = msg[0];
-			var content = msg[1];
-			var sendErdNo = msg[2];
-			if(erdNo == sendErdNo){
-				$("#inputTxt").append(senderId + " : " + content + "<br>");
-			}
-			
+	var chatContent = $("#sendChat").val();
+	webSocket.send("chat" + "★"+ chatContent);
+	
+	// 보낸 채팅 insert
+	$.ajax({
+		type : "post",
+		url : "/erddrawing/chatInsert",
+		data : {
+			chatContent : chatContent,
+			erdNo : erdNo,
+		},
+		success : function(data) {
+			$('#sendChat').val("");
+		},
+		error : function(xhr, status, error) {
+			console.log(error);
 		}
-		
-		chatWS.onclose = function(event){console.log("채팅 웹소켓 종료");}
-	}
-	chatWS.onerror = function(err){console.log("채팅 웹소켓 에러", err);}
+	});
+	
 }
 
-$("#sendBtn").on("click", function(){
-	var sendChat = $("#sendChat").val();
-	chatWebSocket.send(sendChat + "★" + erdNo);
+$("#button42").on("click", function(){
+	// 채팅 리스트 가져오기
+	$.ajax({
+		type : "post",
+		url : "/erddrawing/chatList",
+		data : {
+			erdNo : erdNo
+		},
+		success : function(data) {
+			var chatList = data.chatList;
+			var html = "";
+			for(var i in chatList){
+				
+				
+				html += `<ul>
+					<li><img src="/member/memberImg?memId=`+chatList[i].memId+`"></li>
+					<li>
+						<div class="msg_id">`+chatList[i].memId+`</div>
+						<div style="position:relative; padding:10px;">
+							<div class="msg_chat">`+chatList[i].chatContent+`</div>
+							<span>`+getDateFormatMS(new Date(parseInt(chatList[i].chatInDt)))+`</span>
+						</div>
+					</li>
+				</ul>`;
+	
+	
+			}
+			$("#inputTxt").html(html);
+			$(".con_inner").scrollTop($('.con_inner2').height()+300);
+			
+		},
+		error : function(xhr, status, error) {
+			console.log(error);
+		}
+	});
 });
