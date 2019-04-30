@@ -30,6 +30,7 @@
 	<typeAlias alias="ticketRefHistVo" type="kr.or.ddit.ticket.model.TicketRefHistVo"/>
 	
 	<typeAlias alias="domainVO" type="kr.or.ddit.erd.model.DomainVo"/>
+	<typeAlias alias="chatVo" type="kr.or.ddit.erd.model.ChatVo"/>
 	<typeAlias alias="erdHistVO" type="kr.or.ddit.erdhistory.model.ErdHistVo"/>
 	
 	

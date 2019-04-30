@@ -42,7 +42,7 @@ $(document).ready(function(){
 
 
 function connectWS(){
-	var ws = new WebSocket("ws://localhost:8080/erdEcho?erdNo="+erdNo);
+	var ws = new WebSocket("ws://localhost/erdEcho?erdNo="+erdNo);
 	webSocket = ws;
 	
 	ws.onopen = function(){
@@ -88,8 +88,9 @@ function connectWS(){
 				});
 				
 				
-				
-				
+			//=======================채팅===============================
+			}else if(msg[0].indexOf("chat") > -1){
+				$("#inputTxt").append(senderId + " : " + receContent + "<br>");
 			}
 			
 		}

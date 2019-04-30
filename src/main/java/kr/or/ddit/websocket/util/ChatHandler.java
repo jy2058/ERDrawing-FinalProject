@@ -50,8 +50,10 @@ public class ChatHandler extends TextWebSocketHandler{
 		int erdNo = Integer.parseInt(strs[1]);
 		
 		for(WebSocketSession sess : sessionList){
-			TextMessage tmpMsg = new TextMessage(senderId + "★" + content + "★" + erdNo);
-			sess.sendMessage(tmpMsg);
+			if(session.getUri().equals(sess.getUri())){
+				TextMessage tmpMsg = new TextMessage(senderId + "★" + content);
+				sess.sendMessage(tmpMsg);
+			}
 		}
 		
 	}

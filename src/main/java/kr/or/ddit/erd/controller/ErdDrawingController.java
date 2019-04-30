@@ -3,20 +3,20 @@ package kr.or.ddit.erd.controller;
 import java.util.List;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
+import kr.or.ddit.erd.model.ChatVo;
 import kr.or.ddit.erd.model.DomainVo;
 import kr.or.ddit.erd.service.IErdDrawingService;
 import kr.or.ddit.erdhistory.model.ErdHistVo;
+import kr.or.ddit.member.model.MemberVo;
 
 @RequestMapping("/erddrawing")
 @Controller
@@ -103,5 +103,22 @@ public class ErdDrawingController {
 		return "jsonView"; 
 	}
 	
+	@RequestMapping(path="chatInsert", method=RequestMethod.POST)
+	public String chatInsert(ChatVo chatVo, HttpSession session){
+		
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		String memId = memberVo.getMemId();
+		chatVo.setMemId(memId);
+		
+		erdDrawingService.chatInsert(chatVo);
+		
+		return "jsonView";
+	}
+	@RequestMapping(path="chatList", method=RequestMethod.POST)
+	public String chatList(ChatVo chatVo, Model model){
+		List<ChatVo> chatList = erdDrawingService.chatList(chatVo.getErdNo());
+		model.addAttribute("chatList", chatList);
+		return "jsonView";
+	}
 	
 }

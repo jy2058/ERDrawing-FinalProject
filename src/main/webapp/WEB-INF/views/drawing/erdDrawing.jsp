@@ -3,6 +3,7 @@
 
 <script>
 	var erdNo = ${erdNo};
+	
 </script>
 
 
@@ -710,6 +711,13 @@
      relationType = true;
      compareEntityPosition(); 
      });
+       
+     // team이 아닐 경우 채팅 아이콘 삭제
+     var erdScope = "${erdVo.erdScope}";
+	 if(erdScope != "team"){
+		$("#button42").remove();
+	 }
+     
      
      //nonidentifying을 클릭했을 때
        $("#nonidentifying").on('click', function(){

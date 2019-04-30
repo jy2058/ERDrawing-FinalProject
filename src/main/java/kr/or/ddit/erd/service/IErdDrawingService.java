@@ -2,6 +2,7 @@ package kr.or.ddit.erd.service;
 
 import java.util.List;
 
+import kr.or.ddit.erd.model.ChatVo;
 import kr.or.ddit.erd.model.DomainVo;
 import kr.or.ddit.erdhistory.model.ErdHistVo;
 
@@ -31,8 +32,11 @@ public interface IErdDrawingService {
 	//erd 스냅샷 가져오기
 	List<ErdHistVo> erdSnapList(int erdNo);
 	
+	// 채팅 내용 insert
+	int chatInsert(ChatVo chatVo);
 	
-
+	// 채팅 리스트 
+	List<ChatVo>chatList(int erdNo);
 
 
 
