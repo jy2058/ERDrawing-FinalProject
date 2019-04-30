@@ -34,10 +34,23 @@ $("#button42").on("click", function(){
 			var chatList = data.chatList;
 			var html = "";
 			for(var i in chatList){
-				html += chatList[i].memId + ' : ' + chatList[i].chatContent + '<br>';
-				html += getDateFormatMS(new Date(parseInt(chatList[i].chatInDt)));
+				
+				
+				html += `<ul>
+					<li><img src="/member/memberImg?memId=`+chatList[i].memId+`"></li>
+					<li>
+						<div class="msg_id">`+chatList[i].memId+`</div>
+						<div style="position:relative; padding:10px;">
+							<div class="msg_chat">`+chatList[i].chatContent+`</div>
+							<span>`+getDateFormatMS(new Date(parseInt(chatList[i].chatInDt)))+`</span>
+						</div>
+					</li>
+				</ul>`;
+	
+	
 			}
-			$("#inputTxt").html(html)
+			$("#inputTxt").html(html);
+			
 		},
 		error : function(xhr, status, error) {
 			console.log(error);
