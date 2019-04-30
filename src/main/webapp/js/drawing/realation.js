@@ -577,8 +577,8 @@ function getAngle(compareX,compareY) { // 두 점 사이의 각도를 구하는 
 	}
 	
  	
-
- function compareEntityPosition() {
+//flag : alter할 경우 테이블의 속성을 복사할 필요가 없기 때문에 구분값을 준 것
+ function compareEntityPosition(flag) {
 	 
 	// 라인객체 생성 좌표값은 switch에서 결정
 	 relationLine = new Konva.Line({  
@@ -591,13 +591,14 @@ function getAngle(compareX,compareY) { // 두 점 사이의 각도를 구하는 
 		});
 	 
 	 //컬럼을 추가한 뒤에  x,y 좌표값을 구해야 선이 정확히 가운데에 그려진다.
+	if(flag){
 	 if(!relationType){
 			moveColumnIdentifying(false,relationLine.id()); // pk값을 속성값으로 복사 //비식별
 		}
 		else{
 			moveColumnIdentifying(true,relationLine.id()); //pk값을 fk값으로 복사 //식별
 			}
-	 
+	}
 	 
 	compareX = firstEntity.x() - secondEntity.x();
 	compareY = firstEntity.y() - secondEntity.y();
@@ -1108,6 +1109,14 @@ function moveColumnIdentifying(type,line_id){
 	var arr_identify = checkIdentify();
 	var arr_total  = new Array();
 	
+	pk.sort(function (a,b){ //차례대로 복사하기위해서 정렬
+		return a.attrs.id<b.attrs.id?-1 : a.attrs.id>b.attrs.id?1:0;   //현재 이 배열에는 내가 선택한 곳에 포함되는 객체들이 모두 들어있다.
+	});
+	
+	arr_identify.sort(function (a,b){
+		return a.attrs.id<b.attrs.id?-1 : a.attrs.id>b.attrs.id?1:0;   //현재 이 배열에는 내가 선택한 곳에 포함되는 객체들이 모두 들어있다.
+	});
+	
 
 	for(var i= 0; i<pk.length; i++){
 		arr_total.push(pk[i]);
@@ -1115,6 +1124,9 @@ function moveColumnIdentifying(type,line_id){
 	for(var i= 0; i<arr_identify.length; i++){
 		arr_total.push(arr_identify[i]);
 	}
+	
+	
+	
 	
 	var secondEntityIdx = secondEntity.findOne('.'+identifyType).children.length; //second 객체에 이전에 만든 fk가 존재할 수도 있기 때문에
 	

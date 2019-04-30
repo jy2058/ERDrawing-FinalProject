@@ -9,6 +9,10 @@
     function cntKey(){
         return entity.findOne('.pk_group').find('.attr_phisical').length + 1;
     }
+    
+    function cntKey_param(table){
+        return (table.findOne('.pk_group').find('.attr_phisical').length) + 1;
+    }
 
     function cntField(){
         return entity.findOne('.attr_group').find('.attr_phisical').length + 1;
