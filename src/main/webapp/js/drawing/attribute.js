@@ -45,7 +45,7 @@
             case "fk_group":
                 attrKey = "ForeignKey";
                 nullDefault = "NOT NULL";
-                key_name = "fk이름";
+                key_name = "FKname";
                 containerColor = colorPick[color1_num].groupColor;
                 backgroundColor = colorPick[color1_num].fkBg;
                 fontColor = colorPick[color1_num].fkColor;
@@ -238,7 +238,242 @@
     }
     //entity 생성 종료
 
+    //쿼리입력 시, ERD를 그릴 때, 쿼리에서 추출한 속성을 가지고, 컬럼을 만들 때 (생성자) //YHS
+function fn_attributeAddforDrawing(select_group,entity,arr_attribute,pk_id){
+		console.log(arr_attribute);
+		var logic_key = arr_attribute[0];
+		var key = arr_attribute[1];
+		var dataType = arr_attribute[2];
+		var defaultValue = arr_attribute[3];
+		console.log("defaultValue"+ defaultValue);
+		var nullable = arr_attribute[4];
+		console.log("nullable"+ nullable);
+		comment="";
+		if(arr_attribute[5]!=null){
+		 comment = arr_attribute[5];
+		}
+        //컨트롤 할 그룹 설정
+        attributeGroup = entity.findOne("."+select_group);
+        
+        //entity 색상코드 가져오기
+        //var color1_num = entity.attrs.class;
+        var color1_num = entity.findOne('.giveColor').text();
 
+        //속성 자손 개수 찾기
+        var attrLength = attributeGroup.children.length;
+        
+        //속성 위치값 구하기
+        var attrPosition = 23*attrLength;
+        
+        switch(select_group){
+        case "pk_group":
+            attrKey = "PrimaryKey";
+            nullDefault = "NOT NULL";
+            key_name = "Key" + cntKey();
+            containerColor = colorPick[color1_num].groupColor;
+            backgroundColor = colorPick[color1_num].pkBg;
+            fontColor = colorPick[color1_num].pkColor;
+            placeHolderColor = colorPick[color1_num].pkPlaceHolder
+            break;
+            
+        case "fk_group":
+            attrKey = "ForeignKey";
+            nullDefault = "NOT NULL";
+            key_name = "FKname";
+            containerColor = colorPick[color1_num].groupColor;
+            backgroundColor = colorPick[color1_num].fkBg;
+            fontColor = colorPick[color1_num].fkColor;
+            placeHolderColor = colorPick[color1_num].fkPlaceHolder
+            break;
+            
+        case "attr_group":
+            attrKey = "Attribute";
+            nullDefault = "NULL";
+            key_name = "Field" + cntField();
+            containerColor = colorPick[color1_num].groupColor;
+            backgroundColor = colorPick[color1_num].atBg;
+            fontColor = colorPick[color1_num].atColor;
+            placeHolderColor = colorPick[color1_num].atPlaceHolder
+            break;
+            
+    }
+        
+        //속성 row
+        attribute = new Konva.Group({
+            x: BORDER_SIZE,
+            y: attrPosition,
+            name: 'attribute'
+        });
+        
+        if(select_group =='pk_group'){
+        	attribute.id(get_numId()); 
+        }
+        //추가함
+        else if(pk_id != null){
+        	attribute.attrs.pkId = pk_id;
+        }
+
+
+//      속성 전체 박스
+        attr_container = new Konva.Rect({
+            x: 0,
+            y: 0,
+            width: 508,
+            height: 26,
+            fill: containerColor,
+            name: 'attr_container'
+        });
+
+      
+
+        //속성 종류 설정
+        // key . 논리 . 물리 . 도메인 . 타입
+        
+        attr_groups = new Konva.Group({
+            x: BORDER_SIZE,
+            y: BORDER_SIZE,
+            name: 'attr_groups'
+        });
+        
+        
+        //key
+        attr_key = new Konva.Rect({
+            x: 0,
+            y: 0,
+            width: 98,
+            height: 20,
+            fill: backgroundColor,
+            //stroke: 'red',
+            name: 'attr_background attr_key'
+        });
+        
+        attr_key_txt = new Konva.Text({
+            text: attrKey,
+            x: attr_key.x(),
+            y: attr_key.y(),
+            padding: 5,
+            fill: fontColor,
+            fontSize: 11,
+            name: 'setAttrsText attr_key_txt'
+        });
+        
+
+        
+        
+        
+        //      객체 등록
+        attributeGroup.add(attribute);
+        attribute.add(attr_container);
+        attribute.add(attr_groups);
+        
+        attr_groups.add(attr_key).add(attr_key_txt);
+        
+        
+        
+        
+        //============= 그룹추가 ===============
+        
+        attr_btn_group = new Konva.Group({
+            name: 'attr_btn_group',
+            y:BORDER_SIZE,
+            visible:false
+//            ,
+//            draggable: true,
+//            dragBoundFunc: function(pos) {
+//              return {
+//                x: this.absolutePosition().x,
+//                y: pos.y
+//              };
+//            }
+        });
+        
+        attr_btn_move = new Konva.Rect({
+            name: 'attr_btn_move',
+            x:-20-BORDER_SIZE,
+            width: 20,
+            height: 20,
+            cornerRadius: 5,
+            strokeWidth: 1,
+            stroke: '#ffffff',
+            fill: '#0EB6FF'
+        });
+        
+        attr_btn_move_t = new Konva.Text({
+            name: 'attr_btn_move_t',
+            x: attr_btn_move.x()+2.1,
+            y: attr_btn_move.y()+2.3,
+            fill: '#ffffff',
+            fontSize: 18,
+            text: '▦'
+        });
+        
+        attr_btn_remove = new Konva.Rect({
+            name: 'attr_btn_remove',
+            x:30,
+            width: 20,
+            height: 20,
+            cornerRadius: 5,
+            strokeWidth: 1,
+            stroke: '#ffffff',
+            fill: '#4335af'
+        });
+        
+        attr_btn_remove_t = new Konva.Text({
+            name: 'attr_btn_remove_t',
+            x: attr_btn_remove.x()+7,
+            y: attr_btn_remove.y()+3.5,
+            fill: '#ffffff',
+            fontSize: 12,
+            text: 'x'
+        });
+        
+        attr_btn_group.add(attr_btn_move).add(attr_btn_move_t);
+        attr_btn_group.add(attr_btn_remove).add(attr_btn_remove_t);
+        attribute.add(attr_btn_group);
+        
+        
+        
+        
+        
+        
+        
+        //Key_논리
+        var attr_logical = fn_setAttr(attr_groups, "attr_logical", logic_key, "key_논리");
+        
+        //Key_물리
+        var attr_phisical = fn_setAttr(attr_logical, "attr_phisical", key, "key_물리");
+        
+        //Domain
+        var attr_domain = fn_setAttr(attr_phisical, "attr_domain", "", "Domain");
+        
+        //Type
+        var attr_type = fn_setAttr(attr_domain, "attr_type", dataType, "Type");
+        
+        //NOT NULL (select box)
+        var attr_null = fn_setAttr(attr_type, "attr_null", nullable, "none");
+        
+        //Default value
+        var attr_default = fn_setAttr(attr_null, "attr_default", defaultValue, "Default value");
+        
+        //Comment
+        var attr_comment = fn_setAttr(attr_default, "attr_comment", comment, "Comment");
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        //===================================================================
+        //리사이징
+        
+        //entity_resize();
+        
+
+    }
+    //entity 생성 종료
 
 
 //=================================================================
@@ -287,6 +522,7 @@
             name:'placeHolder'
         });
 
+        
         
         setAttr_groups.add(setAttrs).add(setAttrs_placeHolder).add(setAttrs_txt);
         attribute.add(setAttr_groups);
@@ -522,73 +758,82 @@
         
         //================================================
         // attribute 선택 이벤트
-        
-        var new_color;
-        var old_color = old_entity.findOne('.giveColor').text();
-        //엔티티 객체 선택시
-        if(allNode.findAncestor('.entity') != null){
-            
-           //컬러셋 초기화 
-           new_color = entity.findOne('.giveColor').text();
-            
-           if(old_entity.id() != allNode.findAncestor('.entity').id()){
-            
-               tmp_groupColor = colorPick[old_color].groupColor;
-               
-           }else{
-               //전역변수로 뺌
-               tmp_groupColor = colorPick[new_color].groupColor;
-           }
-
-        }else{
-            tmp_groupColor = colorPick[old_color].groupColor;
-        }
-        
-       
-        //속성 배경 초기화
-        old_entity.find('.attr_container').fill(tmp_groupColor);
-        
-        //속성 버튼 초기화
-        old_entity.find('.attr_btn_group').visible(false);
-        
-        
-        //선택속성 투명도 초기화시키기
-      old_entity.find('.attr_container').opacity(1);
-      old_entity.find('.attr_background').opacity(1);
+        try {
+        	var new_color;
+        	var old_color = old_entity.findOne('.giveColor').text();
+        	//엔티티 객체 선택시
+        	if(allNode.findAncestor('.entity') != null){
+        		
+        		//컬러셋 초기화 
+        		new_color = entity.findOne('.giveColor').text();
+        		
+        		if(old_entity.id() != allNode.findAncestor('.entity').id()){
+        			
+        			tmp_groupColor = colorPick[old_color].groupColor;
+        			
+        		}else{
+        			//전역변수로 뺌
+        			tmp_groupColor = colorPick[new_color].groupColor;
+        		}
+        		
+        	}else{
+        		tmp_groupColor = colorPick[old_color].groupColor;
+        	}
+        	
+        	
+        	//속성 배경 초기화
+        	old_entity.find('.attr_container').fill(tmp_groupColor);
+        	
+        	//속성 버튼 초기화
+        	old_entity.find('.attr_btn_group').visible(false);
+        	
+        	
+        	//선택속성 투명도 초기화시키기
+        	old_entity.find('.attr_container').opacity(1);
+        	old_entity.find('.attr_background').opacity(1);
+			
+		} catch (e) {
+			// TODO: handle exception
+		}
         
     
         
-        //속성 선택시
-        if(allNode.findAncestor('.attribute') != null){
-           
-   
-           var total_attribute_length = allNode.findAncestor('.attribute').parent.children.length-1;
-         
-           allNode.findAncestor('.attribute').zIndex(total_attribute_length);
-           allNode.findAncestor('.attribute').parent.zIndex(entity.children.length-1);
-            
-           //console.log(allNode.findAncestor('.attribute').zIndex()); 
-           allNode.findAncestor('.attribute').find('.attr_container').fill(colorPick[new_color].groupColorActive);
-            
-            
-            //선택속성 투명도
-           allNode.findAncestor('.attribute').findOne('.attr_container').opacity(0.8);
-           allNode.findAncestor('.attribute').find('.attr_background').opacity(0.7);
-            
-           //속성 버튼 설정
-           attr_btn_remove = allNode.findAncestor('.attribute').findOne('.attr_btn_remove');
-           attr_btn_remove_t = allNode.findAncestor('.attribute').findOne('.attr_btn_remove_t');
-           attr_btn_remove.x(entity.findOne('.entity_container').width()-BORDER_SIZE);
-           attr_btn_remove_t.x(attr_btn_remove.x()+7);
-           
-           
-           allNode.findAncestor('.attribute').findOne('.attr_btn_group').visible(true);
-           //////// allNode.findAncestor('.attribute').remove();
-            
-            
-  
-            
-        }
+		try {
+			  //속성 선택시
+	        if(allNode.findAncestor('.attribute') != null){
+	           
+	   
+	           var total_attribute_length = allNode.findAncestor('.attribute').parent.children.length-1;
+	         
+	           allNode.findAncestor('.attribute').zIndex(total_attribute_length);
+	           allNode.findAncestor('.attribute').parent.zIndex(entity.children.length-1);
+	            
+	           //console.log(allNode.findAncestor('.attribute').zIndex()); 
+	           allNode.findAncestor('.attribute').find('.attr_container').fill(colorPick[new_color].groupColorActive);
+	            
+	            
+	            //선택속성 투명도
+	           allNode.findAncestor('.attribute').findOne('.attr_container').opacity(0.8);
+	           allNode.findAncestor('.attribute').find('.attr_background').opacity(0.7);
+	            
+	           //속성 버튼 설정
+	           attr_btn_remove = allNode.findAncestor('.attribute').findOne('.attr_btn_remove');
+	           attr_btn_remove_t = allNode.findAncestor('.attribute').findOne('.attr_btn_remove_t');
+	           attr_btn_remove.x(entity.findOne('.entity_container').width()-BORDER_SIZE);
+	           attr_btn_remove_t.x(attr_btn_remove.x()+7);
+	           
+	           
+	           allNode.findAncestor('.attribute').findOne('.attr_btn_group').visible(true);
+	           //////// allNode.findAncestor('.attribute').remove();
+	            
+	            
+	  
+	            
+	        }
+		} catch (e) {
+			// TODO: handle exception
+		}
+      
         
         
         

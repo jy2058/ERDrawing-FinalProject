@@ -929,7 +929,7 @@ position: relative;
 }
 
 /*web-font  */
-#queryText{
+#queryText, input_query{
 font-family: 'Nanum Gothic Coding', monospace;
 }
 

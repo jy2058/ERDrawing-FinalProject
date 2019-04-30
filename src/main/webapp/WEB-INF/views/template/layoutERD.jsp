@@ -24,6 +24,7 @@
 <script src="/js/drawing/style.js"></script>
 <script src="/js/drawing/realation.js"></script>
 <script src="/js/drawing/sqlexport.js"></script>
+<script src="/js/drawing/sqlimport.js"></script>
 </head>
 
 <body id='my_body'>
