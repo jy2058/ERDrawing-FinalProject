@@ -42,7 +42,7 @@ $(document).ready(function(){
 
 
 function connectWS(){
-	var ws = new WebSocket("ws://localhost/erdEcho?erdNo="+erdNo);
+	var ws = new WebSocket("ws://localhost:8080/erdEcho?erdNo="+erdNo);
 	webSocket = ws;
 	
 	ws.onopen = function(){
@@ -90,7 +90,21 @@ function connectWS(){
 				
 			//=======================채팅===============================
 			}else if(msg[0].indexOf("chat") > -1){
-				$("#inputTxt").append(senderId + " : " + receContent + "<br>");
+
+				var htmls = `<ul>
+								<li><img src="/member/memberImg?memId=`+senderId+`"></li>
+								<li>
+									<div class="msg_id">`+senderId+`</div>
+									<div style="position:relative; padding:10px;">
+										<div class="msg_chat">`+receContent+`</div>
+										<span>`+getTime()+`</span>
+									</div>
+								</li>
+							</ul>`;
+				
+				$("#inputTxt").append(htmls);
+//				$("#inputTxt").append(senderId + " : " + receContent + "<br>");
+				
 			}
 			
 		}
@@ -102,7 +116,26 @@ function connectWS(){
 }
 
 
+function getTime(){
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+	var HH = today.getHours();
+	var MM = today.getMinutes();
+	var SS = today.getSeconds();
 
+	if(dd<10) {
+	    dd='0'+dd
+	} 
+
+	if(mm<10) {
+	    mm='0'+mm
+	} 
+
+	return mm+'/'+dd+'<br>'+HH+':'+mm;
+	
+}
 function webSend(cmd, data1){
 	//evt.preventDefault();
 	if(webSocket.readyState !== 1 )
