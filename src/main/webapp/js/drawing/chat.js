@@ -18,6 +18,8 @@ $("#sendBtn").on("click", function(){
 			console.log(error);
 		}
 	});
+	
+	$("#inputTxt").scrollTop($(document).height());
 });
 
 $("#button42").on("click", function(){
