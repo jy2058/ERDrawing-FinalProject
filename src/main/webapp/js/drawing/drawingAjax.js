@@ -316,7 +316,7 @@ function getDateFormatMS(now) {
 	  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
 	  minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
 	  second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
-	  return month + "/" + day + " " + hour + ":" + minute;
+	  return month + "/" + day + "<br>" + hour + ":" + minute;
 }
 //=======================[ 히스토리 관련 ]=============================
 

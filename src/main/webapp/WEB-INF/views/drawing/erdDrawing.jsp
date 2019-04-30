@@ -384,7 +384,7 @@
 				<div class="right-bottom">
 					<div class="con_inner">
 						<input type="text" id="sendChat">
-						<button id="sendBtn">전송</button>
+						<div id="sendBtn">전송</div>
 					</div>
 				</div>
 				
