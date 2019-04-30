@@ -27,6 +27,7 @@ public class ChatbotController {
 		return "chatbot";
 	}
 	
+	//챗봇 대답 컨트롤러
 	@RequestMapping(path = "/chatbotAnswer")
 	public String chatbotAnswer(Model model, HttpSession session,String userStr) {
 		IamOptions iamOptions = new IamOptions.Builder().apiKey("Rvy0XPi7YkMsaVk2MkZU5iVeSBv67fFl0EKlonub6hZL").build();
@@ -36,9 +37,7 @@ public class ChatbotController {
 		String workspaceId = "2721d597-8f79-42f2-bc70-1fd348f64602";
 		InputData input = new InputData.Builder(userStr).build();
 
-		MessageOptions options = new MessageOptions.Builder(workspaceId)
-		  .input(input)
-		  .build();
+		MessageOptions options = new MessageOptions.Builder(workspaceId).input(input).build();
 
 		MessageResponse response = service.message(options).execute();
 		logger.debug("====son{}",response);
