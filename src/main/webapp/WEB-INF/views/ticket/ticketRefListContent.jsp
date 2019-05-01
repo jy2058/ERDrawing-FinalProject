@@ -6,10 +6,14 @@
 	<link href="/js/ticket/mdi-font/css/material-design-iconic-font.min.css" rel="stylesheet" media="all">
     <link href="/js/ticket/daterangepicker.css" rel="stylesheet" media="all">
     <link href="/css/ticket.css" rel="stylesheet" media="all"> 
-	<link rel="stylesheet" href="/css/member/memList.css">
     <link href="/js/ticket/select2.min.css" rel="stylesheet" media="all">
     <div style="padding-top: 100px"></div>
 <style>
+
+.labelContext{
+    font-weight: 100;
+}
+
 .modal-dialog, .modal-content {
     height: auto;
 }
@@ -19,6 +23,7 @@
 }
 
 .modalLabels{
+margin-left:2%;
 width: 130px;
 }
 
@@ -31,11 +36,21 @@ width: 130px;
     font-weight: 700;
 }
 
-table {
+#divNav {
+    margin-left: 0px;
+     width: 123%; 
+}
+
+#footer h4 {
+    font-weight: 700;
+}
+
+#refTb {
     font-size: 13px;
     text-align: center;
     border-radius:10px;
 	overflow:hidden;
+	width: 100%;
 	/* box-shadow: 2px 2px 2px 2px gray; */
   
 }
@@ -51,7 +66,7 @@ tbody tr:nth-child(odd) {
 	height: 40px;
 }
 
-th {
+.refTh {
  background-color: #ccdb5c;
  color:#000000;
  font-weight:bold;
@@ -149,16 +164,16 @@ td{
 
 <!-- ===============환불내역 테이블=================  -->
 <div>
-    	<table>
+    	<table id="refTb">
     		<thead>
 	    		<tr>
-	    			<th>티켓</th>
-	    			<th>티켓구매일</th>
-	    			<th>구매자</th>
-	    			<th>은행명</th>
-	    			<th>계좌번호</th>
-	    			<th>예금주명</th>
-	    			<th>상태</th>
+	    			<th class="refTh">티켓</th>
+	    			<th class="refTh" >티켓구매일</th>
+	    			<th class="refTh">구매자</th>
+	    			<th class="refTh">은행명</th>
+	    			<th class="refTh">계좌번호</th>
+	    			<th class="refTh">예금주명</th>
+	    			<th class="refTh">상태</th>
 	    		</tr>
 	    	</thead>
     		
@@ -343,6 +358,10 @@ td{
 					 console.log(idx)
 					 
 					 $("#modalMemId").html(val.MEMID+"("+val.MEMNM  +")");
+					 if(val.MEMTEL==null){
+						 val.MEMTEL=" x ";
+						 
+					 }
 					 $("#tel").html("휴대폰 : " + val.MEMTEL);
 					 $("#email").html("이메일 : " + val.MEMEMAIL);
 					 $("#TicketText").html(val.ticketContext);

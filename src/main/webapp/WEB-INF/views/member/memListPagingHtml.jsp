@@ -6,8 +6,7 @@
 
 			<c:forEach items="${memList }" var="mem">
 				<tr>
-					<td>--</td>
-					<td>
+					<td style="width: 120px;">
 					
 						<c:choose>
 							<c:when test="${mem.memEmailDiv =='basic'}}">
@@ -33,7 +32,7 @@
 						</c:choose>
 						
 					</td>
-					<td>${mem.memId }</td>
+					<td style="width: 300px">${mem.memId }</td>
 					<td><fmt:formatDate value="${mem.memInDt }" pattern="yyyy/MM/dd" /></td>
 					
 					<td>

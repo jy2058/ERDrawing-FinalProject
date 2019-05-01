@@ -11,8 +11,8 @@
     					 <fmt:formatDate value="${ticket.get('TICKETBUYDT') }" pattern="yy-MM-dd"/>
     					</td>	
     					<td style="text-align: center;">${ticket.get("MEMID") }</td>	
-    					<td style="text-align: center;">${ticket.get("BANKNM") }</td>	
-    					<td style="text-align: center;">${ticket.get("ACCOUNT") }</td>	
+    					<td style="text-align: center; width: 200px;">${ticket.get("BANKNM") }</td>	
+    					<td style="text-align: center;width: 200px;">${ticket.get("ACCOUNT") }</td>	
     					<td style="text-align: center;">${ticket.get("ACCOUNTHOLDER") }</td>
     					<c:choose>
     						<c:when test="${ticket.get('REFUND_RESPDT') == null }">

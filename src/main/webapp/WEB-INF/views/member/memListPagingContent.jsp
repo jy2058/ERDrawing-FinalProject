@@ -20,16 +20,16 @@
 	height: auto;
 }
 
-table{
-	border-radius:10px;
-	overflow:hidden;
+table {
+	border-radius: 10px;
+	overflow: hidden;
 	/* box-shadow: 2px 2px 2px 2px gray; */
 	font-size: 13px;
 }
+
 tbody tr:nth-child(even) {
 	background-color: #ffffff;
 	height: 40px;
-	
 }
 
 tbody tr:nth-child(odd) {
@@ -38,41 +38,42 @@ tbody tr:nth-child(odd) {
 }
 
 th {
- background-color: #ccdb5c;
- color:#000000;
- font-weight:bold;
- text-align: center;
- height: 40px;
+	background-color: #ccdb5c;
+	color: #000000;
+	font-weight: bold;
+	text-align: center;
+	height: 40px;
 }
+.modalLabel{
+margin-left: 2%;}
 
-td{
+td {
 	text-align: center;
 }
 
-.table-responsive{
+.table-responsive {
 	/* background:#eeeeee; */
-	padding:20px;
-	border-radius:10px;
-	
+	padding: 20px;
+	border-radius: 10px;
 }
 
 /* #contents{background:#eee;} */
-
 .pagination {
-  border:0px;
+	border: 0px;
 }
 
-.pagination > .active > a,
-.pagination > .active > span,
-.pagination > .active > a:hover,
-.pagination > .active > span:hover,
-.pagination > .active > a:focus,
-.pagination > .active > span:focus {
-  z-index: 2;
-  color: #000000;
-  cursor: default;
-  background-color: #ccdb5c;
-  border-color: #ccdb5c;
+.pagination>.active>a, .pagination>.active>span, .pagination>.active>a:hover,
+	.pagination>.active>span:hover, .pagination>.active>a:focus,
+	.pagination>.active>span:focus {
+	z-index: 2;
+	color: #000000;
+	cursor: default;
+	background-color: #ccdb5c;
+	border-color: #ccdb5c;
+}
+
+.sizeModify {
+	width: 180px;
 }
 </style>
 
@@ -106,46 +107,49 @@ td{
 					<div class="form-group">
 						<!-- 여기부터 로직작성 -->
 						<label class="modalLabel">회원 이름</label> <input type="text"
-							id="memNm" name="memNm">
+							id="memNm" name="memNm" class="sizeModify">
 
 						<div id="dupleCode"></div>
 					</div>
 
 					<div class="form-group">
-						<label class="modalLabel">회원 아이디</label> <input type="text"
-							name="memId" id="memId">
+						<label class="modalLabel">회원 아이디</label> <input class="sizeModify"
+							type="text" name="memId" id="memId">
 					</div>
 
 					<div class="pass form-group">
 						<label class="modalLabel">회원 비밀번호</label> <input type="password"
-							class="memPass" id="memPass" oninput="checkPwd()" />
+							class="memPass sizeModify" id="memPass" oninput="checkPwd()" />
 					</div>
 
 					<div class="pass form-group">
 						<label class="modalLabel">회원 비밀번호 확인</label> <input
-							type="password" class="memPass" id="reMemPass" name="memPass"
-							oninput="checkPwd()" />
+							type="password" class="memPass sizeModify" id="reMemPass"
+							name="memPass" oninput="checkPwd()" />
 					</div>
 
 					<div class="form-group">
-						<label class="modalLabel">회원 이메일</label> <input type="text"
-							name="memMail" id="memMail">
+						<label class="modalLabel">회원 이메일</label> <input class="sizeModify"
+							type="text" name="memMail" id="memMail">
 					</div>
 
 
 					<div class="form-group">
-						<label class="modalLabel">회원 소개</label> <input type="text"
-							name="memIntro" id="memIntro">
+						<label class="modalLabel">회원 소개</label><br />
+						<!-- <input class="sizeModify"  type="text"
+							name="memIntro" id="memIntro"><br/> -->
+						<textarea style="width: 180px; height: 100px; margin-left: 29%"
+							name="memIntro" id="memIntro"></textarea>
 					</div>
 
 					<div class="form-group">
-						<label class="modalLabel">회원 전화번호</label> <input type="text"
-							name="memTel" id="memTel">
+						<label class="modalLabel">회원 전화번호</label> <input
+							class="sizeModify" type="text" name="memTel" id="memTel">
 					</div>
 
 					<div class="form-group">
-						<label class="modalLabel">회원 가입날짜</label> <input type="text"
-							name="memInDts" id="memInDts">
+						<label class="modalLabel">회원 가입날짜</label> <input
+							class="sizeModify" type="text" name="memInDts" id="memInDts">
 					</div>
 
 					<div class="form-group">
@@ -154,17 +158,14 @@ td{
 							data-on="O" data-off="X" /> <input type="hidden"
 							name="memBlackFlag" id="memBlackFlag" /> <label
 							class="modalLabel" style="width: 30px"> </label> <label
-							class="modalLabel" style="width: 30px">탈퇴 여부</label> <input
+							class="modalLabel" style="width: 70px">탈퇴 여부</label> <input
 							type="checkbox" name="chMemCancelFlag" id="chMemCancelFlag"
 							data-toggle="toggle" data-on="O" data-off="X" /> <input
 							type="hidden" name="memCancelFlag" id="memCancelFlag" />
 
 					</div>
 
-					<div class="form-group">
-						<label class="modalLabel">이용권 기한</label> <input type="text"
-							name="memPeriods" id="memPeriods">
-					</div>
+
 
 				</div>
 				<div class="modal-footer">
@@ -234,30 +235,29 @@ td{
 
 <!----------------------------- 회원정보 테이블 -------------------------->
 <form id="frm" action="${cp }/member/memberDel">
-		<table>
-			<thead>
-				<tr>
-					<th>#</th>
-					<th>Name</th>
-					<th>Id</th>
-					<th>Date Created</th>
-					<th>Black List</th>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Id</th>
+				<th>Date Created</th>
+				<th>Black List</th>
 
-					<!-- <th>Status</th> -->
-					<th>Secession</th>
-					<th style="text-align: right;">Action</th>
-					<th></th>
-				</tr>
-			</thead>
+				<!-- <th>Status</th> -->
+				<th>Secession</th>
+				<th style="text-align: right;">Action</th>
+				<th></th>
+			</tr>
+		</thead>
 
-			<tbody id="memListTbody">
-			</tbody>
-		</table>
+		<tbody id="memListTbody">
+		</tbody>
+	</table>
 
-		<nav id="divNav" style="text-align: center; width: 100%;">
-			<ul class="pagination" id="pagination">
-			</ul>
-		</nav>
+	<nav id="divNav" style="text-align: center; width: 100%;">
+		<ul class="pagination" id="pagination">
+		</ul>
+	</nav>
 
 </form>
 

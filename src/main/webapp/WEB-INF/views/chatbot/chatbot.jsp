@@ -118,6 +118,7 @@ h2
 
 .message.from {
   color: white;
+  width: 300px;
   background-color: #827DCF;
   margin-left: 26px;
 }
@@ -134,7 +135,7 @@ h2
 .message p {
   text-align: left;
     padding: 10px;
-  margin: 0;
+  margin: 15;
 }
 
 .message:after {

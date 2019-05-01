@@ -59,18 +59,20 @@ td{
 
 .modal-dialog, .modal-content {
     height: auto;
+    margin-top: 10%;
+    margin-left: 28%;
 }
 .modal{
  color: #000;
 
 }
-.modalLabels{
-width: 25%;}
+.modalLabels{padding-left: 2%;
+width: 40%;}
 
 .ticketInfo{
-padding-left: 10%;
+padding-left: 2%;
 
-width: 30%;
+width: 40%;
 }
 </style>
 
@@ -191,29 +193,29 @@ width: 30%;
 
 				<div class="pass form-group">
 					<label class="modalLabels">BANK</label> 
-					    <select id="bankNm" name="bankNm">
+					    <select id="bankNm" name="bankNm" style="width: 150px;">
                      <option selected="selected" value="">은행선택</option>
-                     <option id="D01" value="W003">기업은행</option>
-                     <option id="D02" value="W005">외환은행</option>
-                     <option id="D03" value="W004">국민은행</option>
-                     <option id="D04" value="W011">농협중앙회</option>
-                     <option id="D05" value="W020">우리은행</option>
-                     <option id="D06" value="W088">신한은행</option>
-                     <option id="D07" value="W023">SC제일은행</option>
-                     <option id="D08" value="W027">씨티은행</option>
-                     <option id="D09" value="W031">대구은행</option>
-                     <option id="D10" value="W032">부산은행</option>
-                     <option id="D11" value="W034">광주은행</option>
-                     <option id="D13" value="W039">경남은행</option>
-                     <option id="D14" value="W071">우체국</option>
-                     <option id="D15" value="W081">KEB 하나은행</option>
-                     <option id="D19" value="W007">수협중앙회</option>
+                     <option id="D01" value="기업은행">기업은행</option>
+                     <option id="D02" value="외환은행">외환은행</option>
+                     <option id="D03" value="국민은행">국민은행</option>
+                     <option id="D04" value="농협중앙회">농협중앙회</option>
+                     <option id="D05" value="우리은행">우리은행</option>
+                     <option id="D06" value="신한은행">신한은행</option>
+                     <option id="D07" value="제일은행">SC제일은행</option>
+                     <option id="D08" value="씨티은행">씨티은행</option>
+                     <option id="D09" value="대구은행">대구은행</option>
+                     <option id="D10" value="부산은행">부산은행</option>
+                     <option id="D11" value="광주은행">광주은행</option>
+                     <option id="D13" value="경남은행">경남은행</option>
+                     <option id="D14" value="우체국">우체국</option>
+                     <option id="D15" value="KEB 하나은행">KEB 하나은행</option>
+                     <option id="D19" value="수협중앙회">수협중앙회</option>
                   </select>
 				</div>
 
 				<div class="form-group">
 					<label class="modalLabels">ACCOUNTHOLDER<br/>(예금주명)</label>
-					 <input type="text" name="accountHolder" id="accountHolder">
+					 <input type="text" name="accountHolder" id="accountHolder" placeholder="예금주명을 입력해주세요">
 				</div>
 			</div>
 			<div id="modalBtn" class="modal-footer">
