@@ -1,56 +1,317 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-  <link rel="stylesheet" href="/css/test/app.css">
-  <div class="chat-column">
-	<div id="scrollingChat">
-		<div class="segments load">
-			<div class="from-watson top">
-				<div class="message-inner">
-					<p>Hello, I am the bank's Virtual Agentㅁ.</p>
-				</div>
-			</div>
-		</div>
-		<div class="segments load">
-			<div class="from-watson sub">
-				<div class="message-inner">
-					<p>
-						I can help you with a number of banking tasks:<ul>
-						<li><div class="options-list"
-								onclick="ConversationPanel.sendMessage('I want to make a credit card payment');">Making a credit card payment</div></li>
-						<li><div class="options-list"
-								onclick="ConversationPanel.sendMessage('I want to book an appointment with a banker');">Booking an appointment with a banker</div></li>
-						<li><div class="options-list"
-								onclick="ConversationPanel.sendMessage('Help me choose a credit card');">Choosing a credit card</div></li>
-					</ul>
-					</p>
-				</div>
-			</div>
-		</div>
-		</div>
-        <label
-							for="textInput" class="inputOutline"> <input
-							id="textInput" class="input responsive-column"
-							placeholder="Type something" type="text"
-							onkeydown="ConversationPanel.inputKeyDown(event, this)"
-							autofocus="" style="width:100%">
-        </label>
-        
-					<div class="disclaimer">
-          * This system is for demonstration purposes only and is not intended to process Personal Data. No Personal
-          Data is to be entered
-          into this system as it may not have the necessary controls in place to meet the requirements of the General
-          Data Protection
-          Regulation (EU) 2016/679.
-        </div>
-        
-     </div>
-      <script>
-
-</script>
-  <script src="/css/test/common.js"></script>
-  <script src="/css/test/api.js"></script>
-  <script src="/css/test/conversation.js"></script>
-  <script src="/css/test/payload.js"></script>
-  <script src="/css/test/global.js"></script>
-  <script type="text/javascript" src="https://cdn.rawgit.com/watson-developer-cloud/watson-developer-cloud.github.io/master/analytics.js"></script>
+    
+ <style>
  
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background-color: #DDE0E5;
+}
+a
+{
+  text-decoration:none;
+  color:#827DCF;
+  -webkit-transition: 0.3s ease-out;
+	transition: 0.3s ease-out;
+}
+a:hover
+{
+  color:black
+}
+
+h2
+{
+  text-align:center;
+  font-weight:100;
+  font-size:24px;
+  margin-top:20px;
+}
+.card {
+  z-index: 1;
+  position: relative;
+  width: 490px;
+  height: 650px;
+  margin: 0 auto;
+  margin-top: 20px;
+  background-color: white;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 51px 82px -21px rgba(0, 0, 0, 0.61);
+  -moz-box-shadow: 0px 51px 82px -21px rgba(0, 0, 0, 0.61);
+  box-shadow: 0px 51px 82px -21px rgba(0, 0, 0, 0.61);
+}
+
+.banner {
+  position: absolute;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  height: 67px;
+  width: 100%;
+  background-color: #827DCF;
+  font-family: 'Quicksand', sans-serif;
+}
+
+.banner h1 {
+  color: white;
+  font-size: 25px;
+  margin-left: 65px;
+  margin-top: 17.5px;
+  font-weight: 400;
+}
+
+.banner h1 b {
+  font-weight: 800;
+}
+
+.cog {
+  fill: white;
+  stroke: black;
+  height: 27px;
+  width: 27px;
+  position: absolute;
+  top: 21px;
+  right: 15px;
+}
+
+.contact-photo {
+  position: absolute;
+  top: 15.5px;
+  left: 15px;
+  height: 35px;
+  width: 35px;
+  border-radius: 50%;
+  background-color: black;
+  background-image: url("https://filmshotfreezer.files.wordpress.com/2011/07/untitled-1.jpg");
+  background-size: cover;
+  background-position: center;
+}
+
+.main-text-area {
+    overflow-y: auto;
+  position: absolute;
+  top: 67px;
+     height: 500px;
+  width: 100%;
+}
+
+.time-stamp {
+  position: relative;
+  width: 100%;
+  text-align: center;
+  margin-top: 20px;
+  margin-bottom: 19px;
+  font-size: 12px;
+  font-weight: normal;
+  color: #7C7C7C;
+}
+
+.message {
+  position: relative;
+  display: block;
+  font-weight: 400;
+  border-radius: 10px;
+  height: auto;
+    width: 200px;
+    font-size: 17px;
+}
+
+.message.from {
+  color: white;
+  background-color: #827DCF;
+  margin-left: 26px;
+}
+
+.message.to {
+  color: #7C7C7C;
+  background-color: #F1F1F1;
+  margin-left: 50%;
+  /* 
+  margin-right: 26px;
+  float: right; */
+}
+
+.message p {
+  text-align: left;
+    padding: 10px;
+  margin: 0;
+}
+
+.message:after {
+  position: absolute;
+  width: 0;
+  height: 0;
+  background-color: transparent;
+  content: "";
+  margin-top: -9px;
+}
+
+.message.from:after {
+  border-right: 16px solid #827DCF;
+  border-top-left-radius: 20px;
+  margin-left: -14px;
+}
+
+.message.to:after {
+  border-left: 16px solid #F1F1F1;
+  border-top-right-radius: 20px;
+  margin-left: 366px;
+}
+
+.delivered {
+  float: right;
+  display: block;
+  clear: both;
+  color: #d3d3d3;
+  font-weight: 400;
+  margin-right: 26px;
+  margin-top: 9px;
+  font-size: 14px;
+}
+
+.input-bar {
+  position: absolute;
+  bottom: 0;
+  height: 80px;
+  width: 100%;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background-color: #F1F1F1;
+}
+
+.input-bar-inner {
+  margin: 15px;
+  height: 49px;
+  border-radius: 7px;
+  background-color: white;
+}
+
+.input-bar-inner i {
+  color: #d3d3d3;
+  font-size: 25px;
+  margin-top: 12px;
+  margin-left: 20px;
+  -moz-transform: scaleX(-1);
+  -o-transform: scaleX(-1);
+  -webkit-transform: scaleX(-1);
+  transform: scaleX(-1) rotate(-180deg);
+}
+
+.input-bar-inner h6 {
+  float: right;
+  font-size: 20px;
+  margin-top: 10px;
+  margin-right: 27px;
+  color: #827DCF;
+  font-weight: 400;
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+}
+
+.input-bar-inner h6,
+.input-bar-inner i,
+.cog {
+  -webkit-transition: all 0.3s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  -ms-transition: all 0.3s ease-in-out;
+}
+
+.input-bar-inner h6:hover,
+.input-bar-inner i:hover,
+.cog:hover {
+  opacity: 0.3;
+  cursor: pointer;
+}
+
+#input-text {
+  /*    padding: 10px;*/
+  font-size: 17px;
+  vertical-align: middle;
+  margin-left: 10px;
+  margin-bottom: 8px;
+  width: 300px;
+  font-family: inherit;
+  font-weight: 400;
+  border: none;
+  border-right: solid 2px #F1F1F1;
+}
+
+#input-text:focus {
+  outline: none;
+}
+ </style>   
+  <div class="card">
+    <div class="banner">
+      <div class="contact-photo"></div>
+      <h1><b>Christian</b> (Client)</h1>
+
+    </div>
+    <div class="main-text-area">
+      <div class="time-stamp"><b>Thursday</b> 6:34 pm</div>
+      <div class="message from" style="width: 80%;margin-bottom: 20px;">
+        <p>안녕하세요. ERDrawing가상채팅봇입니다.
+        	ERDrawing의 사용방법에 대하여 도와드리겠습니다 :)	</p>
+      </div>
+    </div>
+    <div class="input-bar">
+      <div class="input-bar-inner">
+        <i class="fa fa-paperclip"></i>
+        <input id="input-text" value="" placeholder="Message"></input>
+        <h6 id="send">Send</h6>
+      </div>
+    </div><%-- 
+    <form id="frm" action="${cp }/chatbot/chatbotAnswer">
+    	<input type="hidden" id="question" name="question">
+    </form> --%>
+  </div>
+  
+  <script>
+  var userStr="";
+  
+  $("#input-text").on("keydown", function(e){
+	   if(e.keyCode == 13){
+		   inputAction();
+	   }
+	});
+  
+  $("#send").on("click",function(){
+	  inputAction();
+      
+  });
+  
+  function inputAction() {
+	  userStr= $("#input-text").val();
+  	  var userDiv = "<div class='message to'>"+"<p>"+userStr+"</p>"+"</div>";
+	 
+      $(".main-text-area").append(userDiv);
+      
+      chatBotAnswer(userStr);
+      
+      $("#input-text").val("");
+	
+}
+  
+  function chatBotAnswer(userStr) {
+	  $.ajax({
+			url : "${cp}/chatbot/chatbotAnswer",
+			data : {
+				userStr : userStr
+				
+			},
+			success : function(data) {
+				console.log(data.answer);
+				//로봇답
+				var chbotBotstr = "<div class='message from'>"+"<p>"+data.answer+"</p>"+"</div>"+"<div style='clear:both;'></div>";
+				
+				$(".main-text-area").append(chbotBotstr);
+
+			     $(".main-text-area").scrollTop(99999);
+			}
+		});
+	
+}
+  
+  
+  </script>

@@ -27,12 +27,66 @@ width: 130px;
      width: 123%; 
 }
 
+#footer h4 {
+    font-weight: 700;
+}
+
 table {
-    width: 100%;
-    font-size: 18px;
-    color: #000;
+    font-size: 13px;
     text-align: center;
+    border-radius:10px;
+	overflow:hidden;
+	/* box-shadow: 2px 2px 2px 2px gray; */
   
+}
+
+tbody tr:nth-child(even) {
+	background-color: #ffffff;
+	height: 40px;
+	
+}
+
+tbody tr:nth-child(odd) {
+	background-color: #eeeeee;
+	height: 40px;
+}
+
+th {
+ background-color: #ccdb5c;
+ color:#000000;
+ font-weight:bold;
+ text-align: center;
+ height: 40px;
+}
+
+td{
+	color:#000000;
+}
+
+.table-responsive{
+	/* background:#eeeeee; */
+	padding:20px;
+	border-radius:10px;
+	
+}
+
+/* #contents{background:#eee;} */
+
+.pagination {
+  border:0px;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  z-index: 2;
+  color: #000000;
+  cursor: default;
+  background-color: #ccdb5c;
+  border-color: #ccdb5c;
 }
 </style>
 
@@ -95,7 +149,7 @@ table {
 
 <!-- ===============환불내역 테이블=================  -->
 <div>
-    	<table border="1">
+    	<table>
     		<thead>
 	    		<tr>
 	    			<th>티켓</th>
@@ -111,7 +165,7 @@ table {
     		<tbody id="ticketRefListTbody"> 		</tbody>
     	</table>
 
-			<nav id="divNav" style="text-align: center;">
+			<nav id="divNav" style="text-align: center; width: 100%;">
 				<ul class="pagination" id="pagination">
 				</ul>
 			</nav>

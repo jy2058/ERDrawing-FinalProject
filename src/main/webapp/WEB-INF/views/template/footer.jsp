@@ -10,7 +10,7 @@
         </div>
         
         <div class="foot_menu col-sm-4">
-            <h4>ERDrawing</h4><br/>
+            <h4>ERDrawing</h4>
             <h4> <a href="${cp }/chatbot/chatbot" style="cursor: pointer;">1:1 Chatting</a></h4>
             
             <li>Library</li>

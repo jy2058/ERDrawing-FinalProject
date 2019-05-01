@@ -5,13 +5,65 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="icon" href="../../favicon.ico">
 <link rel="stylesheet" href="/css/member/memList.css">
-    <!-- Bootstrap core CSS -->
-    <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css"> -->
-
-   <%-- <link href="${cp}/css/dashboard.css" rel="stylesheet"> --%>
    
-<!-- <link href="https://gitcdn.github.io/bootstrap-toggle/2.2.2/css/bootstrap-toggle.min.css" rel="stylesheet">
-<script src="https://gitcdn.github.io/bootstrap-toggle/2.2.2/js/bootstrap-toggle.min.js"></script> -->
+<style>
+table{
+	border-radius:10px;
+	overflow:hidden;
+	/* box-shadow: 2px 2px 2px 2px gray; */
+}
+
+tbody tr:nth-child(even) {
+	background-color: #ffffff;
+	height: 40px;
+}
+
+tbody tr:nth-child(odd) {
+	background-color: #eeeeee;
+	height: 40px;
+}
+
+th {
+ background-color: #ccdb5c;
+ color:#000000;
+ font-weight:bold;
+ text-align: center;
+ margin-top: -100px;
+}
+
+td{
+}
+
+.table-responsive{
+	/* background:#eeeeee; */
+	padding:20px;
+	border-radius:10px;	
+}
+
+.pagination {
+  border:0px;
+}
+
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  z-index: 2;
+  color: #000000;
+  cursor: default;
+  background-color: #ccdb5c;
+  border-color: #ccdb5c;
+}
+
+.report{
+padding:7px;
+margin:10px 0;
+border-radius:5px;
+}
+</style>
+   
 
     <div class="container-fluid">
       <div class="row">
@@ -34,8 +86,8 @@
    #layer_popup .popupContent iframe {border:0;padding:0px;margin:0;z-index:10;}
 </style>
 	
-	<input type = "hidden" name="boardNo" value="${boardNo}"> 
-	<input type="button" id="report" onclick="layer_open()" value="신고" style="margin-left: 250px" />
+	<input type="hidden" name="boardNo" value="${boardNo}"> 
+	<input type="button" id="report" onclick="layer_open()" value="신고" style="margin-left: 250px;" />
 	
 <!-- <input type="button" id="report" onclick="layer_open()" value="신고"> -->
 <!-- <input type="button" value="레이어팝업 열기" onclick="layer_open();"  style="cursor:pointer; background-color:#663333; color:#FFF;" /> -->
@@ -125,12 +177,12 @@
          <br><br>
 
          <div class="table-responsive" style="margin-right: 20px; overflow: hidden;">
-            <table class="table table-striped" style="width: 100%; height: 100px">
+            <table class="table table-striped" style="width: 100%; height: 100px;">
                <thead>
-                  <tr style="height: 50px;">
-                     <th style="text-align: center; border-right: 2px solid #fff; color:black; width:15%;">댓글번호</th>
-                     <th style="text-align: center; border-right: 2px solid #fff; color:black; width:20%;">작성자</th>
-                     <th style="text-align: center; border-right: 2px solid #fff; color:black; width:35%;">댓글내용</th>
+                  <tr style="height: 40px; line-height: 100px; line-height: 5px;">
+                     <th style="text-align: center; color:black; width:15%;">댓글번호</th>
+                     <th style="text-align: center; color:black; width:20%;">작성자</th>
+                     <th style="text-align: center; color:black; width:35%;">댓글내용</th>
                      <th style="text-align: right; color:black; width:20%;">좋아요</th>
                      <th style="text-align: center; color:black; width:20%;"></th>
                   </tr>

@@ -12,9 +12,9 @@ import com.ibm.watson.developer_cloud.assistant.v1.model.MessageOptions;
 import com.ibm.watson.developer_cloud.assistant.v1.model.MessageResponse;
 import com.ibm.watson.developer_cloud.service.security.IamOptions;
 
-public class apiController {
+public class apiControllerTest {
 
-	private Logger logger = LoggerFactory.getLogger(apiController.class);
+	private Logger logger = LoggerFactory.getLogger(apiControllerTest.class);
 	@Test
 	public void test() {
 		IamOptions iamOptions = new IamOptions.Builder().apiKey("Rvy0XPi7YkMsaVk2MkZU5iVeSBv67fFl0EKlonub6hZL").build();
@@ -22,7 +22,7 @@ public class apiController {
 		service.setEndPoint("https://gateway-tok.watsonplatform.net/assistant/api");
 
 		String workspaceId = "2721d597-8f79-42f2-bc70-1fd348f64602";
-		InputData input = new InputData.Builder("이거").build();
+		InputData input = new InputData.Builder("sdfsdfsdf").build();
 
 		MessageOptions options = new MessageOptions.Builder(workspaceId)
 		  .input(input)
@@ -43,8 +43,11 @@ public class apiController {
 		String[] resarray2 = resarray[2].split("\\],");
 		
 		//System.out.println("====================================");
-		System.out.println(resarray2[0]);
+		System.out.println(resarray2[0]);System.out.println("====================================");
 		//System.out.println("====================================");
+		String[] resarray3 = resarray2[0].split("\"");System.out.println("====================================");
+		
+		System.out.println(resarray3[1]);
 	}
 
 }

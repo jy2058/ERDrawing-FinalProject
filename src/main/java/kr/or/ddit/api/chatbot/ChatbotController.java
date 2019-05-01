@@ -24,21 +24,30 @@ public class ChatbotController {
 	
 	@RequestMapping(path = "/chatbot")
 	public String login(Model model, HttpSession session) {
+		return "chatbot";
+	}
+	
+	//챗봇 대답 컨트롤러
+	@RequestMapping(path = "/chatbotAnswer")
+	public String chatbotAnswer(Model model, HttpSession session,String userStr) {
 		IamOptions iamOptions = new IamOptions.Builder().apiKey("Rvy0XPi7YkMsaVk2MkZU5iVeSBv67fFl0EKlonub6hZL").build();
 		Assistant service = new Assistant("2019-02-28", iamOptions);
 		service.setEndPoint("https://gateway-tok.watsonplatform.net/assistant/api");
 
 		String workspaceId = "2721d597-8f79-42f2-bc70-1fd348f64602";
-		InputData input = new InputData.Builder("안녕").build();
+		InputData input = new InputData.Builder(userStr).build();
 
-		MessageOptions options = new MessageOptions.Builder(workspaceId)
-		  .input(input)
-		  .build();
+		MessageOptions options = new MessageOptions.Builder(workspaceId).input(input).build();
 
 		MessageResponse response = service.message(options).execute();
 		logger.debug("====son{}",response);
-		System.out.println(response);
-		return "chatbot";
+		String temp = response.getOutput()+"";
+		String[] resarray = temp.split("\\[");
+		String[] resarray2 = resarray[2].split("\\],");
+		String[] resarray3 = resarray2[0].split("\"");
+		model.addAttribute("answer", resarray3[1]);
+		return "jsonView";
 	}
+	
 	
 }

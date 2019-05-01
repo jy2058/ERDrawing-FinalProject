@@ -967,6 +967,8 @@ position:absolute;
 #inputTxt ul{
 	margin:10px;
 }
+
+
 #inputTxt li{
 	display:inline-block;
 	vertical-align:top;
@@ -990,7 +992,7 @@ position:absolute;
 	display:inline-block;
 	background:#000;
 	padding:10px;
-	max-width:240px;
+	max-width:220px;
 	border-radius:10px;
 	word-break:break-all;
 }

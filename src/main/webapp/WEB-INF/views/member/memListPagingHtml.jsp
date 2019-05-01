@@ -61,8 +61,8 @@
 					<td id="setTd"><div class="d1">
 							<ul>
 								<li><svg  class="btn-style3"
-										xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="35"
-										height="30" viewBox="0 0 192 192" style="fill: #000000;">
+										xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="25"
+										height="25" viewBox="0 0 192 192" style="fill: #000000;">
 							
 								<g fill="none" fill-rule="nonzero" stroke="none"
 											stroke-width="1" stroke-linecap="butt"
@@ -82,7 +82,7 @@
 							</ul>
 						</div>
 					</td>
-					<td><img  class="delImg btn-style3" data-memid="${mem.memId }"	src="https://img.icons8.com/color/48/000000/cancel.png"	width="35" height="30"></td>
+					<td><img  class="delImg btn-style3" data-memid="${mem.memId }"	src="https://img.icons8.com/color/48/000000/cancel.png"	width="25" height="25" align="left"></td>
 				</tr>
 			</c:forEach>
 	

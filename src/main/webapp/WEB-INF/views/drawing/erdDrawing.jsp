@@ -3,6 +3,7 @@
 
 <script>
 	var erdNo = ${erdNo};
+	var S_userId = "${SESSION_MEMBERVO.memId}";
 	
 </script>
 
@@ -1988,7 +1989,7 @@
 	connectMsgWs();
 	
 	function connectMsgWs(){
-		var msgWs = new WebSocket("ws://localhost:8080/msgEcho");
+		var msgWs = new WebSocket("ws://192.168.206.35:8080/msgEcho");
 		MsgWebSocket = msgWs;
 		 
 		msgWs.onopen = function(){
