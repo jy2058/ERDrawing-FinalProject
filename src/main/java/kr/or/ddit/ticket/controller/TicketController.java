@@ -84,17 +84,18 @@ public class TicketController {
       
       TicketVo vo = ticketService.selectTicket(ticketVo.getTicketNo()+"");
 
-		String realFilename = vo.getTicketImg();
+		String filename = vo.getTicketImg();
 		
-		//수정할 이미지가 있을경우
+		//수정시
 		if (profileImg.getSize() > 0) {
-			String filename = profileImg.getOriginalFilename();
-			realFilename = "d:\\picture\\" + UUID.randomUUID() + filename;
+			filename = UUID.randomUUID() +profileImg.getOriginalFilename();
+			String path = req.getServletContext().getRealPath("/upload/");
+			String pathFilename = path +  filename;
 
-			profileImg.transferTo(new File(realFilename));
+			profileImg.transferTo(new File(pathFilename));
 		}
 		
-		ticketVo.setTicketImg(realFilename);
+		ticketVo.setTicketImg(filename);
       
       int updCnt = ticketService.updateTicket(ticketVo);
       
@@ -127,10 +128,21 @@ public class TicketController {
    
 	// 티켓추가
 	@RequestMapping("/insertTicket")
-	public String insertTicket(Model model, TicketVo ticketVo, RedirectAttributes ra, HttpServletRequest req) {
+	public String insertTicket(MultipartFile profileImg,Model model, TicketVo ticketVo, RedirectAttributes ra, HttpServletRequest req) throws IllegalStateException, IOException {
 		logger.debug("======insertTicket{}", ticketVo);
-		int inCnt = ticketService.insertTicket(ticketVo);
 
+		String filename="";
+		if (profileImg.getSize() > 0) {
+			filename = UUID.randomUUID() +profileImg.getOriginalFilename();
+			String path = req.getServletContext().getRealPath("/upload/");
+			String pathFilename = path +  filename;
+
+			profileImg.transferTo(new File(pathFilename));
+		}
+		
+		ticketVo.setTicketImg(filename);
+		int inCnt = ticketService.insertTicket(ticketVo);
+		
 		if (inCnt > 0) {
 			ra.addFlashAttribute("msg", "추가 되었습니다.");
 		} else {
@@ -251,8 +263,9 @@ public class TicketController {
 			// 3-1. memImg 존재 할 경우
 			// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다.
 			FileInputStream fis;
+			String path = req.getServletContext().getRealPath("/upload/");
 			if (tickerVo != null && tickerVo.getTicketImg() != null) {
-				fis = new FileInputStream(new File(tickerVo.getTicketImg()));
+				fis = new FileInputStream(new File(path+tickerVo.getTicketImg()));
 			}
 			// 3-2. memImg 존재하지 않을 경우
 			// 3-2-1. /image/noImg.png(application.getRealPath())

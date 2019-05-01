@@ -45,7 +45,8 @@
 
 					<c:when test="${SESSION_MEMBERVO == null }">
 						<li><a href="${cp }/login">로그인</a></li>
-						<li><a href="${cp }/join">회원가입</a></li>
+						<%-- <li><a href="${cp }/join">회원가입</a></li> --%>
+						 <li><a class="join">회원가입</a></li> 
 					</c:when>
 					<c:otherwise>
 						<li><a href="${cp }/mypage" style="padding:7px 15px 7px 15px;">
@@ -100,6 +101,9 @@
 <script src="//developers.kakao.com/sdk/js/kakao.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.3.0/sockjs.min.js"></script>
 <script>
+
+
+
 		var abc;
 		$("#logout").click(function() {
 		if ($("#memEmailDiv").val() == "google") {

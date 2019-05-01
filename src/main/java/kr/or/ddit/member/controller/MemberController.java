@@ -68,6 +68,10 @@ public class MemberController {
 		
 	}
 	
+	
+	
+	
+	
 	@RequestMapping("/checkId")	//아이디 중복 체크
 	public String checkId(MemberVo memVo,RedirectAttributes ram,Model model){
 		MemberVo memId = memberService.selectMember(memVo.getMemId());
@@ -105,8 +109,9 @@ public class MemberController {
 			// 3-1. memImg 존재 할 경우
 			// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다.
 			FileInputStream fis;
+			String path = req.getServletContext().getRealPath("/upload/");
 			if (memberVo != null && memberVo.getMemImg() != null) {
-				fis = new FileInputStream(new File(memberVo.getMemImg()));
+				fis = new FileInputStream(new File(path+memberVo.getMemImg()));
 			}
 			// 3-2. memImg 존재하지 않을 경우
 			// 3-2-1. /image/noImg.png(application.getRealPath())
@@ -316,19 +321,21 @@ public class MemberController {
 
 		MemberVo vo = memberService.selectMember(memVo.getMemId());
 
-		String realFilename = vo.getMemImg();
+		String filename = vo.getMemImg();
+		//수정시
 		if (profileImg.getSize() > 0) {
-			String filename = profileImg.getOriginalFilename();
-			realFilename = "d:\\picture\\" + UUID.randomUUID() + filename;
+			filename = UUID.randomUUID() +profileImg.getOriginalFilename();
+			String path = req.getServletContext().getRealPath("/upload/");
+			String pathFilename = path +  filename;
 
-			profileImg.transferTo(new File(realFilename));
+			profileImg.transferTo(new File(pathFilename));
 		}
 		
 		logger.debug("imgDelck===={}",imgDelCk);
 		if(imgDelCk.equals("imgno")){
 			vo.setMemImg(null);
 		}else{
-			vo.setMemImg(realFilename);	
+			vo.setMemImg(filename);	
 		}
 		
 		

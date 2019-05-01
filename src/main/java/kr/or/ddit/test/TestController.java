@@ -245,6 +245,8 @@ public class TestController {
 				break;
 			case "erdModify":
 				page = "erd/erdModify";
+			case "joinAgree":
+				page = "member/joinAgree";
 		}
 		
 		return page;
