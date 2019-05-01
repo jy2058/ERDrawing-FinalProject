@@ -216,7 +216,7 @@ margin-left: 7%;}
 		 divHeight = $("#test1").prop('scrollHeight');
 	
 		 if( scrollValue+150>divHeight&&scrollValue2+150>divHeight2){
-				$("#joinBtn").prop("disabled", false);
+				$("#joinBtn").prop("disabled", false); 
 				document.getElementById("joinBtn").style.backgroundColor = "#ef1c7b";
 	}
 		 
