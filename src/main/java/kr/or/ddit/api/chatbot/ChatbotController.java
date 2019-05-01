@@ -24,6 +24,8 @@ public class ChatbotController {
 	
 	@RequestMapping(path = "/chatbot")
 	public String login(Model model, HttpSession session) {
+
+
 		return "chatbot";
 	}
 	

@@ -55,7 +55,7 @@ public class MemberController {
 	public String join(MemberVo memVo,RedirectAttributes ra,HttpServletRequest req){
 		logger.debug("===={}",memVo);
 		String pass =KISA_SHA256.encrypt(memVo.getMemPass());
-		MemberVo vo = new MemberVo(memVo.getMemId(), memVo.getMemMail(),pass , memVo.getMemNm(), memVo.getMemLang(), "basic");
+		MemberVo vo = new MemberVo(memVo.getMemId(), memVo.getMemMail(),pass , memVo.getMemNm(),"kr", "basic");
 		int cnt = memberService.insertMember(vo);
 		
 		if(cnt==1){

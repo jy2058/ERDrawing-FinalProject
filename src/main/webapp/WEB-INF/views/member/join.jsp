@@ -11,24 +11,37 @@
 }
 
 .submit-btn {
-	margin: 10px 0 50px 0;
-	width: 100px;
+    margin-left: 500px;
+    /* margin: 10px 0 50px 0; */
+    width: 100px;
+    margin-bottom: 30px;
 }
-
 .memLang input {
+margin-bottom:0px;
 	margin: 10px 0 0 0;
-	width: 10px;
+	width: 18px;
 }
 
-#memId{
+#memId ,#memMail, #citationVal {
+display: inline-block;
 margin: 0 0 0 0;
-	width: 450px;
+	width: 416px;
 }
 
 #check{
 margin: 0 0 0 0;
 	width: 100px;
 }
+
+#checkId ,#checkEmail,#citation{
+width: 170px;
+padding:0px;
+   display: inline-block; 
+     width: ; 
+         margin-left: 10px;
+}
+
+
 </style>
 
 <div class="member">
@@ -42,34 +55,38 @@ margin: 0 0 0 0;
 		<input type="text" id="memNm" name="memNm" /> 
 		
 		<span >아이디</span>
-		<div >
+		
+		<div style="display: inline-block; width: auto;">
 		<input type="text" id="memId" name="memId" /> 
-		<input type="button" class="btn-style1" id="checkId" name="checkId" value="중복" />
-		
+		<input type="button" class="btn-style1"  id="checkId" name="checkId" value="중복" />
 		</div>
 		
 		
 		
-		
+		<div style="display: inline-block; width: auto;">
 		<span>이메일</span> 
-		<input	type="text" id="memMail" name="memMail" /> 
+		<input	type="text" id="memMail" name="memMail" placeholder="abc123@email.com 형태로 입력해 주세요"/> 
 		<input type="button" class="btn-style1" id="checkEmail" name="email" value="인증번호 보내기" />
-		<div id="fileDiv"></div>
-		<span>비밀번호</span> 
-		<input	type="password" class="memPass" id="memPass"  oninput="checkPwd()" />
-		 <span>비밀번호 확인</span> 
-		 <input	type="password" class="memPass" id="reMemPass" name="memPass" oninput="checkPwd()" />
-		 
-		  <span>언어</span>
-		<div class=".member input memLang">
-			kr	<input type="radio" name="memLang" checked value="kr" />
-			en	<input type="radio" name="memLang" value="en" />
 		</div>
 		
-		<span>핸드폰 번호</span> <input type="text" id="memTel" name="memTel" />
- <div class="g-recaptcha" data-sitekey="6LfnUpoUAAAAAMtKydIehTmTDdm7JZUubAfHHVuf"></div>
+		<div id="fileDiv">
+		<span>인증번호</span> 
+		<input type='text' id='citationVal' placeholder='인증번호를 입력해주세요~' /> 
+		<input type='button' class='btn-style1' id='citation' value='인증' />
+		</div>
+		
+		<span>비밀번호</span> 
+		<input	type="password" class="memPass" id="memPass"  oninput="checkPwd()" placeholder="비밀번호는 숫자, 영문, 특수문자 조합으로 6~15자리를 사용해야 합니다."/>
+		 <span>비밀번호 확인</span> 
+		 <input	type="password" class="memPass" id="reMemPass" name="memPass" oninput="checkPwd()"  />
+		 
+		<span>핸드폰 번호</span> 
+		<input type="text" id="memTel" name="memTel" placeholder="'-'자 없이 입력해주세요" />
 
-		<div class="submit-btn btn-style1">회원가입</div>
+		
+ 		<div style="margin-left: 25%; " class="g-recaptcha" data-sitekey="6LfnUpoUAAAAAMtKydIehTmTDdm7JZUubAfHHVuf"></div>
+		<div class="submit-btn btn-style1 ">회원가입</div>
+		
 	</form>
 </div>
 <script>
@@ -79,6 +96,14 @@ var checkEmail=0;
 var pwdCheck=0;
 
 	$(document).ready(function() {
+		
+		 $("#fileDiv").hide();
+		 
+		 $("#memTel").on("keyup", function(e) {
+			 console.log("dfdf")
+               $(this).val($(this).val().replace(/[^0-9]/g,""));
+           });
+		
 		//회원가입 버튼 클릭시
 		$(".submit-btn").on("click", function() {
 			
@@ -112,10 +137,6 @@ var pwdCheck=0;
 				return;
 			}
 			
-			
-		
-			
-			
 			if($("#memPass").val().trim()==""){
 				//$("#memId").val().trim()
 				alert("비밀번호를 입력해 주세요");
@@ -130,7 +151,6 @@ var pwdCheck=0;
 				return;
 			}
 			
-			
 		
 			if($("#memTel").val().trim()==""){
 				//$("#memId").val().trim()
@@ -138,6 +158,7 @@ var pwdCheck=0;
 				$("#memTel").focus();
 				return;
 			}
+			
 			
 			
 			if(!/^[a-zA-Z0-9!@#$%^&*()?_~]{6,15}$/.test($("#reMemPass").val()))
@@ -210,15 +231,22 @@ var pwdCheck=0;
 		
 		//이메일 인증보내기 클릭시
 		$("#checkEmail").on("click", function() {
-			if(checkInput > 0){
+			
+			var exptext = /^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/;
+			if($("#memMail").val().trim()==""  || exptext.test($("#memMail").val())==false){
+				//$("#memId").val().trim()
+				alert(" 메일형식이 올바르지 않습니다");
+				$("#memMail").focus();
 				return;
 			}
+			
 			if($("#memMail").val().trim()==""){
 				//$("#memId").val().trim()
 				alert("메일을 입력해 주세요");
 				$("#memMail").focus();
 				return;
 			}
+			
 			
 			var email = $("#memMail").val();
 			$.ajax({
@@ -227,17 +255,25 @@ var pwdCheck=0;
 			data : { email: email}, 
 			success : function(data) {
 				if(data.check==true){
-					var citationStr = "<input type='text' id='citationVal' placeholder='인증번호를 입력해주세요~' /> "
-					+"<input type='button' class='btn-style1' id='citation' value='인증' />"
-					 $("#fileDiv").append(citationStr);
+					 $("#fileDiv").show();
 					checkInput++;
 					
 					$("#citation").on("click", function() {
+						
+						
+						if($("#citationVal").val().trim()==""){
+							//$("#memId").val().trim()
+							alert("인증번호를 입력해 주세요");
+							$("#citationVal").focus();
+							return;
+						}
 						
 						 if(data.joinCode==$("#citationVal").val()){
 							
 						alert("인증");
 						checkEmail++;
+						}else{
+							alert("인증번호가 일치하지 않습니다.");
 						} 
 					});
 					
@@ -252,6 +288,8 @@ var pwdCheck=0;
 		});
 		});
 	});
+	
+	
 	function checkPwd() {
 		var inputed = $(".memPass").val();
         var reinputed = $("#reMemPass").val();
