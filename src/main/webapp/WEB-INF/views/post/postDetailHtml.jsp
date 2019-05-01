@@ -11,7 +11,7 @@
 				<td style="text-align: center; color:black; height:10px; line-height: 25px;">${cmt.memId}</td>
 				
 				<c:if test="${cmt.flag eq 'T'}">
-					<td style="color:black; height:10px; vertical-align: bottom">
+					<td style="color:black; height:10px; vertical-align: bottom; line-height: 25px;">
 					<!-- <img src="https://img.icons8.com/material/24/000000/fairytale.png"> -->
 					<svg  xmlns="http://www.w3.org/2000/svg" x="0px" y="100px" width="20" height="20" viewBox="0 0 192 192" style="fill: #000000;">
 						<g xmlns="http://www.w3.org/2000/svg" font-family="none"
@@ -26,13 +26,13 @@
 					&nbsp;${cmt.cmtContent}</td>
 				</c:if>
 				<c:if test="${cmt.flag eq 'F'}">
-					<td style="border-right:2px solid #fff; color:black; height:10px; line-height: 25px;">&nbsp;${cmt.cmtContent}</td>
+					<td style="color:black; height:10px; line-height: 25px;">&nbsp;${cmt.cmtContent}</td>
 				</c:if>
 				
 				
-				<td style="text-align: center; color:black; height:10px;">( ${cmt.cnt} 건 )
+				<td style="text-align: center; color:black; height:10px; line-height: 25px;">( ${cmt.cnt} 건 )
 					<%-- <button type="button" id="likeBtn" class="btnLike btn-default" data-cmtnum="${cmt.cmtNo}">좋아요</button> --%> 
-					<img src="https://img.icons8.com/ios-glyphs/30/000000/facebook-like.png" id="likeBtn" width="24" height="24" class="btnLike btn-default" data-cmtnum="${cmt.cmtNo}" style="cursor: pointer;" />
+					<img src="https://img.icons8.com/ios-glyphs/30/000000/facebook-like.png" id="likeBtn" width="24" height="24" class="btnLike btn-default" data-cmtnum="${cmt.cmtNo}" style="cursor: pointer;  vertical-align: middle;" />
 					<%-- <c:if test="${SESSION_MEMBERVO.memId == cmt.memId}">
 					<button type="button" class="btnDel btn-default" data-cmtnum="${cmt.cmtNo}">삭제</button>
 						 <c:choose>
@@ -44,7 +44,7 @@
 				</td>
 				<td>
 				<c:if test="${SESSION_MEMBERVO.memId == cmt.memId}">
-					<button type="button" class="btnDel btn-default" data-cmtnum="${cmt.cmtNo}">삭제</button>
+					<button type="button" id="cmtDelBtn" class="btnDel btn-default" data-cmtnum="${cmt.cmtNo}">삭제</button>
 						<%--  <c:choose>
 								<c:when test="${SESSION_MEMBERVO.memId ne null}">
 									<a href="javascript: like_func();"><img src="">좋아요</a>

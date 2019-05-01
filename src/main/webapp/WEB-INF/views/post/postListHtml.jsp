@@ -6,7 +6,8 @@
 
 		<c:forEach items="${postList}" var="post">
 			<tr class='postTr' data-postno="${post.postNo}" data-postgn="${post.postGn}" data-flag="${post.postDelFlag}" >
-				<td style="text-align: center;  color:black; height:10px;">${post.postNo}</td>
+				<%-- <td style="text-align: center;  color:black; height:10px;">${post.postNo}</td> --%>
+				<td style="text-align: center;  color:black; height:10px;"></td>
 				<c:choose>
 					<c:when test="${post.level gt 1}"> <!--레벨에 따른 공백주기  -->
 					<a href="javascript:void(0);" onclick="fnTrClick('${post.postNo}', '${post.postGn}', '${post.postDelFlag}');"> ${post.postTitle}</a>
