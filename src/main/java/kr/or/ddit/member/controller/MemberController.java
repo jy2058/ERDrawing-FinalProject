@@ -102,7 +102,6 @@ public class MemberController {
 			// 2. 해당 사용자 아이디로 사용자 정보 조회(realFilename)
 		 	MemberVo memberVo = memberService.selectMember(memId);
 		 	
-		 	
 			// 3-1. memImg 존재 할 경우
 			// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다.
 			FileInputStream fis;
@@ -299,9 +298,6 @@ public class MemberController {
 	 
 	 @RequestMapping("/memberErd")
 	 public String memberErd(@RequestParam("memId")String memId, Model model){
-		 System.out.println("dsfjksdfjsdkfjsdkf;sdjf");
-		 logger.debug("---memId : {}", memId);
-		 
 		 MemberVo memberVo = memberService.selectMember(memId);
 		 model.addAttribute("memberVo", memberVo);
 		 
