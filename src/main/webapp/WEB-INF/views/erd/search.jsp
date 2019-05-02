@@ -37,6 +37,17 @@
 	width: 93%;
 	padding-left: 10px;
 }
+.background-etc {
+    position: absolute;
+    z-index: 9000;
+    display: none;
+    width: 100%;
+    height: 100%;
+    left: 0;
+    top: 0;
+    background-color:0;
+    color: #fff;
+}
 </style>
 
 <div class="modal modal-center fade navbar-example" id="modalEvnTest" tabindex="1" role="dialog" aria-labelledby="my80sizeCenterModalLabel" >

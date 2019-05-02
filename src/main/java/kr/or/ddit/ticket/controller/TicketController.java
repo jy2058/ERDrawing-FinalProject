@@ -89,7 +89,13 @@ public class TicketController {
 		//수정시
 		if (profileImg.getSize() > 0) {
 			filename = UUID.randomUUID() +profileImg.getOriginalFilename();
-			String path = req.getServletContext().getRealPath("/upload/");
+			String path = "";
+		      String os = System.getProperty("os.name").toLowerCase();
+		      if(os.indexOf("win") > -1){
+		         path = "d:\\picture\\" ;
+		      }else if(os.indexOf("mac") > -1){
+		         path = "/users/shinys/imagesave/";
+		      }
 			String pathFilename = path +  filename;
 
 			profileImg.transferTo(new File(pathFilename));
@@ -134,7 +140,13 @@ public class TicketController {
 		String filename="";
 		if (profileImg.getSize() > 0) {
 			filename = UUID.randomUUID() +profileImg.getOriginalFilename();
-			String path = req.getServletContext().getRealPath("/upload/");
+			String path = "";
+		      String os = System.getProperty("os.name").toLowerCase();
+		      if(os.indexOf("win") > -1){
+		         path = "d:\\picture\\" ;
+		      }else if(os.indexOf("mac") > -1){
+		         path = "/users/shinys/imagesave/";
+		      }
 			String pathFilename = path +  filename;
 
 			profileImg.transferTo(new File(pathFilename));
@@ -263,7 +275,13 @@ public class TicketController {
 			// 3-1. memImg 존재 할 경우
 			// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다.
 			FileInputStream fis;
-			String path = req.getServletContext().getRealPath("/upload/");
+			String path = "";
+		      String os = System.getProperty("os.name").toLowerCase();
+		      if(os.indexOf("win") > -1){
+		         path = "d:\\picture\\" ;
+		      }else if(os.indexOf("mac") > -1){
+		         path = "/users/shinys/imagesave/";
+		      }
 			if (tickerVo != null && tickerVo.getTicketImg() != null) {
 				fis = new FileInputStream(new File(path+tickerVo.getTicketImg()));
 			}
@@ -343,7 +361,11 @@ public class TicketController {
 			map.put("pageNo", page);
 			map.put("pageSize", 10);
 			
-			if(searchgroup.equals("날짜")){
+			
+			if(searchgroup.equals("searchNo")){
+				;
+			}
+			else if(searchgroup.equals("날짜")){
 				map.put("inputstart", inputstart.substring(6)+inputstart.substring(0, 2)+inputstart.substring(3,5));
 				map.put("inputend", inputend.substring(6)+inputend.substring(0, 2)+inputend.substring(3,5));
 				map.put("memId", memId);

@@ -247,7 +247,9 @@ td{
 					<button type="button" class="btn btn-default" data-dismiss="modal">취소</button>
 				</div>
 			</div>
+			
 		</div>
+		
 	</div>
 	
 <form id="frm" action="${cp }/ticket/updateTicketRefDt" method="post">
@@ -278,6 +280,10 @@ td{
 			 inputstart = $("#input-start").val();
 			 inputend   = $("#input-end").val();
 			 searchgroup = $("select[name=searchgroup]").val();
+			 
+ 			 if(searchgroup=="날짜" && inputstart==""){
+ 				searchgroup="searchNo";	 
+ 			 }
 			 memId = $("#memId").val();
 			 
 			getTicketRefPageListHtml(1);
@@ -360,8 +366,7 @@ td{
 					 $("#modalMemId").html(val.MEMID+"("+val.MEMNM  +")");
 					 if(val.MEMTEL==null){
 						 val.MEMTEL=" x ";
-						 
-					 }
+						 }
 					 $("#tel").html("휴대폰 : " + val.MEMTEL);
 					 $("#email").html("이메일 : " + val.MEMEMAIL);
 					 $("#TicketText").html(val.ticketContext);

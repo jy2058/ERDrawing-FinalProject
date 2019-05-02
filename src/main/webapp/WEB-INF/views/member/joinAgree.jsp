@@ -6,7 +6,7 @@ select{
 	color: black;
 }
 
-.modal_container_sys{
+.modal_container_k{
 	border: 2px solid #fff;
    background-color : #1e1e1e;
    width : auto;
@@ -20,13 +20,10 @@ select{
  
 }
 
-.modal_container_sys input, .modal_container_sys select{
+.modal_container_k input, .modal_container_k select{
 margin-left:20px;
 }
 
-#erdAddFrm{
-	padding:20px;
-}
 
 .btn-style1{
 display:inline-block;
@@ -89,7 +86,7 @@ margin-left: 7%;}
 
 </style>   
 
-		<div class="modal_container_sys">
+		<div class="modal_container_k">
 			
 			<h1 class="erd-add h1">Join</h1>
  			<div class="agreeinfo" style="margin-top: 8%;"><span>수집 정보 동의</span></div>

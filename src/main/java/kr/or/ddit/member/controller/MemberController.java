@@ -109,7 +109,13 @@ public class MemberController {
 			// 3-1. memImg 존재 할 경우
 			// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다.
 			FileInputStream fis;
-			String path = req.getServletContext().getRealPath("/upload/");
+			String path = "";
+		      String os = System.getProperty("os.name").toLowerCase();
+		      if(os.indexOf("win") > -1){
+		         path = "d:\\picture\\" ;
+		      }else if(os.indexOf("mac") > -1){
+		         path = "/users/shinys/imagesave/";
+		      }
 			if (memberVo != null && memberVo.getMemImg() != null) {
 				fis = new FileInputStream(new File(path+memberVo.getMemImg()));
 			}
@@ -325,7 +331,13 @@ public class MemberController {
 		//수정시
 		if (profileImg.getSize() > 0) {
 			filename = UUID.randomUUID() +profileImg.getOriginalFilename();
-			String path = req.getServletContext().getRealPath("/upload/");
+			String path = "";
+		      String os = System.getProperty("os.name").toLowerCase();
+		      if(os.indexOf("win") > -1){
+		         path = "d:\\picture\\" ;
+		      }else if(os.indexOf("mac") > -1){
+		         path = "/users/shinys/imagesave/";
+		      }
 			String pathFilename = path +  filename;
 
 			profileImg.transferTo(new File(pathFilename));

@@ -132,7 +132,7 @@ display: block;
 			});
 			 
 			//회원가입 클릭시
-			 $(".join").on("click", function(){
+			 $("#join").on("click", function(){
 			 	page = "joinAgree";
 			 	gogogo1(page);
 			 });
