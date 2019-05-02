@@ -93,4 +93,9 @@ public class ErdDaoImpl implements IErdDao{
 		return sqlSession.selectOne("erd.getMyLikeCnt", erdLikeVo);
 	}
 
+	@Override
+	public int getPrivateCnt(String memId) {
+		return sqlSession.selectOne("erd.getPrivateCnt", memId);
+	}
+
 }

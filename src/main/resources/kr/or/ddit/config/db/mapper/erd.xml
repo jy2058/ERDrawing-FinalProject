@@ -220,4 +220,11 @@
 		where erdno = #{erdNo} and memid = #{memId}
 	</select>
 	
+	<!-- private 갯수 조회 -->
+	<select id="getPrivateCnt" parameterType="String" resultType="int">
+		select count(*)
+		from erd
+		where memid = #{memId} and erdscope = 'private'
+	</select>
+	
 </mapper>

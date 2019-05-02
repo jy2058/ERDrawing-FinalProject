@@ -184,6 +184,7 @@
 
 	</div>
 </div>
+<%-- <input type="hidden" id="alertMsg" value="${alertMsg }"> --%>
 <script>
 	// erd 삭제
 	$(".delBtn").on("click", function(e) {
@@ -212,6 +213,11 @@
 		$(location).attr('href', "${cp}/erdDrawing?erdNo="+erdNo);
 	}
 	
+	
+// 	if($("#alertMsg").val() != ""){
+// 		alert($("#alertMsg").val());
+// 		$("#alertMsg").val("");
+// 	} 
 
 </script>
 

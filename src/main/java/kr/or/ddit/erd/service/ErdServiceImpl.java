@@ -315,4 +315,9 @@ public class ErdServiceImpl implements IErdService{
 		return 0;
 	}
 
+	@Override
+	public int getPrivateCnt(String memId) {
+		return erdDao.getPrivateCnt(memId);
+	}
+
 }

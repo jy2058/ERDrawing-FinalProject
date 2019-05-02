@@ -141,6 +141,7 @@ color:#fff;
       </div>
    
    </div>
+   <input type="hidden" id="alertMsg" value="${alertMsg }">
    
 <%@ include file="/WEB-INF/views/ticket/ticketModal.jsp"%>
    
@@ -490,6 +491,11 @@ color:#fff;
             
          }
          
+         alert("${alertMsg}");
+         if($("#alertMsg").val() != ""){
+     		alert($("#alertMsg").val());
+     		$("#alertMsg").val("");
+     	} 
       
    </script>
 </div>

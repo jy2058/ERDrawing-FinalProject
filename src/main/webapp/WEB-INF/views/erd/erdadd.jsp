@@ -99,12 +99,15 @@ background-color:rgba(224, 51, 122,1);
 				<div class="submit-btn99 btn-style1" id="erdAdd">만들기</div>
 			</div>
 		</div>
+<%-- 		<input type="hidden" id="alertMsg" value="${alertMsg }"> --%>
 		<script>
 			var clickTeam = false;	
 			$("#selTeam").hide();
-		
+			
 			$("#erdAdd").on("click", function(){
 				var selTeam = $("select[name=teamNo]").val();
+				
+				
 				if(selTeam == 0 && clickTeam == true){
 					alert("팀을 선택해 주세요.");
 					return;
@@ -112,15 +115,43 @@ background-color:rgba(224, 51, 122,1);
  					$("#erdAddFrm").submit();
  			});
 			
-			$('input[type=radio][name=erdScope]').change(function() {
-			    if (this.value == 'team') {
+			// private에서 경고창 출력시 이전 선택 값으로 돌아가게 이전 값 저장
+			var selScope = $('input[type=radio][name=erdScope]').val();	
+			
+			$('input[type=radio][name=erdScope]').change(function(e) {
+
+				if (this.value == 'team') {
 			    	$("#selTeam").show();
 			    	clickTeam = true;
 			    }else{
 			    	$("#selTeam").hide();
 			    	clickTeam = false;
 			    }
+				
+				
+				if(this.value == 'private'){
+					$.ajax({
+						type : "get",
+						url : "${cp}/erd/privateCnt",
+						async : false,
+						data : {
+						},
+						success : function(data) {
+							alert(data.alertMsg);
+							$('input:radio[name=erdScope][value="'+selScope+'"]').prop('checked',true);
+							
+						},
+						error : function(xhr, status, error) {
+							alert("에러");
+						}
+					});
+				}
+				selScope = e.target.value;	// 다른 거로 또 바꿨을 수도 있으니까
 			});
-
+			
+			
+// 			if($("#alertMsg").val() != ""){
+// 				alert($("#alertMsg").val());
+// 			} 
 		</script>
 		

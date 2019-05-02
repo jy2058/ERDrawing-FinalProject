@@ -170,4 +170,6 @@ public interface IErdDao {
 	*/
 	int getMyLikeCnt(ErdLikeVo erdLikeVo);
 	
+	// erd private 갯수
+	int getPrivateCnt(String memId);
 }

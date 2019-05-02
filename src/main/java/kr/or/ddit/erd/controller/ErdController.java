@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import kr.or.ddit.erd.model.ErdLikeVo;
 import kr.or.ddit.erd.model.ErdVo;
@@ -49,7 +50,7 @@ public class ErdController {
 	
 	
 	@RequestMapping(path = { "/erdAdd" }, method = { RequestMethod.POST })
-	public String makeErd(ErdVo erdVo, @RequestParam("tag")String tag, HttpSession session){
+	public String makeErd(ErdVo erdVo, @RequestParam("tag")String tag, HttpSession session, Model model,RedirectAttributes ra){
 
 		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		String memId = memberVo.getMemId();
@@ -65,7 +66,7 @@ public class ErdController {
 			erdVo.setTeamNo(erdVo.getTeamNo());
 		}
 		// 공개설정이 개인일 때
-		else{
+		else {
 			erdVo.setMemId(memberVo.getMemId());
 			erdVo.setTeamNo(0);
 		}
@@ -284,5 +285,19 @@ public class ErdController {
 		erdService.erdCopy(erdVo);
 		
 		return "redirect:/mypage";
+	}
+	
+	@RequestMapping("/privateCnt")
+	public String privateCnt(HttpSession session, Model model){
+		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
+		String memId = memberVo.getMemId();
+		
+		// private일 경우
+		int privateCnt = erdService.getPrivateCnt(memId);
+		if (privateCnt >= 2 ) {	// and 조건으로 이용권 cnt 0이면 추가
+			 String alertMsg = "private는 2개 까지 무료로 생성 가능합니다." + "\n" + "이용권을 구입해 주세요.";
+			 model.addAttribute("alertMsg",alertMsg);
+		}
+		return "jsonView";
 	}
 }

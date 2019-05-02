@@ -192,4 +192,6 @@ public interface IErdService {
 	*/
 	int erdCopy(ErdVo erdVo);
 	
+	// erd private 갯수
+	int getPrivateCnt(String memId);
 }
