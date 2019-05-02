@@ -123,9 +123,9 @@ public class ErdController {
 		FileInputStream fis;
 		String path = "";
 		String os = System.getProperty("os.name").toLowerCase();
-		if(os.indexOf("win") > 0){
+		if(os.indexOf("win") > -1){
 			path = "d:\\picture\\" ;
-		}else if(os.indexOf("mac") > 0){
+		}else if(os.indexOf("mac") > -1){
 			path = "/users/shinys/imagesave/";
 		}
 		
@@ -182,9 +182,9 @@ public class ErdController {
 
 		String path = "";
 		String os = System.getProperty("os.name").toLowerCase();
-		if(os.indexOf("win") > 0){
+		if(os.indexOf("win") > -1){
 			path = "d:\\picture\\" ;
-		}else if(os.indexOf("mac") > 0){
+		}else if(os.indexOf("mac") > -1){
 			path = "/users/shinys/imagesave/";
 		}
 		

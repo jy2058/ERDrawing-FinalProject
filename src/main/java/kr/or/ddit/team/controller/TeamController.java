@@ -68,9 +68,9 @@ public class TeamController {
 		String filename = fileName + "_" + UUID.randomUUID().toString() + "." + ext;
 		
 		String os = System.getProperty("os.name").toLowerCase();
-		if(os.indexOf("win") > 0){
+		if(os.indexOf("win") > -1){
 			path = "d:\\picture\\" ;
-		}else if(os.indexOf("mac") > 0){
+		}else if(os.indexOf("mac") > -1){
 			path = "/users/shinys/imagesave/";
 		}
 		
@@ -129,9 +129,9 @@ public class TeamController {
 		FileInputStream fis;
 		String path = "";
 		String os = System.getProperty("os.name").toLowerCase();
-		if(os.indexOf("win") > 0){
+		if(os.indexOf("win") > -1){
 			path = "d:\\picture\\" ;
-		}else if(os.indexOf("mac") > 0){
+		}else if(os.indexOf("mac") > -1){
 			path = "/users/shinys/imagesave/";
 		}
 		
@@ -236,7 +236,13 @@ public class TeamController {
 			ext = split[1]; // 확장자
 
 			//String path = req.getRealPath("image"); // image폴더 path
-			String path = req.getServletContext().getRealPath("/upload/");
+			String path = "";
+			String os = System.getProperty("os.name").toLowerCase();
+			if(os.indexOf("win") > -1){
+				path = "d:\\picture\\" ;
+			}else if(os.indexOf("mac") > -1){
+				path = "/users/shinys/imagesave/";
+			}
 
 			String filename = fileName + "_" + UUID.randomUUID().toString() + "." + ext;
 
