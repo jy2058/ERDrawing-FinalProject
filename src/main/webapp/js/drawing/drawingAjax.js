@@ -370,20 +370,34 @@ function histLoadOne(vo){
 		var nowDate = new Date(parseInt(vo.erdDt));
 		var times = getDateFormat(nowDate);
 		var title = vo.erdTitle;
+		var erdJson = this.erdJson;
 		var temp_str = `<tr>
 						<td>` + title +`</td>
 						<td>`+ times +`</td>
-						<td><div class="btn_hist_change">변경</td>
+						<td><div class="btn_hist_change" title>변경</div></td>
+						<td name="erdJson" style="visibility:hidden;position:absolute;">`+ erdJson +`<td>
 					</tr>`;
 		
-		if($('#history_container .con_inner tbody tr').length >= 10){
+		if($('#history_container .con_inner tbody tr').length >= 20){
 			$('#history_container .con_inner tbody tr:last').remove();
 		}
 		
 	$('#history_container .con_inner tbody').prepend(temp_str);
-
+	
+	$('.btn_hist_change').off('click');
+	
+	$('.btn_hist_change').on('click',function(e){
+		var jsonData = e.target.parentNode.nextElementSibling.childNodes[0].textContent+"@@"+numId;
+		jsonLoad(jsonData);
+	});
 	
 }
+
+
+
+
+
+
 
 //선택 ErdNo 전체 히스토리 가져오기 (초기화용)
 function histLoad(){
@@ -403,20 +417,25 @@ function histLoad(){
 				var nowDate = new Date(parseInt(this.erdDt));
 				var times = getDateFormat(nowDate);
 				var title = this.erdTitle;
-				
+				var erdJson = this.erdJson;
 
+				console.log(erdJson);
 				
 				temp_str += `<tr>
 								<td>`+ title +`</td>
 								<td>`+ times +`</td>
-								<td><div class="btn_hist_change">변경</td>
+								<td><div class="btn_hist_change" title>변경</div></td>
+								<td name="erdJson" style="visibility:hidden;position:absolute;">`+ erdJson +`<td>
 							</tr>`;
 				
 			});
 			
 			$('#history_container .con_inner tbody').html(temp_str);
 			$('#loading').css('display','none');
-			
+			$('.btn_hist_change').on('click',function(e){
+				var jsonData = e.target.parentNode.nextElementSibling.childNodes[0].textContent+"@@"+numId;
+				jsonLoad(jsonData);
+			});
 			
 			
 		},
@@ -435,6 +454,8 @@ $('.btn_snapshot_add').on('click',function(){
 		jsonSave("snap");
 		snapshotOne();
 });
+
+
 
 
 
