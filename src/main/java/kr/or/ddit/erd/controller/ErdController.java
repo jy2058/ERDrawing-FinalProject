@@ -121,7 +121,14 @@ public class ErdController {
 		// 3-1. memImg 존재 할 경우
 		// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다.
 		FileInputStream fis;
-		String path = req.getServletContext().getRealPath("/upload/");
+		String path = "";
+		String os = System.getProperty("os.name").toLowerCase();
+		if(os.indexOf("win") > 0){
+			path = "d:\\picture\\" ;
+		}else if(os.indexOf("mac") > 0){
+			path = "/users/shinys/imagesave/";
+		}
+		
 		if (erdInfo != null && erdInfo.getErdImg() != null) {
 			fis = new FileInputStream(new File(path + erdInfo.getErdImg()));
 		}
@@ -173,8 +180,14 @@ public class ErdController {
 			erdVo.setTeamNo(0);
 		}
 
-		String path = req.getServletContext().getRealPath("/upload/");
-		//String path = "d:\\picture\\" ;
+		String path = "";
+		String os = System.getProperty("os.name").toLowerCase();
+		if(os.indexOf("win") > 0){
+			path = "d:\\picture\\" ;
+		}else if(os.indexOf("mac") > 0){
+			path = "/users/shinys/imagesave/";
+		}
+		
 		String savename =  UUID.randomUUID().toString();
 		
 		ErdVo tempVo = erdService.getErdInfo(erdVo.getErdNo());
