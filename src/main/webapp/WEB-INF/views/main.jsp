@@ -17,8 +17,8 @@
 	<div class="mov">
 		<div class="container">
 
-			<div class="youtube-title"><h2>최종 프로젝트가 시작되었습니다.</h2></div>
-			<div class="youtube-bg"><div class="youtube"><span><img width="200px" src="/image/youtube.png" /></span></div></div>
+			<div class="youtube-title"><h2>Web Erdrawing</h2></div>
+			<div class="youtube-bg"><div class="youtube"><span><iframe width="100%" height="400" src="https://www.youtube.com/embed/aBoIKR6gtnU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></span></div></div>
 			<div class="youtube-btn btn-style1 myAdd">ERDrawing 사용해보기</div>
 		</div>
 	</div>

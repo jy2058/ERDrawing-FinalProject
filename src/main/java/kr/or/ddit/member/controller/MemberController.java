@@ -55,7 +55,7 @@ public class MemberController {
 	public String join(MemberVo memVo,RedirectAttributes ra,HttpServletRequest req){
 		logger.debug("===={}",memVo);
 		String pass =KISA_SHA256.encrypt(memVo.getMemPass());
-		MemberVo vo = new MemberVo(memVo.getMemId(), memVo.getMemMail(),pass , memVo.getMemNm(), memVo.getMemLang(), "basic");
+		MemberVo vo = new MemberVo(memVo.getMemId(), memVo.getMemMail(),pass , memVo.getMemNm(),"kr", "basic");
 		int cnt = memberService.insertMember(vo);
 		
 		if(cnt==1){
@@ -67,6 +67,10 @@ public class MemberController {
 		return "redirect:" + req.getContextPath() +"/";
 		
 	}
+	
+	
+	
+	
 	
 	@RequestMapping("/checkId")	//아이디 중복 체크
 	public String checkId(MemberVo memVo,RedirectAttributes ram,Model model){
@@ -102,12 +106,18 @@ public class MemberController {
 			// 2. 해당 사용자 아이디로 사용자 정보 조회(realFilename)
 		 	MemberVo memberVo = memberService.selectMember(memId);
 		 	
-		 	
 			// 3-1. memImg 존재 할 경우
 			// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다.
 			FileInputStream fis;
+			String path = "";
+		      String os = System.getProperty("os.name").toLowerCase();
+		      if(os.indexOf("win") > -1){
+		         path = "d:\\picture\\" ;
+		      }else if(os.indexOf("mac") > -1){
+		         path = "/users/shinys/imagesave/";
+		      }
 			if (memberVo != null && memberVo.getMemImg() != null) {
-				fis = new FileInputStream(new File(memberVo.getMemImg()));
+				fis = new FileInputStream(new File(path+memberVo.getMemImg()));
 			}
 			// 3-2. memImg 존재하지 않을 경우
 			// 3-2-1. /image/noImg.png(application.getRealPath())
@@ -299,9 +309,6 @@ public class MemberController {
 	 
 	 @RequestMapping("/memberErd")
 	 public String memberErd(@RequestParam("memId")String memId, Model model){
-		 System.out.println("dsfjksdfjsdkfjsdkf;sdjf");
-		 logger.debug("---memId : {}", memId);
-		 
 		 MemberVo memberVo = memberService.selectMember(memId);
 		 model.addAttribute("memberVo", memberVo);
 		 
@@ -320,19 +327,27 @@ public class MemberController {
 
 		MemberVo vo = memberService.selectMember(memVo.getMemId());
 
-		String realFilename = vo.getMemImg();
+		String filename = vo.getMemImg();
+		//수정시
 		if (profileImg.getSize() > 0) {
-			String filename = profileImg.getOriginalFilename();
-			realFilename = "d:\\picture\\" + UUID.randomUUID() + filename;
+			filename = UUID.randomUUID() +profileImg.getOriginalFilename();
+			String path = "";
+		      String os = System.getProperty("os.name").toLowerCase();
+		      if(os.indexOf("win") > -1){
+		         path = "d:\\picture\\" ;
+		      }else if(os.indexOf("mac") > -1){
+		         path = "/users/shinys/imagesave/";
+		      }
+			String pathFilename = path +  filename;
 
-			profileImg.transferTo(new File(realFilename));
+			profileImg.transferTo(new File(pathFilename));
 		}
 		
 		logger.debug("imgDelck===={}",imgDelCk);
 		if(imgDelCk.equals("imgno")){
 			vo.setMemImg(null);
 		}else{
-			vo.setMemImg(realFilename);	
+			vo.setMemImg(filename);	
 		}
 		
 		

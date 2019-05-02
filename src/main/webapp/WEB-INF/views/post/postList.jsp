@@ -61,9 +61,16 @@ td{
 }
 
 .insertBtn{
-padding:7px;
-margin:10px 0;
-border-radius:5px;
+	background-color: #fff;
+	width: 55px;
+	height: 35px;
+	line-height: 16px;
+	color:#000000;
+	font-size : 14px;
+	font-weight: normal;
+	border: 0px;
+	margin-left: 790px;
+	
 }
 
 </style>
@@ -94,11 +101,12 @@ border-radius:5px;
 			<table style="width: 100%;">
 				<thead>
 					<tr style="height: 40px;">
-						<th style="text-align: center; width:9%;">글번호</th>
-						<th style="text-align: center; width:50%;">글제목</th>
-						<th style="text-align: center; width:15%;">작성자</th>
-						<th style="text-align: center; width:15%;">등록일</th>
-						<th style="text-align: center; width:9%; border-right: 0px">조회수</th>
+						<!-- <th style="text-align: center; width:9%;">글번호</th> -->
+						<th style="text-align: center; width:4%;"></th>
+						<th style="text-align:center; width:30%;">글제목</th>
+						<th style="text-align:center; width:20%;">작성자</th>
+						<th style="text-align:center; width:20%;">등록일</th>
+						<th style="text-align:center; width:10%; border-right: 0px">조회수</th>
 					</tr>
 				</thead>
 
@@ -112,13 +120,13 @@ border-radius:5px;
 						<c:when test="${boardNo == '1'}">
 							<c:if test="${SESSION_MEMBERVO.memAuth == 'T'}">
 								<input type="hidden" name="boardNo" value="${boardNo}">
-								<button type="button" class="insertBtn btn-default">게시글 등록</button>
+								<button type="button" class="insertBtn btn-style1">게시글 등록</button>
 							</c:if>
 						</c:when>
 
 						<c:otherwise>
 							<input type="hidden" name="boardNo" value="${boardNo}">
-							<button type="button" class="insertBtn btn-default">게시글 등록</button>
+							<button type="button" class="insertBtn btn-style1" style="hover : gray;">등록</button>
 						</c:otherwise>
 					</c:choose>
 				</form>

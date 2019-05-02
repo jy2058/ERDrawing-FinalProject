@@ -255,6 +255,7 @@ margin-left: 98%;}
               var reader = new FileReader();
               reader.onload = function(e) {
                   $("#profileImg").attr("src", e.target.result);
+                  $("#imgDelCk").val("");
               }
               reader.readAsDataURL(f);
           });

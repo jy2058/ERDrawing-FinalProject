@@ -34,7 +34,6 @@ function chatSend(){
 			console.log(error);
 		}
 	});
-	
 }
 
 $("#button42").on("click", function(){

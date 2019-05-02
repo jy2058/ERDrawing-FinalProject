@@ -38,7 +38,7 @@ $(document).ready(function(){
 
 
 function connectWS(){
-	var ws = new WebSocket("ws://192.168.206.35:8080/erdEcho?erdNo="+erdNo);
+	var ws = new WebSocket("ws://localhost:8080/erdEcho?erdNo="+erdNo);
 	webSocket = ws;
 	
 	ws.onopen = function(){
@@ -155,6 +155,28 @@ function getTime(){
 	return mm+'/'+dd+'<br>'+HH+':'+mm;
 	
 }
+
+function getTimeS(){
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; //January is 0!
+	var yyyy = today.getFullYear();
+	var HH = today.getHours();
+	var MM = today.getMinutes();
+	var SS = today.getSeconds();
+
+	if(dd<10) {
+	    dd='0'+dd
+	} 
+
+	if(mm<10) {
+	    mm='0'+mm
+	} 
+
+	return mm+'-'+dd+'_'+HH+mm+SS;
+	
+}
+
 function webSend(cmd, data1){
 	//evt.preventDefault();
 	if(webSocket.readyState !== 1 )

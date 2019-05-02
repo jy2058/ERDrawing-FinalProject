@@ -130,6 +130,13 @@ display: block;
 					page = "erdModify";
 					gogogo1(page);
 			});
+			 
+			//회원가입 클릭시
+			 $("#join").on("click", function(){
+			 	page = "joinAgree";
+			 	gogogo1(page);
+			 });
+			 
 			function gogogo1(page){
 				 $.ajax({
 	                    type: 'get',

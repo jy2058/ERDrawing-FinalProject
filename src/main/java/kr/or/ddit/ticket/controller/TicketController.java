@@ -84,17 +84,24 @@ public class TicketController {
       
       TicketVo vo = ticketService.selectTicket(ticketVo.getTicketNo()+"");
 
-		String realFilename = vo.getTicketImg();
+		String filename = vo.getTicketImg();
 		
-		//수정할 이미지가 있을경우
+		//수정시
 		if (profileImg.getSize() > 0) {
-			String filename = profileImg.getOriginalFilename();
-			realFilename = "d:\\picture\\" + UUID.randomUUID() + filename;
+			filename = UUID.randomUUID() +profileImg.getOriginalFilename();
+			String path = "";
+		      String os = System.getProperty("os.name").toLowerCase();
+		      if(os.indexOf("win") > -1){
+		         path = "d:\\picture\\" ;
+		      }else if(os.indexOf("mac") > -1){
+		         path = "/users/shinys/imagesave/";
+		      }
+			String pathFilename = path +  filename;
 
-			profileImg.transferTo(new File(realFilename));
+			profileImg.transferTo(new File(pathFilename));
 		}
 		
-		ticketVo.setTicketImg(realFilename);
+		ticketVo.setTicketImg(filename);
       
       int updCnt = ticketService.updateTicket(ticketVo);
       
@@ -127,10 +134,27 @@ public class TicketController {
    
 	// 티켓추가
 	@RequestMapping("/insertTicket")
-	public String insertTicket(Model model, TicketVo ticketVo, RedirectAttributes ra, HttpServletRequest req) {
+	public String insertTicket(MultipartFile profileImg,Model model, TicketVo ticketVo, RedirectAttributes ra, HttpServletRequest req) throws IllegalStateException, IOException {
 		logger.debug("======insertTicket{}", ticketVo);
-		int inCnt = ticketService.insertTicket(ticketVo);
 
+		String filename="";
+		if (profileImg.getSize() > 0) {
+			filename = UUID.randomUUID() +profileImg.getOriginalFilename();
+			String path = "";
+		      String os = System.getProperty("os.name").toLowerCase();
+		      if(os.indexOf("win") > -1){
+		         path = "d:\\picture\\" ;
+		      }else if(os.indexOf("mac") > -1){
+		         path = "/users/shinys/imagesave/";
+		      }
+			String pathFilename = path +  filename;
+
+			profileImg.transferTo(new File(pathFilename));
+		}
+		
+		ticketVo.setTicketImg(filename);
+		int inCnt = ticketService.insertTicket(ticketVo);
+		
 		if (inCnt > 0) {
 			ra.addFlashAttribute("msg", "추가 되었습니다.");
 		} else {
@@ -249,10 +273,17 @@ public class TicketController {
 		 	
 		 	
 			// 3-1. memImg 존재 할 경우
-			// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다.
+			// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다. 
 			FileInputStream fis;
+			String path = "";
+		      String os = System.getProperty("os.name").toLowerCase();
+		      if(os.indexOf("win") > -1){
+		         path = "d:\\picture\\" ;
+		      }else if(os.indexOf("mac") > -1){
+		         path = "/users/shinys/imagesave/";
+		      }
 			if (tickerVo != null && tickerVo.getTicketImg() != null) {
-				fis = new FileInputStream(new File(tickerVo.getTicketImg()));
+				fis = new FileInputStream(new File(path+tickerVo.getTicketImg()));
 			}
 			// 3-2. memImg 존재하지 않을 경우
 			// 3-2-1. /image/noImg.png(application.getRealPath())
@@ -330,7 +361,11 @@ public class TicketController {
 			map.put("pageNo", page);
 			map.put("pageSize", 10);
 			
-			if(searchgroup.equals("날짜")){
+			
+			if(searchgroup.equals("searchNo")){
+				;
+			}
+			else if(searchgroup.equals("날짜")){
 				map.put("inputstart", inputstart.substring(6)+inputstart.substring(0, 2)+inputstart.substring(3,5));
 				map.put("inputend", inputend.substring(6)+inputend.substring(0, 2)+inputend.substring(3,5));
 				map.put("memId", memId);

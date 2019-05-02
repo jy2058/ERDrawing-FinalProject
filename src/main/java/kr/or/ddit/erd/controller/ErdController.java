@@ -50,12 +50,9 @@ public class ErdController {
 	
 	@RequestMapping(path = { "/erdAdd" }, method = { RequestMethod.POST })
 	public String makeErd(ErdVo erdVo, @RequestParam("tag")String tag, HttpSession session){
-		
 
 		MemberVo memberVo = (MemberVo) session.getAttribute("SESSION_MEMBERVO");
 		String memId = memberVo.getMemId();
-		
-		logger.debug("======erdTitle : {}  ", erdVo.getErdTitle());
 		
 		// 1. 공개설정이 팀일 때와 아닐 때 insert 값이 달라야 한다. --> xml에서 nullif문 이용
 		// 1.1 팀일 때는 memId가 null이어야 한다.
@@ -118,16 +115,22 @@ public class ErdController {
 	@RequestMapping("/erdImg")
 	public void erdImg(HttpServletRequest req, HttpServletResponse resp, @RequestParam("erdNo") int erdNo) throws IOException{
 
-		logger.debug("***erdNo {}", erdNo);
-		
 		// 2. 해당 사용자 아이디로 사용자 정보 조회(realFilename)
 		ErdVo erdInfo = erdService.getErdInfo(erdNo);
 
 		// 3-1. memImg 존재 할 경우
 		// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다.
 		FileInputStream fis;
+		String path = "";
+		String os = System.getProperty("os.name").toLowerCase();
+		if(os.indexOf("win") > -1){
+			path = "d:\\picture\\" ;
+		}else if(os.indexOf("mac") > -1){
+			path = "/users/shinys/imagesave/";
+		}
+		
 		if (erdInfo != null && erdInfo.getErdImg() != null) {
-			fis = new FileInputStream(new File(erdInfo.getErdImg()));
+			fis = new FileInputStream(new File(path + erdInfo.getErdImg()));
 		}
 		// 3-2. memImg 존재하지 않을 경우
 		// 3-2-1. /image/noImg.png(application.getRealPath())
@@ -177,7 +180,14 @@ public class ErdController {
 			erdVo.setTeamNo(0);
 		}
 
-		String path = "d:\\picture\\" ;
+		String path = "";
+		String os = System.getProperty("os.name").toLowerCase();
+		if(os.indexOf("win") > -1){
+			path = "d:\\picture\\" ;
+		}else if(os.indexOf("mac") > -1){
+			path = "/users/shinys/imagesave/";
+		}
+		
 		String savename =  UUID.randomUUID().toString();
 		
 		ErdVo tempVo = erdService.getErdInfo(erdVo.getErdNo());
@@ -194,10 +204,10 @@ public class ErdController {
 
 			String filename = fileName + "_" + UUID.randomUUID().toString() + "." + ext;
 
-			realFile = path + filename;
+			realFile = filename;
 			
 			// 불러온 파일 저장할 공간 생성
-			File profile = new File(realFile);
+			File profile = new File(path + realFile);
 			multipartFile.transferTo(profile);
 		}
 		// 스냅샷일 경우
@@ -217,7 +227,7 @@ public class ErdController {
 				File outputfile = new File(path + savename + ".png");
 				ImageIO.write(image, "png", outputfile); // 파일생성
 				
-				realFile = path + savename + ".png";
+				realFile = savename + ".png";
 				
 			} catch (IOException e) {
 				throw e;
@@ -233,7 +243,6 @@ public class ErdController {
 	
 	@RequestMapping("/erdTitleEdit")
 	public String erdTitleEdit(ErdVo erdVo, Model model){
-		logger.debug("@@@erdVo : {}", erdVo);
 		ErdVo erdInfoVo = erdService.getErdInfo(erdVo.getErdNo());
 		erdInfoVo.setErdTitle(erdVo.getErdTitle());
 		

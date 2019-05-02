@@ -48,12 +48,6 @@ public class TeamController {
 	@RequestMapping(path="/teamCreate", method=RequestMethod.POST)
 	public String teamCreate(TeamVo teamVo, @RequestParam("teamMember")List<String> teamMember, HttpServletRequest req, @RequestPart("profileImg")MultipartFile multipartFile, HttpSession session){
 
-		logger.debug("===teamNm : {}", teamVo.getTeamNm());
-		logger.debug("===getTeamIntro : {}", teamVo.getTeamIntro());
-		logger.debug("***teamMember : {}", teamMember);
-		
-
-		logger.debug("===getOriginalFilename : {}", multipartFile.getOriginalFilename());
 		String[] split;
 		String fileName="";
 		String ext="";
@@ -64,14 +58,24 @@ public class TeamController {
 			ext = split[1];	// 확장자
 		}
 		
-		logger.debug("===fileName : {}, ext : {}", fileName, ext);
+		// db에 저장할 때 path는 빼고 파일 이름만 저장.
+		// 이미지 가져올 때도 파일 이름을 가져와서 path를 앞에 따로 붙여주자.
+		//String path11 = req.getRealPath("image");	// image폴더 path
+		// /users/shinys/imagesave <- 신유수오빠 이미지 경로
 		
-		String path = req.getRealPath("image");	// image폴더 path
-		
+		//String path = "d:\\picture\\" ;
+		String path = "";
 		String filename = fileName + "_" + UUID.randomUUID().toString() + "." + ext;
 		
+		String os = System.getProperty("os.name").toLowerCase();
+		if(os.indexOf("win") > -1){
+			path = "d:\\picture\\" ;
+		}else if(os.indexOf("mac") > -1){
+			path = "/users/shinys/imagesave/";
+		}
+		
 		// 불러온 파일 저장할 공간 생성
-		File profile = new File(path +"\\" + filename);
+		File profile = new File(path + filename);
 		try {
 			multipartFile.transferTo(profile);
 		} catch (IllegalStateException e) {
@@ -84,7 +88,8 @@ public class TeamController {
 		String memId = memberVo.getMemId();
 		
 		teamVo.setMakerId(memId);
-		teamVo.setTeamImg(path +"\\" + filename);
+//		teamVo.setTeamImg(path +"\\" + filename);
+		teamVo.setTeamImg(filename);
 		
 		// 팀 생성
 		teamMember.add(memId);	// 멤버에 생성자 추가
@@ -96,10 +101,7 @@ public class TeamController {
 	@RequestMapping(path="/auto", method=RequestMethod.GET)
 	public String auto(Model model, String value){
 		
-		logger.debug("===term:{}",value);
-		
 		List<MemberVo> list = memberService.getAutoFindMem(value);
-		logger.debug("===list:{}",list);
 		
 		JSONArray array = new JSONArray();
 		
@@ -116,7 +118,6 @@ public class TeamController {
 	@RequestMapping("/teamImg")
 	public void teamImg(HttpServletRequest req, HttpServletResponse resp, @RequestParam("teamNo") int teamNo) throws IOException{
 		
-		logger.debug("=====teamNO!!! =={}",teamNo);
 		// 1. 사용자 아이디 파라미터 확인
 		// String userId = request.getParameter("userId");
 
@@ -126,8 +127,16 @@ public class TeamController {
 		// 3-1. memImg 존재 할 경우
 		// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다.
 		FileInputStream fis;
+		String path = "";
+		String os = System.getProperty("os.name").toLowerCase();
+		if(os.indexOf("win") > -1){
+			path = "d:\\picture\\" ;
+		}else if(os.indexOf("mac") > -1){
+			path = "/users/shinys/imagesave/";
+		}
+		
 		if (teamInfo != null && teamInfo.getTeamImg() != null) {
-			fis = new FileInputStream(new File(teamInfo.getTeamImg()));
+			fis = new FileInputStream(new File(path + teamInfo.getTeamImg()));
 		}
 		// 3-2. memImg 존재하지 않을 경우
 		// 3-2-1. /image/noImg.png(application.getRealPath())
@@ -151,9 +160,6 @@ public class TeamController {
 	
 	@RequestMapping("/authUpdate")
 	public String authUpdate(TeamListVo teamListVo, Model model){
-		logger.debug("===teamNo : {}", teamListVo.getTeamNo());
-		logger.debug("===getMemId : {}", teamListVo.getMemId());
-		logger.debug("===getTeamAuth : {}", teamListVo.getTeamAuth());
 		
 		teamService.authUpdate(teamListVo);
 		
@@ -171,11 +177,6 @@ public class TeamController {
 	
 	@RequestMapping("/delMember")
 	public String delMember(TeamListVo teamListVo, TeamVo teamVo, Model model, HttpSession session){
-		logger.debug("===teamNo : {}", teamListVo.getTeamNo());
-		logger.debug("===getMemId : {}", teamListVo.getMemId());
-		
-		logger.debug("---teamListVo : {}", teamListVo);
-		logger.debug("---teamVo : {}", teamVo);
 		
 		Object memberVoObj = session.getAttribute("SESSION_MEMBERVO");
 		MemberVo memberVo = (MemberVo) memberVoObj;
@@ -234,14 +235,21 @@ public class TeamController {
 			fileName = split[0]; // 파일 이름
 			ext = split[1]; // 확장자
 
-			String path = req.getRealPath("image"); // image폴더 path
+			//String path = req.getRealPath("image"); // image폴더 path
+			String path = "";
+			String os = System.getProperty("os.name").toLowerCase();
+			if(os.indexOf("win") > -1){
+				path = "d:\\picture\\" ;
+			}else if(os.indexOf("mac") > -1){
+				path = "/users/shinys/imagesave/";
+			}
 
 			String filename = fileName + "_" + UUID.randomUUID().toString() + "." + ext;
 
-			realFile = path + "\\" + filename;
+			realFile = filename;
 			
 			// 불러온 파일 저장할 공간 생성
-			File profile = new File(realFile);
+			File profile = new File(path + realFile);
 			multipartFile.transferTo(profile);
 		}
 		teamVo.setTeamImg(realFile);

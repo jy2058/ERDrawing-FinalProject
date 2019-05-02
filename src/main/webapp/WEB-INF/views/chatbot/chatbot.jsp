@@ -80,8 +80,9 @@ h2
   height: 35px;
   width: 35px;
   border-radius: 50%;
-  background-color: black;
-  background-image: url("https://filmshotfreezer.files.wordpress.com/2011/07/untitled-1.jpg");
+  background-color: white;
+  background-image: url("https://img.icons8.com/ultraviolet/40/000000/bot.png");
+  
   background-size: cover;
   background-position: center;
 }
@@ -117,6 +118,7 @@ h2
 
 .message.from {
   color: white;
+  width: 300px;
   background-color: #827DCF;
   margin-left: 26px;
 }
@@ -133,7 +135,7 @@ h2
 .message p {
   text-align: left;
     padding: 10px;
-  margin: 0;
+  margin: 15;
 }
 
 .message:after {
@@ -202,7 +204,9 @@ h2
   margin-top: 10px;
   margin-right: 27px;
   color: #827DCF;
+  width: 59px;
   font-weight: 400;
+    padding-top: 2px;
   -webkit-transition: all 0.3s ease-in-out;
   -moz-transition: all 0.3s ease-in-out;
   -o-transition: all 0.3s ease-in-out;
@@ -227,6 +231,7 @@ h2
 
 #input-text {
   /*    padding: 10px;*/
+  height: 45px;
   font-size: 17px;
   vertical-align: middle;
   margin-left: 10px;
@@ -245,11 +250,11 @@ h2
   <div class="card">
     <div class="banner">
       <div class="contact-photo"></div>
-      <h1><b>Christian</b> (Client)</h1>
+      <h1><b>ChatBot</b> (1:1 Q&A)</h1>
 
     </div>
     <div class="main-text-area">
-      <div class="time-stamp"><b>Thursday</b> 6:34 pm</div>
+      <div class="time-stamp"></div>
       <div class="message from" style="width: 80%;margin-bottom: 20px;">
         <p>안녕하세요. ERDrawing가상채팅봇입니다.
         	ERDrawing의 사용방법에 대하여 도와드리겠습니다 :)	</p>
@@ -257,7 +262,6 @@ h2
     </div>
     <div class="input-bar">
       <div class="input-bar-inner">
-        <i class="fa fa-paperclip"></i>
         <input id="input-text" value="" placeholder="Message"></input>
         <h6 id="send">Send</h6>
       </div>
@@ -266,52 +270,99 @@ h2
     	<input type="hidden" id="question" name="question">
     </form> --%>
   </div>
-  
   <script>
-  var userStr="";
-  
-  $("#input-text").on("keydown", function(e){
-	   if(e.keyCode == 13){
-		   inputAction();
-	   }
-	});
-  
-  $("#send").on("click",function(){
-	  inputAction();
-      
-  });
-  
-  function inputAction() {
-	  userStr= $("#input-text").val();
-  	  var userDiv = "<div class='message to'>"+"<p>"+userStr+"</p>"+"</div>";
-	 
-      $(".main-text-area").append(userDiv);
-      
-      chatBotAnswer(userStr);
-      
-      $("#input-text").val("");
-	
-}
-  
-  function chatBotAnswer(userStr) {
-	  $.ajax({
-			url : "${cp}/chatbot/chatbotAnswer",
-			data : {
-				userStr : userStr
-				
-			},
-			success : function(data) {
-				console.log(data.answer);
-				//로봇답
-				var chbotBotstr = "<div class='message from'>"+"<p>"+data.answer+"</p>"+"</div>"+"<div style='clear:both;'></div>";
-				
-				$(".main-text-area").append(chbotBotstr);
+ 
+			var userStr = "";
+			var mm ;
+			var h ;
+			var ap;
+			
+			time();
+			$(".time-stamp").html("<b>" + getTodayLabel() + "  </b> "+h+":"+mm+" "+ap);
 
-			     $(".main-text-area").scrollTop(99999);
+			$("#input-text").on("keydown", function(e) {
+				if (e.keyCode == 13) {
+					inputAction();
+				}
+			});
+
+			$("#send").on("click", function() {
+				inputAction();
+
+			});
+
+			//날짜 구하기
+			function getTodayLabel() {
+
+				var week = new Array('일요일', '월요일', '화요일', '수요일', '목요일', '금요일',
+						'토요일');
+
+				var today = new Date().getDay();
+				var todayLabel = week[today];
+
+				return todayLabel;
 			}
-		});
-	
-}
-  
-  
-  </script>
+			
+			function time() {
+				var now = new Date();
+				 h = now.getHours(); //시간
+	            
+	            if(h > 12)
+	            {
+	                ap="pm";
+	               
+	                h = h-12;
+	                if(h>=10);
+		            else
+		             h = "0" +h;
+	                
+	            }
+	            else if(hour < 24)
+	            {
+	                ap="am";
+	                if(h>=10);
+		            else
+		             h = "0" +h;
+	            }
+	             mm = now.getMinutes();
+	            if(mm>=10);
+	            else
+	             mm = "0" +mm;
+				
+			}
+
+			function inputAction() {
+				userStr = $("#input-text").val();
+				var userDiv = "<div class='message to'>" + "<p>" + userStr
+						+ "</p>" + "</div>";
+
+				$(".main-text-area").append(userDiv);
+
+				chatBotAnswer(userStr);
+
+				$("#input-text").val("");
+
+			}
+
+			function chatBotAnswer(userStr) {
+				$.ajax({
+					url : "${cp}/chatbot/chatbotAnswer",
+					data : {
+						userStr : userStr
+
+					},
+					success : function(data) {
+						console.log(data.answer);
+						//로봇답
+						var chbotBotstr = "<div class='message from'>" + "<p>"
+								+ data.answer + "</p>" + "</div>"
+								+ "<div style='clear:both;'></div>";
+
+						$(".main-text-area").append(chbotBotstr);
+
+						$(".main-text-area").scrollTop(99999);
+					}
+				});
+
+			}
+		</script>

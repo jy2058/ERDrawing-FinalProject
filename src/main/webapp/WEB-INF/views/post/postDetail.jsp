@@ -57,11 +57,28 @@ td{
   border-color: #ccdb5c;
 }
 
-.report{
-padding:7px;
-margin:10px 0;
-border-radius:5px;
+#report{
+	background-color: #fff;
+	width: 50px;
+	height: 35px;
+	color:#000000;
+	font-size : 14px;
+	border: 0px;
+	margin-left: 200px;
+	border-radius:3px;
 }
+
+#cmtDelBtn{
+	background-color: #F2F2F2;
+	width: 50px;
+	height: 30px;
+	color:#000000;
+	font-size : 13px;
+	border: 0px;
+	margin-right: 20px;
+	border-radius:3px;
+}
+
 </style>
    
 
