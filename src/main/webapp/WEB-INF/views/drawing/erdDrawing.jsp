@@ -5,6 +5,12 @@
 	var erdNo = ${erdNo};
 	var S_userId = "${SESSION_MEMBERVO.memId}";
 	
+	//@ 잘라주기
+	if(S_userId.indexOf('@')>-1){ 
+	var arr_split = S_userId.split('@');
+	S_userId = arr_split[0];
+	}
+	
 </script>
 
 
@@ -713,6 +719,11 @@
    
      relationType = true;
      compareEntityPosition(true); 
+     
+     var msg = S_userId+" created Relation ["+firstEntity.children[5].attrs.text+" to " + secondEntity.children[5].attrs.text+"]";
+     webSend('domain 추가/수정',jsonSave("hist",msg));
+     
+     
      });
        
      // team이 아닐 경우 채팅 아이콘 삭제
@@ -735,6 +746,9 @@
    	  relationType = false;
      compareEntityPosition(true);
      	  
+     var msg = S_userId+" created Relation ["+firstEntity.children[5].attrs.text+" to " + secondEntity.children[5].attrs.text + "]";
+     webSend('domain 추가/수정',jsonSave("hist",msg));
+     
      });
         
         
@@ -1140,6 +1154,11 @@
                      mini_layer.draw();
                      }
              }); // move end
+             
+             
+             
+             var msg = S_userId+" created entity["+entity_phisical_txt.attrs.text+"]";
+             webSend('domain 추가/수정',jsonSave("hist",msg));
         }
         //entity 생성 종료
        
@@ -1378,7 +1397,9 @@
               	  var length = allNode.findAncestor('.entity').find('.attribute').length;
              	  var tempEntity = allNode.findAncestor('.entity');
            		  var arr_EntityAboutremoveCol = new Array();
+           		  var arr_removeTableName = new Array();
            		  
+           		arr_removeTableName.push(tempEntity.children[5].attrs.text);
            		  //삭제 클릭 시, 내가 클릭한 entity의 속성을 모두 제거
                 for(var i=length-1; i>-1; i--){
                 	 if(allNode.findAncestor('.entity').find('.attribute')[i].attrs.pkId == undefined){  //마스터테이블 일 때,  즉 외래키가 이닐 때
@@ -1390,7 +1411,7 @@
                         	arr_EntityAboutremoveCol.push(tempEntity);
                         }
                         	firstEntity = tempEntity;
-                           	cascadeDeletePk(entityId,arr_EntityAboutremoveCol);
+                           	cascadeDeletePk(entityId,arr_EntityAboutremoveCol,arr_removeTableName);
                             //allNode.findAncestor('.attribute').destroy();
                             allNode.findAncestor('.entity').find('.attribute')[i].destroy();
                 }
@@ -1407,6 +1428,33 @@
                     allNode.findAncestor('.entity').remove(); //클릭한 entity 삭제
                     mini_layer.draw();
                     layer.draw();
+                    
+                    //영향을 받은 테이블이름이 있는 배열에 중복값을 제거
+                    var uniqueTablesName=[];
+                    $.each(arr_removeTableName, function(i, el){
+                    	if($.inArray(el, uniqueTablesName) === -1) uniqueTablesName.push(el);
+                    });
+                    
+                    
+                    var tableMsg="";
+                    for(var i = 0; i<uniqueTablesName.length; i++){
+                    	if(i==0){
+                    		tableMsg+=" remove entity ["+uniqueTablesName[i]; 	
+                    	}
+                    	else if(i ==1){
+                    		tableMsg += "] and updated multiple entities["+uniqueTablesName[i];
+                    	}
+                    	else{
+                    	tableMsg+= ","+uniqueTablesName[i];
+                    	}
+                    	
+                    	if(i == uniqueTablesName.length-1){
+                    	tableMsg +="]";
+                    	}
+                    }
+                    
+                    var msg = S_userId + tableMsg ;
+                    webSend('domain 추가/수정 ',jsonSave("hist",msg));
                     return;
                 }
                 
@@ -1417,20 +1465,50 @@
                      
                      firstEntity = e.target.findAncestor('.entity');
                      
-                       findEntityArr  = stage.find('.entity');
-                      
+                     findEntityArr  = stage.find('.entity');
+                     var arr_addTableName = new Array(); 
+                     
+                     arr_addTableName.push(firstEntity.children[5].attrs.text);
+                     
                       var pkId = entity.findOne('.pk_group').children[entity.findOne('.pk_group').children.length-1].id();
                       pre_identifyingFlag = true;
-                      cascadeAddFk(firstEntity,pkId,findEntityArr,pre_identifyingFlag); //매개변수 : pkId
+                      cascadeAddFk(firstEntity,pkId,findEntityArr,pre_identifyingFlag,arr_addTableName); //매개변수 : pkId
                       
                       entity = firstEntity;
                       
                       entityMouseUp(firstEntity,true);  //관계선의 위치 재조정
+                      
+                      var uniqueTablesName=[];
+                      $.each(arr_addTableName, function(i, el){
+                      	if($.inArray(el, uniqueTablesName) === -1) uniqueTablesName.push(el);
+                      });
+                      
+                      
+                      var tableMsg="";
+                      for(var i = 0; i<uniqueTablesName.length; i++){
+                      	if(i==0){
+                      		tableMsg+=" updated muliple entities ["+uniqueTablesName[i]; 	
+                      	}
+                      	
+                      	else{
+                      	tableMsg+= ","+uniqueTablesName[i];
+                      	}
+                      	
+                      	if(i == uniqueTablesName.length-1){
+                      	tableMsg +="]";
+                      	}
+                      }
+                      
+                      var msg = S_userId + tableMsg ;
+                      webSend('domain 추가/수정 ',jsonSave("hist",msg));     
                 }
                 
                 //attr버튼 이벤트
                 if(allNode.name().indexOf('btn_col_add') > -1){
                     fn_attributeAdd("attr_group",entity);
+                    
+                    var msg = S_userId+" updated multiple entities [" +entity.children[5].attrs.text +"]" ;
+                    webSend('domain 추가/수정 ',jsonSave("hist",msg));
                     //return;
                 }
                 
@@ -1454,6 +1532,9 @@
                    var temp_firstEntity = firstEntity; // 최초에 클릭했던 객체를 담아논다.
                    var entityId;
                    var arr_EntityAboutremoveCol = new Array();
+                   var arr_removeTableName = new Array();
+                   
+                   arr_removeTableName.push(temp_firstEntity.children[5].attrs.text);
                    
                    if(allNode.findAncestor('.attribute').attrs.pkId == undefined){  //마스터테이블 일 때,  즉 외래키가 이닐 때
                     entityId = allNode.findAncestor('.attribute').attrs.id;
@@ -1464,7 +1545,7 @@
                    	arr_EntityAboutremoveCol.push(firstEntity);
                    }
                    	
-                       cascadeDeletePk(entityId,arr_EntityAboutremoveCol);
+                       cascadeDeletePk(entityId,arr_EntityAboutremoveCol,arr_removeTableName);
                        allNode.findAncestor('.attribute').destroy();
                        
                     //관계선의 위치를 재조정 해주는 메서드
@@ -1473,7 +1554,32 @@
                        
                        entityMouseUp(temp_firstEntity,true);  //관계선의 위치 재조정
                        entity = temp_firstEntity;
-     
+ 					
+                       //영향을 받은 테이블이름이 있는 배열에 중복값을 제거
+                       var uniqueTablesName=[];
+                       $.each(arr_removeTableName, function(i, el){
+                       	if($.inArray(el, uniqueTablesName) === -1) uniqueTablesName.push(el);
+                       });
+                       
+                       
+                       var tableMsg="";
+                       for(var i = 0; i<uniqueTablesName.length; i++){
+                       	if(i==0){
+                       		tableMsg+=" updated muliple entities ["+arr_removeTableName[i]; 	
+                       	}
+                       	
+                       	else{
+                       	tableMsg+= ","+uniqueTablesName[i];
+                       	}
+                       	
+                       	if(i == uniqueTablesName.length-1){
+                       	tableMsg +="]";
+                       	}
+                       }
+                       
+                       var msg = S_userId + tableMsg ;
+                       webSend('domain 추가/수정 ',jsonSave("hist",msg));     
+                       
                 }
                 
                 
@@ -1706,6 +1812,9 @@
                 document.body.removeChild(inputss);
                 //this.removeEventListener('keydown',arguments.callee);
                 console.log("엔터입력 완료");
+                
+                var msg = S_userId + " updated muliple entities ["+entity.children[5].attrs.text+"]";
+                webSend('domain 추가/수정 ',jsonSave("hist",msg));  
               }
         }
         
@@ -1989,7 +2098,8 @@
 	connectMsgWs();
 	
 	function connectMsgWs(){
-		var msgWs = new WebSocket("ws://192.168.206.35:8080/msgEcho");
+//		var msgWs = new WebSocket("ws://192.168.206.35:8080/msgEcho");
+		var msgWs = new WebSocket("ws://localhost/msgEcho");
 		MsgWebSocket = msgWs;
 		 
 		msgWs.onopen = function(){

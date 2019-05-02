@@ -1109,20 +1109,35 @@ function moveColumnIdentifying(type,line_id){
 	var arr_identify = checkIdentify();
 	var arr_total  = new Array();
 	
-	pk.sort(function (a,b){ //차례대로 복사하기위해서 정렬
-		return a.attrs.id<b.attrs.id?-1 : a.attrs.id>b.attrs.id?1:0;   //현재 이 배열에는 내가 선택한 곳에 포함되는 객체들이 모두 들어있다.
-	});
+//	pk.sort(function (a,b){ //차례대로 복사하기위해서 정렬
+//		return a.attrs.id<b.attrs.id?-1 : a.attrs.id>b.attrs.id?1:0;   //현재 이 배열에는 내가 선택한 곳에 포함되는 객체들이 모두 들어있다.
+//	});
 	
 	arr_identify.sort(function (a,b){
 		return a.attrs.id<b.attrs.id?-1 : a.attrs.id>b.attrs.id?1:0;   //현재 이 배열에는 내가 선택한 곳에 포함되는 객체들이 모두 들어있다.
 	});
 	
-
+	//원본 배열에 피해를 주지않기 위해서 임의 변수를 만들어서 옮긴다. (pk  / fk 순서도 보존해야 하기 때문에)
 	for(var i= 0; i<pk.length; i++){
 		arr_total.push(pk[i]);
 	}
+	
+	arr_total.sort(function (a,b){ //차례대로 복사하기위해서 정렬
+		return a.attrs.id<b.attrs.id?-1 : a.attrs.id>b.attrs.id?1:0;   //현재 이 배열에는 내가 선택한 곳에 포함되는 객체들이 모두 들어있다.
+	});
+	
+	var arr_temp = new Array();
+	
 	for(var i= 0; i<arr_identify.length; i++){
-		arr_total.push(arr_identify[i]);
+		arr_temp.push(arr_identify[i]);
+	}
+	
+	arr_temp.sort(function (a,b){ //차례대로 복사하기위해서 정렬
+		return a.attrs.id<b.attrs.id?-1 : a.attrs.id>b.attrs.id?1:0;   //현재 이 배열에는 내가 선택한 곳에 포함되는 객체들이 모두 들어있다.
+	});
+	
+	for(var i= 0; i<arr_temp.length; i++){
+		arr_total.push(arr_temp[i]);
 	}
 	
 	
@@ -1197,7 +1212,7 @@ function checkIdentify_1(tempEntity){
 
 
 //추가 버튼을 눌렀을 때, 해당객체를 참조하는 자식 테이블에도 모두 추가하는 메서드 (재귀호출방식)
-function cascadeAddFk(firstEntity,pkId,findEntityArr,pre_identifyingFlag){
+function cascadeAddFk(firstEntity,pkId,findEntityArr,pre_identifyingFlag,arr_addTableName){
 	
 	 //firstEntity = e.target.findAncestor('.entity');
      var arr_line_To= relationLine_layer.find('.'+firstEntity.id());
@@ -1239,9 +1254,10 @@ function cascadeAddFk(firstEntity,pkId,findEntityArr,pre_identifyingFlag){
      			fk.attrs.pkId = pkId;
      			clickSecond(secondEntity); //second객체 클릭 효과
             	entity_resize();
-  			
+            	arr_addTableName.push(secondEntity.children[5].attrs.text);
+            	
             	firstEntity = secondEntity;
-  			cascadeAddFk(firstEntity,pkId,findEntityArr,flag);  //재귀호출 
+  			cascadeAddFk(firstEntity,pkId,findEntityArr,flag,arr_addTableName);  //재귀호출 
         		 }
      } 
    
@@ -1250,7 +1266,7 @@ function cascadeAddFk(firstEntity,pkId,findEntityArr,pre_identifyingFlag){
 }
 
 
-function cascadeDeletePk(entityId,arr_EntityAboutremoveCol){
+function cascadeDeletePk(entityId,arr_EntityAboutremoveCol,arr_removeTableName){
 	 var arr_line_To= relationLine_layer.find('.'+firstEntity.id());
 
 //	 var total_arr = arr_line_To.concat(arr_line_From);
@@ -1265,20 +1281,22 @@ function cascadeDeletePk(entityId,arr_EntityAboutremoveCol){
         	 secondEntity = findEntity(findEntityArr,seconndEntityId); // 선객체에 있는 참조값을 가지고 있는 entity를 찾는 메서드
         	 var delCnt = 0;
 
-
+        	 var temp_tableName = "";
   			 for(var j=secondEntity.find('.attribute').length-1; j>-1; j--){
   				 if(secondEntity.find('.attribute')[j].attrs.pkId == entityId){
+  					temp_tableName = secondEntity.children[5].attrs.text;
    					secondEntity.find('.attribute')[j].destroy();
    					
    					arr_EntityAboutremoveCol.push(secondEntity);  //삭제에 영향을 받은 entity를 알아야 하기 때문에 배열에 담는다.
    				 }
   			 }
   			 
-  		
+  			arr_removeTableName.push(temp_tableName);
+  			 
   	      	clickSecond(secondEntity); //second객체 클릭 효과
   	    	entity_resize();
   	    	firstEntity = secondEntity;
-  			cascadeDeletePk(entityId,arr_EntityAboutremoveCol);
+  			cascadeDeletePk(entityId,arr_EntityAboutremoveCol,arr_removeTableName);
        } 
         
 	}

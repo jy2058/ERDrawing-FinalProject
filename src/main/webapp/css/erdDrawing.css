@@ -931,7 +931,7 @@ position: relative;
 }
 
 /*web-font  */
-#queryText, input_query{
+#queryText, #input_query, #history_container .con_inner tbody{
 font-family: 'Nanum Gothic Coding', monospace;
 }
 

@@ -47,7 +47,7 @@ public class ErdDrawingDaoImpl implements IErdDrawingDao{
 		
 		int cnt = sqlSession.selectOne("erdDrawing.selectCntHist",erdHistVo);
 		
-		if(cnt >= 10){
+		if(cnt >= 20){
 			//update
 			sqlSession.update("erdDrawing.erdHistUpdate",erdHistVo);
 		}else{

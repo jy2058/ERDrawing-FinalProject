@@ -35,8 +35,7 @@
 
 
     function get_numId(){
-    	numId+=1;
-    	return numId;
+    	return ++numId;
     } 
 
     
