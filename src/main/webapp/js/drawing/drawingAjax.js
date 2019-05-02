@@ -186,10 +186,10 @@ function webSend(cmd, data1){
 }
 
 
-function jsonSave(select){
+function jsonSave(select,msg){
 	
 	var url = "/erddrawing/erdHistInsert";
-	var visible, snapNm, snapImg;
+	var visible, snapNm, snapImg,erdTitle;
 	
 	if(select === null){
 		return;
@@ -197,6 +197,7 @@ function jsonSave(select){
 	
 	if(select === "hist"){
 		visible = "T";
+		erdTitle = msg;
 	}else if(select === "snap"){
 		visible = "F";
 		snapNm = "스냅샷 이름";
@@ -223,7 +224,8 @@ function jsonSave(select){
 			erdIsVisible : visible,
 			snapNm:snapNm,
 			snapImg:snapImg,
-			erdJson: json
+			erdJson: json,
+			erdTitle:erdTitle
 		},
 		success : function(data) {
 			checksave = "SuccessSave";
@@ -367,10 +369,9 @@ function histLoadOne(vo){
 	
 		var nowDate = new Date(parseInt(vo.erdDt));
 		var times = getDateFormat(nowDate);
-		var id = "아이디";
-		var title = "히스토리 내용";
+		var title = vo.erdTitle;
 		var temp_str = `<tr>
-						<td>`+ id + " - " + title +`</td>
+						<td>` + title +`</td>
 						<td>`+ times +`</td>
 						<td><div class="btn_hist_change">변경</td>
 					</tr>`;
@@ -401,13 +402,12 @@ function histLoad(){
 			$.each(list, function(){
 				var nowDate = new Date(parseInt(this.erdDt));
 				var times = getDateFormat(nowDate);
-				var id = "아이디";
-				var title = "히스토리 내용";
+				var title = this.erdTitle;
 				
 
 				
 				temp_str += `<tr>
-								<td>`+ id + " - " + title +`</td>
+								<td>`+ title +`</td>
 								<td>`+ times +`</td>
 								<td><div class="btn_hist_change">변경</td>
 							</tr>`;
@@ -683,9 +683,10 @@ function fn_domainUpdate(evt){
 				domainTr.find('.btn_d_update .btn_inner').hide().fadeIn(400).delay( 500 ).fadeOut(400, function(){
 					domainTr.find('.btn_d_update .btn_inner').html('<i class="fas fa-sync-alt"></i>');
 					domainTr.find('.btn_d_update .btn_inner').show();
-
 					
-					webSend('domain 추가/수정 domain 추가/수정',jsonSave("hist"));
+					
+					var msg = S_userId+ " updated domain"
+					webSend('domain 추가/수정 domain 추가/수정',jsonSave("hist",msg));
 					//histLoad();
 				});
 			}, 500);
