@@ -62,8 +62,17 @@ public class TeamController {
 		// 이미지 가져올 때도 파일 이름을 가져와서 path를 앞에 따로 붙여주자.
 		//String path11 = req.getRealPath("image");	// image폴더 path
 		// /users/shinys/imagesave <- 신유수오빠 이미지 경로
-		String path = req.getServletContext().getRealPath("/upload/");
+		
+		//String path = "d:\\picture\\" ;
+		String path = "";
 		String filename = fileName + "_" + UUID.randomUUID().toString() + "." + ext;
+		
+		String os = System.getProperty("os.name").toLowerCase();
+		if(os.indexOf("win") > 0){
+			path = "d:\\picture\\" ;
+		}else if(os.indexOf("mac") > 0){
+			path = "/users/shinys/imagesave/";
+		}
 		
 		// 불러온 파일 저장할 공간 생성
 		File profile = new File(path + filename);
@@ -118,7 +127,14 @@ public class TeamController {
 		// 3-1. memImg 존재 할 경우
 		// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다.
 		FileInputStream fis;
-		String path = req.getServletContext().getRealPath("/upload/");
+		String path = "";
+		String os = System.getProperty("os.name").toLowerCase();
+		if(os.indexOf("win") > 0){
+			path = "d:\\picture\\" ;
+		}else if(os.indexOf("mac") > 0){
+			path = "/users/shinys/imagesave/";
+		}
+		
 		if (teamInfo != null && teamInfo.getTeamImg() != null) {
 			fis = new FileInputStream(new File(path + teamInfo.getTeamImg()));
 		}
