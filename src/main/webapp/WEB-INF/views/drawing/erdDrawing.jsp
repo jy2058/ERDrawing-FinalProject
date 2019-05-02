@@ -285,7 +285,7 @@
 			</div>
 
 			<div class="under-bottom">
-				<span id='preview'>SQL Oracle Preview</span> <span>Download
+				<span id='preview'>SQL Oracle Preview</span> <span onclick="imgDown()">Download
 					PNG</span>
 			</div>
 		</div>
@@ -2121,7 +2121,7 @@
 	function imgDown(){
 		var dataPick = stage.toDataURL({ pixelRatio: 3 });
 		var name = getTimeS();
-        downloadURI(dataPick, name+'png');
+        downloadURI(dataPick, name);
 	}
 	// erd 이미지 다운로드 메서드
 	function downloadURI(uri, name) {
