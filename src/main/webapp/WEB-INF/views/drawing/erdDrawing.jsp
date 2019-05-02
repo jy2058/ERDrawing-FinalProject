@@ -279,7 +279,7 @@
 			</div>
 
 			<div class="under-bottom">
-				<span id='preview'>SQL Oracle Preview</span> <span>Download
+				<span id='preview'>SQL Oracle Preview</span> <span onclick="imgDown(this)">Download
 					PNG</span>
 			</div>
 		</div>
@@ -2007,6 +2007,22 @@
 		msgWs.onerror = function(err){console.log('Error:', err);}
 	}
 	
+	// erd 이미지 다운로드
+	function imgDown(){
+		var dataPick = stage.toDataURL({ pixelRatio: 3 });
+		var name = getTimeS();
+        downloadURI(dataPick, name+'png');
+	}
+	// erd 이미지 다운로드 메서드
+	function downloadURI(uri, name) {
+        var link = document.createElement('a');
+        link.download = name;
+        link.href = uri;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        delete link;
+      }
 </script>
 
 
