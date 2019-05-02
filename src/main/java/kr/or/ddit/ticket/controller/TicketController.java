@@ -273,7 +273,7 @@ public class TicketController {
 		 	
 		 	
 			// 3-1. memImg 존재 할 경우
-			// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다.
+			// 3-1-1. 해당 경로의 파일을 FileInputStream으로 읽는다. 
 			FileInputStream fis;
 			String path = "";
 		      String os = System.getProperty("os.name").toLowerCase();
