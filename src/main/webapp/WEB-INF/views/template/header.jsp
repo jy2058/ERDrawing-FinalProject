@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <nav id="header" class="navbar navbar-inverse navbar-fixed-top">
-	<div class="container">
+	<div class="container" style="background:#232323;">
 
 
 		<div class="navbar-header">

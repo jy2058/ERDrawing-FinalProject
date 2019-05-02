@@ -4,12 +4,6 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <link rel="stylesheet" href="/css/message/messageModal.css">
 
-<style>
-.modalms{
-	width:550px;
-}
-</style>
-
 
 <div class="message modalms">
 	<h1>
@@ -20,7 +14,7 @@
 	
 	<div class="msg-listBox">
 		<!----------------------------------------------알림------------------------------------------------>
-		<ul id="ul">
+		<ul id="ul" style="padding:10px;">
 		
 			
 		</ul>
