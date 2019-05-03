@@ -51,8 +51,8 @@ width: 100px;
 }
 
 #add{
-    margin-right: 1.5%;
-    margin-left: 90%;
+margin-right: 8%;
+    margin-left: 84%;
     position: relative;
     padding: 10px;
     font-weight: 100;
@@ -98,6 +98,7 @@ color:#fff;
 <br />
 <br />
 
+
 <c:if test="${SESSION_MEMBERVO.memAuth == 'T' }">
 
       <div style="" id="add" class="modifyModal" data-toggle="modal" data-ticketno="insert" data-target="#ticketModalEvnTest" data-ticketno="insert" >티켓 추가</div>
@@ -106,43 +107,36 @@ color:#fff;
 </c:if>
 
 
-<div class="best-erd-list tickets">
-   <div class="inner-container">
-      <div class="col-sm-12">
-         <ul class="erd-box-list">
+<c:forEach var="ticket" varStatus="status" items="${ticketList }">
+	<div style="display: block; margin-bottom: 27px ;margin-left: 8%;margin-right: 8% ;">
+		<div
+			style="border: 2px solid #fff; display: inline-block; width: 100%;">
 
-            <c:forEach var="ticket" varStatus="status" items="${ticketList }">
-               <li class="erd-box-item"  >
-               
-                  <a class="preview-box" data-ticketno="${ticket.ticketNo }"  style="" class="modifyModal" data-toggle="modal" data-target="#modifyBuyModal" >
-                     <div class="bg-box">
-                        <div class="bg-img1" ><img alt="" src="${cp }/ticket/ticketImg?ticketNo=${ticket.ticketNo }" width="500" height="70"></div>
-                        <div class="table-bg-text">
-                           <div class="bg-text shinys"><h1>${ticket.ticketContent }</h1>${ticket.ticketPrice } 원</div>
-                        </div>
-                     </div>
-                  </a>
-            
-                  <div class="description-item">
-                     <c:if test="${SESSION_MEMBERVO.memAuth == 'T' }">
-                        <div  class="modifyModal" style="float: right; cursor: pointer;" data-toggle="modal" data-target="#ticketModalEvnTest" data-ticketno="${ticket.ticketNo }">수정</div>
-                     </c:if>
+			<div
+				style="display: inline-block; background-color: #ccdb5c; width: 27%; text-align: center;">
+				<h4 style="display: inline-block;  padding: 30px; font-size: 28px;">${ticket.ticketContent }&nbsp;권</h4>
+			</div>
 
-                     <div style="float: left;">${ticket.ticketContent }</div>
+			<div style="display: inline-block; margin-left: 10%; width: 47%; text-align: center;">
+				<%-- <label style="display: inline-block; margin-left: 10%;">${ticket.ticketContent }</label> --%>
+				<label style="font-size: 18px;" >${ticket.ticketPrice }&nbsp;원</label>
 
-                     <ul class="tagList" style="clear: both;">
-                        <li>가격:</li>
-                        <li>&nbsp;${ticket.ticketPrice }</li>
-                     </ul>
-                     
-                  </div></li>
-            </c:forEach>
-         </ul>
-      </div>
-   
-   </div>
-   <input type="hidden" id="alertMsg" value="${alertMsg }">
-   
+			</div>
+			<c:if test="${SESSION_MEMBERVO.memAuth == 'T' }">
+				<div
+					style="display: inline-block; float: right; border: 1px solid #fff; border-radius: 3px; padding: 3px; margin: 5px; cursor: pointer;"
+					data-toggle="modal" data-target="#ticketModalEvnTest"
+					data-ticketno="${ticket.ticketNo }" class="modifyModal">수정</div>
+			</c:if>
+			<div  style="display: inline-block; cursor: pointer;"
+				data-ticketno="${ticket.ticketNo }" class="modifyModal buyTicketBtn"
+				data-toggle="modal" data-target="#modifyBuyModal">이용권구매버튼</div>
+
+		</div>
+	</div>
+
+</c:forEach>
+
 <%@ include file="/WEB-INF/views/ticket/ticketModal.jsp"%>
    
    
@@ -161,7 +155,7 @@ color:#fff;
       }
    
       //티켓 클릭시
-      $(".preview-box").on('click', function() {
+      $(".buyTicketBtn").on('click', function() {
          ticketNo = $(this).data("ticketno");
          getModifyInfo(ticketNo);
            $("#sinbuy").hide();  
@@ -320,6 +314,7 @@ color:#fff;
          $("#ticketNo").val("");
          $("#ticketPrice").val("");
          $("#ticketContent").val("");
+         $("#ticketPeriod").val("");
          $("#profileImg").attr("src","/image/noImg.png");
       }
       
@@ -491,11 +486,5 @@ color:#fff;
             
          }
          
-         alert("${alertMsg}");
-         if($("#alertMsg").val() != ""){
-     		alert($("#alertMsg").val());
-     		$("#alertMsg").val("");
-     	} 
       
    </script>
-</div>
