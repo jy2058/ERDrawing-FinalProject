@@ -34,7 +34,6 @@ background-color: rgb(102, 102, 102);
 
 
 </style>
-<br/><br/>
 <div class="navbar-header d1" style="padding-right: 10px;">
 	<ul class="left-menu1" style="margin-top: 100px; color: #D1D1D2;">
 		<li class="navbar-brand1" style="font-size: 18px; font-weight: bold;"><a href="/ticket/ticketChart">Total Sales</a></li>
