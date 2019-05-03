@@ -6,7 +6,7 @@
 .page-header {
     padding-bottom: 9px;
     margin: 40px 0 20px;
-    border-bottom: 1px solid #eee;
+    border-bottom: 2px solid #eee;
 }
 .navbar-brand1 {
     float: left;
@@ -19,7 +19,7 @@
     padding: 3px;
 }
 </style>
-<br/><br/>
+
 <div class="navbar-header" style="padding-right: 10px;">
 	<ul class="left-menu1" style="margin-top: 100px; color: #D1D1D2;">
 		<li class="navbar-brand1" style="font-size: 18px; font-weight: bold;"><a href="/ticket/ticketChart" >Total Sales</a></li>
@@ -28,8 +28,10 @@
 	<ul class="left-menu1" style="color: #D1D1D2;">
 		<li class="navbar-brand1" style="font-size: 18px; font-weight: bold;"><a href="/ticket/ticketPie?yyyy=2019">Sales by Product</a></li>
 	</ul>
+	
 </div>
-<br/><br/><br/>	
+	<div style="text-align: center;"><h3 class="page-header" style="color: #D1D1D2;">전체 매출 현황</h3></div>
+<br/>
 <div id="chartContainer" style="height: 450px; width: 87%;"></div>
 
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>

@@ -94,9 +94,22 @@ color:#fff;
     height: 100%;
     overflow: hidden;
 }
+
+.page-header {
+    padding-bottom: 12px;
+    margin:  0 ; 
+    border-bottom: 1px solid #eee;
+}
 </style>
 <br />
 <br />
+<c:if test="${SESSION_MEMBERVO.memAuth == 'F' || SESSION_MEMBERVO.memAuth ==null}">
+<div style="text-align: center;">
+    <h3 class="page-header" style="color: #fff;  font-weight: bold;">Ticket</h3>
+   </div>
+   <div style="margin-bottom: 50px"></div>
+</c:if>
+
 
 
 <c:if test="${SESSION_MEMBERVO.memAuth == 'T' }">
@@ -110,11 +123,11 @@ color:#fff;
 <c:forEach var="ticket" varStatus="status" items="${ticketList }">
 	<div style="display: block; margin-bottom: 27px ;margin-left: 8%;margin-right: 8% ;">
 		<div
-			style="border: 2px solid #fff; display: inline-block; width: 100%;">
+			style="border: 2px solid darkgray; display: inline-block; width: 100%; background-color: #5d5d5d;">
 
 			<div
 				style="display: inline-block; background-color: #ccdb5c; width: 27%; text-align: center;">
-				<h4 style="display: inline-block;  padding: 30px; font-size: 28px;">${ticket.ticketContent }&nbsp;권</h4>
+				<h4 style="display: inline-block; color:#000; padding: 30px; font-size: 28px; ">${ticket.ticketContent }&nbsp;권</h4>
 			</div>
 
 			<div style="display: inline-block; margin-left: 10%; width: 47%; text-align: center;">
@@ -123,15 +136,17 @@ color:#fff;
 
 			</div>
 			<c:if test="${SESSION_MEMBERVO.memAuth == 'T' }">
-				<div
-					style="display: inline-block; float: right; border: 1px solid #fff; border-radius: 3px; padding: 3px; margin: 5px; cursor: pointer;"
-					data-toggle="modal" data-target="#ticketModalEvnTest"
-					data-ticketno="${ticket.ticketNo }" class="modifyModal">수정</div>
+				
 			</c:if>
 			<div  style="display: inline-block; cursor: pointer;"
 				data-ticketno="${ticket.ticketNo }" class="modifyModal buyTicketBtn"
-				data-toggle="modal" data-target="#modifyBuyModal">이용권구매버튼</div>
-
+				data-toggle="modal" data-target="#modifyBuyModal">
+				<button  class="btn btn-default" style="">구매</button></div>
+<div
+					style="display: inline-block; margin-left:10%;  color:ccdbaa;  border-radius: 3px; padding: 3px; margin: 5px; cursor: pointer; "
+					data-toggle="modal" data-target="#ticketModalEvnTest" 
+					data-ticketno="${ticket.ticketNo }" class="modifyModal">
+					<button  class="btn btn-default" style="">수정</button></div>
 		</div>
 	</div>
 
