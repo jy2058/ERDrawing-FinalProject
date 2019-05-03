@@ -99,7 +99,6 @@ background-color:rgba(224, 51, 122,1);
 				<div class="submit-btn99 btn-style1" id="erdAdd">만들기</div>
 			</div>
 		</div>
-<%-- 		<input type="hidden" id="alertMsg" value="${alertMsg }"> --%>
 		<script>
 			var clickTeam = false;	
 			$("#selTeam").hide();
@@ -128,7 +127,7 @@ background-color:rgba(224, 51, 122,1);
 			    	clickTeam = false;
 			    }
 				
-				
+				// private 갯수 가져오는 ajax
 				if(this.value == 'private'){
 					$.ajax({
 						type : "get",
@@ -137,9 +136,10 @@ background-color:rgba(224, 51, 122,1);
 						data : {
 						},
 						success : function(data) {
-							alert(data.alertMsg);
-							$('input:radio[name=erdScope][value="'+selScope+'"]').prop('checked',true);
-							
+							if(data.alertMsg != ""){
+								alert(data.alertMsg);
+								$('input:radio[name=erdScope][value="'+selScope+'"]').prop('checked',true);
+							}
 						},
 						error : function(xhr, status, error) {
 							alert("에러");
@@ -149,9 +149,5 @@ background-color:rgba(224, 51, 122,1);
 				selScope = e.target.value;	// 다른 거로 또 바꿨을 수도 있으니까
 			});
 			
-			
-// 			if($("#alertMsg").val() != ""){
-// 				alert($("#alertMsg").val());
-// 			} 
 		</script>
 		
