@@ -93,5 +93,15 @@ public class ErdDrawingServiceImpl implements IErdDrawingService{
 	public List<ChatVo> chatList(int erdNo) {
 		return erdDrawingDao.chatList(erdNo);
 	}
+	
+	@Override
+	public String selectSnapImg(int erdHistNo) {
+		return erdDrawingDao.selectSnapImg(erdHistNo);
+	}
+
+	@Override
+	public String selectErdJson(int erdHistNo) {
+		return erdDrawingDao.selectErdJson(erdHistNo);
+	}
 
 }

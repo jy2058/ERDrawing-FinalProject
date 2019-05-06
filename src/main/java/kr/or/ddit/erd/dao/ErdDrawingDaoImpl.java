@@ -93,4 +93,14 @@ public class ErdDrawingDaoImpl implements IErdDrawingDao{
 		return sqlSession.selectList("erdDrawing.chatList", erdNo);
 	}
 	
+	@Override
+	public String selectSnapImg(int erdHistNo) {
+		return sqlSession.selectOne("erdDrawing.selectSnapImg", erdHistNo);
+	}
+
+	@Override
+	public String selectErdJson(int erdHistNo) {
+		return sqlSession.selectOne("erdDrawing.selectErdJson", erdHistNo);
+	}
+	
 }

@@ -137,4 +137,18 @@
 		order by chatindt asc
 	</select>
 
+<!--스냅샷 이미지 가져오기  -->
+	<select id="selectSnapImg" parameterType="int" resultType="String">
+	select SNAPIMG
+		from erd_hist
+		where ERDHISTNO = #{erdHistNo}
+	</select>
+	
+	<!--erdjson 데이터  가져오기  -->
+	<select id="selectErdJson" parameterType="int" resultType="String">
+	select ERDJSON
+		from erd_hist
+		where ERDHISTNO = #{erdHistNo}
+	</select>
+
 </mapper>

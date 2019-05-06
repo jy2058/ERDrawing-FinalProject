@@ -44,6 +44,10 @@ public interface IErdDrawingDao {
 	// 도메인 1개만 찾아서 가져오기
 	List<DomainVo> domainOneSearch(DomainVo domainVo);
 	
-	
+	//스냅샷 이미지 가져오기
+	String selectSnapImg(int erdHistNo);
+		
+	//erdjson데이터 가져오기
+	String selectErdJson(int erdHistNo);
 
 }

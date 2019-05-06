@@ -2153,6 +2153,7 @@
 	
 	function connectMsgWs(){
 		var msgWs = new WebSocket("ws://localhost:8080/msgEcho");
+		//var msgWs = new WebSocket("ws://localhost/msgEcho");
 		MsgWebSocket = msgWs;
 		 
 		msgWs.onopen = function(){
