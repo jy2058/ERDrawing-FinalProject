@@ -143,7 +143,7 @@ color:#fff;
 				data-toggle="modal" data-target="#modifyBuyModal">
 				<button  class="btn btn-default" style="">구매</button></div>
 				
-			<c:if test="${SESSION_MEMBERVO.memAuth == 'T' }">
+			<c:if test="${SESSION_MEMBERVO.memAuth == 'T' }"> 
 			<div
 				style="display: inline-block; margin-left: 10%; color: ccdbaa; border-radius: 3px; padding: 3px; margin: 5px; cursor: pointer;"
 				data-toggle="modal" data-target="#ticketModalEvnTest"
