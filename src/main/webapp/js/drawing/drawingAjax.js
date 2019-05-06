@@ -38,7 +38,7 @@ $(document).ready(function(){
 
 
 function connectWS(){
-	var ws = new WebSocket("ws://localhost/erdEcho?erdNo="+erdNo);
+	var ws = new WebSocket("ws://localhost:8080/erdEcho?erdNo="+erdNo);
 	webSocket = ws;
 	
 	ws.onopen = function(){
@@ -703,6 +703,16 @@ function fn_domainUpdate(evt){
 				domainTr.find('.btn_d_update .btn_inner').hide().fadeIn(400).delay( 500 ).fadeOut(400, function(){
 					domainTr.find('.btn_d_update .btn_inner').html('<i class="fas fa-sync-alt"></i>');
 					domainTr.find('.btn_d_update .btn_inner').show();
+					
+					
+					//도메인 적용
+					stage.find('.attr_domain_txt').each(function(item){
+						if(item.text() === domainNm){
+							item.findAncestor('.attribute').findOne('.attr_type_txt').text(domainDataType);
+							item.findAncestor('.attribute').findOne('.attr_default_txt').text(domainDefaultValue);
+						}
+					});
+
 					
 					
 					var msg = S_userId+ " updated domain"

@@ -38,6 +38,9 @@ public interface IErdDrawingService {
 	// 채팅 리스트 
 	List<ChatVo>chatList(int erdNo);
 
+	// 도메인 1개 찾아서 가져오기
+	List<DomainVo> domainOneSearch(DomainVo domainVo);
+
 
 
 }

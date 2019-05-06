@@ -32,6 +32,11 @@ public class ErdDrawingServiceImpl implements IErdDrawingService{
 	}
 	
 	@Override
+	public List<DomainVo> domainOneSearch(DomainVo domainVo){
+		return erdDrawingDao.domainOneSearch(domainVo);
+	}
+	
+	@Override
 	public int domainUpdate(DomainVo domainVo){
 		
 		int cnt=0;

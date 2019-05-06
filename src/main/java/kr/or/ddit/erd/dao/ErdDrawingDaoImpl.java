@@ -43,6 +43,14 @@ public class ErdDrawingDaoImpl implements IErdDrawingDao{
 	}
 	
 	@Override
+	public List<DomainVo> domainOneSearch(DomainVo domainVo){
+		return sqlSession.selectList("erdDrawing.domainOneSearch", domainVo);
+	}
+	
+	
+	
+	
+	@Override
 	public int erdHistInsert(ErdHistVo erdHistVo){
 		
 		int cnt = sqlSession.selectOne("erdDrawing.selectCntHist",erdHistVo);

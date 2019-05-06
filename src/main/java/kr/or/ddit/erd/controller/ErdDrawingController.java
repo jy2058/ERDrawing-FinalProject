@@ -66,6 +66,17 @@ public class ErdDrawingController {
 		return "jsonView";
 	}
 	
+	//도메인 1개만 찾아서 가져오기 (erd에 도메인 입력시 사용)
+	@RequestMapping(path="/domainOneSearch", method=RequestMethod.GET)
+	public String domainOneSearch(Model model, DomainVo domainVo){
+		
+		List<DomainVo> list = erdDrawingService.domainOneSearch(domainVo);
+		model.addAttribute(list);
+		
+		return "jsonView";
+	}
+	
+	
 	@RequestMapping(path="/erdHistInsert", method=RequestMethod.POST)
 	public String erdHistInser(ErdHistVo erdHistVo){
 		erdDrawingService.erdHistInsert(erdHistVo);
