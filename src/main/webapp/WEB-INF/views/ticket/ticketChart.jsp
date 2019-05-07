@@ -119,7 +119,7 @@
 				type : "line",
 				xValueType : "dateTime",
 				name: "5개월권",
-				showInLegend : true,
+				showInLegend : true, 
 				markerType : "square",
 				xValueFormatString : "MMM, YYYY",
 				dataPoints : dps[3]
