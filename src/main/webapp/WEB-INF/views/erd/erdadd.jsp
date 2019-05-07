@@ -69,15 +69,15 @@ background-color:rgba(224, 51, 122,1);
 					<div>
 						<div>
 							<input type="radio" name="erdScope" value="public" checked="checked">
-							<label>공개</label>
+							<label>Public</label>
 						</div>
 						<div>
 							<input type="radio" name="erdScope" value="private">
-							<label>비공개</label>
+							<label>Private</label>
 						</div>
 						<div>
 							<input type="radio" name="erdScope" value="team">
-							<label>팀</label>
+							<label>Team</label>
 							
 						</div>
 					</div>
