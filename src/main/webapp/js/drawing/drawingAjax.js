@@ -255,8 +255,7 @@ function jsonLoad(loadData){
 				item2.destroy();
 			}
 		});
-		
-		
+
 //	 	if(item.children.length > 0){
 //	 		item.destroyChildren();
 //	 	}
@@ -315,6 +314,7 @@ function jsonLoad(loadData){
         });
         
        stageClick(0);
+       stage.off('click');
        stage.on('click', stageClick);
        
        

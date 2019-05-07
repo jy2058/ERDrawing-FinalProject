@@ -36,5 +36,42 @@
 <script src="/js/drawing/drawingAjax.js"></script>
 <script src="/js/drawing/chat.js"></script>
 
+<script>
+$(document).ready(function(){
+	
+	//본인이 아니면 버튼 이벤트 없애기
+	if(erdCreator != S_userId && erdScope != 'team'){
+
+		 $('#button3').off('click');		//엔티티추가
+		 $('#tmp_btn_11').off('click');
+		 $('#tmp_btn_12').off('click');
+		 $('#tmp_btn_13').off('click');
+		 $('#tmp_btn_14').off('click');
+		 $('#tmp_btn_15').off('click');
+		 $('#one2many').off('click');
+		 $('#one2one').off('click');
+		 $('#button30').off('click');	//도메인
+		 $('#button31').off('click');	//가져오기
+		 
+		 $('#button40').off('click');	
+		 $('#button41').off('click');	
+		 
+		 $('#erdModify').off('click');
+
+		 $('#erdModify, #button41, #button40, #button30, #button31').css('color','#999999');
+		 $('#button3, #tmp_btn_11, #tmp_btn_12, #tmp_btn_13, #tmp_btn_14, #tmp_btn_15, #one2many, #one2one').css('opacity','0.5');
+		 $('#erdModify, #button41, #button40, #button30, #button31').css('cursor','not-allowed');
+		 $('#button3, #tmp_btn_11, #tmp_btn_12, #tmp_btn_13, #tmp_btn_14, #tmp_btn_15, #one2many, #one2one').css('cursor','not-allowed');
+		 
+		 stage.off('click');
+		 stage.off('.dragSetup');
+		 stage.find('.entity').draggable(false);
+	}
+
+});
+
+
+</script>
+
 </body>
 </html>

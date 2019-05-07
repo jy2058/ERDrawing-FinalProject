@@ -1,9 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <script>
 	var erdNo = ${erdNo};
 	var S_userId = "${SESSION_MEMBERVO.memId}";
+	var erdCreator = '${erdVo.memId}';
+	var erdScope = '${erdVo.erdScope}';
+
+	
+	
 	
 	//@ 잘라주기
 	if(S_userId.indexOf('@')>-1){ 
@@ -36,17 +41,26 @@
 			<!--   <div id="button1" class="buttons" style="display: none">테이블 이름 가져오기</div>
                 <div id="button5" class="buttons">1대1 연결</div>
                 <div id="button6" class="buttons">1대 다 연결</div>
-                <div id="button20" class="buttons">데이터 저장</div> -->
-			<div id="button21" class="buttons">데이터 불러오기</div>
+                <div id="button20" class="buttons">데이터 저장</div>
+				<div id="button21" class="buttons">데이터 불러오기</div> -->
+				
+			<div style="display:inline-block;">Creator : ${erdVo.memId}</div>
+		
 		</div>
 
 		<div class="top_right">
 			<div class="buttons_top" title="ERD 복사" id="erdCopyBtn">
 				<i class="fas fa-copy"></i>
 			</div>
+			
+
+
 			<div class="buttons_top" title="ERD 설정" id="erdModify" data-erdno="${erdNo }">
 				<i class="fas fa-cog"></i>
 			</div>
+
+			
+			
 			<div class="buttons_top" id="message" title="알람">
 				<i class="fas fa-bell"></i><div style="position:relative;"><span class="badge" id="msgCnt"></span></div>
 			</div>
@@ -72,26 +86,26 @@
 			<img src="/image/drawing/entity.png">
 		</div>
 
-		<div class="buttons_right" title="없거나 한개 또는 여러개">
+		<div class="buttons_right" title="없거나 한개 또는 여러개" id="tmp_btn_11">
 			<img src="/image/drawing/NoOneOrMore.png">
 		</div>
-		<div class="buttons_right" title="없거나 여러개">
+		<div class="buttons_right" title="없거나 여러개" id="tmp_btn_12">
 			<img src="/image/drawing/NoOrMore.png">
 		</div>
-		<div class="buttons_right" title="없거나 한개">
+		<div class="buttons_right" title="없거나 한개" id="tmp_btn_13">
 			<img src="/image/drawing/NoOrOne.png">
 		</div>
 
-		<div class="buttons_right" title="오직 한개만">
+		<div class="buttons_right" title="오직 한개만" id="tmp_btn_14">
 			<img src="/image/drawing/onlyone.png">
 		</div>
-		<div class="buttons_right" title="한개 또는 여러개">
+		<div class="buttons_right" title="한개 또는 여러개" id="tmp_btn_15">
 			<img src="/image/drawing/OneOrMore.png">
 		</div>
 		<div class="buttons_right" title="여러개" id='one2many'>
 			<img src="/image/drawing/more.png">
 		</div>
-		<div class="buttons_right" title="한개" id='one2one'>
+		<div class="buttons_right" title="한개" id='one2one' >
 			<img src="/image/drawing/one.png">
 		</div>
 
@@ -726,12 +740,14 @@
      
      });
        
+       
+       
      // team이 아닐 경우 채팅 아이콘 삭제
      var erdScope = "${erdVo.erdScope}";
 	 if(erdScope != "team"){
 		$("#button42").remove();
 	 }
-     
+	 
      
      //nonidentifying을 클릭했을 때
        $("#nonidentifying").on('click', function(){
@@ -1003,7 +1019,7 @@
             });
 
             
-            //색상 변경 버튼
+            //색상 변경 버튼 (fk테스트 버튼으로 사용중)
             btn_color = new Konva.Rect({
                 x: btn_entity_delete.x() - 21,
                 y: btn_entity_delete.y(),
@@ -1012,7 +1028,8 @@
                 fill: '#262629',
                 //stroke: 'red',
                 cornerRadius: 5,
-                name: 'btn_color'
+                name: 'btn_color',	
+                	visible: false  //fk추가 버튼 숨기기
             });
             
             btn_color_txt = new Konva.Text({
@@ -1021,7 +1038,8 @@
                 y: btn_color.y()+3.5,
                 fill: '#ffffff',
                 fontSize: 12,
-                name: 'btn_color_txt'
+                name: 'btn_color_txt',
+                	visible: false  //fk추가 버튼 숨기기
             });
 
             btn_entity_group.add(btn_entity_delete).add(btn_color);
@@ -1586,36 +1604,48 @@
                 
                 else if(allNode.findAncestor('.entity')){
                 	
-                	entity.off('dblclick');
-                	entity.on('dblclick', textClick);
                 	
-            	  entity.on('dragend',function(e){
-                  	 console.log('드래그엔드');
-                  	 var first_Entity = e.target; // 첫번째 객체를 얻어옴 (내가 클릭한 객체)
-                  	 
-                  	entityMouseUp(first_Entity,true); 
-                  	relationLine_layer.draw();
-                  }); 
-                  
+                	entity.off('dblclick');
+                	entity.off('dragend');
+                	entity.off('dragstart');
+                	
+                	
+                	//드래그 이벤트 조건 부여 (erd생성자와 같거나 team erd일때)
+                	if(erdCreator === S_userId || erdScope === 'team'){
+                		  entity.on('dblclick', textClick);
                
-                  // 엔티티를 클릭했을 경우(mousedown) 엔티티와 관계된 관계선들을 숨겨준다.
+                
+		                	
+		            	  entity.on('dragend',function(e){
+		                  	 console.log('드래그엔드');
+		                  	 var first_Entity = e.target; // 첫번째 객체를 얻어옴 (내가 클릭한 객체)
+		                  	 
+		                  	entityMouseUp(first_Entity,true); 
+		                  	relationLine_layer.draw();
+		                  }); 
+		                  
+		               
+		                  // 엔티티를 클릭했을 경우(mousedown) 엔티티와 관계된 관계선들을 숨겨준다.
+		                  
+		                  entity.on('dragstart',function(e){
+		                 	 console.log('드래그스타트');
+		                 	
+		                 	 // e.target.findAncestor('.entity');
+		                 	 var arr_line_To= relationLine_layer.find('.'+e.target.id());
+		     				 
+		                 	 var arr_line_From = findLineRefPos(e.target.id());
+		                 	 for(var i=0; i<arr_line_To.length; i++){
+		                 		 arr_line_To[i].hide();
+		                 	 }
+		                 	 
+		                 	 for(var i = 0; i<arr_line_From.length; i++){
+		                 		 arr_line_From[i].hide();
+		                 	 }
+		                 		relationLine_layer.draw();
+		                 });
                   
-                  entity.on('dragstart',function(e){
-                 	 console.log('드래그스타트');
-                 	
-                 	 // e.target.findAncestor('.entity');
-                 	 var arr_line_To= relationLine_layer.find('.'+e.target.id());
-     				 
-                 	 var arr_line_From = findLineRefPos(e.target.id());
-                 	 for(var i=0; i<arr_line_To.length; i++){
-                 		 arr_line_To[i].hide();
-                 	 }
-                 	 
-                 	 for(var i = 0; i<arr_line_From.length; i++){
-                 		 arr_line_From[i].hide();
-                 	 }
-                 		relationLine_layer.draw();
-                 });
+                 	}
+                	
             	
             }
                 
@@ -1693,6 +1723,11 @@
             console.log("double click!!!");
             
             textNode = e.target;
+            
+            //키 변경금지
+            if(textNode.hasName('attr_key_txt')){
+           	 	return;
+            }
             
             if(textNode.className != "Text" || textNode.name().indexOf('btn') > -1){
                 return;
