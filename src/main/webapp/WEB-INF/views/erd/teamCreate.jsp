@@ -162,7 +162,7 @@ $( "#autocomplete" ).autocomplete({
         	html += '	<div><img src="'+ui.item.data+'"></div>';
         }else{
         	html += '	<div><img src="/member/memberImg?memId='+ui.item.value+'"></div>';
-        }
+        } 
         
        
         html += '	<div>' + ui.item.value + '</div>';
