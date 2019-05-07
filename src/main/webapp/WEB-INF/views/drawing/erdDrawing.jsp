@@ -418,14 +418,22 @@
 
 		<session class="drawing_content drawing_pannel">
 		<div id="container_Shin"></div>
+		<div id="loading1">
+			<div class="loading_inner">
+				<div class="lodding_content" id ="Progress_Loading">
+				<img  src="/image/ajax-loader1.gif"/>
+				</div>
+			</div>
+		</div>
 		<div id="loading">
 			<div class="loading_inner">
-				<div class="lodding_content">
-					로딩중
+				<div class="lodding_content" id ="Progress_Loading">
+				<img src="/image/ajax-loader4.gif"/>
 				</div>
 			</div>
 		</div>
 		</session>
+		
 
 	</div>
 </div>
