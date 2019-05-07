@@ -345,8 +345,11 @@ public class TicketController {
 		PageVo paging= new PageVo();
 		 paging.setPageNo(page);
 		 paging.setPageSize(10);
+		 if(ticketService.getAllTicketRefList(map).size()>0){
 		 int cnts = Integer.valueOf((String) ticketService.getAllTicketRefList(map).get(0).get("CNT"));
 		 paging.setTotalCount(cnts);
+		 }
+		
 		 model.addAttribute("ticketList", ticketService.getAllTicketList());
 		 model.addAttribute("ticketRefList", ticketService.getAllTicketRefList(map));
 		 model.addAttribute("paging", paging);
