@@ -321,6 +321,7 @@
 					</div>
 				</div>
 	
+	
 				<div class="container_inner">
 					<div class="con_inner">
 						
@@ -347,7 +348,7 @@
 		
 		
 		<!-- 스냅샷 컨테이너 -->
-		<div id="snapshot_container" class="ani_sys">
+		<div id="snapshot_container" class="ani_sys" style="width:410px;">
 		
 			<div class="flexVertical">
 				
@@ -517,8 +518,12 @@
             stageClick();
         });
         
+        //엔티티 모양이 바뀌었을 경우  관계선의 위치도 재조정
+        findEntityArr  = stage.find('.entity');
+       for(var i =0; i<findEntityArr.length; i++ ){
+       	 entityMouseUp(findEntityArr[i],true); 
+       }
         stageClick(0);
-        
         
     });
 
@@ -2197,7 +2202,7 @@
 	connectMsgWs();
 	
 	function connectMsgWs(){
-		var msgWs = new WebSocket("ws://localhost:8080/msgEcho");
+		var msgWs = new WebSocket("ws://192.168.206.22/msgEcho");
 		//var msgWs = new WebSocket("ws://localhost/msgEcho");
 		MsgWebSocket = msgWs;
 		 

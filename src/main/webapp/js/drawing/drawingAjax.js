@@ -42,7 +42,7 @@ $(document).ready(function(){
 
 
 function connectWS(){
-	var ws = new WebSocket("ws://localhost:8080/erdEcho?erdNo="+erdNo);
+	var ws = new WebSocket("ws://192.168.206.22/erdEcho?erdNo="+erdNo);
 	//var ws = new WebSocket("ws://localhost/erdEcho?erdNo="+erdNo);
 	webSocket = ws;
 	
@@ -361,7 +361,7 @@ function getDateFormat(now) {
 	  hour = "" + now.getHours(); if (hour.length == 1) { hour = "0" + hour; }
 	  minute = "" + now.getMinutes(); if (minute.length == 1) { minute = "0" + minute; }
 	  second = "" + now.getSeconds(); if (second.length == 1) { second = "0" + second; }
-	  return year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+	  return year + "-" + month + "-" + day + "<br>" + hour + ":" + minute + ":" + second;
 }
 
 // 날짜 포맷 (분/초)
