@@ -67,6 +67,7 @@ public class ErdController {
 		
 		// 공개설정이 팀일 때
 		if(erdVo.getErdScope().equals("team")){
+			erdVo.setMemId(memberVo.getMemId());
 			erdVo.setTeamNo(erdVo.getTeamNo());
 		}
 		// 공개설정이 개인일 때

@@ -3,6 +3,9 @@ var webSocket;
 var tmp_search_text;
 
 $(document).ready(function(){
+	$('#loading1').css('display','none');
+
+	
 	connectWS();
 	
 	//도메인 초기화 - ShinYS
@@ -35,6 +38,7 @@ $(document).ready(function(){
 	
 
 });
+
 
 
 function connectWS(){
@@ -187,6 +191,7 @@ function webSend(cmd, data1){
 
 
 function jsonSave(select,msg){
+	$('.btn_hist_change').removeClass('on');
 	
 	var url = "/erddrawing/erdHistInsert";
 	var visible, snapNm, snapImg,erdTitle;
@@ -241,7 +246,7 @@ function jsonSave(select,msg){
 
 function jsonLoad(loadData){
 
-
+	
 	//스테이지 삭제
 	stage.children.each(function(item){
 		 	if(item.children.length > 0){
@@ -315,6 +320,7 @@ function jsonLoad(loadData){
         });
         
        stageClick(0);
+       stage.off('click');
        stage.on('click', stageClick);
        
        
@@ -338,6 +344,10 @@ function jsonLoad(loadData){
        mini_layer.draw();
        relationLine_layer.draw();
 
+       
+       
+       
+       
 }
 
 	
@@ -369,6 +379,7 @@ function getDateFormatMS(now) {
 
 //Erd추가 그려주기
 function histLoadOne(vo){
+		$('#loading1').show();
 		var nowDate = new Date(parseInt(vo.erdDt));
 		var times = getDateFormat(nowDate);
 		var title = vo.erdTitle;
@@ -388,12 +399,20 @@ function histLoadOne(vo){
 	//$('.btn_hist_change').off('click');
 	
 	$('.btn_hist_change').on('click',function(e){
+		$('#loading1').show();
 		$('.btn_hist_change').removeClass('on');
 		$(this).addClass('on');
 		var jsonData = e.target.dataset.erdjson;
 		jsonLoad(jsonData);
+		
+		setTimeout(() => {
+			$('#loading1').hide();
+		}, 1000);
 	});
 	
+	setTimeout(() => {
+		$('#loading1').hide();
+	}, 1000);
 }
 
 
@@ -424,11 +443,9 @@ function histLoad(){
 								<td>`+ times +`</td>
 								<td><div class="btn_hist_change" data-erdhistno="`+ erdHistNo +`">change</td>
 							</tr>`;
-				
 			});
 			
 			$('#history_container .con_inner tbody').html(temp_str);
-			$('#loading').css('display','none');
 			
 			$('.btn_hist_change').on('click',function(e){
 				var erdHistNo = e.target.dataset.erdhistno;
@@ -436,10 +453,10 @@ function histLoad(){
 				$('.btn_hist_change').removeClass('on');
 				$(this).addClass('on');
 				//erdJson이 용량이 크기 떄문에, 한번에 가지고 있기보단, 클릭 시  erdhistno로 검색해 해당하는 jsondata 값을 얻어옴. 
-				 $.ajax({
+				$.ajax({
 						type : "post",
 						url : "/erddrawing/erdSnapJson",
-						async: false,
+						async: true,
 						data : {
 							erdHistNo : erdHistNo
 						},
@@ -448,6 +465,12 @@ function histLoad(){
 						},
 						error : function(xhr, status, error) {
 							console.log(error);
+						},beforeSend : function(xhr, status, error) {
+							console.log("beforeSend");
+							$('#loading1').show();
+						},
+						complete : function(xhr, status, error) {
+							$('#loading1').hide();
 						}
 					});
 			});
@@ -482,6 +505,7 @@ $('.btn_snapshot_add').on('click',function(){
 
 //스냅샷 하나 추가
 function snapshotOne(vo){
+	$('#loading1').show();
 	var temp_str ="";
 	var times = vo.times;
 	var snapnm = vo.snapNm;
@@ -511,11 +535,19 @@ function snapshotOne(vo){
 	//$('.btn_hist_change').off('click');
 	
 	$('.btn_hist_change').on('click',function(e){
+		$('#loading1').show();
+		
 		$('.btn_hist_change').removeClass('on');
 		$(this).addClass('on');
 		var jsonData = e.target.dataset.erdjson;
 		jsonLoad(jsonData);
+		setTimeout(() => {
+			$('#loading1').hide();
+		}, 1000);
 	});
+	setTimeout(() => {
+		$('#loading1').hide();
+	}, 1000);
 }
 
 
@@ -575,6 +607,12 @@ function snapshotList(){
 						},
 						error : function(xhr, status, error) {
 							console.log(error);
+						},beforeSend : function(xhr, status, error) {
+							console.log("beforeSend");
+							$('#loading1').show();
+						},
+						complete : function(xhr, status, error) {
+							$('#loading1').hide();
 						}
 					});
 			});
