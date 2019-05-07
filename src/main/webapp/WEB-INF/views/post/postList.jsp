@@ -70,7 +70,6 @@ td{
 	font-weight: normal;
 	border: 0px;
 	margin-left: 790px;
-	
 }
 
 </style>

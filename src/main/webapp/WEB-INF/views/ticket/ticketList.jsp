@@ -103,7 +103,7 @@ color:#fff;
 </style>
 <br />
 <br />
-<c:if test="${SESSION_MEMBERVO.memAuth == 'F' || SESSION_MEMBERVO.memAuth ==null}">
+<c:if test="${SESSION_MEMBERVO.memAuth == 'F' || SESSION_MEMBERVO.memAuth == null}">
 <div style="text-align: center;">
     <h3 class="page-header" style="color: #fff;  font-weight: bold;">Ticket</h3>
    </div>
@@ -142,11 +142,16 @@ color:#fff;
 				data-ticketno="${ticket.ticketNo }" class="modifyModal buyTicketBtn"
 				data-toggle="modal" data-target="#modifyBuyModal">
 				<button  class="btn btn-default" style="">구매</button></div>
-<div
-					style="display: inline-block; margin-left:10%;  color:ccdbaa;  border-radius: 3px; padding: 3px; margin: 5px; cursor: pointer; "
-					data-toggle="modal" data-target="#ticketModalEvnTest" 
-					data-ticketno="${ticket.ticketNo }" class="modifyModal">
-					<button  class="btn btn-default" style="">수정</button></div>
+				
+			<c:if test="${SESSION_MEMBERVO.memAuth == 'T' }"> 
+			<div
+				style="display: inline-block; margin-left: 10%; color: ccdbaa; border-radius: 3px; padding: 3px; margin: 5px; cursor: pointer;"
+				data-toggle="modal" data-target="#ticketModalEvnTest"
+				data-ticketno="${ticket.ticketNo }" class="modifyModal">
+				<button class="btn btn-default" style="">수정</button>
+			</div>
+			</c:if>	
+			
 		</div>
 	</div>
 

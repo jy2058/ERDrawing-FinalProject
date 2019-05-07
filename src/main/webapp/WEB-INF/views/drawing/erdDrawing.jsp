@@ -1586,6 +1586,7 @@
                 
                 else if(allNode.findAncestor('.entity')){
                 	
+                	entity.off('dblclick');
                 	entity.on('dblclick', textClick);
                 	
             	  entity.on('dragend',function(e){
@@ -1730,6 +1731,7 @@
            
 //             inputss.style.border = (2*stage.scale().x)+'px solid #000';
 
+
             inputss.focus();
 
             inputss.addEventListener('keydown', enterK);
@@ -1745,6 +1747,7 @@
         
         //엔터입력
         function enterK(e){
+        
              if (e.keyCode === 13) {
                 //텍스트 입력 값 적용
                  textNode.text(inputss.value);
@@ -1766,7 +1769,58 @@
                  }
                     
 
-                 
+                 //도메인 작성시
+                 if(textNode.hasName("attr_domain_txt")){
+                	 
+                	 var domainText = textNode.text();
+
+                	 $.ajax({
+                		type : "get",
+               			url : "/erddrawing/domainOneSearch",
+               			data : {
+               				domainNm : domainText,
+               				erdNo : erdNo
+               			},
+               			async: false,
+               			success : function(data) {
+         
+               				console.log("도메인 리스트2 : " + data.length);
+               				console.log(data);
+               				
+               				if(data.domainVoList != undefined){
+               					console.log("도메인 검출");
+               					var domainType = textNode.findAncestor('.attribute').findOne('.attr_type_txt');
+	   	                       	 domainType.text(data.domainVoList[0].domainDataType);
+	   	                       	 if(domainType.findAncestor('.attr_groups') != null){
+	   	                                if(domainType.text() === "" && domainType.findAncestor('.attr_groups').findOne('.placeHolder') != null ){
+	   	                               	 domainType.findAncestor('.attr_groups').findOne('.placeHolder').visible(true);
+	   	                                 }else if(domainType.findAncestor('.attr_groups').findOne('.placeHolder') != null){
+	   	                               	  domainType.findAncestor('.attr_groups').findOne('.placeHolder').visible(false);
+	   	                                 } 
+	   	                             }
+	   	                       	 
+	   	                       	 
+	   	                       	 var domainDefault = textNode.findAncestor('.attribute').findOne('.attr_default_txt');
+	   	                       	 domainDefault.text(data.domainVoList[0].domainDefaultValue);
+	   	                       	 if(domainDefault.findAncestor('.attr_groups') != null){
+	   	                                if(domainDefault.text() === "" && domainDefault.findAncestor('.attr_groups').findOne('.placeHolder') != null ){
+	   	                               	 domainDefault.findAncestor('.attr_groups').findOne('.placeHolder').visible(true);
+	   	                                 }else if(domainDefault.findAncestor('.attr_groups').findOne('.placeHolder') != null){
+	   	                               	  domainDefault.findAncestor('.attr_groups').findOne('.placeHolder').visible(false);
+	   	                                 } 
+	   	                             }
+               				}
+
+               			},
+               			error : function(xhr, status, error) {
+               				console.log(error);
+               			}
+               		});
+                	 
+                	 
+                	 
+                	 
+     			}
                  
 
                  
@@ -2098,8 +2152,8 @@
 	connectMsgWs();
 	
 	function connectMsgWs(){
-//		var msgWs = new WebSocket("ws://192.168.206.35:8080/msgEcho");
-		var msgWs = new WebSocket("ws://localhost/msgEcho");
+		var msgWs = new WebSocket("ws://localhost:8080/msgEcho");
+		//var msgWs = new WebSocket("ws://localhost/msgEcho");
 		MsgWebSocket = msgWs;
 		 
 		msgWs.onopen = function(){

@@ -38,8 +38,8 @@ $(document).ready(function(){
 
 
 function connectWS(){
-	//var ws = new WebSocket("ws://localhost:8080/erdEcho?erdNo="+erdNo);
-	var ws = new WebSocket("ws://localhost/erdEcho?erdNo="+erdNo);
+	var ws = new WebSocket("ws://localhost:8080/erdEcho?erdNo="+erdNo);
+	//var ws = new WebSocket("ws://localhost/erdEcho?erdNo="+erdNo);
 	webSocket = ws;
 	
 	ws.onopen = function(){
@@ -200,8 +200,8 @@ function jsonSave(select,msg){
 		erdTitle = msg;
 	}else if(select === "snap"){
 		visible = "F";
-		snapNm = "스냅샷 이름";
-		snapImg = "스냅샷 스크린샷";
+		 snapNm = S_userId+" takes a snapshot";
+		snapImg = msg;
 	}
 	
 	stageClick(0);
@@ -261,6 +261,8 @@ function jsonLoad(loadData){
 //	 		item.destroyChildren();
 //	 	}
 	//});
+	
+	
 	
 	
 	
@@ -364,18 +366,17 @@ function getDateFormatMS(now) {
 }
 //=======================[ 히스토리 관련 ]=============================
 
+
 //Erd추가 그려주기
 function histLoadOne(vo){
-	
 		var nowDate = new Date(parseInt(vo.erdDt));
 		var times = getDateFormat(nowDate);
 		var title = vo.erdTitle;
-		var erdJson = this.erdJson;
+		var erdJson = vo.erdJson;
 		var temp_str = `<tr>
 						<td>` + title +`</td>
 						<td>`+ times +`</td>
-						<td><div class="btn_hist_change" title>변경</div></td>
-						<td name="erdJson" style="visibility:hidden;position:absolute;">`+ erdJson +`<td>
+						<td><div class="btn_hist_change" data-erdjson='`+ erdJson +`'>change</div></td>
 					</tr>`;
 		
 		if($('#history_container .con_inner tbody tr').length >= 20){
@@ -384,19 +385,16 @@ function histLoadOne(vo){
 		
 	$('#history_container .con_inner tbody').prepend(temp_str);
 	
-	$('.btn_hist_change').off('click');
+	//$('.btn_hist_change').off('click');
 	
 	$('.btn_hist_change').on('click',function(e){
-		var jsonData = e.target.parentNode.nextElementSibling.childNodes[0].textContent+"@@"+numId;
+		$('.btn_hist_change').removeClass('on');
+		$(this).addClass('on');
+		var jsonData = e.target.dataset.erdjson;
 		jsonLoad(jsonData);
 	});
 	
 }
-
-
-
-
-
 
 
 //선택 ErdNo 전체 히스토리 가져오기 (초기화용)
@@ -418,23 +416,40 @@ function histLoad(){
 				var times = getDateFormat(nowDate);
 				var title = this.erdTitle;
 				var erdJson = this.erdJson;
+				var erdHistNo = this.erdHistNo;
 
-				console.log(erdJson);
 				
 				temp_str += `<tr>
 								<td>`+ title +`</td>
 								<td>`+ times +`</td>
-								<td><div class="btn_hist_change" title>변경</div></td>
-								<td name="erdJson" style="visibility:hidden;position:absolute;">`+ erdJson +`<td>
+								<td><div class="btn_hist_change" data-erdhistno="`+ erdHistNo +`">change</td>
 							</tr>`;
 				
 			});
 			
 			$('#history_container .con_inner tbody').html(temp_str);
 			$('#loading').css('display','none');
+			
 			$('.btn_hist_change').on('click',function(e){
-				var jsonData = e.target.parentNode.nextElementSibling.childNodes[0].textContent+"@@"+numId;
-				jsonLoad(jsonData);
+				var erdHistNo = e.target.dataset.erdhistno;
+				
+				$('.btn_hist_change').removeClass('on');
+				$(this).addClass('on');
+				//erdJson이 용량이 크기 떄문에, 한번에 가지고 있기보단, 클릭 시  erdhistno로 검색해 해당하는 jsondata 값을 얻어옴. 
+				 $.ajax({
+						type : "post",
+						url : "/erddrawing/erdSnapJson",
+						async: false,
+						data : {
+							erdHistNo : erdHistNo
+						},
+						success : function(data) {
+							jsonLoad(data.erdJson);
+						},
+						error : function(xhr, status, error) {
+							console.log(error);
+						}
+					});
 			});
 			
 			
@@ -451,29 +466,37 @@ function histLoad(){
 //=======================[ 스냅샷 관련 ]=============================
 
 $('.btn_snapshot_add').on('click',function(){
-		jsonSave("snap");
-		snapshotOne();
+		var dataURL = stage.toDataURL({ pixelRatio: 3 });
+		jsonSave("snap",dataURL);
+		var erdHist = new Object();
+		erdHist.erdNo = erdNo;
+		erdHist.snapNm = S_userId+" takes a snapshot";
+		erdHist.snapImg = dataURL;
+		erdHist.erdJson = json;
+		
+		var nowDate = new Date();
+		erdHist.times =  getDateFormat(nowDate);
+				
+		snapshotOne(erdHist);
 });
-
-
-
-
 
 //스냅샷 하나 추가
 function snapshotOne(vo){
-//	var nowDate = new Date(parseInt(vo.erdDt));
-//	var times = getDateFormat(nowDate);
-	var times = "시간";
-	var id = "아이디";
-	var title = "스냅샷 내용";
-	var temp_str = `<tr class="snap_img">
-						<td colspan="3">이미지</td>
-					</tr>
-					<tr class="snap_group">
-						<td>`+ id + " - " + title +`</td>
-						<td>`+ times +`</td>
-						<td><div class="btn_hist_change">변경</td>
-					</tr>`;
+	var temp_str ="";
+	var times = vo.times;
+	var snapnm = vo.snapNm;
+	var snapimg = vo.snapImg;
+	var erdJson = vo.erdJson;
+	//var erdHistNo = vo.erdHistNo;
+	
+	temp_str += `<tr class="snap_img">
+					<td colspan="5"><img src="`+snapimg+`" width="380px" height="300px"/></td>
+				</tr>
+				<tr class="snap_group">
+					<td>`+ snapnm +`</td>
+					<td>`+ times +`</td>
+					<td><div class="btn_hist_change" data-erdjson='`+ erdJson +`'>change</div></td>
+				</tr>`;
 	
 	console.log($('#snapshot_container .con_inner tbody .snap_group').length);
 	if($('#snapshot_container .con_inner tbody .snap_group').length >= 10){
@@ -483,6 +506,16 @@ function snapshotOne(vo){
 	}
 	
 	$('#snapshot_container .con_inner tbody').prepend(temp_str);
+	
+	
+	//$('.btn_hist_change').off('click');
+	
+	$('.btn_hist_change').on('click',function(e){
+		$('.btn_hist_change').removeClass('on');
+		$(this).addClass('on');
+		var jsonData = e.target.dataset.erdjson;
+		jsonLoad(jsonData);
+	});
 }
 
 
@@ -504,23 +537,47 @@ function snapshotList(){
 				
 				var nowDate = new Date(parseInt(this.erdDt));
 				var times = getDateFormat(nowDate);
-				var id = "아이디";
-				var title = "스냅샷 내용";
+				var snapnm = this.snapNm;
+				var snapimg = this.snapImg;
+				var erdJson = this.erdJson;
+				var erdHistNo = this.erdHistNo;
+				console.log('snapimg:'+ snapimg);
 				temp_str += `<tr class="snap_img">
-								<td colspan="3">이미지</td>
+								<td colspan="5"><img src="/erddrawing/erdSnapshot?erdHistNo=`+erdHistNo+`" width="380px" height="300px"/></td>
 							</tr>
 							<tr class="snap_group">
-								<td>`+ id + " - " + title +`</td>
+								<td>`+ snapnm +`</td>
 								<td>`+ times +`</td>
-								<td><div class="btn_hist_change">변경</td>
+								<td><div class="btn_hist_change" data-erdhistno="`+ erdHistNo +`">change</td>
 							</tr>`;
 			});
 			
 			$('#snapshot_container .con_inner tbody').html(temp_str);
 			$('#loading').css('display','none');
 			
-			
-			
+			$('.btn_hist_change').on('click',function(e){
+				
+				$('.btn_hist_change').removeClass('on');
+				$(this).addClass('on');
+				
+				var erdHistNo = e.target.dataset.erdhistno;
+				//erdJson이 용량이 크기 떄문에, 한번에 가지고 있기보단, 클릭 시  erdhistno로 검색해 해당하는 jsondata 값을 얻어옴. 
+				 $.ajax({
+						type : "post",
+						url : "/erddrawing/erdSnapJson",
+						async: false,
+						data : {
+							erdHistNo : erdHistNo
+						},
+						success : function(data) {
+							jsonLoad(data.erdJson);
+							
+						},
+						error : function(xhr, status, error) {
+							console.log(error);
+						}
+					});
+			});
 		},
 		error : function(xhr, status, error) {
 			console.log(error);
@@ -705,6 +762,15 @@ function fn_domainUpdate(evt){
 					domainTr.find('.btn_d_update .btn_inner').html('<i class="fas fa-sync-alt"></i>');
 					domainTr.find('.btn_d_update .btn_inner').show();
 					
+					
+					//도메인 적용
+					stage.find('.attr_domain_txt').each(function(item){
+						if(item.text() === domainNm){
+							item.findAncestor('.attribute').findOne('.attr_type_txt').text(domainDataType);
+							item.findAncestor('.attribute').findOne('.attr_default_txt').text(domainDefaultValue);
+						}
+					});
+
 					
 					var msg = S_userId+ " updated domain"
 					webSend('domain 추가/수정 domain 추가/수정',jsonSave("hist",msg));
