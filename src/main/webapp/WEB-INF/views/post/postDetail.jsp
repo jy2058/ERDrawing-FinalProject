@@ -99,7 +99,7 @@ td{
          <div class="form-group" style="border-bottom: 1px solid #eee; width: 945px;">
            <!--  <label for="title" class="col-sm-1 control-label" style="color: #fff; margin-left: 20px;">글제목&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> -->
             <div class="col-sm-7">
-               <label class="control-label" style="color: #fff; font-size: 25px; margin-bottom: 10px;">${postList.postTitle}</label>
+               <label class="control-label" style="color: #fff; font-size: 25px; margin-bottom: 10px;">&nbsp;&nbsp;${postList.postTitle}</label>
             </div>
             
 <style>
@@ -179,7 +179,7 @@ td{
             <!-- <label for="content" class="col-sm-1 control-label" style="color: #fff; margin-left: 20px;">글내용&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label> -->
             <br><br><br>
             <div class="col-sm-7">
-               <label class="control-label" style="color: #fff; font-size: 16px; margin-left: 25px;">${postList.postContent}</label>
+               <div style="color: #fff; font-size: 16px; margin-left: 25px;">${postList.postContent}</div>
             </div>
          </div>
             <br><br><br>
