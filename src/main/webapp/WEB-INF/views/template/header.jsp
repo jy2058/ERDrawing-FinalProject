@@ -117,24 +117,23 @@
 					}	//구글로그인한 경우
 
 		else if ($("#memEmailDiv").val() == "kakao") {
-						Kakao.init('8eded83f4085ba344e793801d05f3722');
-					     Kakao.API.request({
-					          url: '/v1/user/unlink',
-					       //   /v1/api/talk/profile
-					          success: function(res) {
-						            alert("로그아웃");
-						            location.href = '/logout';
-						          },
-					          fail: function(error) {
-					            alert("로그인 실패");
-					          }
-					        });
-					}
-
-					else {
-						$("#logout").attr("href", "/logout");
-					}//기본 로그인한 경우
-				});
+			Kakao.init('8eded83f4085ba344e793801d05f3722');
+		     Kakao.API.request({
+		          url: '/v1/user/unlink',
+		       //   /v1/api/talk/profile
+		          success: function(res) {
+			            alert("로그아웃");
+			            location.href = '/logout';
+			          },
+		          fail: function(error) {
+		            alert("로그인 실패");
+		          }
+		        });
+		}
+		else {
+			$("#logout").attr("href", "/logout");
+		}//기본 로그인한 경우
+	});	
 		
 		var msgWebSocket;
 		

@@ -4,6 +4,8 @@
 <script>
 	var erdNo = ${erdNo};
 	var S_userId = "${SESSION_MEMBERVO.memId}";
+	var S_userId2 = "${SESSION_MEMBERVO.memId}";
+	var S_email = "${SESSION_MEMBERVO.memEmailDiv}";
 	var erdCreator = '${erdVo.memId}';
 	var erdScope = '${erdVo.erdScope}';
 
@@ -64,7 +66,7 @@
 			<div class="buttons_top" id="message" title="알람">
 				<i class="fas fa-bell"></i><div style="position:relative;"><span class="badge" id="msgCnt"></span></div>
 			</div>
-			<div class="buttons_top" title="로그아웃">
+			<div class="buttons_top" id="logout" title="로그아웃">
 				<i class="fas fa-sign-out-alt"></i>
 			</div>
 <!-- 			<div class="buttons_top" id="searchModal" title="검색 창 열기"> -->
@@ -1619,7 +1621,7 @@
                 	
                 	
                 	//드래그 이벤트 조건 부여 (erd생성자와 같거나 team erd일때)
-                	if(erdCreator === S_userId || erdScope === 'team'){
+                	if(erdCreator === S_userId2 || erdScope === 'team'){
                 		  entity.on('dblclick', textClick);
                
                 

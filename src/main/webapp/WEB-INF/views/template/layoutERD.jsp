@@ -40,7 +40,7 @@
 $(document).ready(function(){
 	
 	//본인이 아니면 버튼 이벤트 없애기
-	if(erdCreator != S_userId && erdScope != 'team'){
+	if(erdCreator != S_userId2 && erdScope != 'team'){
 
 		 $('#button3').off('click');		//엔티티추가
 		 $('#tmp_btn_11').off('click');
@@ -68,6 +68,39 @@ $(document).ready(function(){
 		 stage.find('.entity').draggable(false);
 	}
 
+});
+
+
+$("#logout").on("click", function() {
+	console.log("로그아웃 클릭");
+	if (S_email === "google") {
+					abc = window.open('https://accounts.google.com/logout',
+							'ot', 'width=300,height=300,left=650,top=300');
+
+					setTimeout(function() {
+						abc.close();
+						window.location.href = '/logout';
+					}, 1500);
+				}	//구글로그인한 경우
+
+	else if (S_email === "kakao") {
+		 Kakao.init('8eded83f4085ba344e793801d05f3722');
+	     Kakao.API.request({
+	          url: '/v1/user/unlink',
+	       //   /v1/api/talk/profile
+	          success: function(res) {
+		            alert("로그아웃");
+		            location.href = '/logout';
+		          },
+	          fail: function(error) {
+	            alert("로그인 실패");
+	          }
+	        });
+	}
+
+	else {
+		location.href = '/logout';
+	}//기본 로그인한 경우
 });
 
 
