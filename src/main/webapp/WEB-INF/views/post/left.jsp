@@ -14,6 +14,10 @@
 	<ul class="left-menu" style="color: #D1D1D2;">
 		<li  class="navbar-brand" style="font-size: 18px; font-weight: bold;"><a href="${cp}/post/postList?boardNo=3" onmouseover="fnOver(this);" onmouseout="fnOut(this);">질문게시판</a></li>
 	</ul>
+	
+	<ul class="left-menu" style="color: #D1D1D2;">
+		<li  class="navbar-brand" style="font-size: 18px; font-weight: bold;"><a href="${cp}/chatbot/chatbot" onmouseover="fnOver(this);" onmouseout="fnOut(this);">1:1 Chatting</a></li>
+	</ul>
 </div>
 
 <script type="text/javascript">
