@@ -23,7 +23,8 @@
 	 	update ticket
 	 		set ticketPrice =#{ticketPrice, jdbcType=VARCHAR},
 	 			ticketImg =#{ticketImg, jdbcType=VARCHAR},
-	 			ticketContent=#{ticketContent, jdbcType=VARCHAR}
+	 			ticketContent=#{ticketContent, jdbcType=VARCHAR},
+	 			ticketPeriod=#{ticketPeriod, jdbcType=VARCHAR}
 	 	where ticketNo=#{ticketNo}
 	 </update>
 	 

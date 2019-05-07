@@ -33,7 +33,6 @@
 	<div style="text-align: center;"><h3 class="page-header" style="color: #D1D1D2;">전체 매출 현황</h3></div>
 <br/>
 <div id="chartContainer" style="height: 450px; width: 87%;"></div>
-
 <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 <script>
 
@@ -43,13 +42,17 @@
 		var dps =[[],[],[],[],[],[],[],[],[],[],[],[]];
 		var dps2 =[[],[],[],[],[],[],[],[],[],[],[],[]];
 		var dps3 =[[],[],[],[],[],[],[],[],[],[],[],[]];
-		//var dps3 =new Array();
+		
 		var chart = new CanvasJS.Chart("chartContainer", {
 			animationEnabled : true,
 			theme : "dark2", //light2
 			title : {
 				text : "Total Sales"
 			},
+			data :{
+				name:"test"
+			},
+			
 			axisX : {
 				valueFormatString : "MMM YYYY",
 				intervalType : "month",
@@ -59,6 +62,7 @@
 					snapToDataPoint : true
 				}
 			},
+			
 			axisY : {
 				title : "Sales Amount",
 				crosshair : {
@@ -75,9 +79,10 @@
 				dockInsidePlotArea: true,
 				itemclick: toogleDataSeries
 			},
+			
 			data : [ {
 				type : "line",
-				name: "6개월권",
+				name: "${nameList.get(0)}",
 				showInLegend : dps2[0],
 				xValueType : "dateTime",
 				markerType : "square",
@@ -109,18 +114,17 @@
 
 			} ,
 			
+			
 			{
 				type : "line",
 				xValueType : "dateTime",
-				name: "권",
+				name: "5개월권",
 				showInLegend : true,
 				markerType : "square",
 				xValueFormatString : "MMM, YYYY",
 				dataPoints : dps[3]
 
 			} ,
-			
-			
 			
 			]
 		});
@@ -133,7 +137,6 @@
 		
 		
 		<c:forEach items="${ticketBuyHistList}" var="ticket" varStatus="i">
-		console.log("${ticketBuyHistList}")
 		<c:forEach items="${dataPointsList}" var="dataPoints" varStatus="loop">
 		<c:forEach items="${dataPoints}" var="dataPoint">
 		
@@ -156,8 +159,9 @@
 		</c:forEach>
 		</c:forEach>
 		</c:forEach>
-		
 
+		
+		
 		chart.render();
 
 		$(".canvasjs-chart-credit").html("");

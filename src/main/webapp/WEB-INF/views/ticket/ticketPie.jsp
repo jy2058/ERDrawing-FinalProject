@@ -48,7 +48,7 @@ background-color: rgb(102, 102, 102);
 			</c:forEach>
 			</ul></li>
 	</ul>
-</div>
+</div> 
 <div style="text-align: center;"><h3 class="page-header" style="color: #D1D1D2;">Ticket별 매출 </h3></div>
 
 

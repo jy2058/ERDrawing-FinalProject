@@ -130,10 +130,10 @@ color:#fff;
 				<h4 style="display: inline-block; color:#000; padding: 30px; font-size: 28px; ">${ticket.ticketContent }&nbsp;권</h4>
 			</div>
 
-			<div style="display: inline-block; margin-left: 10%; width: 47%; text-align: center;">
+			<div style="display: inline-block; margin-left: 10%; width: 47%; text-align: center;     margin-right: 20px;">
 				<%-- <label style="display: inline-block; margin-left: 10%;">${ticket.ticketContent }</label> --%>
-				<label style="font-size: 18px;" >${ticket.ticketPrice }&nbsp;원</label>
-
+				<label style="font-size: 18px; margin-top: 3px; margin-bottom: 20px'" >${ticket.ticketPrice }&nbsp;원</label><br/>
+					<label>	${ticket.ticketPeriod }일 동안 ERD생성 시 비공개설정을 더 많이 사용할수있는 이용권입니다.</label>
 			</div>
 			<c:if test="${SESSION_MEMBERVO.memAuth == 'T' }">
 				
@@ -150,8 +150,9 @@ color:#fff;
 				data-ticketno="${ticket.ticketNo }" class="modifyModal">
 				<button class="btn btn-default" style="">수정</button>
 			</div>
+		
 			</c:if>	
-			
+		
 		</div>
 	</div>
 
@@ -167,6 +168,8 @@ color:#fff;
    var regex= /^[0-9]+$/;
    $(document).ready(function() {
       
+	   $(".imgDiv").hide();
+	   
        $("#input_img").on("change", handleImgFileSelect);
 
       var msg = "${msg}"
