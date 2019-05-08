@@ -96,7 +96,7 @@ h2
 }
 
 .time-stamp {
-  position: relative;
+  position: relative; 
   width: 100%;
   text-align: center;
   margin-top: 20px;
