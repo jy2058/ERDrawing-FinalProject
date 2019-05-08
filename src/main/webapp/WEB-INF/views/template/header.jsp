@@ -149,7 +149,7 @@
 				console.log("접속");
 				setTimeout(() => {
 					connectMsgWs();
-				}, 100000000);
+				}, 5000);
 				
 				msgWs.onmessage = function(event){
 					var msg = event.data;

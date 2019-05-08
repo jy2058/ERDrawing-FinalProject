@@ -330,7 +330,7 @@ public class TicketController {
 		 vo.setTicketFee(ticketService.selectTicket(ticketNo+"").getTicketPrice());
 		 ticketService.insertticketBuyHist(vo);
 		 
-		 ra.addFlashAttribute("msg", "결제가 완료되었습니다~");
+		 ra.addFlashAttribute("msg", "결제가 완료되었습니다.");
 		 }
 			return "redirect:" + req.getContextPath() + "/ticket/ticketList";
 	 }
