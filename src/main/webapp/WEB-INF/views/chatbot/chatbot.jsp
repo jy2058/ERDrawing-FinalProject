@@ -31,7 +31,7 @@ h2
   z-index: 1;
   position: relative;
   width: 490px;
-  height: 650px;
+  height: 580px;
   margin: 0 auto;
   margin-top: 20px;
   background-color: white;
@@ -91,7 +91,7 @@ h2
     overflow-y: auto;
   position: absolute;
   top: 67px;
-     height: 500px;
+     height: 400px;
   width: 100%;
 }
 
