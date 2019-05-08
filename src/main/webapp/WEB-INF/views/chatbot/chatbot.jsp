@@ -95,7 +95,7 @@ h2
   width: 100%;
 }
 
-.time-stamp {
+.time-stamp { 
   position: relative; 
   width: 100%;
   text-align: center;
