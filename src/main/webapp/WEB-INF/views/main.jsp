@@ -19,6 +19,7 @@
 	overflow: hidden;
 	background-color: #232323;
 	text-align: center;
+	margin-top:20px;
   
 }
 

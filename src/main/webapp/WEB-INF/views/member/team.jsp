@@ -365,6 +365,16 @@ var getTeamNo = ${teamInfo.teamNo};
 			$(this).addClass('active');
 		}
 	});
+	
+	var S_id = '${SESSION_MEMBERVO.memId}';
+	$(".member-li").each(function(){
+		
+		var listTeamMember = $(this).data("memid");
+		
+		if(S_id === listTeamMember){
+			$(this).addClass('active');
+		}
+	});
 		
 </script>
 

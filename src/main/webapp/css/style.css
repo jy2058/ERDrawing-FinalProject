@@ -288,6 +288,11 @@ input{
 	}
 
 
+.member-li.active{
+	
+	border:2px solid #fff;
+}
+
 
  
 
