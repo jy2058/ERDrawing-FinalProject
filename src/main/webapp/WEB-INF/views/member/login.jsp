@@ -52,7 +52,7 @@ margin-left: 35%;}
 			<div id="loginBtns">
 			<div class="submit-btn btn-style1" >로그인</div>
 
-			<div class="IdSearch btn-style3">아이디/ &nbsp;</div>
+			<div class="IdSearch btn-style3">아이디&nbsp;/&nbsp;</div>
 			<div class="pwSearch btn-style3">비밀번호를  잊으셨나요?</div>
 			
 			</div>
