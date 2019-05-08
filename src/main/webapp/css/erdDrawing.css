@@ -1095,3 +1095,7 @@ position:absolute;
 
 
 
+#history_container tr td{
+word-break:break-all;
+padding-right:10px;
+}
