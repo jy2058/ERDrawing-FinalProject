@@ -107,9 +107,9 @@ margin-left:10px;
 				<div style="background:#232323; color:#fff; min-height:50px; line-height:100px; padding-left:5px; font-size:20px; font-weight:600;">
 					<ul style=" min-height:50px; line-height: 2.2">
 					<c:forEach var="teamList" items="${teamInfoList }" >
-						<li class="team-li">
+						<li class="team-li" data-teamno="${teamList.teamNo }">
 							<a href="/team?teamNo=${teamList.teamNo }">
-								<div>${fn:toUpperCase(fn:substring(teamList.teamNm,0,1 ))}</div>
+								<div class="bg-box1">${fn:toUpperCase(fn:substring(teamList.teamNm,0,1 ))}</div>
 								<span>${teamList.teamNm }</span>
 							</a>
 						</li>
@@ -355,5 +355,18 @@ var getTeamNo = ${teamInfo.teamNo};
 	 function erdClick(erdNo){
 			$(location).attr('href', "${cp}/erdDrawing?erdNo="+erdNo);
 	}
+	 
+	 
+	var curTeamNo = ${teamInfo.teamNo};
+	$(".team-li").each(function(item, i){
+		
+		var listTeamNo = $(this).data("teamno");
+		if(curTeamNo === listTeamNo){
+			$(this).addClass('active');
+		}
+	});
+		
 </script>
+
+
 

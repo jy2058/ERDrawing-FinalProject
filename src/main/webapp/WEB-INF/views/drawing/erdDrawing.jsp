@@ -2210,7 +2210,7 @@
 			console.log("접속");
 			setTimeout(() => {
 				connectMsgWs();
-			}, 20000000);
+			}, 5000);
 			
 			msgWs.onmessage = function(event){
 				var msg = event.data;

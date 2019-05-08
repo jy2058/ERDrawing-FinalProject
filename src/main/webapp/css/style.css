@@ -276,6 +276,19 @@ input{
 }
 
 
+	.team-li.active .bg-box1{
+		background:rgba(219, 255, 79, 1);
+		color:#333;
+	}
+	
+	.team-li:hover .bg-box1{
+		background:rgba(219, 255, 79, 0.5);
+		color:#333;
+		
+	}
+
+
+
  
 
 
